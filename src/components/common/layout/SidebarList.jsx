@@ -1,8 +1,10 @@
 import styled from "styled-components";
 import PropTypes from 'prop-types'
 
+
 const MenuStyle = styled.div`
     display:flex;
+    align-items: center;
     list-style-type: none;
     background-color : white;
     color:rgba(95, 150, 107, 1);
@@ -10,8 +12,9 @@ const MenuStyle = styled.div`
     margin :0.5rem;
     height:3rem;
     border-radius:0.2rem;
-    font-size:1rem;
-    
+    font-size: 1rem;
+
+
 
     &:first-child {
         margin-top:2rem;
@@ -26,12 +29,17 @@ const MenuStyle = styled.div`
       }
 
     `
+const MenuIcon = styled.div`
+    font-size: 2rem;
+    padding:0 1rem;
+`
 
 
-const MenuList = ({ name }) => {
+const MenuList = ({ name, icons }) => {
     return (
         <>
             <MenuStyle>
+                <MenuIcon>{icons}</MenuIcon>
                 {name}
             </MenuStyle>
         </>
@@ -39,7 +47,9 @@ const MenuList = ({ name }) => {
 };
 
 MenuList.propTypes = {
-    name: PropTypes.string
+    name: PropTypes.string,
+
+
 }
 
 export default MenuList;
