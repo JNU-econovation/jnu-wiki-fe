@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import "../assets/fonts/pretendard.css";
-import jnuLogo from "../assets/jnu-logo.svg";
+import "/public/fonts/pretendard.css";
+import jnuLogo from "/public/jnu-logo.svg";
 import { useState } from "react";
 import Button from "./Button";
 
@@ -35,7 +35,7 @@ const Header = () => {
         <Button
           type="button"
           name="회원가입"
-          color="#216D32"
+          color="primary"
           border="1px solid #216D32"
           backgroundColor="white"
         ></Button>
@@ -44,7 +44,7 @@ const Header = () => {
           name="로그인"
           color="white"
           border="none"
-          backgroundColor="#216D32"
+          backgroundColor="primary"
         ></Button>
       </HeaderDiv>
     </>
