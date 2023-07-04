@@ -1,9 +1,13 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import Header from "../components/Header";
+import Sidebar from "../components/common/layout/Sidebar.jsx";
+import Header from "../components/common/layout/Header.jsx";
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <Header />
-  </React.StrictMode>
-);
+const Home = () => {
+  return (
+    <>
+      <Sidebar></Sidebar>
+      <Header></Header>
+    </>
+  );
+};
+
+export default Home;
