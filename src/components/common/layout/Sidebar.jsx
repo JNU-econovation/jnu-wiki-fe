@@ -26,19 +26,19 @@ const Container = styled.div`
 
 
 function Sidebar() {
-  const navigate = useNavigate();
+
 
   return (
     <>
       <Container>
-        <MenuList name="Home" icons={<GoHomeFill />} onClick={() => { navigate(routes.home); }}>
+        <MenuList name="Home" icons={<GoHomeFill />} route={routes.home}>
         </MenuList>
 
-        <MenuList name="Add Posts" icons={<FaPenSquare />} onClick={() => { navigate(routes.addPosts); }}>
+        <MenuList name="Add Posts" icons={<FaPenSquare />} route={routes.addPost}>
         </MenuList>
 
 
-        <MenuList name="Mypage" icons={<HiMiniUserGroup />} onClick={() => { navigate(routes.mypage); }}>
+        <MenuList name="Mypage" icons={<HiMiniUserGroup />} route={routes.myPage}>
         </MenuList>
       </Container >
 
