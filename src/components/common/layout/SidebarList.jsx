@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import PropTypes from 'prop-types'
-
+import { useNavigate } from "react-router-dom";
+import routes from "../../../routes";
 
 const MenuStyle = styled.div`
     display:flex;
@@ -8,12 +9,12 @@ const MenuStyle = styled.div`
     list-style-type: none;
     background-color : white;
     color:rgba(95, 150, 107, 1);
+
     width : 17rem;
     margin :0.5rem;
     height:3rem;
     border-radius:0.2rem;
     font-size: 1rem;
-
 
 
     &:first-child {
@@ -35,10 +36,11 @@ const MenuIcon = styled.div`
 `
 
 
-const MenuList = ({ name, icons }) => {
+const MenuList = ({ name, icons, route }) => {
+    const navigate = useNavigate();
     return (
         <>
-            <MenuStyle>
+            <MenuStyle onClick={() => { navigate(route); }}>
                 <MenuIcon>{icons}</MenuIcon>
                 {name}
             </MenuStyle>
