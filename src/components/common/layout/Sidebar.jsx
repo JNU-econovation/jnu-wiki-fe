@@ -1,85 +1,50 @@
-import styled from "styled-components";
-import routes from "/src/routes.js";
+import React from "react";
+import styled from 'styled-components';
+import routes from "../../../routes";
+import MenuList from "./SidebarList";
 import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faUser,
-  faHouse,
-  faSquarePen,
-} from "@fortawesome/free-solid-svg-icons";
+import { GoHomeFill } from 'react-icons/go';
+import { FaPenSquare } from 'react-icons/fa';
+import { HiMiniUserGroup } from 'react-icons/hi2';
+
 
 const Container = styled.div`
-  width: 325px;
-  height: 734px;
-  background-color: white;
-  box-shadow: 3px 5px 15px rgba(0, 0, 0, 0.25);
-  position: absolute;
-  top: 100px;
-  left: 0;
+    width : 20rem;
+    height : 45rem;
+    background-color : white;
+    box-shadow:0.2rem 0.3rem 1rem rgba(0, 0, 0, 0.25);
+    position:absolute;
+    top:6rem;
+    left:0;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    
+    `
 
-const MenuList = styled.div`
-  display: flex;
-  list-style-type: none;
-  background-color: white;
-  color: rgba(95, 150, 107, 1);
-  width: 277px;
-  margin: 8px;
-  height: 48px;
-  border-radius: 3px;
-  font-size: 16px;
 
-  &:first-child {
-    margin-top: 32px;
-  }
-
-  &:hover {
-    background-color: rgba(222, 233, 224, 1);
-    color: rgba(33, 109, 50, 1);
-    font-size: 16px;
-    font-weight: 600;
-  }
-`;
 
 function Sidebar() {
-  const navigate = useNavigate();
+
 
   return (
     <>
       <Container>
-        <MenuList
-          onClick={() => {
-            navigate(routes.home);
-          }}
-        >
-          <FontAwesomeIcon icon={faHouse} size="30px" />
-          Home
+        <MenuList name="Home" icons={<GoHomeFill />} route={routes.home}>
         </MenuList>
 
-        <MenuList
-          onClick={() => {
-            navigate(routes.addPosts);
-          }}
-        >
-          <FontAwesomeIcon icon={faSquarePen} />
-          Add Posts
+        <MenuList name="Add Posts" icons={<FaPenSquare />} route={routes.addPost}>
         </MenuList>
 
-        <MenuList
-          onClick={() => {
-            navigate(routes.mypage);
-          }}
-        >
-          <FontAwesomeIcon icon={faUser} />
-          Mypage
+
+        <MenuList name="Mypage" icons={<HiMiniUserGroup />} route={routes.myPage}>
         </MenuList>
-      </Container>
+      </Container >
+
     </>
-  );
+
+  )
 }
 
 export default Sidebar;
