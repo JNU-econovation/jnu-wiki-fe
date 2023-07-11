@@ -21,8 +21,12 @@ const Header = () => {
   return (
     <>
       <HeaderDiv>
-        <LogoImg src={jnuLogo} alt="jnu-logo" />
-        <LogoTitle>
+        <LogoImg
+          src={jnuLogo}
+          alt="jnu-logo"
+          onClick={() => navigate(routes.home)}
+        />
+        <LogoTitle onClick={() => navigate(routes.home)}>
           전대
           <br />
           위키
