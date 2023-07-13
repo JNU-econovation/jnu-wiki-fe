@@ -6,10 +6,12 @@ import AddPost from "./pages/AddPost.jsx";
 import MyPage from "./pages/MyPage.jsx";
 import Login from "./pages/Login.jsx";
 import Join from "./pages/Join.jsx";
+import { GlobalStyle } from "./styles/globalStyle";
 
 function App() {
   return (
     <>
+      <GlobalStyle />
       <BrowserRouter>
         <Routes>
           <Route path={routes.home} element={<Home />} />
