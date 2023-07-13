@@ -17,6 +17,7 @@ function App() {
           <Route path={routes.myPage} element={<MyPage />} />
           <Route path={routes.join} element={<Join />} />
           <Route path={routes.login} element={<Login />} />
+
         </Routes>
       </BrowserRouter>
     </>
