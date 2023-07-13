@@ -1,3 +1,4 @@
+
 import React from 'react';
 import ResisterForm from '../components/common/form/ResisterForm';
 

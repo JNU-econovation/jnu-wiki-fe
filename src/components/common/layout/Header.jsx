@@ -1,55 +1,62 @@
 import styled from "styled-components";
 import "/public/fonts/pretendard.css";
 import jnuLogo from "/public/jnu-logo.svg";
-import { useState } from "react";
+import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "./Button";
 import routes from "../../../routes";
 
 const Header = () => {
-  const [focus, setFocus] = useState(false);
+  const navigate = useNavigate();
+  const focusRef = useRef(null);
 
-  const handleFocus = () => {
-    setFocus(true);
+  const onFocusSearchBar = () => {
+    focusRef.current.placeholder = "";
   };
 
-  const handleBlur = () => {
-    setFocus(false);
+  const onBlurSearchBar = () => {
+    focusRef.current.placeholder = "      검색";
   };
-
-  const placeholderText = focus ? "" : "      검색";
 
   return (
     <>
       <HeaderDiv>
-        <LogoImg src={jnuLogo} alt="jnu-logo" />
-        <LogoTitle>
+        <LogoImg
+          src={jnuLogo}
+          alt="jnu-logo"
+          onClick={() => navigate(routes.home)}
+        />
+        <LogoTitle onClick={() => navigate(routes.home)}>
           전대
           <br />
           위키
         </LogoTitle>
         <SearchBar
           type="search"
-          placeholder={placeholderText}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
+          placeholder="      검색"
+          ref={focusRef}
+          onFocus={onFocusSearchBar}
+          onBlur={onBlurSearchBar}
         />
         <Button
-          type="button"
-          name="회원가입"
+          type="click"
           color="primary"
           border="1px solid #216D32"
           backgroundColor="white"
 
         ></Button>
+
         <Button
-          type="button"
-          name="로그인"
+          type="click"
           color="white"
           border="none"
+
           backgroundColor="primary"
 
         ></Button>
+
       </HeaderDiv>
+      <Line />
     </>
   );
 };
@@ -58,7 +65,7 @@ const HeaderDiv = styled.header`
   display: flex;
   align-items: center;
 
-  margin: 1rem 3rem;
+  margin: 0.25rem 3rem;
 `;
 
 const LogoImg = styled.img`
@@ -94,4 +101,8 @@ const SearchBar = styled.input`
   }
 `;
 
+const Line = styled.hr`
+  background-color: #216d32;
+  height: 0.7px;
+`;
 export default Header;
