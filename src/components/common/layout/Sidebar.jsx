@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import routes from "../../../routes";
 import MenuList from "./SidebarList";
+
 import { useNavigate } from "react-router-dom";
 import { GoHomeFill } from "react-icons/go";
 import { FaPenSquare } from "react-icons/fa";
@@ -47,4 +48,27 @@ function Sidebar() {
   );
 }
 
+
+const SidebarContainer = styled.div`
+    width : 20rem;
+    height : 40rem;
+
+    background-color : white;
+    box-shadow:0.2rem 0.5rem 0.7rem rgba(0, 0, 0, 0.25);
+
+    position:absolute;
+    /* position: sticky; */
+    top:6rem;
+    left:0;
+
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    
+    `
+
 export default Sidebar;
+
+
+
+

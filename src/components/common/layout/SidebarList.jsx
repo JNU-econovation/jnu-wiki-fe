@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import PropTypes from 'prop-types'
 import { useNavigate } from "react-router-dom";
-import routes from "../../../routes";
+
 
 const MenuStyle = styled.div`
     display:flex;
@@ -50,7 +50,8 @@ const MenuList = ({ name, icons, route }) => {
 
 MenuList.propTypes = {
     name: PropTypes.string,
-
+    icons: PropTypes.element,
+    route: PropTypes.string,
 
 }
 

@@ -20,6 +20,7 @@ const colors = {
   white: "#ffffff",
 };
 
+
 const Button = ({
   children,
   type,
@@ -36,6 +37,7 @@ const Button = ({
       backgroundcolor={backgroundcolor}
       onClick={onClick}
     >
+
       {children}
     </Btn>
   );
