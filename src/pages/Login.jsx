@@ -1,12 +1,13 @@
-import Sidebar from "../components/common/layout/Sidebar.jsx";
-import Header from "../components/common/layout/Header.jsx";
+
+import React from 'react';
+import LoginForm from '../components/common/form/LoginForm';
+
 const Login = () => {
-  return (
-    <>
-      <Sidebar></Sidebar>
-      <Header></Header>
-    </>
-  );
+    return (
+        <div>
+            <LoginForm></LoginForm>
+        </div>
+    );
 };
 
 export default Login;

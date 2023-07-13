@@ -42,20 +42,19 @@ const Header = () => {
           type="click"
           color="primary"
           border="1px solid #216D32"
-          backgroundcolor="white"
-          onClick={() => navigate(routes.join)}
-        >
-          회원가입
-        </Button>
+          backgroundColor="white"
+
+        ></Button>
+
         <Button
           type="click"
           color="white"
           border="none"
-          backgroundcolor="primary"
-          onClick={() => navigate(routes.login)}
-        >
-          로그인
-        </Button>
+
+          backgroundColor="primary"
+
+        ></Button>
+
       </HeaderDiv>
       <Line />
     </>
