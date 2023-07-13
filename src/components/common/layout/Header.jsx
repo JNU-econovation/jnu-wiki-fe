@@ -3,6 +3,7 @@ import "/public/fonts/pretendard.css";
 import jnuLogo from "/public/jnu-logo.svg";
 import { useState } from "react";
 import Button from "./Button";
+import routes from "../../../routes";
 
 const Header = () => {
   const [focus, setFocus] = useState(false);
@@ -38,6 +39,7 @@ const Header = () => {
           color="primary"
           border="1px solid #216D32"
           backgroundColor="white"
+
         ></Button>
         <Button
           type="button"
@@ -45,6 +47,7 @@ const Header = () => {
           color="white"
           border="none"
           backgroundColor="primary"
+
         ></Button>
       </HeaderDiv>
     </>
