@@ -21,6 +21,7 @@ const colors = {
 };
 
 const Button = ({ name, color, border, backgroundColor }) => {
+
   return (
     <SignUpBtn
       type="button"
@@ -29,7 +30,7 @@ const Button = ({ name, color, border, backgroundColor }) => {
       backgroundColor={backgroundColor}
     >
       {name}
-    </SignUpBtn>
+    </SignUpBtn >
   );
 };
 
