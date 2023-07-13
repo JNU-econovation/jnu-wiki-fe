@@ -12,7 +12,7 @@ const Container = styled.div`
   height: 45rem;
   background-color: white;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  position: absolute;
+  position: fixed;
   top: 6rem;
   left: 0;
 

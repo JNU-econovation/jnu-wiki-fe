@@ -20,48 +20,57 @@ const Header = () => {
 
   return (
     <>
-      <HeaderDiv>
-        <LogoImg
-          src={jnuLogo}
-          alt="jnu-logo"
-          onClick={() => navigate(routes.home)}
-        />
-        <LogoTitle onClick={() => navigate(routes.home)}>
-          전대
-          <br />
-          위키
-        </LogoTitle>
-        <SearchBar
-          type="search"
-          placeholder="      검색"
-          ref={focusRef}
-          onFocus={onFocusSearchBar}
-          onBlur={onBlurSearchBar}
-        />
-        <Button
-          type="click"
-          color="primary"
-          border="1px solid #216D32"
-          backgroundcolor="white"
-          onClick={() => navigate(routes.join)}
-        >
-          회원가입
-        </Button>
-        <Button
-          type="click"
-          color="white"
-          border="none"
-          backgroundcolor="primary"
-          onClick={() => navigate(routes.login)}
-        >
-          로그인
-        </Button>
-      </HeaderDiv>
-      <Line />
+      <Container>
+        <HeaderDiv>
+          <LogoImg
+            src={jnuLogo}
+            alt="jnu-logo"
+            onClick={() => navigate(routes.home)}
+          />
+          <LogoTitle onClick={() => navigate(routes.home)}>
+            전대
+            <br />
+            위키
+          </LogoTitle>
+          <SearchBar
+            type="search"
+            placeholder="      검색"
+            ref={focusRef}
+            onFocus={onFocusSearchBar}
+            onBlur={onBlurSearchBar}
+          />
+          <Button
+            type="click"
+            color="primary"
+            border="1px solid #216D32"
+            backgroundcolor="white"
+            onClick={() => navigate(routes.join)}
+          >
+            회원가입
+          </Button>
+          <Button
+            type="click"
+            color="white"
+            border="none"
+            backgroundcolor="primary"
+            onClick={() => navigate(routes.login)}
+          >
+            로그인
+          </Button>
+        </HeaderDiv>
+        <Line />
+      </Container>
     </>
   );
 };
 
+const Container = styled.div`
+  position: fixed;
+  width: 100vw;
+  height: 6rem;
+  background-color: white;
+  z-index: 3;
+`;
 const HeaderDiv = styled.header`
   display: flex;
   align-items: center;
