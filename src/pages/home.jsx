@@ -1,13 +1,13 @@
-import Sidebar from "../components/common/layout/Sidebar.jsx";
-import Header from "../components/common/layout/Header.jsx";
+
+import Layout from "../components/common/layout/Layout.jsx";
 
 const Home = () => {
   return (
     <>
-      <Sidebar></Sidebar>
-      <Header></Header>
+      <Layout>
+      </Layout>
     </>
-  );
+  )
 };
 
 export default Home;

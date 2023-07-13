@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import "/public/fonts/pretendard.css";
 
-const SignUpBtn = styled.button`
+const Btn = styled.button`
   width: 6.5rem;
   height: 3rem;
   border-radius: 99999px;
@@ -11,7 +11,7 @@ const SignUpBtn = styled.button`
 
   color: ${(props) => colors[props.color]};
   border: ${(props) => props.border};
-  background-color: ${(props) => colors[props.backgroundColor]};
+  background-color: ${(props) => colors[props.backgroundcolor]};
 `;
 
 const colors = {
@@ -20,16 +20,26 @@ const colors = {
   white: "#ffffff",
 };
 
-const Button = ({ name, color, border, backgroundColor }) => {
+
+const Button = ({
+  children,
+  type,
+  color,
+  border,
+  backgroundcolor,
+  onClick,
+}) => {
   return (
-    <SignUpBtn
-      type="button"
+    <Btn
+      type={type}
       color={color}
       border={border}
-      backgroundColor={backgroundColor}
+      backgroundcolor={backgroundcolor}
+      onClick={onClick}
     >
-      {name}
-    </SignUpBtn>
+
+      {children}
+    </Btn>
   );
 };
 
