@@ -1,13 +1,12 @@
-
-import React from 'react';
-import ResisterForm from '../components/common/form/ResisterForm';
-
+import Sidebar from "../components/common/layout/Sidebar.jsx";
+import Header from "../components/common/layout/Header.jsx";
 const Join = () => {
-    return (
-        <div>
-            <ResisterForm />
-        </div>
-    );
+  return (
+    <>
+      <Sidebar></Sidebar>
+      <Header></Header>
+    </>
+  );
 };
 
 export default Join;
