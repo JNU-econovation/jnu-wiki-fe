@@ -22,6 +22,7 @@ const ContainerCss = styled.div`
   left: 35rem;
   top: 15rem;
   z-index: 1;
+  margin-bottom: 30rem;
 `;
 
 export default Container;
