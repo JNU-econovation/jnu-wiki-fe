@@ -1,21 +1,22 @@
-import Container from "../ResisterCompo/Container";
-import InputGroup from "../ResisterCompo/InputGroup";
-import Button from "../ResisterCompo/Button";
+import Container from "../Resister/Container";
+import InputGroup from "../Input/InputGroup";
+import Button from "../Resister/Button";
 import useInput from "../../../hooks/useInput";
 import styled from "styled-components";
 import routes from "../../../routes";
 import { useNavigate } from "react-router-dom";
 // import { register, doubleCheck } from "../../../services/api";
-import Question from "../ResisterCompo/Question";
+import Question from "../Resister/Question";
 import { useState, useEffect } from "react";
-import DoubleCheck from "../ResisterCompo/DoubleCheck";
+import DoubleCheck from "../Resister/DoubleCheck";
 import {
   emailCheck,
   passwordCheck,
   passwordReCheck,
 } from "../../../services/regex";
+import Swal from "sweetalert2";
 
-import Title from "../ResisterCompo/Title";
+import Title from "../Resister/Title";
 const ResisterForm = () => {
   const navigate = useNavigate();
   const { valueInit, handleOnChange } = useInput({
@@ -37,22 +38,34 @@ const ResisterForm = () => {
     doubleCheckEmail(email)
       .then((e) => {
         setDoubleEmail(true);
-        alert("사용가능한 이메일 입니다.");
+        Swal.fire({
+          icon: 'success',
+          text: '사용가능한 이메일 입니다.'
+        });
       })
       .catch((e) => {
         setDoubleEmail(false);
-        alert("동일한 이메일이 존재합니다.");
+        Swal.fire({
+          icon: 'warning',
+          text: '동일한 이메일이 존재합니다.'
+        });
       });
   };
   const NameDoubleCheck = (name) => {
     doubleCheckNickName(name)
       .then((e) => {
         setDoubleName(true);
-        alert("사용가능한 닉네임 입니다.");
+        Swal.fire({
+          icon: 'success',
+          text: '사용가능한 닉네임 입니다.'
+        });
       })
       .catch((e) => {
         setDoubleName(false);
-        alert("동일한 닉네임이 존재합니다.");
+        Swal.fire({
+          icon: 'warning',
+          text: '동일한 닉네임이 존재합니다.'
+        });
       });
   };
 
@@ -98,8 +111,8 @@ const ResisterForm = () => {
   return (
     <>
       <Container>
-        <Title fontSize="30px">회원가입</Title>
-        <Title fontSize="15px">
+        <Title fontSize="30px" margin='4.5rem 0 1rem 0'>회원가입</Title>
+        <Title fontSize="15px" margin='0 0 3rem 0'>
           {" "}
           반가워요! 회원가입 후 <Strong>10</Strong>일이 지나면 글작성이 가능해요
           :)
@@ -177,9 +190,23 @@ const ResisterForm = () => {
         />
 
         <Button
+          margin='1rem 0 3rem 0'
           onClick={() => {
             if (doubleEmail === false) {
-              alert("이메일 중복확인을 해주세요");
+              Swal.fire({
+                icon: 'warning',
+                text: '이메일 중복확인을 해주세요🥲',
+                confirmButtonText: '예',
+                confirmButtonColor: '#429f50',
+              })
+            }
+            else if (doubleName === false) {
+              Swal.fire({
+                icon: 'warning',
+                text: '닉네임 중복확인을 해주세요🥲',
+                confirmButtonText: '예',
+                confirmButtonColor: '#429f50',
+              })
             }
 
             //회원가입 요청
@@ -191,18 +218,27 @@ const ResisterForm = () => {
               isPassword &&
               isPasswordConfirm
             ) {
-              console.log(
-                valueInit.email,
-                valueInit.password,
-                valueInit.username
-              );
               // register({
               //     "email": valueInit.email,
               //     "password": valueInit.password,
               //     "username": valueInit.username
               // })
-              alert("회원가입 성공!");
-              navigate(routes.logIn);
+              Swal.fire({
+                icon: 'success',
+                title: '회원가입 성공!',
+                text: '로그인 페이지로 이동하시겠습니까?',
+                confirmButtonText: '예',
+                cancelButtonText: '아니오',
+                confirmButtonColor: '#429f50',
+                cancelButtonColor: '#d33',
+              }).then(result => {
+                if (result.isConfirmed) {
+                  location.href = routes.login
+                } else if (result.isDismissed) {
+                  location.href = routes.home
+                }
+                //resister .then 으로 위에 모달창 넣어주기.
+              })
             }
           }}
         >
