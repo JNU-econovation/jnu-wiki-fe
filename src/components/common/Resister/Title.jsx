@@ -1,11 +1,11 @@
 
 import styled from "styled-components";
 
-const Title = ({ children, fontSize }) => {
+const Title = ({ children, fontSize, margin }) => {
     return (
         <>
             <TitleStyle
-                fontSize={fontSize}>
+                fontSize={fontSize} margin={margin}>
                 {children}
             </TitleStyle>
         </>
@@ -15,13 +15,7 @@ const Title = ({ children, fontSize }) => {
 const TitleStyle = styled.p`
     color: #216D32; 
     font-size:  ${props => props.fontSize} ;
-    &:nth-child(2){
-        margin-bottom: 3rem;
-    };
-
-    &:first-child{
-        margin:4.5rem 0 1rem 0;
-    }
+    margin:${props => props.margin};
     
     `
 
