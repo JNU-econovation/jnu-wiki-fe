@@ -1,12 +1,10 @@
-import Sidebar from "../components/common/layout/Sidebar.jsx";
-import Header from "../components/common/layout/Header.jsx";
+import MainLayout from "../components/common/layout/MainLayout.jsx";
 
 
 const Admin = () => {
     return (
         <>
-            <Sidebar></Sidebar>
-            <Header></Header>
+            <MainLayout />
         </>
     );
 };
