@@ -2,8 +2,9 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import routes from "../../../routes";
+import { NavLink } from "react-router-dom";
 
-const MenuStyle = styled.div`
+const NavStyle = styled(NavLink)`
   display: flex;
   align-items: center;
   list-style-type: none;
@@ -22,30 +23,41 @@ const MenuStyle = styled.div`
     margin-top: 2rem;
   }
 
+  &:link {
+    transition: 0.1s;
+    text-decoration: none;
+  }
   &:hover {
     background-color: rgba(222, 233, 224, 1);
     color: rgba(33, 109, 50, 1);
     font-size: 1rem;
     font-weight: 600;
   }
+
+  &:focus {
+    background-color: rgba(222, 233, 224, 1);
+    color: rgba(33, 109, 50, 1);
+    font-size: 1rem;
+    font-weight: 600;
+  }
 `;
+
 const MenuIcon = styled.div`
   font-size: 2rem;
   padding: 0 1rem;
 `;
 
-const MenuList = ({ name, icons, route }) => {
-  const navigate = useNavigate();
+const MenuList = ({ name, icons, route, onClick }) => {
   return (
     <>
-      <MenuStyle
-        onClick={() => {
-          navigate(route);
-        }}
+      <NavStyle
+        className={({ isActive }) => (isActive ? "active" : "")}
+        to={route}
+        onClick={onClick}
       >
         <MenuIcon>{icons}</MenuIcon>
         {name}
-      </MenuStyle>
+      </NavStyle>
     </>
   );
 };
