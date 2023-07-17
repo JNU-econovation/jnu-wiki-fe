@@ -37,7 +37,7 @@ const MypageForm = () => {
                 <InfoStyle>
                     <MyInputGroup data={Data.nickname}>닉네임</MyInputGroup>
                     <MyInputGroup data={Data.password}>비밀번호</MyInputGroup>
-                    <MyBtn route={routes.myInfoEdit}>정보수정</MyBtn>
+                    <MyBtn color='white' backgroundColor='#216D32' route={routes.myInfoEdit}>정보수정</MyBtn>
                 </InfoStyle>
             </Container>
         </>
