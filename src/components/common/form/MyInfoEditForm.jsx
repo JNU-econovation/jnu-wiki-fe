@@ -10,9 +10,17 @@ import routes from "../../../routes";
 import {
     passwordCheck,
 } from "../../../services/regex";
+import MyBtn from "../mypage/MyBtn";
+import { styled } from "styled-components";
+import { Navigate } from "react-router-dom";
 
-
+const ButtonWrap = styled.div`
+    display: flex;
+    justify-content: space-around;
+    margin:2rem 0;
+`
 const MyInfoEditForm = () => {
+    // const navigate = Navigate();
 
     const [Data, setInputData] = useState({});
 
@@ -106,32 +114,39 @@ const MyInfoEditForm = () => {
                     }
                     margin={false}
                 ></InputGroup>
-                <Button margin='3rem 0 6rem 0' onClick={() => {
-                    if (Doublenewnickname === false) {
-                        Swal.fire({
-                            icon: 'warning',
-                            text: '닉네임 중복확인을 해주세요🥲',
-                            confirmButtonText: '예',
-                            confirmButtonColor: '#429f50',
-                        })
-                    }
-                    if (
-                        Doublenewnickname && Isnewnickname && Isnewpassword
-                    ) {
-                        getChangeInfo({ Isnewnickname, Isnewpassword })
-                        Swal.fire({
-                            icon: 'success',
-                            title: '수정 완료🥰',
-                            confirmButtonColor: '#429f50',
-                        }).then(result => {
-                            if (result.isConfirmed) {
-                                location.href = routes.myPage
-                            }
-                        })
+                <ButtonWrap>
+                    <MyBtn color='white' backgroundColor='#216D32' onClick={() => {
+                        if (Doublenewnickname === false) {
+                            Swal.fire({
+                                icon: 'warning',
+                                text: '닉네임 중복확인을 해주세요🥲',
+                                confirmButtonText: '예',
+                                confirmButtonColor: '#429f50',
+                            })
+                        }
+                        if (
+                            Doublenewnickname && Isnewnickname && Isnewpassword
+                        ) {
+                            getChangeInfo({ Isnewnickname, Isnewpassword })
+                            Swal.fire({
+                                icon: 'success',
+                                title: '수정 완료🥰',
+                                confirmButtonColor: '#429f50',
+                            }).then(result => {
+                                if (result.isConfirmed) {
+                                    location.href = routes.myPage
+                                }
+                            })
 
-                    }
+                        }
 
-                }}>수정완료</Button>
+                    }}>수정완료</MyBtn>
+                    <MyBtn color='#216D32 ' backgroundColor='white' border='1px solid #216D32'
+                        route={routes.myPage}
+                    >취소</MyBtn>
+                </ButtonWrap>
+
+                {/* <Button margin='3rem 0 6rem 0' onClick=>수정완료</Button> */}
             </Container>
 
         </>
