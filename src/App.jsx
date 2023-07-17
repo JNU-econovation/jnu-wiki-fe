@@ -16,7 +16,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path={routes.home} element={<Home />} />
-          <Route path={routes.addPost} element={<AddPost />} />
+          {/* <Route path={routes.addPost} element={<AddPost />} /> */}
           <Route path={routes.myInfoEdit} element={<MyInfoEdit />} />
           <Route path={routes.myPage} element={<MyPage />} />
           <Route path={routes.login} element={<Login />} />
