@@ -6,6 +6,7 @@ const MapDiv = styled.div`
   position: fixed;
   left: 20rem;
   top: 6rem;
+  z-index: -1;
 `;
 const Map = () => {
   useEffect(() => {
