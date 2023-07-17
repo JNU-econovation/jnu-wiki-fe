@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { GoHomeFill } from "react-icons/go";
 import { FaPenSquare } from "react-icons/fa";
 import { HiMiniUserGroup } from "react-icons/hi2";
+import { useState, useRef, useEffect } from "react";
+import CreateDocument from "../Document/CreateDocument";
 
 const Container = styled.div`
   width: 20rem;
@@ -21,7 +23,25 @@ const Container = styled.div`
   align-items: center;
 `;
 
+const DocumentWrapper = styled.div`
+  opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
+  transition: opacity 0.2s ease-out;
+`;
+
 function Sidebar() {
+  const [isShow, setShow] = useState(false);
+  const homeRef = useRef(null);
+
+  useEffect(() => {
+    if (homeRef.current) {
+      homeRef.current.focus();
+    }
+  }, []);
+
+  const handleClick = () => {
+    setShow(!isShow);
+  };
+
   return (
     <>
       <Container>
@@ -29,12 +49,14 @@ function Sidebar() {
           name="Home"
           icons={<GoHomeFill />}
           route={routes.home}
+          ref={homeRef}
         ></MenuList>
 
         <MenuList
+          onClick={handleClick}
           name="Add Posts"
           icons={<FaPenSquare />}
-          route={routes.addPost}
+          // route={routes.addPost}
         ></MenuList>
 
         <MenuList
@@ -43,6 +65,10 @@ function Sidebar() {
           route={routes.myPage}
         ></MenuList>
       </Container>
+
+      <DocumentWrapper isVisible={isShow}>
+        <CreateDocument />
+      </DocumentWrapper>
     </>
   );
 }
