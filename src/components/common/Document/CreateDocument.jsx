@@ -1,10 +1,14 @@
 import styled from "styled-components";
 import DocumentInputGroup from "./DocumentInputGroup";
+import Button from "../layout/Button";
 import { helperMsg } from "../../../utils/helpermsg";
+import useInput from "../../../hooks/useInput";
+import useValidation from "../../../hooks/useValidation";
+import { create } from "../../../services/document";
 
 const Container = styled.div`
   width: 22rem;
-  height: 45rem;
+  height: 100vh;
 
   position: fixed;
   left: 20rem;
@@ -15,31 +19,108 @@ const Container = styled.div`
   box-shadow: 10px 0px 5px 0px rgba(0, 0, 0, 0.106);
 `;
 
+const StyledButton = styled.div`
+  position: absolute;
+  right: 2rem;
+  bottom: 12rem;
+`;
+
 const CreateDocument = () => {
+  const { valueInit, handleOnChange } = useInput({
+    docsName: "",
+    docsCategory: "",
+    docsLocation: "",
+    docsContent: null,
+    docsCreateBy: "cookie",
+  });
+
+  // const { msg: nameMsg, handleSetMsg: handleSetNameMsg } = useValidation("");
+  // const { msg: locationMsg, handleSetMsg: handleSetLocationMsg } =
+  //   useValidation("");
+  // const { msg: categoryMsg, handleSetMsg: handleSetCategoryMsg } =
+  //   useValidation("");
+
+  const handleSubmit = () => {
+    const data = {
+      docsName: valueInit.docsName,
+      docsCategory: valueInit.docsCategory,
+      docsLocation: valueInit.docsLocation,
+      docsContent: null,
+      docsCreatedBy: "cookie",
+    };
+
+    create(data)
+      .then((response) => {
+        if (response.status === 200) {
+          alert("post 요청 성공!");
+        }
+      })
+      .catch((error) => console.log(error));
+  };
   return (
     <>
-      <Container className="go">
+      <Container>
         <DocumentInputGroup
-          htmlFor="title"
-          id="title"
+          htmlFor="docsName"
+          id="docsName"
           placeholder={helperMsg.title}
+          value={valueInit.docsName}
+          onChange={(e) => {
+            handleOnChange(e);
+            // handleSetNameMsg(e);
+          }}
+          // helperMsg={nameMsg}
         >
           문서 제목
         </DocumentInputGroup>
         <DocumentInputGroup
-          htmlFor="location"
-          id="location"
+          htmlFor="docsLocation"
+          id="docsLocation"
           placeholder={helperMsg.location}
+          value={valueInit.docsLocation}
+          onChange={(e) => {
+            handleOnChange(e);
+            // handleSetLocationMsg(e);
+          }}
+          // helperMsg={locationMsg}
         >
           위치
         </DocumentInputGroup>
         <DocumentInputGroup
-          htmlFor="category"
-          id="category"
+          htmlFor="docsCategory"
+          id="docsCategory"
           placeholder={helperMsg.category}
+          value={valueInit.docsCategory}
+          onChange={(e) => {
+            handleOnChange(e);
+            // handleSetCategoryMsg(e);
+          }}
+          // helperMsg={categoryMsg}
         >
           카테고리
         </DocumentInputGroup>
+        <StyledButton>
+          <Button
+            type="click"
+            color="primary"
+            border="1px solid #216D32"
+            backgroundcolor="white"
+          >
+            등록 취소
+          </Button>
+          <Button
+            type="submit"
+            color="white"
+            border="none"
+            backgroundcolor="primary"
+            onClick={(e) => {
+              handleSubmit(e);
+              // checkInput(e);
+            }}
+          >
+            등록 요청
+          </Button>
+        </StyledButton>
       </Container>
     </>
   );
