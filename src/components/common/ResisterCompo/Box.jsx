@@ -9,7 +9,7 @@ const BoxCss = styled.div`
     flex-direction: column;
 
     position: relative;
-    bottom:  ${(props) => props ? '0' : '2rem'};
+    bottom:  ${(props) => props ? '0' : '2rem'};;
 
 
 `

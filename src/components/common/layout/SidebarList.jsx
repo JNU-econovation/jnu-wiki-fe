@@ -1,7 +1,5 @@
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { useNavigate } from "react-router-dom";
-import routes from "../../../routes";
 import { NavLink } from "react-router-dom";
 
 const NavStyle = styled(NavLink)`
