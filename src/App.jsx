@@ -9,6 +9,8 @@ import Join from "./pages/Join.jsx";
 import MyInfoEdit from "./pages/MyInfoEdit.jsx";
 import { GlobalStyle } from "./styles/globalStyle";
 import Admin from "./pages/Admin.jsx";
+import BasicInfoEditReq from "./pages/BasicInfoEditReq.jsx";
+import NewDocsReq from "./pages/NewDocsReq.jsx"
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
           <Route path={routes.login} element={<Login />} />
           <Route path={routes.join} element={<Join />} />
           <Route path={routes.admin} element={<Admin />} />
+          <Route path={`${routes.newDocsRequest}/:id`} element={<NewDocsReq/>} />
+          <Route path={`${routes.basicInfoEditRequest}/:id`} element={<BasicInfoEditReq/>} />
         </Routes>
       </BrowserRouter>
     </>
