@@ -1,14 +1,14 @@
-import Sidebar from "../components/common/layout/Sidebar.jsx";
-import Header from "../components/common/layout/Header.jsx";
+import MainLayout from "../components/common/layout/MainLayout";
+import Map from "../components/common/layout/Map";
 
-
-const AddPost = () => {
-    return (
-        <>
-            <Sidebar></Sidebar>
-            <Header></Header>
-        </>
-    );
+const Home = () => {
+  return (
+    <>
+      <MainLayout>
+        <Map />
+      </MainLayout>
+    </>
+  );
 };
 
-export default AddPost;
+export default Home;
