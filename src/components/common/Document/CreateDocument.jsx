@@ -5,6 +5,7 @@ import { helperMsg } from "../../../utils/helpermsg";
 import useInput from "../../../hooks/useInput";
 import useValidation from "../../../hooks/useValidation";
 import { create } from "../../../services/document";
+import { useSelector } from "react-redux";
 
 const Container = styled.div`
   width: 22rem;
@@ -26,37 +27,43 @@ const StyledButton = styled.div`
 `;
 
 const CreateDocument = () => {
+  const { latitude, longitude } = useSelector((state) => state.latLng);
+  const address = useSelector((state) => state.address.address);
+
   const { valueInit, handleOnChange } = useInput({
     docsName: "",
     docsCategory: "",
-    docsLocation: "",
+    docsLocation: { lat: latitude, lng: longitude },
     docsContent: null,
     docsCreateBy: "cookie",
   });
-
-  // const { msg: nameMsg, handleSetMsg: handleSetNameMsg } = useValidation("");
-  // const { msg: locationMsg, handleSetMsg: handleSetLocationMsg } =
-  //   useValidation("");
-  // const { msg: categoryMsg, handleSetMsg: handleSetCategoryMsg } =
-  //   useValidation("");
 
   const handleSubmit = () => {
     const data = {
       docsName: valueInit.docsName,
       docsCategory: valueInit.docsCategory,
-      docsLocation: valueInit.docsLocation,
+      docsLocation: { lat: latitude, lng: longitude },
       docsContent: null,
       docsCreatedBy: "cookie",
     };
 
+    console.log(data);
+
+    // const { msg: nameMsg, handleSetMsg: handleSetNameMsg } = useValidation("");
+    // const { msg: locationMsg, handleSetMsg: handleSetLocationMsg } =
+    //   useValidation("");
+    // const { msg: categoryMsg, handleSetMsg: handleSetCategoryMsg } =
+    //   useValidation("");
+
     create(data)
       .then((response) => {
         if (response.status === 200) {
-          alert("post 요청 성공!");
+          alert("문서가 생성되었습니다.");
         }
       })
       .catch((error) => console.log(error));
   };
+
   return (
     <>
       <Container>
@@ -77,7 +84,8 @@ const CreateDocument = () => {
           htmlFor="docsLocation"
           id="docsLocation"
           placeholder={helperMsg.location}
-          value={valueInit.docsLocation}
+          // value={valueInit.docsLocation}
+          value={address}
           onChange={(e) => {
             handleOnChange(e);
             // handleSetLocationMsg(e);

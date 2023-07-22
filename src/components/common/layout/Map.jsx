@@ -1,5 +1,7 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+
 const { kakao } = window;
 
 const MapDiv = styled.div`
@@ -13,10 +15,12 @@ const MapDiv = styled.div`
     width: 100%;
     height: 350px;
   }
+
   .title {
     font-weight: bold;
     display: block;
   }
+
   .hAddr {
     position: absolute;
     left: 10px;
@@ -27,11 +31,13 @@ const MapDiv = styled.div`
     z-index: 1;
     padding: 5px;
   }
+
   #centerAddr {
     display: block;
     margin-top: 2px;
     font-weight: normal;
   }
+
   .bAddr {
     padding: 5px;
     text-overflow: ellipsis;
@@ -41,7 +47,8 @@ const MapDiv = styled.div`
 `;
 
 const Map = () => {
-  const markerRef = useRef(null);
+  const dispatch = useDispatch();
+
   useEffect(() => {
     mapscript();
   }, []);
@@ -74,6 +81,10 @@ const Map = () => {
 
     kakao.maps.event.addListener(map, "click", function (mouseEvent) {
       searchDetailAddrFromCoords(mouseEvent.latLng, function (result, status) {
+        const latitude = mouseEvent.latLng.getLat();
+        const longitude = mouseEvent.latLng.getLng();
+        dispatch({ type: "getLatLng", payload: { latitude, longitude } });
+
         if (status === kakao.maps.services.Status.OK) {
           let detailAddr = result[0].road_address
             ? "<div>도로명주소 : " +
@@ -82,6 +93,12 @@ const Map = () => {
             : "";
           detailAddr +=
             "<div>지번 주소 : " + result[0].address.address_name + "</div>";
+
+          const payloadAddress = result[0].road_address
+            ? result[0].road_address.address_name
+            : result[0].address.address_name;
+
+          dispatch({ type: "getAddress", payload: payloadAddress });
 
           let content = '<div class="bAddr">' + detailAddr + "</div>";
 
@@ -105,7 +122,6 @@ const Map = () => {
     <>
       <MapDiv
         id="map"
-        ref={markerRef}
         style={{
           width: "80%",
           height: "100vh",
