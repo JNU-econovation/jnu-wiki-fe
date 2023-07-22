@@ -1,10 +1,13 @@
 import styled from "styled-components";
 import DocumentInputGroup from "./DocumentInputGroup";
+import DocumentLabel from "./DocumentLabel";
+import SelectMenu from "./SelectMenu";
 import Button from "../layout/Button";
 import { helperMsg } from "../../../utils/helpermsg";
 import useInput from "../../../hooks/useInput";
 import useValidation from "../../../hooks/useValidation";
 import { create } from "../../../services/document";
+import { useRef } from "react";
 import { useSelector } from "react-redux";
 
 const Container = styled.div`
@@ -29,10 +32,11 @@ const StyledButton = styled.div`
 const CreateDocument = () => {
   const { latitude, longitude } = useSelector((state) => state.latLng);
   const address = useSelector((state) => state.address.address);
+  const category = useSelector((state) => state.category.category);
 
   const { valueInit, handleOnChange } = useInput({
     docsName: "",
-    docsCategory: "",
+    docsCategory: category,
     docsLocation: { lat: latitude, lng: longitude },
     docsContent: null,
     docsCreateBy: "cookie",
@@ -41,7 +45,7 @@ const CreateDocument = () => {
   const handleSubmit = () => {
     const data = {
       docsName: valueInit.docsName,
-      docsCategory: valueInit.docsCategory,
+      docsCategory: category,
       docsLocation: { lat: latitude, lng: longitude },
       docsContent: null,
       docsCreatedBy: "cookie",
@@ -94,19 +98,12 @@ const CreateDocument = () => {
         >
           위치
         </DocumentInputGroup>
-        <DocumentInputGroup
-          htmlFor="docsCategory"
+        <DocumentLabel>카테고리</DocumentLabel>
+        <SelectMenu
           id="docsCategory"
-          placeholder={helperMsg.category}
           value={valueInit.docsCategory}
-          onChange={(e) => {
-            handleOnChange(e);
-            // handleSetCategoryMsg(e);
-          }}
-          // helperMsg={categoryMsg}
-        >
-          카테고리
-        </DocumentInputGroup>
+          onChange={handleOnChange}
+        />
         <StyledButton>
           <Button
             type="click"
