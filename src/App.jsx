@@ -8,6 +8,7 @@ import Login from "./pages/Login.jsx";
 import Join from "./pages/Join.jsx";
 import MyInfoEdit from "./pages/MyInfoEdit.jsx";
 import { GlobalStyle } from "./styles/globalStyle";
+import Admin from "./pages/Admin.jsx";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path={routes.myPage} element={<MyPage />} />
           <Route path={routes.login} element={<Login />} />
           <Route path={routes.join} element={<Join />} />
+          <Route path={routes.admin} element={<Admin />} />
         </Routes>
       </BrowserRouter>
     </>

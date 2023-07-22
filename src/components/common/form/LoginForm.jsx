@@ -112,22 +112,22 @@ const LoginForm = ({ marginBottom }) => {
                     confirmButtonColor: '#429f50',
                   }).then(result => {
                     if (result.isConfirmed) {
-                      location.href = routes.home
+                      localStorage.setItem("token", res.headers.authorization);
+                      localStorage.setItem("role", res.response.role);
+                      navigate(routes.home);
                     }
                   })
-                  localStorage.setItem("token", res.headers.authorization);
-                  navigate(routes.home);
                 }).catch((err) => {
                   console.log(err);
                   Swal.fire({
                     icon: 'warning',
                     text: '회원정보가 없습니다',
                     confirmButtonColor: '#429f50',
-                  })
-                })
-              }
-            }
-          }}
+                  })//swal
+                })//catch
+              }//else
+            }//if
+          }}//onClick5
         >
           로그인
         </Button>
