@@ -11,7 +11,7 @@ import CreateDocument from "../Document/CreateDocument";
 
 const Container = styled.div`
   width: 20rem;
-  height: 45rem;
+  height: 50rem;
   background-color: white;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   position: fixed;
@@ -24,19 +24,12 @@ const Container = styled.div`
 `;
 
 const DocumentWrapper = styled.div`
-  opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
+  opacity: ${({ isvisible }) => (isvisible ? 1 : 0)};
   transition: opacity 0.2s ease-out;
 `;
 
 function Sidebar() {
   const [isShow, setShow] = useState(false);
-  const homeRef = useRef(null);
-
-  useEffect(() => {
-    if (homeRef.current) {
-      homeRef.current.focus();
-    }
-  }, []);
 
   const handleClick = () => {
     setShow(!isShow);
@@ -46,10 +39,10 @@ function Sidebar() {
     <>
       <Container>
         <MenuList
+          onClick={routes.home}
           name="Home"
           icons={<GoHomeFill />}
           route={routes.home}
-          ref={homeRef}
         ></MenuList>
 
         <MenuList
@@ -60,13 +53,14 @@ function Sidebar() {
         ></MenuList>
 
         <MenuList
+          onClick={handleClick}
           name="Mypage"
           icons={<HiMiniUserGroup />}
           route={routes.myPage}
         ></MenuList>
       </Container>
 
-      <DocumentWrapper isVisible={isShow}>
+      <DocumentWrapper isvisible={isShow}>
         <CreateDocument />
       </DocumentWrapper>
     </>
