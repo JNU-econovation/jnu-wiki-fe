@@ -1,11 +1,11 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import routes from "../../../routes";
 import MenuList from "./SidebarList";
-import { useNavigate } from "react-router-dom";
 import { GoHomeFill } from "react-icons/go";
 import { FaPenSquare } from "react-icons/fa";
 import { HiMiniUserGroup } from "react-icons/hi2";
+import { AiTwotoneSetting } from "react-icons/ai";
 
 const Container = styled.div`
   width: 20rem;
@@ -19,9 +19,16 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  z-index: 3;
 `;
 
 function Sidebar() {
+  const [role, setRole] = useState(window.localStorage.getItem('role'));
+  useEffect(
+    () => { setRole(window.localStorage.getItem('role')) }, [])
+  //회원정보 가져오기, 이때 회원정보 중 
+
   return (
     <>
       <Container>
@@ -42,6 +49,14 @@ function Sidebar() {
           icons={<HiMiniUserGroup />}
           route={routes.myPage}
         ></MenuList>
+        {role === 'admin' ?
+          <MenuList
+            name="Admin"
+            icons={<AiTwotoneSetting />}
+            route={routes.admin}
+          ></MenuList>
+          : null}
+
       </Container>
     </>
   );
