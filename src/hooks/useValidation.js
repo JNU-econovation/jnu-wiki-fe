@@ -7,7 +7,9 @@ const useValidation = (initialValue) => {
     return docsName === "" ? "문서 제목을 입력해주세요." : "";
   };
   const docsLocation = (docsLocation) => {
-    return docsLocation.lat === undefined || docsLocation.lng === undefined
+    return docsLocation === "" ||
+      docsLocation.lat === undefined ||
+      docsLocation.lng === undefined
       ? "위치를 지도에서 클릭해주세요"
       : "";
   };
@@ -27,7 +29,11 @@ const useValidation = (initialValue) => {
     setMsg(newMsg);
   };
 
-  return { msg, handleSetMsg };
+  const clearMsg = () => {
+    setMsg("");
+  };
+
+  return { msg, handleSetMsg, clearMsg };
 };
 
 export default useValidation;
