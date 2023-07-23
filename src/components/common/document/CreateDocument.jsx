@@ -31,7 +31,7 @@ const StyledButton = styled.div`
 `;
 
 const CreateDocument = () => {
-  const { latitude, longitude } = useSelector((state) => state.latLng);
+  let { latitude, longitude } = useSelector((state) => state.latLng);
   const address = useSelector((state) => state.address.address);
   const category = useSelector((state) => state.category.category);
 
@@ -39,19 +39,15 @@ const CreateDocument = () => {
   const inputLocation = useRef(null);
 
   const { valueInit, handleOnChange } = useInput({
-    docsName: "",
     docsCategory: category,
+    docsName: "",
     docsLocation: { lat: latitude, lng: longitude },
-    docsContent: null,
-    docsCreateBy: "cookie",
   });
 
   const data = {
-    docsName: valueInit.docsName,
     docsCategory: category || "카페",
+    docsName: valueInit.docsName,
     docsLocation: { lat: latitude, lng: longitude },
-    docsContent: null,
-    docsCreatedBy: "cookie",
   };
 
   let { msg: nameMsg, handleSetMsg: handleSetNameMsg } = useValidation("");
@@ -64,6 +60,7 @@ const CreateDocument = () => {
     handleSetNameMsg("docsName", valueInit.docsName);
     handleSetLocationMsg("docsLocation", { lat: latitude, lng: longitude });
   };
+  console.log(data.docsLocation);
 
   const handleSubmit = () => {
     handleValidation();
