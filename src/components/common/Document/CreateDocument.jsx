@@ -42,6 +42,10 @@ const CreateDocument = () => {
     docsCreateBy: "cookie",
   });
 
+  const { msg: nameMsg, handleSetMsg: handleSetNameMsg } = useValidation("");
+  const { msg: locationMsg, handleSetMsg: handleSetLocationMsg } =
+    useValidation("");
+
   const handleSubmit = () => {
     const data = {
       docsName: valueInit.docsName,
@@ -51,21 +55,18 @@ const CreateDocument = () => {
       docsCreatedBy: "cookie",
     };
 
+    handleSetNameMsg("docsName", valueInit.docsName);
+    handleSetLocationMsg("docsLocation", { lat: latitude, lng: longitude });
+
     console.log(data);
 
-    // const { msg: nameMsg, handleSetMsg: handleSetNameMsg } = useValidation("");
-    // const { msg: locationMsg, handleSetMsg: handleSetLocationMsg } =
-    //   useValidation("");
-    // const { msg: categoryMsg, handleSetMsg: handleSetCategoryMsg } =
-    //   useValidation("");
-
-    create(data)
-      .then((response) => {
-        if (response.status === 200) {
-          alert("문서가 생성되었습니다.");
-        }
-      })
-      .catch((error) => console.log(error));
+    // create(data)
+    //   .then((response) => {
+    //     if (response.status === 200) {
+    //       alert("문서가 생성되었습니다.");
+    //     }
+    //   })
+    //   .catch((error) => console.log(error));
   };
 
   return (
@@ -76,11 +77,8 @@ const CreateDocument = () => {
           id="docsName"
           placeholder={helperMsg.title}
           value={valueInit.docsName}
-          onChange={(e) => {
-            handleOnChange(e);
-            // handleSetNameMsg(e);
-          }}
-          // helperMsg={nameMsg}
+          onChange={handleOnChange}
+          helperMsg={nameMsg}
         >
           문서 제목
         </DocumentInputGroup>
@@ -88,13 +86,9 @@ const CreateDocument = () => {
           htmlFor="docsLocation"
           id="docsLocation"
           placeholder={helperMsg.location}
-          // value={valueInit.docsLocation}
           value={address}
-          onChange={(e) => {
-            handleOnChange(e);
-            // handleSetLocationMsg(e);
-          }}
-          // helperMsg={locationMsg}
+          onChange={handleOnChange}
+          helperMsg={locationMsg}
         >
           위치
         </DocumentInputGroup>
@@ -118,10 +112,7 @@ const CreateDocument = () => {
             color="white"
             border="none"
             backgroundcolor="primary"
-            onClick={(e) => {
-              handleSubmit(e);
-              // checkInput(e);
-            }}
+            onClick={handleSubmit}
           >
             등록 요청
           </Button>
