@@ -25,6 +25,7 @@ export const register = (data) => {
 }
 
 
+///mypage
 export const getUserInfo = () => {
     return instance.get('/members/info');
 }
@@ -33,3 +34,12 @@ export const getChangeInfo = (data) => {
     const { nickname, password } = data;
     return instance.put('/members/modify/change', { nickname, password });
 }
+
+///admin
+export const basicInfoEditRequest =()=>{
+    return instance.get('/admin/requests/update')
+}
+export const newInfoCreateRequest =()=>{
+    return instance.get('/requests/new')
+}
+
