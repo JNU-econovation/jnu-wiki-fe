@@ -1,6 +1,7 @@
 import InfoGroup from "./InfoGroup";
 import DocumentHeading from "./DocumentHeading";
 import Description from "./Description";
+import DocumentTime from "./DocumentTime";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -21,6 +22,16 @@ const Box = styled.div`
   margin: 1rem 0 2.5rem 0;
 `;
 
+const ContentTime = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+`;
+
+// const DocumentTime = styled.span`
+//   background-color: black;
+// `;
+
 const Document = () => {
   return (
     <>
@@ -37,7 +48,10 @@ const Document = () => {
             전남대학교 북구 용봉로 77
           </InfoGroup>
         </Box>
-        <DocumentHeading>내용</DocumentHeading>
+        <ContentTime>
+          <DocumentHeading>내용</DocumentHeading>
+          <DocumentTime className="time">Jan 5 09:30</DocumentTime>
+        </ContentTime>
         <Description>
           hi여러분방가방가hi여러분방가방가hi여러분방가방가hi여러분방가방가hi여러분방가방가hi여러분방가방가hi여러분방가방가hi여러분방가방가hi여러분방가방가hi여러분방가방가hi여러분방가방가hi여러분방가방가hi여러분방가방가hi여러분방가방가hi여러분방가방가hi여러분방가방가hi여러분방가방가hi여러분방가방가hi여러분방가방가
         </Description>

@@ -83,7 +83,7 @@ function Sidebar() {
       </Container>
       {isShow && (
         <DocumentWrapper>
-          <CreateDocument />
+          <Document />
         </DocumentWrapper>
       )}
     </>
