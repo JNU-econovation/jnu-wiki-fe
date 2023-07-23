@@ -75,7 +75,7 @@ const Header = () => {
          onClick={() => {
           Swal.fire({
             icon: 'info',
-            title: '로그아웃 하시겠습니까?',
+            text: '로그아웃 하시겠습니까?',
             showCancelButton: true,
             confirmButtonText: '예', 
             cancelButtonText: '아니오',
