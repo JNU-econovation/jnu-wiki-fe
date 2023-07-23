@@ -1,5 +1,4 @@
 
-import styled from 'styled-components'
 import Title from '../Resister/Title';
 import Contain from '../admin/Contain';
 import AdminBox from '../admin/AdminBox';
