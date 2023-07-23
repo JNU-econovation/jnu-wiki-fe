@@ -11,7 +11,7 @@ import { useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 
-export const Container = styled.div`
+const Container = styled.div`
   width: 22rem;
   height: 100vh;
 
