@@ -7,7 +7,7 @@ import useValidation from "../../../hooks/useValidation";
 import { create } from "../../../services/document";
 import { useSelector } from "react-redux";
 
-const Container = styled.div`
+export const Container = styled.div`
   width: 22rem;
   height: 100vh;
 
