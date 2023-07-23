@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import "/public/fonts/pretendard.css";
-import jnuLogo from "/public/jnu-logo.svg";
+import jnuLogo from "/public/jnu-logo.png";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "./Button";
