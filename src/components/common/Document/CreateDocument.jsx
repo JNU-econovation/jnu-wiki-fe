@@ -7,7 +7,7 @@ import { helperMsg } from "../../../utils/helpermsg";
 import useInput from "../../../hooks/useInput";
 import useValidation from "../../../hooks/useValidation";
 import { create } from "../../../services/document";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 
@@ -60,10 +60,13 @@ const CreateDocument = () => {
 
   const handleCancel = () => {};
 
-  const handleSubmit = () => {
+  const handleValidation = () => {
     handleSetNameMsg("docsName", valueInit.docsName);
     handleSetLocationMsg("docsLocation", { lat: latitude, lng: longitude });
+  };
 
+  const handleSubmit = () => {
+    handleValidation();
     if (data.docsName != "" && data.docsLocation != "") {
       const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
@@ -144,10 +147,7 @@ const CreateDocument = () => {
           disabled
           onChange={(e) => {
             handleOnChange(e);
-            handleSetLocationMsg(e.target.id, {
-              lat: latitude,
-              lng: longitude,
-            });
+            console.log(e.target.value);
           }}
           helperMsg={locationMsg}
         >
