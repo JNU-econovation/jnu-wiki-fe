@@ -9,6 +9,7 @@ import useValidation from "../../../hooks/useValidation";
 import { create } from "../../../services/document";
 import { useRef } from "react";
 import { useSelector } from "react-redux";
+import Swal from "sweetalert2";
 
 const Container = styled.div`
   width: 22rem;
@@ -34,6 +35,9 @@ const CreateDocument = () => {
   const address = useSelector((state) => state.address.address);
   const category = useSelector((state) => state.category.category);
 
+  const inputName = useRef(null);
+  const inputLocation = useRef(null);
+
   const { valueInit, handleOnChange } = useInput({
     docsName: "",
     docsCategory: category,
@@ -42,31 +46,76 @@ const CreateDocument = () => {
     docsCreateBy: "cookie",
   });
 
-  const { msg: nameMsg, handleSetMsg: handleSetNameMsg } = useValidation("");
-  const { msg: locationMsg, handleSetMsg: handleSetLocationMsg } =
+  const data = {
+    docsName: valueInit.docsName,
+    docsCategory: category || "카페",
+    docsLocation: { lat: latitude, lng: longitude },
+    docsContent: null,
+    docsCreatedBy: "cookie",
+  };
+
+  let { msg: nameMsg, handleSetMsg: handleSetNameMsg } = useValidation("");
+  let { msg: locationMsg, handleSetMsg: handleSetLocationMsg } =
     useValidation("");
 
-  const handleSubmit = () => {
-    const data = {
-      docsName: valueInit.docsName,
-      docsCategory: category,
-      docsLocation: { lat: latitude, lng: longitude },
-      docsContent: null,
-      docsCreatedBy: "cookie",
-    };
+  const handleCancel = () => {};
 
+  const handleSubmit = () => {
     handleSetNameMsg("docsName", valueInit.docsName);
     handleSetLocationMsg("docsLocation", { lat: latitude, lng: longitude });
 
-    console.log(data);
+    if (data.docsName != "" && data.docsLocation != "") {
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: "btn btn-success",
+          cancelButton: "btn btn-danger",
+        },
+        buttonsStyling: true,
+      });
 
-    // create(data)
-    //   .then((response) => {
-    //     if (response.status === 200) {
-    //       alert("문서가 생성되었습니다.");
-    //     }
-    //   })
-    //   .catch((error) => console.log(error));
+      swalWithBootstrapButtons
+        .fire({
+          title: "문서를 등록하시겠습니까?",
+          html: `문서제목: ${data.docsName}<br/>
+          위치: ${address}<br/>
+          카테고리: ${data.docsCategory}`,
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "등록 요청",
+          cancelButtonText: "취소",
+          reverseButtons: true,
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            swalWithBootstrapButtons.fire(
+              "문서 등록 요청 완료!",
+              "관리자의 승인 후 등록이 완료됩니다.",
+              "success"
+            );
+            handleRequest();
+          } else if (
+            /* Read more about handling dismissals below */
+            result.dismiss === Swal.DismissReason.cancel
+          ) {
+            swalWithBootstrapButtons.fire(
+              "취소 완료",
+              "문서 등록 요청을 취소합니다.",
+              "error"
+            );
+          }
+        });
+    }
+  };
+
+  const handleRequest = () => {
+    create(data)
+      .then((response) => {
+        if (response.status === 200) {
+          alert("문서가 생성되었습니다.");
+          console.log(data);
+        }
+      })
+      .catch((error) => console.log(error));
   };
 
   return (
@@ -77,7 +126,11 @@ const CreateDocument = () => {
           id="docsName"
           placeholder={helperMsg.title}
           value={valueInit.docsName}
-          onChange={handleOnChange}
+          ref={inputName}
+          onChange={(e) => {
+            handleOnChange(e);
+            handleSetNameMsg(e.target.id, e.target.value);
+          }}
           helperMsg={nameMsg}
         >
           문서 제목
@@ -87,7 +140,15 @@ const CreateDocument = () => {
           id="docsLocation"
           placeholder={helperMsg.location}
           value={address}
-          onChange={handleOnChange}
+          ref={inputLocation}
+          disabled
+          onChange={(e) => {
+            handleOnChange(e);
+            handleSetLocationMsg(e.target.id, {
+              lat: latitude,
+              lng: longitude,
+            });
+          }}
           helperMsg={locationMsg}
         >
           위치
@@ -104,6 +165,7 @@ const CreateDocument = () => {
             color="primary"
             border="1px solid #216D32"
             backgroundcolor="white"
+            onClick={handleCancel}
           >
             등록 취소
           </Button>
@@ -112,7 +174,9 @@ const CreateDocument = () => {
             color="white"
             border="none"
             backgroundcolor="primary"
-            onClick={handleSubmit}
+            onClick={(e) => {
+              handleSubmit(e);
+            }}
           >
             등록 요청
           </Button>
