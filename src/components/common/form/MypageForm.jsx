@@ -6,6 +6,7 @@ import MyBtn from "../mypage/MyBtn";
 import { useEffect, useState } from "react";
 import { getUserInfo } from "../../../services/user";
 import routes from "../../../routes";
+import { mypageTestData } from "./MypageTestData";
 
 //데이터 받아아오기
 //react query 사용을 할까
@@ -13,21 +14,23 @@ import routes from "../../../routes";
 
 
 const MypageForm = () => {
-    const [Data, setInputData] = useState([]);
+    // const [Data, setInputData] = useState([]);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await getUserInfo();
-                setInputData(response.response.member);
-                //response.data.response.map((data) => { setInputData(data); })
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             const response = await getUserInfo();
+    //             setInputData(response.member);
+    //             //response.data.response.map((data) => { setInputData(data); })
 
-            } catch (error) {
-                alert(error.status + ', 데이터를 찾을 수 없습니다.');
-            }
-        };
-        fetchData();
-    }, []);
+    //         } catch (error) {
+    //             alert(error.status + ', 데이터를 찾을 수 없습니다.');
+    //         }
+    //     };
+    //     fetchData();
+    // }, []);
+    const Data=mypageTestData.response.member
+    console.log(Data)
 
     return (
         <>

@@ -12,7 +12,7 @@ import {
 } from "../../../services/regex";
 import MyBtn from "../mypage/MyBtn";
 import { styled } from "styled-components";
-import { Navigate } from "react-router-dom";
+import { mypageTestData } from "./MypageTestData";
 
 const ButtonWrap = styled.div`
     display: flex;
@@ -22,21 +22,24 @@ const ButtonWrap = styled.div`
 const MyInfoEditForm = () => {
     // const navigate = Navigate();
 
-    const [Data, setInputData] = useState({});
+    // const [Data, setInputData] = useState({});
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await getUserInfo();
-                setInputData(response.response.member);
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             const response = await getUserInfo();
+    //              console.log(response);
+    //             setInputData(response.member);
 
-            } catch (error) {
-                alert(error.status + ', 데이터를 찾을 수 없습니다.');
-                console.log(error)
-            }
-        };
-        fetchData();
-    }, []);
+    //         } catch (error) {
+    //             alert(error.status + ', 데이터를 찾을 수 없습니다.');
+    //             console.log(error)
+    //         }
+    //     };
+    //     fetchData();
+    // }, []);
+    const Data=mypageTestData.response.member
+    //나중에 동일한 닉네임입니다 이런거 추가하기
 
     const [Newnickname, setNewnickname] = useState(Data.nickname);
     const [Isnewnickname, setIsnewnickname] = useState(true);
@@ -52,6 +55,15 @@ const MyInfoEditForm = () => {
             setIsnewpassword(passwordCheck(Newpassword));
         }
     };
+    useEffect(
+        (e) => {
+          if (Newpassword.length > 0) {
+            setIsnewpassword(passwordCheck(Newpassword));
+            setNewpassword(Newpassword);
+          }
+        },
+        [Newpassword]
+      );
 
     const NameDoubleCheck = (name) => {
         doubleCheckNickName(name)

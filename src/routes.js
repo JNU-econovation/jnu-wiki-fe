@@ -5,7 +5,9 @@ const routes = {
   join: "/join",
   login: "/login",
   myPage: "/mypage",
-  myInfoEdit: '/myinfo-edit'
+  myInfoEdit: '/myinfo-edit',
+  newDocsRequest:'/newDocsReq',
+  basicInfoEditRequest:'/basicInfoEditReq'
 };
 
 export default routes;

@@ -2,21 +2,21 @@ export const TestData = [
     {
         "success" : true,
       "response" : [ {
-        "id" : 1,
+        "docsRequestId" : 1,
             "docsRequestType" : "MODIFIED",
         "docsRequestCategory" : "CAFE",
         "docsRequestName" : "팬도로시",
         "docsreqeustLocation" : {"lat": "33.45048921971038", "lng": "126.56945764814947"},
         "docsRequestAt" :' 2024-09-09T10:00'
       }, {
-        "id" : 2,
+        "docsRequestId" : 2,
             "docsRequestType" : "MODIFIED",
         "docsRequestCategory" : "STORE",
         "docsRequestName" : "에브리띵이즈오케이",
         "docsreqeustLocation" : "좌표",
         "docsRequestAt" : '2024-09-14T10:30'
       }, {
-        "id" : 3,
+        "docsRequestId" : 3,
             "docsRequestType" : "MODIFIED",
         "docsRequestCategory" : "CAFE",
         "docsRequestName" : "소코아",
@@ -24,7 +24,7 @@ export const TestData = [
         "docsRequestAt" : '2024-10-09T19:46'
       },
       {
-        "id" : 4,
+        "docsRequestId" : 4,
             "docsRequestType" : "MODIFIED",
         "docsRequestCategory" : "CAFE",
         "docsRequestName" : "소코아2",
@@ -32,7 +32,7 @@ export const TestData = [
         "docsRequestAt" : '2024-10-09T19:46'
       },
       {
-        "id" : 5,
+        "docsRequestId" : 5,
             "docsRequestType" : "MODIFIED",
         "docsRequestCategory" : "CAFE",
         "docsRequestName" : "소코아3",
