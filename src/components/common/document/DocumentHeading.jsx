@@ -13,10 +13,12 @@ const StyledHeading = styled.p`
 const DocumentHeading = ({ children }) => {
   return (
     <>
-      <StyledHeading>{children} </StyledHeading>
-      <div>
-        <EditPhoto src="/public/pencil.png" alt="edit" />
-      </div>
+      <span>
+        <StyledHeading>{children} </StyledHeading>
+        <span>
+          <EditPhoto src="/public/pencil.png" alt="edit" />
+        </span>
+      </span>
     </>
   );
 };
