@@ -7,14 +7,15 @@ const useValidation = (initialValue) => {
     return docsName === "" ? "문서 제목을 입력해주세요." : "";
   };
   const docsLocation = (docsLocation) => {
-    return docsLocation === "" ? "위치를 지도에서 클릭해주세요" : "";
+    return docsLocation.lat === undefined || docsLocation.lng === undefined
+      ? "위치를 지도에서 클릭해주세요"
+      : "";
   };
   const docsCategory = (docsCategory) => {
     return docsCategory === "" ? "카테고리를 입력해주세요." : "";
   };
 
-  const handleSetMsg = (e) => {
-    const { value, id } = e.target;
+  const handleSetMsg = (id, value) => {
     let newMsg = "";
     if (id === "docsName") {
       newMsg = docsNameCheck(value);
