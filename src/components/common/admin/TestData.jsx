@@ -48,7 +48,31 @@ export const TestData2 = [
     {
         "success" : true,
       "response" : [ 
+        {
+          "docsRequestId" : 5,
+              "docsRequestType" : "MODIFIED",
+          "docsRequestCategory" : "CAFE",
+          "docsRequestName" : "소코아3",
+          "docsreqeustLocation" : "좌표",
+          "docsRequestAt" : '2024-10-09T19:46'
+        },
     ],
       "error": null
     }
 ]
+
+
+export const modifyData=
+{
+	"success" : true,
+  "response" : {
+    "docsRequestId" : 1,
+		"docsId" : 1,
+		"docsRequestType" : "MODIFIED",
+    "docsRequestCategory" : "CAFE",
+    "docsRequestName" : "팬도로시",
+    "reqeustLocation" : {lat:126.9786567, lng:37.566826},
+    "docsRequestAt" :' 2024-09-09T10:00',
+  },
+  "error": null
+}
