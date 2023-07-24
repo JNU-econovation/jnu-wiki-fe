@@ -10,7 +10,6 @@ const MapDiv = styled.div`
 `
 
 const MapContainer = ({mark}) => {
-    console.log(mark)
     useEffect(() => {
         const container = document.getElementById('myMap');
 		const options = {
