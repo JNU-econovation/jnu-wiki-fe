@@ -1,13 +1,10 @@
 import { instance } from "./index";
 
 export const create = (data) => {
-  const { docsName, docsCategory, docsLocation, docsContent, docsCreatedBy } =
-    data;
-  return instance.post("/docs", {
-    docsName,
+  const { docsName, docsCategory, docsLocation } = data;
+  return instance.post("/requests/new", {
     docsCategory,
+    docsName,
     docsLocation,
-    docsContent,
-    docsCreatedBy,
   });
 };
