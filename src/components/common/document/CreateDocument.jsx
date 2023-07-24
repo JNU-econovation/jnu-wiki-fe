@@ -24,7 +24,7 @@ export const Container = styled.div`
   box-shadow: 10px 0px 5px 0px rgba(0, 0, 0, 0.106);
 `;
 
-const StyledButton = styled.div`
+export const StyledButton = styled.div`
   position: absolute;
   right: 2rem;
   bottom: 12rem;
