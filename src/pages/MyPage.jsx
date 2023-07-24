@@ -3,16 +3,21 @@ import MypageForm from "../components/common/form/MypageForm.jsx";
 import Swal from "sweetalert2";
 import routes from "../routes.js";
 import MainLayout from "../components/common/layout/MainLayout.jsx";
-
-const token = localStorage.getItem('token');
-
+import { useEffect, useState } from "react";
+const token=localStorage.getItem('token');
 const MyPage = () => {
+    const [JWT, setJWT] = useState(token)
+    useEffect(() => {
+        setJWT(localStorage.getItem('token'));
+    }, [JWT]);
+
     // const navigate = useNavigate();
+    console.log(JWT)
     return (
         <>
             <MainLayout>
                 {/* <MypageForm /> */}
-                {token ? <MypageForm></MypageForm>
+                {JWT ? <MypageForm></MypageForm>
                     : Swal.fire({
                         icon: 'info',
                         title: '로그인 후 이용 가능합니다.',
