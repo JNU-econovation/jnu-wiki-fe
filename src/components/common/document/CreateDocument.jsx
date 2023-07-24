@@ -36,6 +36,8 @@ const CreateDocument = () => {
   const category = useSelector((state) => state.category.category);
   const dispatch = useDispatch();
 
+  console.log(latitude, longitude);
+
   const inputName = useRef(null);
   const inputLocation = useRef(null);
 
