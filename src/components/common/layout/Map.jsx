@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const { kakao } = window;
 
@@ -48,6 +48,8 @@ const MapDiv = styled.div`
 
 const Map = () => {
   const dispatch = useDispatch();
+  const apiLat = useSelector((state) => state.latLng.latitude);
+  const apiLng = useSelector((state) => state.latLng.longitude);
 
   useEffect(() => {
     mapscript();
@@ -116,6 +118,21 @@ const Map = () => {
         }
       });
     });
+
+    // 백엔드에서 보내준 좌표대로 주소 출력
+    let coord = new kakao.maps.LatLng(apiLat, apiLng);
+    let callback = function (result, status) {
+      if (status === kakao.maps.services.Status.OK) {
+        const payloadAddress = result[0].road_address
+          ? result[0].road_address.address_name
+          : result[0].address.address_name;
+        console.log(result);
+        dispatch({ type: "getAddress", payload: payloadAddress });
+      }
+    };
+
+    geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+
     // 중심 좌표나 확대 수준이 변경됐을 때 지도 중심 좌표에 대한 주소 정보를 표시하도록 이벤트를 등록
     kakao.maps.event.addListener(map, "idle", function () {
       searchAddFromCoords(map.getCenter());
