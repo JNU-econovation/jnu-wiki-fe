@@ -6,6 +6,8 @@ import styled from "styled-components";
 import { useQuery } from "@tanstack/react-query";
 import { detailDocument } from "../../../services/document";
 import { testData } from "./testData";
+import { useSelector, useDispatch } from "react-redux";
+const { kakao } = window;
 
 const Container = styled.div`
   width: 22rem;
@@ -43,11 +45,19 @@ const Document = () => {
   //   }
   // );
 
+  const { address } = useSelector((state) => state.address);
+  const dispatch = useDispatch();
+
   // const info = data?.data?.response;
   const info = testData[0].response;
-  // console.log(testData[0].response);
-  const { docsName, docsCategory, docsLocation, docsCreatedAt } = info[0];
-  console.log(info[0]);
+
+  const { docsName, docsCategory, docsLocation, docsContent, docsCreatedAt } =
+    info[0];
+
+  dispatch({
+    type: "getLatLng",
+    payload: { latitude: docsLocation.lat, longitude: docsLocation.lng },
+  });
 
   return (
     <>
@@ -61,14 +71,14 @@ const Document = () => {
             {docsCategory}
           </InfoGroup>
           <InfoGroup className="location" htmlFor="location" label="위치">
-            {/* {docsLocation} */}
+            {address}
           </InfoGroup>
         </Box>
         <ContentTime>
           <DocumentHeading>내용</DocumentHeading>
           <DocumentTime className="time">{docsCreatedAt}</DocumentTime>
         </ContentTime>
-        <Description></Description>
+        <Description>{docsContent}</Description>
       </Container>
     </>
   );
