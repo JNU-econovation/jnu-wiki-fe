@@ -81,8 +81,12 @@ const Map = () => {
 
     kakao.maps.event.addListener(map, "click", function (mouseEvent) {
       searchDetailAddrFromCoords(mouseEvent.latLng, function (result, status) {
-        const latitude = mouseEvent.latLng.getLat();
-        const longitude = mouseEvent.latLng.getLng();
+        let latposition = mouseEvent.latLng.getLat();
+        let lngposition = mouseEvent.latLng.getLng();
+
+        let latitude = Math.round(latposition * 10000) / 10000;
+        let longitude = Math.round(lngposition * 10000) / 10000;
+
         dispatch({ type: "getLatLng", payload: { latitude, longitude } });
 
         if (status === kakao.maps.services.Status.OK) {
