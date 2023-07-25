@@ -8,6 +8,10 @@ const addressReducer = (state = addressState, action) => {
       return {
         address: action.payload,
       };
+    case "clearAddress":
+      return {
+        address: "",
+      };
     default:
       return state;
   }

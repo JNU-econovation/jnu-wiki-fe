@@ -12,7 +12,7 @@ import Admin from "./pages/Admin.jsx";
 import store from "./store/index.js";
 import { Provider } from "react-redux";
 import BasicInfoEditReq from "./pages/BasicInfoEditReq.jsx";
-import NewDocsReq from "./pages/NewDocsReq.jsx"
+import NewDocsReq from "./pages/NewDocsReq.jsx";
 
 function App() {
   return (
@@ -28,9 +28,15 @@ function App() {
             <Route path={routes.login} element={<Login />} />
             <Route path={routes.join} element={<Join />} />
             <Route path={routes.admin} element={<Admin />} />
-            <Route path={`${routes.newDocsRequest}/:id`} element={<NewDocsReq/>} />
-          <Route path={`${routes.basicInfoEditRequest}/:id`} element={<BasicInfoEditReq/>} />
-        </Routes>
+            <Route
+              path={`${routes.newDocsRequest}/:id`}
+              element={<NewDocsReq />}
+            />
+            <Route
+              path={`${routes.basicInfoEditRequest}/:id`}
+              element={<BasicInfoEditReq />}
+            />
+          </Routes>
         </BrowserRouter>
       </Provider>
     </>
