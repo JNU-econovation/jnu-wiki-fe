@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import "/public/fonts/pretendard.css";
 import jnuLogo from "/public/jnu-logo.png";
-import { useEffect, useRef,useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "./Button";
 import routes from "../../../routes";
 import Swal from "sweetalert2";
-const token=localStorage.getItem('token');
+const token = localStorage.getItem("token");
 const Header = () => {
   const navigate = useNavigate();
   const focusRef = useRef(null);
@@ -19,10 +19,10 @@ const Header = () => {
     focusRef.current.placeholder = "      검색";
   };
 
-  const [JWT, setJWT] = useState(token)
-    useEffect(() => {
-        setJWT(localStorage.getItem('token'));
-    }, [JWT]);
+  const [JWT, setJWT] = useState(token);
+  useEffect(() => {
+    setJWT(localStorage.getItem("token"));
+  }, [JWT]);
 
   return (
     <>
@@ -45,52 +45,54 @@ const Header = () => {
             onFocus={onFocusSearchBar}
             onBlur={onBlurSearchBar}
           />
-         {!JWT ?
-         (
-          <> <Button
-          type="click"
-          color="primary"
-          border="1px solid #216D32"
-          backgroundcolor="white"
-          onClick={() => navigate(routes.join)}
-        >
-          회원가입
-        </Button>
-        <Button
-          type="click"
-          color="white"
-          border="none"
-          backgroundcolor="primary"
-          onClick={() => navigate(routes.login)}
-        >
-          로그인
-        </Button></>
-         )
-         :<Button
-         type="click"
-         color="white"
-         border="none"
-         backgroundcolor="primary"
-         onClick={() => {
-          Swal.fire({
-            icon: 'question',
-            text: '로그아웃 하시겠습니까?',
-            showCancelButton: true,
-            confirmButtonText: '예', 
-            cancelButtonText: '아니오',
-            confirmButtonColor: '#429f50',
-            cancelButtonColor: '#d33',
-          }).then(result => {
-            if (result.isConfirmed) {
-              localStorage.removeItem('token')
-              setJWT(null);
-            }
-        })
-          
-         }}
-       >
-         로그아웃
-       </Button>}
+          {!JWT ? (
+            <>
+              {" "}
+              <Button
+                type="click"
+                color="primary"
+                border="1px solid #216D32"
+                backgroundcolor="white"
+                onClick={() => navigate(routes.join)}
+              >
+                회원가입
+              </Button>
+              <Button
+                type="click"
+                color="white"
+                border="none"
+                backgroundcolor="primary"
+                onClick={() => navigate(routes.login)}
+              >
+                로그인
+              </Button>
+            </>
+          ) : (
+            <Button
+              type="click"
+              color="white"
+              border="none"
+              backgroundcolor="primary"
+              onClick={() => {
+                Swal.fire({
+                  icon: "question",
+                  text: "로그아웃 하시겠습니까?",
+                  showCancelButton: true,
+                  confirmButtonText: "예",
+                  cancelButtonText: "아니오",
+                  confirmButtonColor: "#429f50",
+                  cancelButtonColor: "#d33",
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    localStorage.removeItem("token");
+                    setJWT(null);
+                  }
+                });
+              }}
+            >
+              로그아웃
+            </Button>
+          )}
         </HeaderDiv>
         <Line />
       </Container>
@@ -126,7 +128,7 @@ const LogoTitle = styled.span`
   cursor: pointer;
 `;
 
-const SearchBar = styled.input`
+export const SearchBar = styled.input`
   width: 60rem;
   height: 3rem;
   padding: 1.3rem;
