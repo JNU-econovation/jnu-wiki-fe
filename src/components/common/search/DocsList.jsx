@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { useQuery } from "@tanstack/react-query";
 import DocsItem from "./DocsItem";
 import Loader from "../layout/Loader";
