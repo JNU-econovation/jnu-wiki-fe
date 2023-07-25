@@ -10,13 +10,13 @@ const StyledHeading = styled.p`
   float: left;
 `;
 
-const DocumentHeading = ({ children }) => {
+const DocumentHeading = ({ children, onClick }) => {
   return (
     <>
       <span>
         <StyledHeading>{children} </StyledHeading>
         <span>
-          <EditPhoto src="/public/pencil.png" alt="edit" />
+          <EditPhoto onClick={onClick} src="/public/pencil.png" alt="edit" />
         </span>
       </span>
     </>
