@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const { kakao } = window;
 
@@ -48,19 +48,28 @@ const MapDiv = styled.div`
 
 const Map = () => {
   const dispatch = useDispatch();
+  const apiLat = useSelector((state) => state.latLng.latitude);
+  const apiLng = useSelector((state) => state.latLng.longitude);
 
   useEffect(() => {
     mapscript();
   }, []);
 
-  const mapscript = () => {
-    // map 기본 세팅
+  let map;
+  let marker = new kakao.maps.Marker();
+
+  const initialMap = () => {
     const container = document.getElementById("map");
     const options = {
       center: new kakao.maps.LatLng(35.175636, 126.907136),
       level: 4,
     };
-    const map = new kakao.maps.Map(container, options);
+    map = new kakao.maps.Map(container, options);
+  };
+
+  const mapscript = () => {
+    // map 기본 세팅
+    initialMap();
 
     function searchAddFromCoords(coords, callback) {
       // 좌표로 행정동 주소 정보를 요청
@@ -81,9 +90,12 @@ const Map = () => {
 
     kakao.maps.event.addListener(map, "click", function (mouseEvent) {
       searchDetailAddrFromCoords(mouseEvent.latLng, function (result, status) {
-        const latitude = mouseEvent.latLng.getLat();
-        const longitude = mouseEvent.latLng.getLng();
-        console.log(latitude,longitude)
+        let latposition = mouseEvent.latLng.getLat();
+        let lngposition = mouseEvent.latLng.getLng();
+
+        let latitude = Math.round(latposition * 10000) / 10000;
+        let longitude = Math.round(lngposition * 10000) / 10000;
+
         dispatch({ type: "getLatLng", payload: { latitude, longitude } });
 
         if (status === kakao.maps.services.Status.OK) {
@@ -113,11 +125,36 @@ const Map = () => {
         }
       });
     });
+
     // 중심 좌표나 확대 수준이 변경됐을 때 지도 중심 좌표에 대한 주소 정보를 표시하도록 이벤트를 등록
     kakao.maps.event.addListener(map, "idle", function () {
       searchAddFromCoords(map.getCenter());
     });
   };
+
+  const setAddress = useCallback(() => {
+    // 백엔드에서 보내준 좌표대로 주소 출력
+    let geocoder = new kakao.maps.services.Geocoder();
+
+    let coord = new kakao.maps.LatLng(apiLat, apiLng);
+    let callback = function (result, status) {
+      if (status === kakao.maps.services.Status.OK) {
+        const payloadAddress = result[0].road_address
+          ? result[0].road_address.address_name
+          : result[0].address.address_name;
+        dispatch({ type: "getAddress", payload: payloadAddress });
+      }
+    };
+
+    marker.setPosition(new kakao.maps.LatLng(apiLat, apiLng));
+    marker.setMap(map);
+
+    geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+  }, [apiLat, apiLng, dispatch, map, marker]);
+
+  useEffect(() => {
+    setAddress();
+  }, [apiLat, apiLng, map, marker, setAddress]);
 
   return (
     <>

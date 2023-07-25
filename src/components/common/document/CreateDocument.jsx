@@ -7,8 +7,7 @@ import { helperMsg } from "../../../utils/helpermsg";
 import useInput from "../../../hooks/useInput";
 import useValidation from "../../../hooks/useValidation";
 import { create } from "../../../services/document";
-import { useRef, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 
 export const Container = styled.div`
@@ -31,34 +30,44 @@ export const StyledButton = styled.div`
 `;
 
 const CreateDocument = () => {
-  const { latitude, longitude } = useSelector((state) => state.latLng);
+  let { latitude, longitude } = useSelector((state) => state.latLng);
   const address = useSelector((state) => state.address.address);
   const category = useSelector((state) => state.category.category);
+  const dispatch = useDispatch();
 
-  const inputName = useRef(null);
-  const inputLocation = useRef(null);
-
-  const { valueInit, handleOnChange } = useInput({
+  const { valueInit, handleOnChange, reset } = useInput({
+    docsCategory: "",
     docsName: "",
-    docsCategory: category,
-    docsLocation: { lat: latitude, lng: longitude },
-    docsContent: null,
-    docsCreateBy: "cookie",
+    docsLocation: "",
   });
 
   const data = {
-    docsName: valueInit.docsName,
     docsCategory: category || "카페",
+    docsName: valueInit.docsName,
     docsLocation: { lat: latitude, lng: longitude },
-    docsContent: null,
-    docsCreatedBy: "cookie",
   };
 
-  let { msg: nameMsg, handleSetMsg: handleSetNameMsg } = useValidation("");
-  let { msg: locationMsg, handleSetMsg: handleSetLocationMsg } =
+  const { msg: nameMsg, handleSetMsg: handleSetNameMsg } = useValidation("");
+  const { msg: locationMsg, handleSetMsg: handleSetLocationMsg } =
     useValidation("");
 
-  const handleCancel = () => {};
+  const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: "btn btn-success",
+      cancelButton: "btn btn-danger",
+    },
+    buttonsStyling: true,
+  });
+
+  const handleCancel = () => {
+    reset();
+    dispatch({ type: "clearAddress" });
+    swalWithBootstrapButtons.fire(
+      "취소 완료",
+      "문서 등록 요청을 취소합니다.",
+      "error"
+    );
+  };
 
   const handleValidation = () => {
     handleSetNameMsg("docsName", valueInit.docsName);
@@ -68,14 +77,6 @@ const CreateDocument = () => {
   const handleSubmit = () => {
     handleValidation();
     if (data.docsName != "" && data.docsLocation != "") {
-      const swalWithBootstrapButtons = Swal.mixin({
-        customClass: {
-          confirmButton: "btn btn-success",
-          cancelButton: "btn btn-danger",
-        },
-        buttonsStyling: true,
-      });
-
       swalWithBootstrapButtons
         .fire({
           title: "문서를 등록하시겠습니까?",
@@ -96,10 +97,7 @@ const CreateDocument = () => {
               "success"
             );
             handleRequest();
-          } else if (
-            /* Read more about handling dismissals below */
-            result.dismiss === Swal.DismissReason.cancel
-          ) {
+          } else if (result.dismiss === Swal.DismissReason.cancel) {
             swalWithBootstrapButtons.fire(
               "취소 완료",
               "문서 등록 요청을 취소합니다.",
@@ -129,7 +127,6 @@ const CreateDocument = () => {
           id="docsName"
           placeholder={helperMsg.title}
           value={valueInit.docsName}
-          ref={inputName}
           onChange={(e) => {
             handleOnChange(e);
             handleSetNameMsg(e.target.id, e.target.value);
@@ -143,7 +140,6 @@ const CreateDocument = () => {
           id="docsLocation"
           placeholder={helperMsg.location}
           value={address}
-          ref={inputLocation}
           disabled
           onChange={(e) => {
             handleOnChange(e);
@@ -156,7 +152,7 @@ const CreateDocument = () => {
         <DocumentLabel>카테고리</DocumentLabel>
         <SelectMenu
           id="docsCategory"
-          value={valueInit.docsCategory}
+          value={data.docsCategory}
           onChange={handleOnChange}
         />
         <StyledButton>
