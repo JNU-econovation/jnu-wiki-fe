@@ -40,7 +40,7 @@ const CreateDocument = () => {
   const inputLocation = useRef(null);
 
   const { valueInit, handleOnChange, reset } = useInput({
-    docsCategory: category,
+    docsCategory: "",
     docsName: "",
     docsLocation: "",
   });
@@ -158,7 +158,7 @@ const CreateDocument = () => {
         <DocumentLabel>카테고리</DocumentLabel>
         <SelectMenu
           id="docsCategory"
-          value={valueInit.docsCategory}
+          value={data.docsCategory}
           onChange={handleOnChange}
         />
         <StyledButton>
