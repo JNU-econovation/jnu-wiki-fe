@@ -3,32 +3,61 @@ import MainLayout from "../components/common/layout/MainLayout";
 import { Container } from "../components/common/Document/CreateDocument";
 import styled from "styled-components";
 import MapContainer from "../components/Map/MapContainer";
-import { TestData, modifyData } from "../components/common/admin/TestData";
+import { Test3 } from "../components/common/admin/TestData";
 import { useEffect, useState } from "react";
 import Button from "../components/common/layout/Button";
 import { StyledButton } from "../components/common/Document/CreateDocument";
 import EditInfo from "../components/common/admin/EditInfo";
 import { TitleP } from "./BasicInfoEditReq";
 
+
+//import { useDispatch } from "react-redux";
+const { kakao } = window;
 const NewDocsReq = () => {
-    const { id } = useParams();
-
-
-
+    const [Ok,setOk]=useState(false);
     const [Data,setData]=useState({
-        "docsRequestCategory" : "CAFE",
-        "docsRequestName" : "팬도로시",
-        "docsreqeustLocation" : '광주광역시 북구 용봉로 77',
+        "docsRequestCategory" : "",
+        "docsRequestName" : "",
+        "reqeustLocation" :"",
     })
+    const [address,setAddress]=useState(null);
     //setData axios로 가져오기
     useEffect(() => {
-        setData({
-            "docsRequestCategory" : "111",
-            "docsRequestName" : "222",
-            "docsreqeustLocation" :'3333',
-        });
+        setData(Test3.response);
+        setOk(true);
       }, []);
 
+   useEffect(()=>{
+    map(); 
+    },[Ok,Data]);
+   
+
+   const map=()=>{
+    
+    const geocoder = new kakao.maps.services.Geocoder();
+    const coord = new kakao.maps.LatLng(Data.reqeustLocation.lat,Data.reqeustLocation.lng);
+    const callback = function(result, status) {
+        if (status === kakao.maps.services.Status.OK) {
+            if(result[0].address_name){
+                setAddress(result[0].address_name)
+                console.log(result[0].address_name)
+            }else{
+                setAddress(result[0].address.address_name)
+                console.log(result[0].address.address_name)
+            }
+           
+        }
+    }
+    const LonLaToAdress = () => {
+        geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+        //geocoder.coord2RegionCode(lat, lng, callback);
+    }
+    if (Ok){
+        console.log(Ok)
+        console.log(Data);
+        LonLaToAdress()}
+
+}
 
     return (
         <>
@@ -37,7 +66,7 @@ const NewDocsReq = () => {
                 <TitleP>기본 정보</TitleP>
                 <EditInfo child={Data.docsRequestName} >문서 제목 </EditInfo>
                 <EditInfo child={Data.docsRequestCategory} >카테고리</EditInfo>
-                <EditInfo child={Data.docsreqeustLocation}>위치</EditInfo>
+                <EditInfo address={address} >위치</EditInfo>
 
             <StyledButton>
             <Button
@@ -61,7 +90,7 @@ const NewDocsReq = () => {
             </StyledButton>
             
                 </Container>
-            <MapContainer mark={Data.docsreqeustLocation}></MapContainer>
+            <MapContainer lat={Data.reqeustLocation.lat} lng={Data.reqeustLocation.lng}></MapContainer>
             
         </MainLayout></>
         
