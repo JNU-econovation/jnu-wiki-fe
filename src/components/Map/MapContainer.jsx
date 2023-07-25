@@ -1,7 +1,6 @@
 
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import styled from "styled-components";
-import {useDispatch} from 'react-redux'
 const { kakao } = window;
 const MapDiv = styled.div`
   position: fixed;
