@@ -4,7 +4,6 @@ import Request from "./Request";
 import Title from "../Resister/Title";
 
 const RequestContain = ({border,datas,route}) => {
-    console.log(datas)
     return (
         <RequestContainCss border={border}>
             {datas.length>0?
