@@ -7,7 +7,6 @@ import { helperMsg } from "../../../utils/helpermsg";
 import useInput from "../../../hooks/useInput";
 import useValidation from "../../../hooks/useValidation";
 import { create } from "../../../services/document";
-import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 
@@ -24,7 +23,7 @@ export const Container = styled.div`
   box-shadow: 10px 0px 5px 0px rgba(0, 0, 0, 0.106);
 `;
 
-const StyledButton = styled.div`
+export const StyledButton = styled.div`
   position: absolute;
   right: 2rem;
   bottom: 12rem;
@@ -36,11 +35,8 @@ const CreateDocument = () => {
   const category = useSelector((state) => state.category.category);
   const dispatch = useDispatch();
 
-  const inputName = useRef(null);
-  const inputLocation = useRef(null);
-
   const { valueInit, handleOnChange, reset } = useInput({
-    docsCategory: category,
+    docsCategory: "",
     docsName: "",
     docsLocation: "",
   });
@@ -131,7 +127,6 @@ const CreateDocument = () => {
           id="docsName"
           placeholder={helperMsg.title}
           value={valueInit.docsName}
-          ref={inputName}
           onChange={(e) => {
             handleOnChange(e);
             handleSetNameMsg(e.target.id, e.target.value);
@@ -145,7 +140,6 @@ const CreateDocument = () => {
           id="docsLocation"
           placeholder={helperMsg.location}
           value={address}
-          ref={inputLocation}
           disabled
           onChange={(e) => {
             handleOnChange(e);
@@ -158,7 +152,7 @@ const CreateDocument = () => {
         <DocumentLabel>카테고리</DocumentLabel>
         <SelectMenu
           id="docsCategory"
-          value={valueInit.docsCategory}
+          value={data.docsCategory}
           onChange={handleOnChange}
         />
         <StyledButton>

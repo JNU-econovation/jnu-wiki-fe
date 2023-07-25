@@ -3,6 +3,11 @@ import DocumentHeading from "./DocumentHeading";
 import Description from "./Description";
 import DocumentTime from "./DocumentTime";
 import styled from "styled-components";
+import { useQuery } from "@tanstack/react-query";
+import { detailDocument } from "../../../services/document";
+import { testData } from "./testData";
+import { useSelector, useDispatch } from "react-redux";
+const { kakao } = window;
 
 const Container = styled.div`
   width: 22rem;
@@ -28,33 +33,52 @@ const ContentTime = styled.div`
   align-items: stretch;
 `;
 
-// const DocumentTime = styled.span`
-//   background-color: black;
-// `;
-
 const Document = () => {
+  // const { data, isLoading, isError } = useQuery(
+  //   ["detail_document"],
+  //   detailDocument,
+  //   {
+  //     onSuccess: (data) => {
+  //       console.log(data);
+  //     },
+  //     staleTime: 10000,
+  //   }
+  // );
+
+  const { address } = useSelector((state) => state.address);
+  const dispatch = useDispatch();
+
+  // const info = data?.data?.response;
+  const info = testData[0].response;
+
+  const { docsName, docsCategory, docsLocation, docsContent, docsCreatedAt } =
+    info[0];
+
+  dispatch({
+    type: "getLatLng",
+    payload: { latitude: docsLocation.lat, longitude: docsLocation.lng },
+  });
+
   return (
     <>
       <Container>
         <DocumentHeading>기본 정보</DocumentHeading>
         <Box>
           <InfoGroup htmlFor="title" label="시설 명칭">
-            전남대 공과대학
+            {docsName}
           </InfoGroup>
           <InfoGroup htmlFor="category" label="카테고리">
-            학교 건물
+            {docsCategory}
           </InfoGroup>
           <InfoGroup className="location" htmlFor="location" label="위치">
-            전남대학교 북구 용봉로 77
+            {address}
           </InfoGroup>
         </Box>
         <ContentTime>
           <DocumentHeading>내용</DocumentHeading>
-          <DocumentTime className="time">Jan 5 09:30</DocumentTime>
+          <DocumentTime className="time">{docsCreatedAt}</DocumentTime>
         </ContentTime>
-        <Description>
-          hi여러분방가방가hi여러분방가방가hi여러분방가방가hi여러분방가방가hi여러분방가방가hi여러분방가방가hi여러분방가방가hi여러분방가방가hi여러분방가방가hi여러분방가방가hi여러분방가방가hi여러분방가방가hi여러분방가방가hi여러분방가방가hi여러분방가방가hi여러분방가방가hi여러분방가방가hi여러분방가방가hi여러분방가방가
-        </Description>
+        <Description>{docsContent}</Description>
       </Container>
     </>
   );
