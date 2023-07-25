@@ -48,8 +48,8 @@ const MapDiv = styled.div`
 
 const Map = () => {
   const dispatch = useDispatch();
-  const apiLat = useSelector((state) => state.latLng.latitude);
-  const apiLng = useSelector((state) => state.latLng.longitude);
+  const apiLat = useSelector((state) => state.requestLatLng.requestLat);
+  const apiLng = useSelector((state) => state.requestLatLng.requestLng);
 
   useEffect(() => {
     mapscript();
