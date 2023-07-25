@@ -83,6 +83,7 @@ const Map = () => {
       searchDetailAddrFromCoords(mouseEvent.latLng, function (result, status) {
         const latitude = mouseEvent.latLng.getLat();
         const longitude = mouseEvent.latLng.getLng();
+        console.log(latitude,longitude)
         dispatch({ type: "getLatLng", payload: { latitude, longitude } });
 
         if (status === kakao.maps.services.Status.OK) {

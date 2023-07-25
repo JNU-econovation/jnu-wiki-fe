@@ -3,13 +3,14 @@ import MainLayout from "../components/common/layout/MainLayout";
 import { Container } from "../components/common/Document/CreateDocument";
 import styled from "styled-components";
 import MapContainer from "../components/Map/MapContainer";
-import { TestData } from "../components/common/admin/TestData";
+import { Test4, TestData2 } from "../components/common/admin/TestData";
 import { useState,useEffect } from "react";
 import Button from "../components/common/layout/Button";
 import { StyledButton } from "../components/common/Document/CreateDocument";
 import EditInfo from "../components/common/admin/EditInfo";
 import { modifyData } from "../components/common/admin/TestData";
-
+import { ModuleNode } from "vite";
+const { kakao } = window;
 export const TitleP = styled.p`
   font-weight: 900;
   color:#216D32;
@@ -19,34 +20,14 @@ export const TitleP = styled.p`
 `;
     
     const BasicInfoEditReq = () => {
-        const { id } = useParams()
         const [address,setAddress]=useState('');
         const [modiAddress,setModiAddress]=useState('');
+        const [Ok,setOk]=useState([]);
 
-    const { kakao } = window;
-    const geocoder = new kakao.maps.services.Geocoder();
-    const callback1 = function(result, status) {
-        if (status === kakao.maps.services.Status.OK) {
-            console.log(address, modiAddress)
-            setAddress(result[0].address_name)}
-        }
-
-    const LonLaToAdress1 = (lat,lng) => {
-        geocoder.coord2RegionCode(lat, lng,callback1)
-    };
-    const callback2 = function(result, status) {
-        if (status === kakao.maps.services.Status.OK) {
-            setModiAddress(result[0].address_name)
-        }
-    };
-    const LonLaToAdress2 = (lat,lng) => {
-        geocoder.coord2RegionCode(lat, lng,callback2)
-    };
- 
         const [Data,setData]=useState({
             "docsRequestCategory" : "",
             "docsRequestName" : "",
-            "docsreqeustLocation" :{lat:'', lng:''}
+            "reqeustLocation" :{lat:'', lng:''}
         })
         const [ModiData,setModiData]=useState({
             "docsRequestCategory" : "",
@@ -55,37 +36,82 @@ export const TitleP = styled.p`
             //이거 경도 위도 주소로 바꾸기
         })
 
-
-        // 기존 데이터 가져오기 -> 추후에 hook 만들기
-        useEffect(
-            () => {
-            setData({
-                "docsRequestCategory" : "111",
-                "docsRequestName" : "222",
-                "docsreqeustLocation" :{lat:126.9786567, lng:37.566826}
-            });
+        useEffect(() => {
+            setData(Test4.response);
+            setOk(ok=>!ok);
           }, []);
-        useEffect(
-            () => {
-            if (Data.docsreqeustLocation.lat!=''&&Data.docsreqeustLocation.lng!=''){
-                LonLaToAdress1(Data.docsreqeustLocation.lat,Data.docsreqeustLocation.lng)
-            } 
-          }, [Data.docsreqeustLocation.lat,Data.docsreqeustLocation.lng]);
-          //수정된 데이터 가져오기
           useEffect(() => {
             setModiData(modifyData.response);
+            setOk(ok=>!ok);
           }, []);
-          useEffect(
-            () => {
-                if (ModiData.reqeustLocation.lat!=''&&ModiData.reqeustLocation.lng!=''){
-                    LonLaToAdress2(ModiData.reqeustLocation.lat,ModiData.reqeustLocation.lng)
-                } 
-          }, [ModiData.reqeustLocation.lat,ModiData.reqeustLocation.lng]);
-            
-          
-          
-          //요청정보 get하기
+          //data가져오기(나중에 쿼리로바꾸기)
 
+        useEffect(()=>{
+            map(); 
+            },[Ok]);
+
+    const map=()=>{
+        const geocoder = new kakao.maps.services.Geocoder();
+        const coord = new kakao.maps.LatLng(Data.reqeustLocation.lat,Data.reqeustLocation.lng);
+        const coord2 = new kakao.maps.LatLng(ModiData.reqeustLocation.lat,ModiData.reqeustLocation.lng);
+        const callback1 = function(result, status) {
+            if (status === kakao.maps.services.Status.OK) {
+                if(result[0].address_name){
+                    setAddress(result[0].address_name)
+                    console.log(result[0].address_name)
+                }else{
+                    setAddress(result[0].address.address_name)
+                    console.log(result[0].address.address_name)
+                }
+               
+            }
+        }
+        const callback2 = function(result, status) {
+            if (status === kakao.maps.services.Status.OK) {
+                if(result[0].address_name){
+                    setModiAddress(result[0].address_name)
+                    console.log(result[0].address_name)
+                }else{
+                    setModiAddress(result[0].address.address_name)
+                    console.log(result[0].address.address_name)
+                }
+               
+            }
+        }
+        const LonLaToAdress1 = () => {
+            geocoder.coord2Address(coord.getLng(), coord.getLat(), callback1);
+        }
+        const LonLaToAdress2 = () => {
+            geocoder.coord2Address(coord2.getLng(), coord2.getLat(), callback2);
+        }
+        if (Ok){
+            LonLaToAdress1()}
+        else if (!Ok){
+            LonLaToAdress2()}
+    
+    }
+    // const geocoder = new kakao.maps.services.Geocoder();
+    // const callback1 = function(result, status) {
+    //     if (status === kakao.maps.services.Status.OK) {
+    //         console.log(address, modiAddress)
+    //         setAddress(result[0].address_name)}
+    //     }
+
+    // const LonLaToAdress1 = (lat,lng) => {
+    //     geocoder.coord2RegionCode(lat, lng,callback1)
+    // };
+    // const callback2 = function(result, status) {
+    //     if (status === kakao.maps.services.Status.OK) {
+    //         setModiAddress(result[0].address_name)
+    //     }
+    // };
+    // const LonLaToAdress2 = (lat,lng) => {
+    //     geocoder.coord2RegionCode(lat, lng,callback2)
+    // };
+        
+
+          //요청정보 get하기
+console.log(Data.reqeustLocation.lat)
     //setData axios로 가져오기
        // console.log(Data.docsreqeustLocation.lat)
     return (
@@ -118,7 +144,7 @@ export const TitleP = styled.p`
           </Button>
             </StyledButton>
             </Container>
-            <MapContainer mark={Data.docsreqeustLocation}></MapContainer>
+            <MapContainer lat={Data.reqeustLocation.lat} lng={Data.reqeustLocation.lng}></MapContainer>
             
         </MainLayout></>
         
