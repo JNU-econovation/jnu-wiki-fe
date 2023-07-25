@@ -31,7 +31,6 @@ const EditBox = styled.div`
 
 
 const EditInfo = ({children,child,modify,address,textDecoration}) => {
-    
 //정보들 다 가져와서 만약에 정보가 다르면 modify 활성
 //if child!= modify => modify,textdecorations 라는 usestate true 
     return (
@@ -41,20 +40,23 @@ const EditInfo = ({children,child,modify,address,textDecoration}) => {
                  :null
             }
            
-            
             <div>
                 {child?
-               <TextP textDecoration={textDecoration}>{child}</TextP>
+               <TextP textDecoration={
+                modify&&modify!=child&&modify!=address ?
+                textDecoration:false
+            }>{child}</TextP>
                 :null}
                 
                 {address?
-                <TextP textDecoration={textDecoration}>{address}</TextP>
+                <TextP textDecoration={modify&&modify!=child&&modify!=address ?
+                    textDecoration:false}>{address}</TextP>
                 :null}
-                {modify?
+
+                {modify&&modify!=child&&modify!=address ?
                     <ModifyP>{modify}</ModifyP>
                     :
-                    null
-                    }
+                    null}
             </div>
         </EditBox>
     );

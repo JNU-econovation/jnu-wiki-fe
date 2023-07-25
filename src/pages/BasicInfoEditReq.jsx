@@ -3,13 +3,12 @@ import MainLayout from "../components/common/layout/MainLayout";
 import { Container } from "../components/common/Document/CreateDocument";
 import styled from "styled-components";
 import MapContainer from "../components/Map/MapContainer";
-import { Test4, TestData2 } from "../components/common/admin/TestData";
+import { Test4 } from "../components/common/admin/TestData";
 import { useState,useEffect } from "react";
 import Button from "../components/common/layout/Button";
 import { StyledButton } from "../components/common/Document/CreateDocument";
 import EditInfo from "../components/common/admin/EditInfo";
 import { modifyData } from "../components/common/admin/TestData";
-import { ModuleNode } from "vite";
 const { kakao } = window;
 export const TitleP = styled.p`
   font-weight: 900;
@@ -22,7 +21,8 @@ export const TitleP = styled.p`
     const BasicInfoEditReq = () => {
         const [address,setAddress]=useState('');
         const [modiAddress,setModiAddress]=useState('');
-        const [Ok,setOk]=useState([]);
+        const [Ok1,setOk1]=useState(false);
+        const [Ok2,setOk2]=useState(true);
 
         const [Data,setData]=useState({
             "docsRequestCategory" : "",
@@ -38,17 +38,17 @@ export const TitleP = styled.p`
 
         useEffect(() => {
             setData(Test4.response);
-            setOk(ok=>!ok);
-          }, []);
+            setOk1((ok)=>!ok);
+          }, [Data]);
           useEffect(() => {
             setModiData(modifyData.response);
-            setOk(ok=>!ok);
-          }, []);
+            setOk2((ok)=>!ok);
+          }, [ModiData]);
           //data가져오기(나중에 쿼리로바꾸기)
 
         useEffect(()=>{
             map(); 
-            },[Ok]);
+            },[Ok1,Data,ModiData]);
 
     const map=()=>{
         const geocoder = new kakao.maps.services.Geocoder();
@@ -84,44 +84,21 @@ export const TitleP = styled.p`
         const LonLaToAdress2 = () => {
             geocoder.coord2Address(coord2.getLng(), coord2.getLat(), callback2);
         }
-        if (Ok){
+        if (Ok1){
             LonLaToAdress1()}
-        else if (!Ok){
+        else if (Ok2){
             LonLaToAdress2()}
     
     }
-    // const geocoder = new kakao.maps.services.Geocoder();
-    // const callback1 = function(result, status) {
-    //     if (status === kakao.maps.services.Status.OK) {
-    //         console.log(address, modiAddress)
-    //         setAddress(result[0].address_name)}
-    //     }
-
-    // const LonLaToAdress1 = (lat,lng) => {
-    //     geocoder.coord2RegionCode(lat, lng,callback1)
-    // };
-    // const callback2 = function(result, status) {
-    //     if (status === kakao.maps.services.Status.OK) {
-    //         setModiAddress(result[0].address_name)
-    //     }
-    // };
-    // const LonLaToAdress2 = (lat,lng) => {
-    //     geocoder.coord2RegionCode(lat, lng,callback2)
-    // };
         
-
-          //요청정보 get하기
-console.log(Data.reqeustLocation.lat)
-    //setData axios로 가져오기
-       // console.log(Data.docsreqeustLocation.lat)
     return (
         <>
         <MainLayout>
             <Container>
                 <TitleP>기본 정보</TitleP>
-                <EditInfo child={Data.docsRequestName} modify={ModiData.docsRequestName}>문서 제목 </EditInfo>
-                <EditInfo child={Data.docsRequestCategory} modify={ModiData.docsRequestCategory}>카테고리</EditInfo>
-                {address? <EditInfo address={address} modify={modiAddress}>위치</EditInfo>:<EditInfo >위치</EditInfo>}
+                <EditInfo child={Data.docsRequestName} modify={ModiData.docsRequestName} textDecoration={true}>문서 제목 </EditInfo>
+                <EditInfo child={Data.docsRequestCategory} modify={ModiData.docsRequestCategory} textDecoration={true}>카테고리</EditInfo>
+                {address? <EditInfo address={address} modify={modiAddress} textDecoration={true}>위치</EditInfo>:<EditInfo >위치</EditInfo>}
             
             <StyledButton>
             <Button
