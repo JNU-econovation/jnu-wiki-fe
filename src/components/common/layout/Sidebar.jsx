@@ -4,10 +4,12 @@ import routes from "../../../routes";
 import MenuList from "./SidebarList";
 import CreateDocument from "../document/CreateDocument";
 import Document from "../document/Document";
+import DocsList from "../search/DocsList";
 import { GoHomeFill } from "react-icons/go";
 import { FaPenSquare } from "react-icons/fa";
 import { HiMiniUserGroup } from "react-icons/hi2";
 import { AiTwotoneSetting } from "react-icons/ai";
+import { SlDocs } from "react-icons/Sl";
 
 const Container = styled.div`
   width: 20rem;
@@ -40,11 +42,22 @@ const DocumentWrapper = styled.div`
 `;
 
 function Sidebar() {
-  const [isShow, setShow] = useState(false);
+  const [addShow, setAddShow] = useState(false);
+  const [viewShow, setViewShow] = useState(false);
 
-  const handleClick = () => {
-    setShow(!isShow);
+  const handleClick = (type) => {
+    if (type === "addPost") {
+      setAddShow((addShow) => !addShow);
+      setViewShow(false);
+    } else if (type === "viewPost") {
+      setViewShow((viewShow) => !viewShow);
+      setAddShow(false);
+    } else {
+      setAddShow(false);
+      setViewShow(false);
+    }
   };
+
   const [role, setRole] = useState(window.localStorage.getItem("role"));
   useEffect(() => {
     setRole(window.localStorage.getItem("role"));
@@ -55,19 +68,29 @@ function Sidebar() {
     <>
       <Container>
         <MenuList
-          onClick={handleClick}
+          onClick={() => handleClick("home")}
           name="Home"
           icons={<GoHomeFill />}
           route={routes.home}
         ></MenuList>
 
         <MenuList
-          onClick={handleClick}
+          onClick={() => {
+            handleClick("addPost");
+          }}
           name="Add Posts"
           icons={<FaPenSquare />}
           // route={routes.addPost}
         ></MenuList>
 
+        <MenuList
+          onClick={() => {
+            handleClick("viewPost");
+          }}
+          name="View Posts"
+          icons={<SlDocs />}
+          // route={routes.myPage}
+        ></MenuList>
         <MenuList
           name="Mypage"
           icons={<HiMiniUserGroup />}
@@ -81,11 +104,11 @@ function Sidebar() {
           ></MenuList>
         ) : null}
       </Container>
-      {isShow && (
-        <DocumentWrapper>
-          <CreateDocument />
-        </DocumentWrapper>
-      )}
+
+      <DocumentWrapper>
+        {addShow ? <CreateDocument /> : undefined}
+        {viewShow ? <DocsList /> : undefined}
+      </DocumentWrapper>
     </>
   );
 }
