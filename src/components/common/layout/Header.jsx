@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "./Button";
 import routes from "../../../routes";
 import Swal from "sweetalert2";
-
+const token=localStorage.getItem('token');
 const Header = () => {
   const navigate = useNavigate();
   const focusRef = useRef(null);
@@ -19,12 +19,11 @@ const Header = () => {
     focusRef.current.placeholder = "      검색";
   };
 
-  const [JWT, setJWT] = useState(null)
+  const [JWT, setJWT] = useState(token)
     useEffect(() => {
         setJWT(localStorage.getItem('token'));
     }, [JWT]);
 
-    console.log(JWT)
   return (
     <>
       <Container>
@@ -74,7 +73,7 @@ const Header = () => {
          backgroundcolor="primary"
          onClick={() => {
           Swal.fire({
-            icon: 'info',
+            icon: 'question',
             text: '로그아웃 하시겠습니까?',
             showCancelButton: true,
             confirmButtonText: '예', 
