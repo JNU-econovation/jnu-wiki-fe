@@ -4,7 +4,7 @@ import InfoContent from "./InfoContent";
 
 const Container = styled.div`
   display: block;
-  margin: 1.5rem 0;
+  margin: 1.8rem 0;
 `;
 
 const InfoGroup = ({ htmlFor, children, label }) => {

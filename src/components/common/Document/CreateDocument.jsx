@@ -11,7 +11,6 @@ import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 
 export const Container = styled.div`
-  width: 22rem;
   height: 100vh;
 
   position: fixed;
@@ -21,6 +20,14 @@ export const Container = styled.div`
 
   background-color: white;
   box-shadow: 10px 0px 5px 0px rgba(0, 0, 0, 0.106);
+
+  #docsName,
+  #docsLocation,
+  #docsCategory {
+    width: 22rem;
+    height: 2.4rem;
+    margin-top: 0.7rem;
+  }
 `;
 
 export const StyledButton = styled.div`
@@ -141,10 +148,7 @@ const CreateDocument = () => {
           placeholder={helperMsg.location}
           value={address}
           disabled
-          onChange={(e) => {
-            handleOnChange(e);
-            console.log(e.target.value);
-          }}
+          onChange={handleOnChange}
           helperMsg={locationMsg}
         >
           위치

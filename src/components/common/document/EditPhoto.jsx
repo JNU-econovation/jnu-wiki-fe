@@ -6,9 +6,9 @@ const ImgPhoto = styled.img`
   cursor: pointer;
 `;
 
-const EditPhoto = ({ className, src, alt }) => {
+const EditPhoto = ({ className, src, alt, onClick }) => {
   return (
-    <picture className={className}>
+    <picture onClick={onClick} className={className}>
       <ImgPhoto src={src} alt={alt} />
     </picture>
   );

@@ -62,6 +62,36 @@ export const TestData2 = [
 ]
 
 
+export const Test3={
+	"success" : true,
+  "response" : {
+    "docsRequestId" : 1,
+		"docsId" : 1,
+		"docsRequestType" : "MODIFIED",
+    "docsRequestCategory" : "CAFE",
+    "docsRequestName" : "팬도로시",
+    "reqeustLocation" : {lat:35.17641341218037, lng: 126.91349388159176},
+    "docsRequestAt" : '2024-09-09T10:00'
+  },
+  //35.175636, 126.907136
+  "error": null
+}
+
+export const Test4={
+	"success" : true,
+  "response" : {
+    "docsRequestId" : 1,
+		"docsId" : 1,
+		"docsRequestType" : "MODIFIED",
+    "docsRequestCategory" : "CAFE",
+    "docsRequestName" : "팬도로시",
+    "reqeustLocation" : {lat:35.17641341218037, lng: 126.91349388159176},
+    "docsRequestAt" : '2024-09-09T10:00'
+  },
+  "error": null
+}
+
+
 export const modifyData=
 {
 	"success" : true,
@@ -70,9 +100,9 @@ export const modifyData=
 		"docsId" : 1,
 		"docsRequestType" : "MODIFIED",
     "docsRequestCategory" : "CAFE",
-    "docsRequestName" : "팬도로시",
-    "reqeustLocation" : {lat:126.9786567, lng:37.566826},
+    "docsRequestName" : "소코아",
+    "reqeustLocation" : {lat:35.175223527778925, lng:126.91336340881693},
     "docsRequestAt" :' 2024-09-09T10:00',
   },
   "error": null
-}
+} 
