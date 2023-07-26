@@ -18,7 +18,7 @@ const NewDocsReq = () => {
     const [Data,setData]=useState({
         "docsRequestCategory" : "",
         "docsRequestName" : "",
-        "reqeustLocation" :"",
+        "docsReqeustLocation" :"",
     })
     const [address,setAddress]=useState(null);
     //setData axios로 가져오기
@@ -35,7 +35,7 @@ const NewDocsReq = () => {
    const map=()=>{
     
     const geocoder = new kakao.maps.services.Geocoder();
-    const coord = new kakao.maps.LatLng(Data.reqeustLocation.lat,Data.reqeustLocation.lng);
+    const coord = new kakao.maps.LatLng(Data.docsReqeustLocation.lat,Data.docsReqeustLocation.lng);
     const callback = function(result, status) {
         if (status === kakao.maps.services.Status.OK) {
             if(result[0].address_name){
@@ -90,7 +90,7 @@ const NewDocsReq = () => {
             </StyledButton>
             
                 </Container>
-            <MapContainer lat={Data.reqeustLocation.lat} lng={Data.reqeustLocation.lng}></MapContainer>
+            <MapContainer lat={Data.docsReqeustLocation.lat} lng={Data.docsReqeustLocation.lng}></MapContainer>
             
         </MainLayout></>
         
