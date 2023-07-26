@@ -27,10 +27,10 @@ const StyledHr = styled.hr`
   margin-bottom: 1.5rem;
 `;
 
-const DocsItem = ({ name, category }) => {
+const DocsItem = ({ name, category, onClick }) => {
   return (
     <>
-      <Container>
+      <Container onClick={onClick}>
         <span>{name}</span>
         <span>{category}</span>
       </Container>
