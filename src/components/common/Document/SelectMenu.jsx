@@ -3,11 +3,10 @@ import category from "../../../utils/category";
 import { useDispatch } from "react-redux";
 
 const StyledSelected = styled.select`
+  display: block;
   box-sizing: border-box;
   padding: 0.2rem 0.5rem;
-  margin-top: 0.7rem;
-  width: 22rem;
-  height: 2.4rem;
+  width: 100%;
 
   font-size: 0.8rem;
 
