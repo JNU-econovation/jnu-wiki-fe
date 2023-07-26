@@ -43,7 +43,7 @@ const MapContainer = ({lat,lng}) => {
 
     return (
         <MapDiv id='myMap' style={{
-            width: "50%",
+            width: "60%",
             height: "100vh",
         }}></MapDiv>
     );

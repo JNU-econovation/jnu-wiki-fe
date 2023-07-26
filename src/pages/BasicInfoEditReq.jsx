@@ -1,12 +1,12 @@
 import { useParams } from "react-router-dom";
 import MainLayout from "../components/common/layout/MainLayout";
-import { Container } from "../components/common/Document/CreateDocument";
+import { Container } from "../components/common/document/CreateDocument";
 import styled from "styled-components";
 import MapContainer from "../components/Map/MapContainer";
 import { Test4 } from "../components/common/admin/TestData";
 import { useState,useEffect } from "react";
 import Button from "../components/common/layout/Button";
-import { StyledButton } from "../components/common/Document/CreateDocument";
+import { StyledButton } from "../components/common/document/CreateDocument";
 import EditInfo from "../components/common/admin/EditInfo";
 import { modifyData } from "../components/common/admin/TestData";
 const { kakao } = window;
@@ -27,12 +27,12 @@ export const TitleP = styled.p`
         const [Data,setData]=useState({
             "docsRequestCategory" : "",
             "docsRequestName" : "",
-            "reqeustLocation" :{lat:'', lng:''}
+            "docsReqeustLocation" :{lat:'', lng:''}
         })
         const [ModiData,setModiData]=useState({
             "docsRequestCategory" : "",
             "docsRequestName" : "",
-            "reqeustLocation" :{lat:'', lng:''}
+            "docsReqeustLocation" :{lat:'', lng:''}
             //이거 경도 위도 주소로 바꾸기
         })
 
@@ -52,8 +52,8 @@ export const TitleP = styled.p`
 
     const map=()=>{
         const geocoder = new kakao.maps.services.Geocoder();
-        const coord = new kakao.maps.LatLng(Data.reqeustLocation.lat,Data.reqeustLocation.lng);
-        const coord2 = new kakao.maps.LatLng(ModiData.reqeustLocation.lat,ModiData.reqeustLocation.lng);
+        const coord = new kakao.maps.LatLng(Data.docsReqeustLocation.lat,Data.docsReqeustLocation.lng);
+        const coord2 = new kakao.maps.LatLng(ModiData.docsReqeustLocation.lat,ModiData.docsReqeustLocation.lng);
         const callback1 = function(result, status) {
             if (status === kakao.maps.services.Status.OK) {
                 if(result[0].address_name){
@@ -121,7 +121,7 @@ export const TitleP = styled.p`
           </Button>
             </StyledButton>
             </Container>
-            <MapContainer lat={Data.reqeustLocation.lat} lng={Data.reqeustLocation.lng}></MapContainer>
+            <MapContainer lat={Data.docsReqeustLocation.lat} lng={Data.docsReqeustLocation.lng}></MapContainer>
             
         </MainLayout></>
         

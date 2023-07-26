@@ -4,8 +4,10 @@ import Swal from "sweetalert2";
 import routes from "../routes.js";
 import MainLayout from "../components/common/layout/MainLayout.jsx";
 import { useEffect, useState } from "react";
+
 const token=localStorage.getItem('token');
 const MyPage = () => {
+
     const [JWT, setJWT] = useState(token)
     useEffect(() => {
         setJWT(localStorage.getItem('token'));

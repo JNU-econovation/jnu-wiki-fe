@@ -9,7 +9,7 @@ export const login = async (data) => {
 }
 
 export const nicknameDoubleCheck = (nickname) => {
-    return instance.post('/members/check/nickname', { nickname });
+    return instance.post('https://f7cf390b-1657-42d2-a51f-30739cae9efe.mock.pstmn.io/members/check/nickname', { 'nickname':nickname });
 }
 export const emailDoubleCheck = (email) => {
     return instance.post('/members/check/email', { email });
@@ -25,9 +25,11 @@ export const register = (data) => {
 }
 
 
+
+
 ///mypage
 export const getUserInfo = () => {
-    return instance.get('/members/info');
+    return instance.get('https://f7cf390b-1657-42d2-a51f-30739cae9efe.mock.pstmn.io/members/info');
 }
 
 export const getChangeInfo = (data) => {
@@ -42,4 +44,6 @@ export const basicInfoEditRequest =()=>{
 export const newInfoCreateRequest =()=>{
     return instance.get('/requests/new')
 }
+
+
 
