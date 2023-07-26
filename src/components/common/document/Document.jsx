@@ -11,9 +11,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState, useRef } from "react";
 import MDEditor from "@uiw/react-md-editor";
 import useInput from "../../../hooks/useInput";
+import Skeleton from "../layout/Skeleton";
 
-const Container = styled.div`
-  width: 22rem;
+const Group = styled.div`
   height: 100vh;
 
   position: fixed;
@@ -24,10 +24,18 @@ const Container = styled.div`
   background-color: white;
   box-shadow: 10px 0px 5px 0px rgba(0, 0, 0, 0.106);
   overflow: hidden;
+
+  #docsName,
+  #docsLocation,
+  #docsCategory {
+    width: fit-content;
+    height: fit-content;
+    margin-top: -4rem;
+  }
 `;
 
 const Box = styled.div`
-  margin: 1rem 0 2.5rem 0;
+  margin: 1rem 0 2rem 0;
 `;
 
 const ContentTime = styled.div`
@@ -46,6 +54,12 @@ const StyledSpan = styled.span`
   display: inline-block;
   height: 1rem;
 `;
+
+const EditorContainer = styled.div`
+  width: fit-content;
+  max-width: 22rem;
+`;
+
 const Document = (id) => {
   const [edit, setEdit] = useState(false);
   const [editContent, setEditContent] = useState(false);
@@ -64,23 +78,18 @@ const Document = (id) => {
     }
   );
 
+  console.log(data);
+
   const category = useSelector((state) => state.category.category);
   let getLat = useSelector((state) => state.latLng.latitude);
   let getLng = useSelector((state) => state.latLng.longitude);
 
   const dispatch = useDispatch();
 
-  const docsName = data?.data?.docsName;
-  const docsCategory = data?.data?.docsCategory;
-  const latitude = data?.data?.docsLocation.lat;
-  const longitude = data?.data?.docsLocation.lng;
-  const docsCreatedAt = data?.data?.docsCreatedAt;
-  const docsContent = data?.data?.docsContent;
-
-  dispatch({
-    type: "requestLatLng",
-    payload: { requestLat: latitude, requestLng: longitude },
-  });
+  const docsName = data?.data[0].docsName;
+  const docsCategory = data?.data[0].docsCategory;
+  const docsCreatedAt = data?.data[0].docsCreatedAt;
+  const docsContent = data?.data[0].docsContent;
 
   const { address } = useSelector((state) => state.address);
 
@@ -91,12 +100,15 @@ const Document = (id) => {
     docsContent,
   });
 
-  const [value, setValue] = useState(docsContent);
-  const handleOnContentChange = () => {
-    setValue(value);
+  let [value, setValue] = useState(docsContent);
+  const handleOnContentChange = (updateValue) => {
+    setValue(updateValue);
   };
+
   const handleInput = (type) => {
     type === "basic" ? setEdit(!edit) : setEditContent(!editContent);
+    valueInit.docsName = docsName;
+    setValue(docsContent);
   };
 
   // const data = {
@@ -107,7 +119,8 @@ const Document = (id) => {
 
   return (
     <>
-      <Container>
+      {!isLoading && <Skeleton />}
+      <Group>
         <DocumentHeading className="basic" onClick={() => handleInput("basic")}>
           기본 정보
         </DocumentHeading>
@@ -167,9 +180,11 @@ const Document = (id) => {
         <div className="markarea"></div>
         <Description>
           {editContent ? (
-            <div className="container">
+            <EditorContainer className="container">
               <MDEditor
-                value={valueInit.docsContent}
+                height="20rem"
+                overflow="scroll"
+                value={value}
                 onChange={handleOnContentChange}
                 preview="edit"
                 components={{
@@ -191,12 +206,12 @@ const Document = (id) => {
                   },
                 }}
               />
-            </div>
+            </EditorContainer>
           ) : (
             docsContent
           )}
         </Description>
-      </Container>
+      </Group>
     </>
   );
 };
