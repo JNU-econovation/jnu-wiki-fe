@@ -16,7 +16,15 @@ export const detailDocument = (id = 0) => {
 
   return instance.get(
     // "/docs/" + id
-    "https://a1384822-b40b-4a9e-ae44-598dc20b6ad1.mock.pstmn.io//docs/%7Bdocs_id%7D"
+    // "https://a1384822-b40b-4a9e-ae44-598dc20b6ad1.mock.pstmn.io/docs/"
+    "https://a1384822-b40b-4a9e-ae44-598dc20b6ad1.mock.pstmn.io/docs?id=1"
+  );
+};
+
+export const docsList = () => {
+  return instance.get(
+    // "/docs/"
+    "https://a1384822-b40b-4a9e-ae44-598dc20b6ad1.mock.pstmn.io/docs"
   );
 };
 
