@@ -182,7 +182,7 @@ const Document = (id) => {
           {editContent ? (
             <EditorContainer className="container">
               <MDEditor
-                height="20rem"
+                height="15rem"
                 overflow="scroll"
                 value={value}
                 onChange={handleOnContentChange}
