@@ -13,6 +13,8 @@ import {
 import MyBtn from "../mypage/MyBtn";
 import { styled } from "styled-components";
 import { mypageTestData } from "./MypageTestData";
+import { useQuery } from "@tanstack/react-query";
+import Loader from "../../../constant/Loader";
 
 const ButtonWrap = styled.div`
     display: flex;
@@ -20,44 +22,43 @@ const ButtonWrap = styled.div`
     margin:2rem 0;
 `
 const MyInfoEditForm = () => {
-    // const navigate = Navigate();
-
-    // const [Data, setInputData] = useState({});
-
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             const response = await getUserInfo();
-    //              console.log(response);
-    //             setInputData(response.member);
-
-    //         } catch (error) {
-    //             alert(error.status + ', 데이터를 찾을 수 없습니다.');
-    //             console.log(error)
-    //         }
-    //     };
-    //     fetchData();
-    // }, []);
-    const Data=mypageTestData.response.member
+   
+    
     //나중에 동일한 닉네임입니다 이런거 추가하기
-
-    const [Newnickname, setNewnickname] = useState(Data.nickname);
+    const {
+        data,
+        isLoading,
+        isError,
+        error,
+        } = useQuery(['mypage'],()=>{
+            return getUserInfo()})  
+    const [Data,setData]=useState(data?.data?.response?.member);
+    //const Data= data?.data?.response?.member;
+    const [Newnickname, setNewnickname] = useState(Data?.nickname);
     const [Isnewnickname, setIsnewnickname] = useState(true);
     const [Doublenewnickname, setDoublenewnickname] = useState(false);
-    const [Newpassword, setNewpassword] = useState(Data.password);
+    const [Newpassword, setNewpassword] = useState(Data?.password);
     const [Isnewpassword, setIsnewpassword] = useState(true);
+
     const handleNicknameChange = (e) => {
         setNewnickname(e.target.value);
     };
     const handlePasswordChange = (e) => {
         setNewpassword(e.target.value);
-        if (Newpassword.length > 0) {
+        if (Newpassword) {
             setIsnewpassword(passwordCheck(Newpassword));
         }
     };
     useEffect(
+        () => {
+            console.log(Newnickname,Newpassword)
+            setNewnickname(Data?.nickname);
+            setNewpassword(Data?.password);
+        },[Data]);
+
+    useEffect(
         (e) => {
-          if (Newpassword.length > 0) {
+          if (Newpassword) {
             setIsnewpassword(passwordCheck(Newpassword));
             setNewpassword(Newpassword);
           }

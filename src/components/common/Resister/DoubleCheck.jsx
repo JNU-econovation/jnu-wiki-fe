@@ -19,7 +19,9 @@ const DoubleCheckStyle = styled.button`
 
 const DoubleCheck = ({ onClick }) => {
     return (
-        <DoubleCheckStyle onClick={onClick}>
+        <DoubleCheckStyle onClick={()=>{
+            onClick()
+            }}>
             중복확인
         </DoubleCheckStyle>
 
