@@ -30,7 +30,7 @@ export const Container = styled.div`
   }
 `;
 
-export const StyledButton = styled.div`
+const StyledButton = styled.div`
   position: absolute;
   right: 2rem;
   bottom: 12rem;
@@ -185,5 +185,7 @@ const CreateDocument = () => {
     </>
   );
 };
+
+
 
 export default CreateDocument;
