@@ -13,10 +13,10 @@ const Btn = styled.button`
     border-radius: 0.3rem;
     border: ${(props) => props.border};`
 
-const MyBtn = ({ route, children, color, backgroundColor, border }) => {
+const MyBtn = ({ route, children, color, backgroundColor, border,onClick}) => {
     const navigate = useNavigate();
     return (
-        <Btn border={border} color={color} backgroundColor={backgroundColor} onClick={() => { navigate(route); }}>
+        <Btn border={border} color={color} backgroundColor={backgroundColor} onClick={onClick}>
             {children}
         </Btn>
     )

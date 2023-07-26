@@ -34,7 +34,7 @@ export const getUserInfo = () => {
 
 export const getChangeInfo = (data) => {
     const { nickname, password } = data;
-    return instance.put('/members/modify/change', { nickname, password });
+    return instance.patch('https://f7cf390b-1657-42d2-a51f-30739cae9efe.mock.pstmn.io/members/modify/change', { nickname, password });
 }
 
 ///admin

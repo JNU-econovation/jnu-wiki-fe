@@ -27,6 +27,7 @@ margin-bottom: 1.7rem;
 `;
 const EditBox = styled.div`
  display: flex;
+ width: 20rem;
 `;
 
 

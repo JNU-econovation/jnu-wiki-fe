@@ -19,6 +19,9 @@ import { nicknameDoubleCheck } from "../../../services/user";
 
 import Title from "../Resister/Title";
 const ResisterForm = () => {
+
+  //registerform 으로 바꾸기...ㅎ
+
   const navigate = useNavigate();
   const { valueInit, handleOnChange } = useInput({
     username: "",
