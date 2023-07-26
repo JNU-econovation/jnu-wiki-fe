@@ -3,6 +3,7 @@ import styled from "styled-components";
 import routes from "../../../routes";
 import MenuList from "./SidebarList";
 import CreateDocument from "../document/CreateDocument";
+import Document from "../document/Document";
 import { GoHomeFill } from "react-icons/go";
 import { FaPenSquare } from "react-icons/fa";
 import { HiMiniUserGroup } from "react-icons/hi2";
@@ -25,8 +26,17 @@ const Container = styled.div`
 `;
 
 const DocumentWrapper = styled.div`
-  opacity: ${({ isvisible }) => (isvisible ? 1 : 0)};
-  transition: opacity 0.2s ease-out;
+  animation: fade-in 0.4s;
+  -webkit-animation: fade-in 0.4s;
+
+  @-webkit-keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 `;
 
 function Sidebar() {
@@ -45,7 +55,7 @@ function Sidebar() {
     <>
       <Container>
         <MenuList
-          onClick={routes.home}
+          onClick={handleClick}
           name="Home"
           icons={<GoHomeFill />}
           route={routes.home}
@@ -59,7 +69,6 @@ function Sidebar() {
         ></MenuList>
 
         <MenuList
-          onClick={handleClick}
           name="Mypage"
           icons={<HiMiniUserGroup />}
           route={routes.myPage}
@@ -72,10 +81,11 @@ function Sidebar() {
           ></MenuList>
         ) : null}
       </Container>
-
-      <DocumentWrapper isvisible={isShow}>
-        <CreateDocument />
-      </DocumentWrapper>
+      {isShow && (
+        <DocumentWrapper>
+          <CreateDocument />
+        </DocumentWrapper>
+      )}
     </>
   );
 }

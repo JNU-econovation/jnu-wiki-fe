@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import DocumentLabel from "./DocumentLabel";
-import DocumentInput from "./DocumentInput";
+import DocumentLabel from "./documentLabel";
+import DocumentInput from "./documentInput";
 import HelperMsg from "./HelperMsg";
 
 const Container = styled.div`
