@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import routes from "../../../routes";
 import MenuList from "./SidebarList";
-import CreateDocument from "../Document/CreateDocument";
+import CreateDocument from "../document/CreateDocument";
 import { GoHomeFill } from "react-icons/go";
 import { FaPenSquare } from "react-icons/fa";
 import { HiMiniUserGroup } from "react-icons/hi2";
