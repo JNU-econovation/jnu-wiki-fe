@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
+import { useState, useRef, useEffect } from "react";
 import DocsItem from "./DocsItem";
 import DocumentPage from "../../../pages/DocumentPage";
 import Loader from "../layout/Loader";
@@ -13,12 +13,55 @@ const DocsList = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // 무한스크롤
+  // const bottomObserver = useRef(null);
+
+  // const { data, isLoading, isError, fetchNextPage, hasNextPage } =
+  //   useInfiniteQuery(["docs_list"], docsList, {
+  //     getNextPageParam: (currentPage, allPages) => {
+  //       const nextPage = allPages.length;
+  //       return nextPage > 2 ? null : nextPage;
+  //     },
+  //   });
+
+  // useEffect(() => {
+  //   const io = new IntersectionObserver(
+  //     (entries) => {
+  //       entries.forEach((entry) => {
+  //         if (entry.isIntersecting && !isLoading && hasNextPage) {
+  //           fetchNextPage();
+  //         }
+  //       });
+  //     },
+  //     {
+  //       threshold: 0.5,
+  //     }
+  //   );
+
+  //   if (bottomObserver.current) {
+  //     io.observe(bottomObserver.current);
+  //   }
+
+  //   return () => {
+  //     if (bottomObserver.current) {
+  //       io.unobserve(bottomObserver.current);
+  //     }
+  //   };
+  // }, [isLoading, hasNextPage, fetchNextPage]);
+
+  // // if (data && data.pages && Array.isArray(data.pages)) {
+  // //   const responseData = _.uniqBy(
+  // //     data.pages.flatMap((pages) => pages.data.response),
+  // //     "id"
+  // //   );
+
   const { data, isLoading, isError } = useQuery(["docs_list"], docsList, {
     onSuccess: (data) => {
       console.log(data);
     },
     staleTime: 10000,
   });
+
   const docsData = data?.data;
   const docsListArray = docsData || [];
 
@@ -62,6 +105,7 @@ const DocsList = () => {
             apiLng={selectedDocs[0].docsLocation.lng}
           />
         )}
+        {/* <div style={{ height: "80px" }} ref={bottomObserver}></div> */}
       </Container>
     </>
   );
