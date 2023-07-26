@@ -15,7 +15,16 @@ export const detailDocument = (id = 0) => {
   }
 
   return instance.get(
-    "/docs/" + id
-    // "https://a1384822-b40b-4a9e-ae44-598dc20b6ad1.mock.pstmn.io/docs/%7Bdocs_id%7D"
+    // "/docs/" + id
+    "https://a1384822-b40b-4a9e-ae44-598dc20b6ad1.mock.pstmn.io//docs/%7Bdocs_id%7D"
   );
+};
+
+export const basicModify = (data) => {
+  const { docsCategory, docsName, docsLocation } = data;
+  return instance.post("/requests/update", {
+    docsCategory,
+    docsName,
+    docsLocation,
+  });
 };
