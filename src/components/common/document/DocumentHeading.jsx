@@ -1,6 +1,11 @@
 import styled from "styled-components";
 import EditPhoto from "./EditPhoto";
+import { PiPencilLineThin } from "react-icons/Pi";
 
+const Group = styled.span`
+  display: flex;
+  align-items: center;
+`;
 const StyledHeading = styled.p`
   font-size: 1.4rem;
   font-weight: bold;
@@ -10,15 +15,19 @@ const StyledHeading = styled.p`
   float: left;
 `;
 
+const StyledPencil = styled(PiPencilLineThin)`
+  cursor: pointer;
+  color: #216d32;
+  font-size: 1.2rem;
+`;
+
 const DocumentHeading = ({ children, onClick }) => {
   return (
     <>
-      <span>
-        <StyledHeading>{children} </StyledHeading>
-        <span>
-          <EditPhoto onClick={onClick} src="/public/pencil.png" alt="edit" />
-        </span>
-      </span>
+      <Group>
+        <StyledHeading>{children}</StyledHeading>
+        <StyledPencil onClick={onClick} />
+      </Group>
     </>
   );
 };
