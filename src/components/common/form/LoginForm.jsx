@@ -133,11 +133,10 @@ const LoginForm = ({ marginBottom }) => {
         </Button>
         <Question
           para="계정이 없으신가요?"
-          children="회원가입"
           onClick={() => {
             navigate(routes.join);
           }}
-        ></Question>
+        >회원가입</Question>
       </Container>
     </>
   );

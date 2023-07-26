@@ -15,6 +15,7 @@ import {
   passwordReCheck,
 } from "../../../services/regex";
 import Swal from "sweetalert2";
+import { nicknameDoubleCheck } from "../../../services/user";
 
 import Title from "../Resister/Title";
 const ResisterForm = () => {
@@ -52,7 +53,7 @@ const ResisterForm = () => {
       });
   };
   const NameDoubleCheck = (name) => {
-    doubleCheckNickName(name)
+    nicknameDoubleCheck(name)
       .then((e) => {
         setDoubleName(true);
         Swal.fire({
@@ -132,6 +133,7 @@ const ResisterForm = () => {
         />
         <DoubleCheck
           onClick={(e) => {
+            console.log(whatEmail, isEmail)
             if (isEmail === true && whatEmail.length > 0) {
               e.preventDefault();
               console.log(whatEmail);
@@ -150,14 +152,9 @@ const ResisterForm = () => {
           para={isName ? null : "필수 입력사항 입니다."}
           margin={true}
         ></InputGroup>
+
         <DoubleCheck
-          onClick={(e) => {
-            if (isName === true && whatName.length > 0) {
-              e.preventDefault();
-              console.log(whatName);
-              emailDoubleCheck(whatName);
-            }
-          }}
+          onClick={NameDoubleCheck}
         ></DoubleCheck>
 
         <InputGroup
