@@ -9,27 +9,47 @@ import Button from "../components/common/layout/Button";
 import { StyledButton } from "../components/common/document/CreateDocument";
 import EditInfo from "../components/common/admin/EditInfo";
 import { TitleP } from "./BasicInfoEditReq";
-
-
+import { newDocsRequest,newRequestApprove } from "../services/user";
+import { useQuery } from "@tanstack/react-query";
+import Loader from "../components/common/layout/Loader";
+import Swal from "sweetalert2";
+import routes from "../routes";
+import { useNavigate } from "react-router-dom";
+import { requestReject } from "../services/user";
 //import { useDispatch } from "react-redux";
 const { kakao } = window;
+
 const NewDocsReq = () => {
+    const { id } = useParams()
+    //const 
+    const navigate = useNavigate();
+    const {
+        data,
+        isLoading,
+        } = useQuery(['newrequest',id],()=>{
+            return newDocsRequest(id)})  
+ 
+
     const [Ok,setOk]=useState(false);
     const [Data,setData]=useState({
         "docsRequestCategory" : "",
         "docsRequestName" : "",
         "docsReqeustLocation" :"",
+        "docsRequestId":"",
+        "docsRequestType":"",
     })
     const [address,setAddress]=useState(null);
-    //setData axios로 가져오기
     useEffect(() => {
-        setData(Test3.response);
-        //여기서 데이터 가ㅇ져오기!!!!
-        setOk(true);
-      }, []);
+        if(data){
+            setData(data?.data?.response);
+            //이거 나중에 저거 세개만 데이터 바꾸게 하기...
+            setOk(true);
+        }
+      }, [data]);
 
    useEffect(()=>{
-    map(); 
+    console.log(Data)
+        map(); 
     },[Ok,Data]);
    
 
@@ -54,8 +74,6 @@ const NewDocsReq = () => {
         //geocoder.coord2RegionCode(lat, lng, callback);
     }
     if (Ok){
-        console.log(Ok)
-        console.log(Data);
         LonLaToAdress()}
 
 }
@@ -65,18 +83,40 @@ const NewDocsReq = () => {
         <MainLayout>
             <Container>
                 <TitleP>기본 정보</TitleP>
+                {isLoading?<EditInfo><Loader/></EditInfo>:<>
                 <EditInfo child={Data.docsRequestName} >문서 제목 </EditInfo>
                 <EditInfo child={Data.docsRequestCategory} >카테고리</EditInfo>
                 <EditInfo address={address} >위치</EditInfo>
-
+                </>}
+                
+                
             <StyledButton>
             <Button
             type="click"
             color="primary"
             border="1px solid #216D32"
             backgroundcolor="white"
-            onClick={()=>{console.log('생성반려')}}
-            >생성반려</Button>
+            onClick={
+                ()=>{
+                    requestReject(Data.docsRequestType,Data.docsRequestId).then((res)=>{
+                        console.log(res)
+                        Swal.fire({
+                            icon: 'success',
+                            text: '생성이 반려됐습니다!',
+                            confirmButtonColor: '#429f50',
+                          }).then(()=>navigate(routes.admin))
+                     }).catch((error)=>{
+                        console.log(error)
+                        Swal.fire({
+                            icon: 'warning',
+                            title:`${error.status}`,
+                            text: `error : ${error.data.error.message}`,
+                            confirmButtonColor: '#de3020',
+                          })
+                     })
+                }
+            }
+            >생성 반려</Button>
 
             <Button
             type="submit"
@@ -84,12 +124,27 @@ const NewDocsReq = () => {
             border="none"
             backgroundcolor="primary"
             onClick={(e) => {
-             console.log("생성수락")
+             console.log(Data.docsRequestId);
+             newRequestApprove(Data.docsRequestId).then((res)=>{
+                console.log(res)
+                Swal.fire({
+                    icon: 'success',
+                    text: '생성 수락!',
+                    confirmButtonColor: '#429f50',
+                  }).then(()=>navigate(routes.admin))
+             }).catch((error)=>{
+                console.log(error)
+                Swal.fire({
+                    icon: 'warning',
+                    title:`${error.status}`,
+                    text: `error : ${error.data.error.message}`,
+                    confirmButtonColor: '#de3020',
+                  })
+             })
             }}
           >생성 수락
           </Button>
             </StyledButton>
-            
                 </Container>
             <MapContainer lat={Data.docsReqeustLocation.lat} lng={Data.docsReqeustLocation.lng}></MapContainer>
             
