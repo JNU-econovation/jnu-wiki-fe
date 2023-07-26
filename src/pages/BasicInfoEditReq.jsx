@@ -1,12 +1,12 @@
 import { useParams } from "react-router-dom";
 import MainLayout from "../components/common/layout/MainLayout";
-import { Container } from "../components/common/Document/CreateDocument";
+import { Container } from "../components/common/document/CreateDocument";
 import styled from "styled-components";
 import MapContainer from "../components/Map/MapContainer";
 import { Test4 } from "../components/common/admin/TestData";
 import { useState,useEffect } from "react";
 import Button from "../components/common/layout/Button";
-import { StyledButton } from "../components/common/Document/CreateDocument";
+import { StyledButton } from "../components/common/document/CreateDocument";
 import EditInfo from "../components/common/admin/EditInfo";
 import { modifyData } from "../components/common/admin/TestData";
 const { kakao } = window;
