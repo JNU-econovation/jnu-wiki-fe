@@ -31,9 +31,9 @@ const Header = () => {
           <LogoImg
             src={jnuLogo}
             alt="jnu-logo"
-            onClick={() => navigate(routes.home)}
+            onClick={() => location.reload()}
           />
-          <LogoTitle onClick={() => navigate(routes.home)}>
+          <LogoTitle onClick={() => location.reload()}>
             전대
             <br />
             위키
