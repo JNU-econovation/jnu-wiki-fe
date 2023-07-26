@@ -6,6 +6,8 @@ const NavStyle = styled(NavLink)`
   display: flex;
   align-items: center;
   list-style-type: none;
+
+  font-weight: 300;
   background-color: white;
   color: rgba(95, 150, 107, 1);
 
@@ -28,16 +30,14 @@ const NavStyle = styled(NavLink)`
   &:hover {
     background-color: rgba(222, 233, 224, 1);
     color: rgba(33, 109, 50, 1);
-    font-size: 1rem;
     font-weight: 600;
   }
-
-  &.visited {
+  /* &.act{
     background-color: rgba(222, 233, 224, 1);
     color: rgba(33, 109, 50, 1);
     font-size: 1rem;
     font-weight: 600;
-  }
+  } */
 `;
 
 const MenuIcon = styled.div`
@@ -45,11 +45,11 @@ const MenuIcon = styled.div`
   padding: 0 1rem;
 `;
 
-const MenuList = ({ name, icons, route, onClick }) => {
+const MenuList = ({ name, icons, route, onClick}) => {
   return (
     <>
       <NavStyle
-        className={({ isActive }) => (isActive ? "active" : "")}
+        // className={({ isActive }) => (isActive ? "active" : "")}
         to={route}
         onClick={onClick}
       >
