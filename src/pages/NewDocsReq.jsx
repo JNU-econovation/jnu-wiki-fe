@@ -1,12 +1,12 @@
 import { useParams } from "react-router-dom";
 import MainLayout from "../components/common/layout/MainLayout";
-import { Container } from "../components/common/Document/CreateDocument";
+import { Container } from "../components/common/document/CreateDocument";
 import styled from "styled-components";
 import MapContainer from "../components/Map/MapContainer";
 import { Test3 } from "../components/common/admin/TestData";
 import { useEffect, useState } from "react";
 import Button from "../components/common/layout/Button";
-import { StyledButton } from "../components/common/Document/CreateDocument";
+import { StyledButton } from "../components/common/document/CreateDocument";
 import EditInfo from "../components/common/admin/EditInfo";
 import { TitleP } from "./BasicInfoEditReq";
 
@@ -18,7 +18,7 @@ const NewDocsReq = () => {
     const [Data,setData]=useState({
         "docsRequestCategory" : "",
         "docsRequestName" : "",
-        "reqeustLocation" :"",
+        "docsReqeustLocation" :"",
     })
     const [address,setAddress]=useState(null);
     //setData axios로 가져오기
@@ -35,7 +35,7 @@ const NewDocsReq = () => {
    const map=()=>{
     
     const geocoder = new kakao.maps.services.Geocoder();
-    const coord = new kakao.maps.LatLng(Data.reqeustLocation.lat,Data.reqeustLocation.lng);
+    const coord = new kakao.maps.LatLng(Data.docsReqeustLocation.lat,Data.docsReqeustLocation.lng);
     const callback = function(result, status) {
         if (status === kakao.maps.services.Status.OK) {
             if(result[0].address_name){
@@ -90,7 +90,7 @@ const NewDocsReq = () => {
             </StyledButton>
             
                 </Container>
-            <MapContainer lat={Data.reqeustLocation.lat} lng={Data.reqeustLocation.lng}></MapContainer>
+            <MapContainer lat={Data.docsReqeustLocation.lat} lng={Data.docsReqeustLocation.lng}></MapContainer>
             
         </MainLayout></>
         
