@@ -8,16 +8,16 @@ import { getUserInfo } from "../../../services/user";
 import routes from "../../../routes";
 import { mypageTestData } from "./MypageTestData";
 import { useQuery } from "@tanstack/react-query";
-import Loader from "../../../constant/Loader";
+import Loader from "../layout/Loader";
+import { useNavigate } from "react-router-dom";
 
 //데이터 받아아오기
 const MypageForm = () => {
+    const navigate=useNavigate();
     //const [Data, setInputData] = useState({});
     const {
         data,
         isLoading,
-        isError,
-        error,
         } = useQuery(['mypage'],()=>{
             return getUserInfo()})  
  
@@ -27,14 +27,14 @@ const MypageForm = () => {
                 <Title fontSize="20px" margin='3rem 0'>마이페이지</Title>
                 <Title fontSize="30px" margin='0 0 4rem 0'>회원정보</Title>
                 <InfoStyle>
-                    {isLoading ? <LoadBox><Loader/></LoadBox>:
+                    {isLoading ? <Loader/>:
                     <>
                      <MyInputGroup data={data?.data?.response?.member?.nickname}>닉네임</MyInputGroup>
                     <MyInputGroup data={data?.data?.response?.member?.password}>비밀번호</MyInputGroup></>
                    
                     }
                     
-                    <MyBtn color='white' backgroundColor='#216D32' route={routes.myInfoEdit}>정보수정</MyBtn>
+                    <MyBtn color='white' backgroundColor='#216D32' onClick={() => { navigate(routes.myInfoEdit); }}>정보수정</MyBtn>
                 </InfoStyle>
             </Container>
         </>
@@ -48,10 +48,7 @@ const InfoStyle = styled.div`
     flex-direction: column;
 
 `
-const LoadBox = styled.div`
-    margin: 3.7rem 0;
 
-`
 export default MypageForm;
 
 

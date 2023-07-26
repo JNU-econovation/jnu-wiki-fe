@@ -24,6 +24,7 @@ const NewDocsReq = () => {
     //setData axios로 가져오기
     useEffect(() => {
         setData(Test3.response);
+        //여기서 데이터 가ㅇ져오기!!!!
         setOk(true);
       }, []);
 
