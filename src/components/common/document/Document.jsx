@@ -46,12 +46,14 @@ const StyledSpan = styled.span`
   display: inline-block;
   height: 1rem;
 `;
-const Document = () => {
+const Document = (id) => {
   const [edit, setEdit] = useState(false);
   const [editContent, setEditContent] = useState(false);
   const docsTitle = useRef(null);
 
   const { data, isLoading, isError } = useQuery(
+    // ["detail_document", { id }],
+    // detailDocument(id),
     ["detail_document"],
     detailDocument,
     {
