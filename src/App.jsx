@@ -14,7 +14,6 @@ import { Provider } from "react-redux";
 import BasicInfoEditReq from "./pages/BasicInfoEditReq.jsx";
 import NewDocsReq from "./pages/NewDocsReq.jsx";
 import DocumentPage from "./pages/DocumentPage.jsx";
-// import Document from "./components/common/document/Document.jsx";
 
 function App() {
   return (
@@ -24,7 +23,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path={routes.home} element={<Home />} />
-            {/* <Route path={routes.addPost} element={<AddPost />} /> */}
+            <Route path={routes.addPost} element={<AddPost />} />
             <Route path={routes.myInfoEdit} element={<MyInfoEdit />} />
             <Route path={routes.documentPage} element={<DocumentPage />} />
             <Route path={routes.myPage} element={<MyPage />} />
