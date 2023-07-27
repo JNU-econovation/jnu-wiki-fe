@@ -4,40 +4,73 @@ import {TestData,TestData2} from './TestData'
 import { basicInfoEditRequest, newInfoCreateRequest } from "../../../services/user";
 import { useState,useEffect } from "react";
 import routes from "../../../routes";
-
+import { useQuery,useMutation } from "@tanstack/react-query";
+import Loader from "../layout/Loader";
 const AdminBox = () => {
     // const data1=TestData[0].response;
     // const data2=TestData2[0].response;
 
-    const [data1, setData1] = useState(null);
-    const [data2, setData2] = useState(null);
-    const Request=basicInfoEditRequest()
-        .then((res)=>{setData1(res[0])})
-        .catch((error)=>{console.log(error)});
-    const Request2=newInfoCreateRequest()
-    .then((res)=>{setData2(res[0])})
-    .catch((error)=>{alert(error)});
-    useEffect(()=>{
-        Request();
-        Request2();
-    },[]);
-    
+    // const [data1, setData1] = useState(null);
+    // const [data2, setData2] = useState(null);
+
+    //mutation 으로 post 요청,,, 무한스크롤하기
+    // const Request=basicInfoEditRequest()
+    //     .then((res)=>{setData1(res[0])})
+    //     .catch((error)=>{console.log(error)});
+    // const Request2=newInfoCreateRequest()
+    // .then((res)=>{setData2(res[0])})
+    // //
+    // .catch((error)=>{alert(error)});
+    // useEffect(()=>{
+    //     Request();
+    //     Request2();
+    // },[]);
+    const {
+
+        data:data1,
+        isLoading:isLoading1,
+        isError:isError1,
+        error:error1
+
+        } = useQuery(['basicInfo'],basicInfoEditRequest)
+
+    const {
+        data:data2,
+        isLoading:isLoading2,
+        isError:isError2,
+        error:error2
+        } = useQuery(['newInfo2'],newInfoCreateRequest);
+
+    console.log(data1?.data?.response?.modifiedRequestList)
+    console.log(data2?.data?.response?.createdRequestList)
+    console.log(error1)
+    console.log(error2)
+
     return (
         <AdminBoxCss>
-            <RequestContainerBox
+            
+            
+             <RequestContainerBox
              border=' 2px solid #F5F6FA;'
              title='정보 수정 요청'
-             data={data1}
+             data={data1?.data?.response?.modifiedRequestList}
              route={routes.basicInfoEditRequest}
              modi={true}
+             isLoading={isLoading1}
+             isError={isError1}
              />
+           
             
             <RequestContainerBox
             title='새 장소 신청 요청'
-            data={data2}
+            data={data2?.data?.response?.createdRequestList}
             route={routes.newDocsRequest}
             modi={false}
+            isLoading={isLoading2}
+            isError={isError2}
             />
+            
+
         </AdminBoxCss>
     );
 };
