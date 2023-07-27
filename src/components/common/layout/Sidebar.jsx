@@ -96,7 +96,7 @@ function Sidebar() {
           icons={<HiMiniUserGroup />}
           route={routes.myPage}
         ></MenuList>
-        {role === "admin" ? (
+        {role === "ADMIN" ? (
           <MenuList
             name="Admin"
             icons={<AiTwotoneSetting />}
@@ -108,6 +108,7 @@ function Sidebar() {
       <DocumentWrapper>
         {addShow ? <CreateDocument /> : undefined}
         {viewShow ? <DocsList /> : undefined}
+        {/* {searchShow ? <Search /> : undefined} */}
       </DocumentWrapper>
     </>
   );

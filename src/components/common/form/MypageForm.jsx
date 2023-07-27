@@ -20,7 +20,7 @@ const MypageForm = () => {
         isLoading,
         } = useQuery(['mypage'],()=>{
             return getUserInfo()})  
- 
+            console.log(data)
     return (
         <>
             <Container>
@@ -29,8 +29,8 @@ const MypageForm = () => {
                 <InfoStyle>
                     {isLoading ? <Loader/>:
                     <>
-                     <MyInputGroup data={data?.data?.response?.member?.nickname}>닉네임</MyInputGroup>
-                    <MyInputGroup data={data?.data?.response?.member?.password}>비밀번호</MyInputGroup></>
+                     <MyInputGroup data={data?.data?.response?.nickName}>닉네임</MyInputGroup>
+                    <MyInputGroup data='비밀'>비밀번호</MyInputGroup></>
                    
                     }
                     

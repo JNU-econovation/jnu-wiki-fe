@@ -2,25 +2,25 @@ import { instance } from "./index";
 
 export const login = async (data) => {
     const { email, password } = data;
-    return await instance.post('/members/login', {
+    return await instance.post('members/login', {
         email,
         password,
     })
 }
 
-export const nicknameDoubleCheck = (nickname) => {
-    return instance.post('https://f7cf390b-1657-42d2-a51f-30739cae9efe.mock.pstmn.io/members/check/nickname', { 'nickname':nickname });
+export const nicknameDoubleCheck = (name) => {
+    return instance.post('members/check/nickname', { 'nickname':name });
 }
 export const emailDBCheck = (email) => {
-    return instance.post('/members/check/email', { email });
+    return instance.post('members/check/email', { email });
 }
 
 export const register = (data) => {
-    const { email, password, nickname } = data;
-    return instance.post('/members/join', {
+    const { email, password, nickName } = data;
+    return instance.post('members/join', {
         email,
         password,
-        nickname
+        nickName
     })
 }
 
@@ -29,45 +29,45 @@ export const register = (data) => {
 
 ///mypage
 export const getUserInfo = () => {
-    return instance.get('https://f7cf390b-1657-42d2-a51f-30739cae9efe.mock.pstmn.io/members/info');
+    return instance.get('members/info');
 }
 
 export const getChangeInfo = (data) => {
-    const { nickname, password } = data;
-    return instance.patch('https://f7cf390b-1657-42d2-a51f-30739cae9efe.mock.pstmn.io/members/modify/change', { nickname, password });
+    const { Newnickname, Newpassword } = data;
+    return instance.post('members/modify/change', { nickname:Newnickname, password: Newpassword });
 }
 
 //admin List
 export const basicInfoEditRequest =()=>{
-    return instance.get('https://f7cf390b-1657-42d2-a51f-30739cae9efe.mock.pstmn.io/admin/requests/update')
+    return instance.get('admin/requests/update')
 }
 export const newInfoCreateRequest =()=>{
-    return instance.get('https://f7cf390b-1657-42d2-a51f-30739cae9efe.mock.pstmn.io/requests/new')
+    return instance.get('admin/requests/new')
 }
 
 //admin detail
 export const newDocsRequest =(docs_request_id)=>{
-    return instance.get(`/requests/new/${docs_request_id}`)
+    return instance.get(`admin/requests/new/${docs_request_id}`)
 }
 export const editDocsRequest =(docs_request_id)=>{
-    return instance.get(`/admin/update/${docs_request_id}`)
+    return instance.get(`admin/requests/update/${docs_request_id}`)
 }
 
 export const docsRequest =(docs_id)=>{
-    return instance.get(`/docs/${docs_id}`)
+    return instance.get(`docs/${docs_id}`)
 }
 
 
 //admin request 
-export const newRequestApprove =(docs_request_id)=>{
-    return instance.post(`/requests/new/${docs_request_id}/approve`)
+export const newRequestApprove =async(docs_request_id)=>{
+    return await instance.post(`admin/approve/new/${docs_request_id}`)
 }
 
-export const requestReject =(docs_request_type,docs_request_id)=>{
-    return instance.post(`/admin/${docs_request_type}/${docs_request_id}/reject`)
+export const requestReject =async(docs_request_id)=>{
+    return await instance.post(`admin/reject/${docs_request_id}`)
 }
 
-export const editRequestApprove =(docs_request_id)=>{
-    return instance.patch(`/admin/update/${docs_request_id}/approve`)
+export const editRequestApprove =async(docs_request_id)=>{
+    return await instance.post(`admin/approve/update/${docs_request_id}`)
 }
 

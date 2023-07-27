@@ -104,7 +104,10 @@ const LoginForm = ({ marginBottom }) => {
                   email: valueInit.email,
                   password: valueInit.password,
                 }).then((res) => {
-                  console.log(res);
+                  // console.log(JSON.parse(res.data));
+                 
+        
+
                   Swal.fire({
                     icon: 'success',
                     title: '로그인 성공!',
@@ -112,8 +115,9 @@ const LoginForm = ({ marginBottom }) => {
                     confirmButtonColor: '#429f50',
                   }).then(result => {
                     if (result.isConfirmed) {
+                      
                       localStorage.setItem("token", res.headers.authorization);
-                      localStorage.setItem("role", res.response.role);
+                      localStorage.setItem("role", res.data.response.role);
                       navigate(routes.home);
                     }
                   })
