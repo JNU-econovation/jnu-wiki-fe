@@ -34,7 +34,7 @@ export const basicModify = (data) => {
 
 export const contentModify = (data) => {
   const { docs_id, docsContent } = data;
-  return instance.post(`/docs/${docs_id}`, {
+  return instance.put(`/docs/${docs_id}`, {
     docsContent,
   });
 };
