@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { docsRequest,editDocsRequest } from "../services/user";
 import Loader from "../components/common/layout/Loader";
-
+import { useMutation } from "@tanstack/react-query";
 const { kakao } = window;
 export const TitleP = styled.p`
   font-weight: 900;
@@ -27,7 +27,10 @@ export const TitleP = styled.p`
 `;
 
 const BasicInfoEditReq = () => {
+    
     const { docsId,docsRequestId } = useParams();
+    // console.log(docsId)
+    // console.log(docsRequestId )
     const navigate = useNavigate();
   const [address, setAddress] = useState("");
   const [modiAddress, setModiAddress] = useState("");
@@ -48,23 +51,29 @@ const BasicInfoEditReq = () => {
     //이거 경도 위도 주소로 바꾸기
   });
 
+  const mutation = useMutation({
+    mutationFn:()=>editRequestApprove(Data?.docsRequestId)
+ })
+const rejectmutation = useMutation({
+    mutationFn:()=>requestReject(Data?.docsRequestId)
+ })
+
   const {
     data:basicData, 
     isLoading:basicLoading,
-    } = useQuery(['basicrequest'],()=>{
+    } = useQuery(['basicrequest',docsId],()=>{
         return docsRequest(docsId)})  
 
      
     const {
         data:modiData,
         isLoading:modiLoading,
-        } = useQuery(['modirequest'],()=>{
+        } = useQuery(['modirequest',docsRequestId],()=>{
             return editDocsRequest(docsRequestId)})
             
             
   useEffect(() => {
     setData(basicData?.data?.response);
-    
     setOk1((ok) => !ok);
   }, [Data]);
   useEffect(() => {
@@ -129,15 +138,15 @@ const BasicInfoEditReq = () => {
           <TitleP>기본 정보</TitleP>
           {basicLoading||modiLoading ? <EditInfo><Loader/></EditInfo>:
           <><EditInfo
-          child={Data?.docsName}
-          modify={ModiData?.docsRequestName}
+          child={Data&&ModiData? Data.docsName:null}
+          modify={Data&&ModiData? ModiData.docsRequestName:null}
           textDecoration={true}
         >
           문서 제목{" "}
         </EditInfo>
         <EditInfo
-          child={Data?.docsCategory}
-          modify={ModiData?.docsRequestCategory}
+          child={Data&&ModiData? Data.docsCategory:null}
+          modify={ Data&&ModiData? ModiData.docsRequestCategory:null}
           textDecoration={true}
         >
           카테고리
@@ -165,22 +174,25 @@ const BasicInfoEditReq = () => {
               backgroundcolor="white"
               onClick={
                 ()=>{
-                    requestReject(ModiData?.docsRequestType,ModiData?.docsRequestId).then((res)=>{
-                        console.log(res)
-                        Swal.fire({
-                            icon: 'success',
-                            text: '기본정보 수정이 반려됐습니다!',
-                            confirmButtonColor: '#429f50',
-                          }).then(()=>navigate(routes.admin))
-                     }).catch((error)=>{
-                        console.log(error)
-                        Swal.fire({
-                            icon: 'warning',
-                            title:`${error.status}`,
-                            text: `error : ${error.data.error.message}`,
-                            confirmButtonColor: '#de3020',
-                          })
-                     })
+                        const payload={docs_request_type:ModiData?.docsRequestType,docs_request_id:ModiData?.docsRequestId}
+                        rejectmutation(payload,{
+                            onSuccess:()=>{
+    
+                            Swal.fire({
+                                icon: 'success',
+                                text: '생성이 반려됐습니다!',
+                                confirmButtonColor: '#429f50',
+                              }).then(()=>navigate(routes.admin))},
+                         onError:((error)=>{
+                            console.log(error)
+                            Swal.fire({
+                                icon: 'warning',
+                                title:`${error.status}`,
+                                text: `error : ${error.data.error.message}`,
+                                confirmButtonColor: '#de3020',
+                              })
+                         })
+                            })
                 }
             }
             >
@@ -194,31 +206,31 @@ const BasicInfoEditReq = () => {
               backgroundcolor="primary"
               onClick={(e) => {
                 console.log(Data?.docsRequestId);
-                editRequestApprove(Data?.docsId).then((res)=>{
-                   console.log(res)
-                   Swal.fire({
-                       icon: 'success',
-                       text: '기본정보 수정 수락!',
-                       confirmButtonColor: '#429f50',
-                     }).then(()=>navigate(routes.admin))
-                }).catch((error)=>{
-                   console.log(error)
-                   Swal.fire({
-                       icon: 'warning',
-                       title:`${error.status}`,
-                       text: `error : ${error.data.error.message}`,
-                       confirmButtonColor: '#de3020',
-                     })
-                })
-               }}
+                const updatePayload=Data?.docsRequestId;
+                mutation(updatePayload,{
+                    onSuccess:(data)=>{
+                        Swal.fire({
+                            icon: 'success',
+                            text: '생성 수락!',
+                            confirmButtonColor: '#429f50',
+                        }).then(()=>navigate(routes.admin))
+                    },
+                    onError:(error)=>{
+                        Swal.fire({
+                            icon: 'warning',
+                            title:`${error.status}`,
+                            text: `error : ${error.data.error.message}`,
+                            confirmButtonColor: '#de3020',
+                        })
+                    }})
+                }}
             >
               수정 수락
             </Button>
           </StyledButton>
         </Container>
         <MapContainer
-          lat={Data?.docsLocation?.lat}
-          lng={Data?.docsLocation?.lng}
+          location={Data?.docsRequestLocation}
           //나중에 마커 두개 찍히게 바꿔야겠다....
         ></MapContainer>
       </MainLayout>

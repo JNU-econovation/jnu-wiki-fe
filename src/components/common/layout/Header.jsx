@@ -85,6 +85,7 @@ const Header = () => {
                 }).then((result) => {
                   if (result.isConfirmed) {
                     localStorage.removeItem("token");
+                    localStorage.removeItem("role");
                     setJWT(null);
                   }
                 });

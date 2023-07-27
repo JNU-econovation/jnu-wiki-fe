@@ -13,7 +13,7 @@ const Admin = () => {
     return (
         <>
             <MainLayout>
-                {role === 'admin'?
+                {role === 'ADMIN'?
                 <AdminForm></AdminForm>:
                 Swal.fire({
                     icon: 'error',

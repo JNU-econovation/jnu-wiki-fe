@@ -13,8 +13,7 @@ import {
 import MyBtn from "../mypage/MyBtn";
 import { styled } from "styled-components";
 import { mypageTestData } from "./MypageTestData";
-import { useQuery } from "@tanstack/react-query";
-import Loader from "../../../constant/Loader";
+import { useQuery,useMutation } from "@tanstack/react-query";
 import { nicknameDoubleCheck } from "../../../services/user";
 const ButtonWrap = styled.div`
     display: flex;
@@ -32,12 +31,17 @@ const MyInfoEditForm = () => {
         error,
         } = useQuery(['mypage'],()=>{
             return getUserInfo()})  
-    const [Data,setData]=useState(data?.data?.response?.member);
+
+    const {mutate} = useMutation({
+        mutationFn:getChangeInfo,
+    })
+    const [Data,setData]=useState(data?.data?.response);
     //const Data= data?.data?.response?.member;
-    const [Newnickname, setNewnickname] = useState(Data?.nickname);
+
+    const [Newnickname, setNewnickname] = useState(Data?.nickName);
     const [Isnewnickname, setIsnewnickname] = useState(true);
     const [Doublenewnickname, setDoublenewnickname] = useState(false);
-    const [Newpassword, setNewpassword] = useState(Data?.password);
+    const [Newpassword, setNewpassword] = useState('');
     const [Isnewpassword, setIsnewpassword] = useState(true);
 
     const handleNicknameChange = (e) => {
@@ -52,8 +56,8 @@ const MyInfoEditForm = () => {
     useEffect(
         () => {
             console.log(Newnickname,Newpassword)
-            setNewnickname(Data?.nickname);
-            setNewpassword(Data?.password);
+            setNewnickname(Data?.nickName);
+            //setNewpassword(Data?.password);
         },[Data]);
 
     useEffect(
@@ -82,7 +86,7 @@ const MyInfoEditForm = () => {
                     icon: 'warning',
                     text: '동일한 닉네임이 존재합니다.'
                 });
-                setNewnickname('');
+                //setNewnickname('');
             });
     };
 
@@ -103,7 +107,7 @@ const MyInfoEditForm = () => {
                         handleNicknameChange(e);
                     }}
                     para={
-                        Newnickname.length > 0
+                        Newnickname?.length > 0
                             ? null
                             : "닉네임을 작성해주세요."
                     }
@@ -111,7 +115,7 @@ const MyInfoEditForm = () => {
                 ></InputGroup>
                 <DoubleCheck
                     onClick={(e) => {
-                        if (Isnewnickname === true && Newnickname.length > 0) {
+                        if (Isnewnickname === true && Newnickname?.length > 0) {
                             NameDoubleCheck(Newnickname);
                         }
                     }}
@@ -146,16 +150,40 @@ const MyInfoEditForm = () => {
                         if (
                             Doublenewnickname && Isnewnickname && Isnewpassword
                         ) {
-                            getChangeInfo({ Isnewnickname, Isnewpassword })
-                            Swal.fire({
-                                icon: 'success',
-                                title: '수정 완료🥰',
-                                confirmButtonColor: '#429f50',
-                            }).then(result => {
-                                if (result.isConfirmed) {
-                                    location.href = routes.myPage
-                                }
+                            const updatePayload=  { Newnickname, Newpassword };
+                            console.log(updatePayload);
+                            //payload 는 바디같은거//...!
+                            mutate(updatePayload,{
+                                onSuccess:(data)=>{
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: '수정 완료🥰',
+                                        confirmButtonColor: '#429f50',
+                                    }).then(result => {
+                                        if (result.isConfirmed) {
+                                            location.href = routes.myPage
+                                        }
+                                    })
+                                },
+                                onError:(error)=>{
+                                    Swal.fire({
+                                        icon: 'warning',
+                                        title: '수정실패....',
+                                        confirmButtonColor: '#429f50',
+                                    })
+                                },
                             })
+
+                            // getChangeInfo({ Isnewnickname, Isnewpassword })
+                            // Swal.fire({
+                            //     icon: 'success',
+                            //     title: '수정 완료🥰',
+                            //     confirmButtonColor: '#429f50',
+                            // }).then(result => {
+                            //     if (result.isConfirmed) {
+                            //         location.href = routes.myPage
+                            //     }
+                            // })
 
                         }
 
