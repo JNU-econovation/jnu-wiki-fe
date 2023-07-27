@@ -9,6 +9,7 @@ import { FaPenSquare } from "react-icons/fa";
 import { HiMiniUserGroup } from "react-icons/hi2";
 import { AiTwotoneSetting } from "react-icons/ai";
 import { SlDocs } from "react-icons/Sl";
+import { useLocation } from "react-router-dom";
 
 const Container = styled.div`
   width: 20rem;
@@ -41,6 +42,7 @@ const DocumentWrapper = styled.div`
 `;
 
 function Sidebar() {
+  const location = useLocation();
   const [addShow, setAddShow] = useState(false);
   const [viewShow, setViewShow] = useState(false);
 
@@ -50,6 +52,7 @@ function Sidebar() {
       setViewShow(false);
     } else if (type === "viewPost") {
       setViewShow((viewShow) => !viewShow);
+      if (location.pathname !== "/") window.location.replace("/");
       setAddShow(false);
     } else {
       setAddShow(false);
@@ -88,7 +91,7 @@ function Sidebar() {
           }}
           name="View Posts"
           icons={<SlDocs />}
-          // route={routes.myPage}
+          // route={routes.documentList}
         ></MenuList>
         <MenuList
           name="Mypage"

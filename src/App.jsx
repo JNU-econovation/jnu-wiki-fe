@@ -14,6 +14,7 @@ import { Provider } from "react-redux";
 import BasicInfoEditReq from "./pages/BasicInfoEditReq.jsx";
 import NewDocsReq from "./pages/NewDocsReq.jsx";
 import DocumentPage from "./pages/DocumentPage.jsx";
+import DocumentListPage from "./pages/DocumentListPage.jsx";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
             <Route path={routes.login} element={<Login />} />
             <Route path={routes.join} element={<Join />} />
             <Route path={routes.admin} element={<Admin />} />
+            <Route path={routes.documentList} element={<DocumentListPage />} />
             <Route
               path={`${routes.newDocsRequest}/:id`}
               element={<NewDocsReq />}
