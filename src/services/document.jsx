@@ -23,14 +23,18 @@ export const docsList = (page = 0) => {
 };
 
 export const basicModify = (data) => {
-  const { docsCategory, docsName, docsLocation } = data;
+  const { docsId, docsCategory, docsName, docsLocation } = data;
   return instance.post("/requests/update", {
+    docsId,
     docsCategory,
     docsName,
     docsLocation,
   });
 };
 
-export const contentModify = (docs_id, updatedData) => {
-  return instance.put(`/docs/${docs_id}`, updatedData);
+export const contentModify = (data) => {
+  const { docs_id, docsContent } = data;
+  return instance.post(`/docs/${docs_id}`, {
+    docsContent,
+  });
 };
