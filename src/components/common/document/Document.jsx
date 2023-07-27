@@ -81,9 +81,6 @@ const Document = ({ id }) => {
   let docsContent = data?.data.response.docsContent;
   const { address } = useSelector((state) => state.address);
 
-  // 업데이트할 내용 담을 객체
-  let updateData = {};
-
   // 데이터를 커스텀 훅에 선언
   const { valueInit, handleOnChange, reset } = useInput({
     docsCategory,
@@ -128,6 +125,7 @@ const Document = ({ id }) => {
       docsName: valueInit.docsName,
       docsLocation: { lat: getLat, lng: getLng },
     });
+    setEdit(!edit);
   };
 
   const handleBasicCancel = () => {
@@ -234,7 +232,7 @@ const Document = ({ id }) => {
               <MDEditor
                 height="15rem"
                 overflow="scroll"
-                value={value}
+                value={value ? value : docsContent}
                 onChange={handleOnContentChange}
                 preview="edit"
                 components={{
@@ -257,8 +255,6 @@ const Document = ({ id }) => {
                 }}
               />
             </EditorContainer>
-          ) : value ? (
-            value
           ) : (
             docsContent
           )}
