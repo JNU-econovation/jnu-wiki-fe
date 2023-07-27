@@ -3,10 +3,22 @@ import { useState, useRef, useEffect } from "react";
 import DocsItem from "./DocsItem";
 import DocumentPage from "../../../pages/DocumentPage";
 import Loader from "../layout/Loader";
-import { Container } from "../document/CreateDocument";
 import { docsList } from "../../../services/document";
 import { useNavigate } from "react-router-dom";
 import routes from "../../../routes";
+import styled from "styled-components";
+
+const Container = styled.div`
+  overflow: hidden;
+  position: absolute;
+  left: 20rem;
+  overflow-x: hidden;
+  top: 6rem;
+  padding: 2rem;
+
+  background-color: white;
+  box-shadow: 10px 0px 5px 0px rgba(0, 0, 0, 0.106);
+`;
 
 const DocsList = () => {
   const navigate = useNavigate();
@@ -15,12 +27,18 @@ const DocsList = () => {
   const bottomObserver = useRef(null);
 
   const { data, isLoading, isError, fetchNextPage, hasNextPage } =
-    useInfiniteQuery(["docs_list"], docsList, {
-      getNextPageParam: (currentPage, allPages) => {
-        const nextPage = allPages.length;
-        return nextPage > 2 ? null : nextPage;
-      },
-    });
+    useInfiniteQuery(
+      ["docs_list"],
+      ({ pageParam = 0 }) => docsList(pageParam),
+      {
+        getNextPageParam: (currentPage, allPages) => {
+          const nextPage = allPages.length;
+          return nextPage > 2 ? null : nextPage;
+        },
+      }
+    );
+
+  console.log(data);
   useEffect(() => {
     const io = new IntersectionObserver(
       (entries) => {
@@ -31,7 +49,7 @@ const DocsList = () => {
         });
       },
       {
-        threshold: 0.5,
+        threshold: 1.0,
       }
     );
 
@@ -64,26 +82,28 @@ const DocsList = () => {
     selectedDocs.length > 0 && navigate(routes.documentPage);
   };
 
-  return (
-    <>
-      <Container>
-        {isLoading && <Loader />}
-        {isError && <div>error</div>}
-        {docsListArray.map((el) => (
-          // <List key={el.id} to={`docs/${el.id}`}>
-          <DocsItem
-            // to={`/docs/${selectedDocs.docsId}`}
-            key={el.docsId}
-            name={el.docsName}
-            category={el.docsCategory}
-            onClick={() => handleOnClick(el)}
-          />
-          // </List>
-        ))}
-        {selectedDocs.length > 0 && <DocumentPage docs={selectedDocs[0]} />}
-        {/* <div style={{ height: "80px" }} ref={bottom/Observer}></div> */}
-      </Container>
-    </>
-  );
+  if (data && data.pages && Array.isArray(data.pages)) {
+    return (
+      <>
+        <Container>
+          {isLoading && <Loader />}
+          {/* {isError && <div>error</div>} */}
+          {docsListArray.map((el) => (
+            <DocsItem
+              key={el.docsId}
+              name={el.docsName}
+              category={el.docsCategory}
+              onClick={() => handleOnClick(el)}
+            />
+          ))}
+          {selectedDocs.length > 0 && <DocumentPage docs={selectedDocs[0]} />}
+          <div style={{ height: "50px" }} ref={bottomObserver}></div>
+          {isLoading && !hasNextPage && <Loader />}
+        </Container>
+      </>
+    );
+  } else {
+    return null;
+  }
 };
 export default DocsList;
