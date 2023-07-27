@@ -15,7 +15,7 @@ import { styled } from "styled-components";
 import { mypageTestData } from "./MypageTestData";
 import { useQuery } from "@tanstack/react-query";
 import Loader from "../../../constant/Loader";
-
+import { nicknameDoubleCheck } from "../../../services/user";
 const ButtonWrap = styled.div`
     display: flex;
     justify-content: space-around;
@@ -67,15 +67,16 @@ const MyInfoEditForm = () => {
       );
 
     const NameDoubleCheck = (name) => {
-        doubleCheckNickName(name)
-            .then((e) => {
+        console.log(name)
+        nicknameDoubleCheck(name)
+            .then(() => {
                 setDoublenewnickname(true);
                 Swal.fire({
                     icon: 'success',
                     text: '사용가능한 닉네임 입니다.'
                 });
             })
-            .catch((e) => {
+            .catch(() => {
                 setDoublenewnickname(false);
                 Swal.fire({
                     icon: 'warning',
@@ -101,12 +102,16 @@ const MyInfoEditForm = () => {
                     onChange={(e) => {
                         handleNicknameChange(e);
                     }}
+                    para={
+                        Newnickname.length > 0
+                            ? null
+                            : "닉네임을 작성해주세요."
+                    }
                     margin={false}
                 ></InputGroup>
                 <DoubleCheck
                     onClick={(e) => {
                         if (Isnewnickname === true && Newnickname.length > 0) {
-                            e.preventDefault();
                             NameDoubleCheck(Newnickname);
                         }
                     }}
@@ -129,6 +134,7 @@ const MyInfoEditForm = () => {
                 ></InputGroup>
                 <ButtonWrap>
                     <MyBtn color='white' backgroundColor='#216D32' onClick={() => {
+                        console.log(Doublenewnickname,Isnewnickname,Isnewpassword)
                         if (Doublenewnickname === false) {
                             Swal.fire({
                                 icon: 'warning',
