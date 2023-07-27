@@ -38,9 +38,11 @@ const DocumentHeading = ({
   onClick,
   type = false,
   contentType = false,
-  save = false,
-  cancel = false,
   className,
+  onSave,
+  onCancel,
+  onBasicSave,
+  onBasicCancel,
 }) => {
   return (
     <>
@@ -52,8 +54,8 @@ const DocumentHeading = ({
               <StyledPencil onClick={onClick} />
             ) : (
               <>
-                <StyledSave className="save" onClick={onClick} />
-                <StyledCancel className="cancel" onClick={onClick} />
+                <StyledSave className="save" onClick={onBasicSave} />
+                <StyledCancel className="cancel" onClick={onBasicCancel} />
               </>
             )}
           </>
@@ -63,8 +65,8 @@ const DocumentHeading = ({
               <StyledPencil onClick={onClick} />
             ) : (
               <>
-                <StyledSave className="save" onClick={onClick} />
-                <StyledCancel className="cancel" onClick={onClick} />
+                <StyledSave className="save" onClick={onSave} />
+                <StyledCancel className="cancel" onClick={onCancel} />
               </>
             )}
           </>
