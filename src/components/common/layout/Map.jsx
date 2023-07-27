@@ -129,7 +129,6 @@ const Map = ({ apiLat, apiLng }) => {
       searchAddFromCoords(map.getCenter());
     });
   };
-
   const setAddress = useCallback(() => {
     // 백엔드에서 보내준 좌표대로 주소 출력
     let geocoder = new kakao.maps.services.Geocoder();
@@ -159,7 +158,7 @@ const Map = ({ apiLat, apiLng }) => {
       <MapDiv
         id="map"
         style={{
-          width: "80%",
+          width: "100vw",
           height: "100vh",
         }}
       />

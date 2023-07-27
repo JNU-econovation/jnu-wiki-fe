@@ -1,3 +1,3 @@
-const category = ["카페", "음식점", "학교시설", "복사집", "편의점", "약국"];
+const category = ["CAFE", "SCHOOL", "COPY", "CONV", "PHAR"];
 
 export default category;
