@@ -16,9 +16,12 @@ import {
 } from "../../../services/regex";
 import Swal from "sweetalert2";
 import { nicknameDoubleCheck } from "../../../services/user";
-
+import { emailDBCheck } from "../../../services/user";
 import Title from "../Resister/Title";
 const ResisterForm = () => {
+
+  //registerform 으로 바꾸기...ㅎ
+
   const navigate = useNavigate();
   const { valueInit, handleOnChange } = useInput({
     username: "",
@@ -36,7 +39,7 @@ const ResisterForm = () => {
   const [isPasswordConfirm, setIsPasswordConfirm] = useState(true);
 
   const emailDoubleCheck = (email) => {
-    doubleCheckEmail(email)
+    emailDBCheck(email)
       .then((e) => {
         setDoubleEmail(true);
         Swal.fire({

@@ -9,6 +9,14 @@ import Button from "../components/common/layout/Button";
 import { StyledButton } from "../components/common/document/CreateDocument";
 import EditInfo from "../components/common/admin/EditInfo";
 import { modifyData } from "../components/common/admin/TestData";
+import { requestReject,editRequestApprove } from "../services/user";
+import Swal from "sweetalert2";
+import routes from "../routes";
+import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { docsRequest,editDocsRequest } from "../services/user";
+import Loader from "../components/common/layout/Loader";
+
 const { kakao } = window;
 export const TitleP = styled.p`
   font-weight: 900;
@@ -19,32 +27,51 @@ export const TitleP = styled.p`
 `;
 
 const BasicInfoEditReq = () => {
+    const { docsId,docsRequestId } = useParams();
+    const navigate = useNavigate();
   const [address, setAddress] = useState("");
   const [modiAddress, setModiAddress] = useState("");
   const [Ok1, setOk1] = useState(false);
-  const [Ok2, setOk2] = useState(true);
+  const [Ok2, setOk2] = useState(false);
 
   const [Data, setData] = useState({
-    docsRequestCategory: "",
-    docsRequestName: "",
-    docsReqeustLocation: { lat: "", lng: "" },
+	"docsId" : "",
+    "docsName" : "",
+    "docsCategory" : "",
+    "docsLocation" :  { lat: "", lng: "" },
   });
   const [ModiData, setModiData] = useState({
-    docsRequestCategory: "",
-    docsRequestName: "",
-    docsReqeustLocation: { lat: "", lng: "" },
+    "docsRequestId":'',
+    "docsRequestCategory": "",
+    "docsRequestName": "",
+    "docsReqeustLocation": { lat: "", lng: "" },
     //이거 경도 위도 주소로 바꾸기
   });
 
+  const {
+    data:basicData, 
+    isLoading:basicLoading,
+    } = useQuery(['basicrequest'],()=>{
+        return docsRequest(docsId)})  
+
+     
+    const {
+        data:modiData,
+        isLoading:modiLoading,
+        } = useQuery(['modirequest'],()=>{
+            return editDocsRequest(docsRequestId)})
+            
+            
   useEffect(() => {
-    setData(Test4.response);
+    setData(basicData?.data?.response);
+    
     setOk1((ok) => !ok);
   }, [Data]);
   useEffect(() => {
-    setModiData(modifyData.response);
+    setModiData(modiData?.data?.response);
     setOk2((ok) => !ok);
   }, [ModiData]);
-  //data가져오기(나중에 쿼리로바꾸기)
+
 
   useEffect(() => {
     map();
@@ -53,12 +80,12 @@ const BasicInfoEditReq = () => {
   const map = () => {
     const geocoder = new kakao.maps.services.Geocoder();
     const coord = new kakao.maps.LatLng(
-      Data.docsReqeustLocation.lat,
-      Data.docsReqeustLocation.lng
+      Data?.docsLocation?.lat,
+      Data?.docsLocation?.lng
     );
     const coord2 = new kakao.maps.LatLng(
-      ModiData.docsReqeustLocation.lat,
-      ModiData.docsReqeustLocation.lng
+      ModiData?.docsReqeustLocation?.lat,
+      ModiData?.docsReqeustLocation?.lng
     );
     const callback1 = function (result, status) {
       if (status === kakao.maps.services.Status.OK) {
@@ -100,41 +127,64 @@ const BasicInfoEditReq = () => {
       <MainLayout>
         <Container>
           <TitleP>기본 정보</TitleP>
+          {basicLoading||modiLoading ? <EditInfo><Loader/></EditInfo>:
+          <><EditInfo
+          child={Data?.docsName}
+          modify={ModiData?.docsRequestName}
+          textDecoration={true}
+        >
+          문서 제목{" "}
+        </EditInfo>
+        <EditInfo
+          child={Data?.docsCategory}
+          modify={ModiData?.docsRequestCategory}
+          textDecoration={true}
+        >
+          카테고리
+        </EditInfo>
+        {address ? (
           <EditInfo
-            child={Data.docsRequestName}
-            modify={ModiData.docsRequestName}
+            address={address}
+            modify={modiAddress}
             textDecoration={true}
           >
-            문서 제목{" "}
+            위치
           </EditInfo>
-          <EditInfo
-            child={Data.docsRequestCategory}
-            modify={ModiData.docsRequestCategory}
-            textDecoration={true}
-          >
-            카테고리
-          </EditInfo>
-          {address ? (
-            <EditInfo
-              address={address}
-              modify={modiAddress}
-              textDecoration={true}
-            >
-              위치
-            </EditInfo>
-          ) : (
-            <EditInfo>위치</EditInfo>
-          )}
+        ) : (
+          <EditInfo>위치</EditInfo>
+        )}
+</>
 
+          }
+          
           <StyledButton>
             <Button
               type="click"
               color="primary"
               border="1px solid #216D32"
               backgroundcolor="white"
-              onClick={() => console.log("생성반려")}
+              onClick={
+                ()=>{
+                    requestReject(ModiData?.docsRequestType,ModiData?.docsRequestId).then((res)=>{
+                        console.log(res)
+                        Swal.fire({
+                            icon: 'success',
+                            text: '기본정보 수정이 반려됐습니다!',
+                            confirmButtonColor: '#429f50',
+                          }).then(()=>navigate(routes.admin))
+                     }).catch((error)=>{
+                        console.log(error)
+                        Swal.fire({
+                            icon: 'warning',
+                            title:`${error.status}`,
+                            text: `error : ${error.data.error.message}`,
+                            confirmButtonColor: '#de3020',
+                          })
+                     })
+                }
+            }
             >
-              생성반려
+              수정 반려
             </Button>
 
             <Button
@@ -143,16 +193,33 @@ const BasicInfoEditReq = () => {
               border="none"
               backgroundcolor="primary"
               onClick={(e) => {
-                console.log("생성수락");
-              }}
+                console.log(Data?.docsRequestId);
+                editRequestApprove(Data?.docsId).then((res)=>{
+                   console.log(res)
+                   Swal.fire({
+                       icon: 'success',
+                       text: '기본정보 수정 수락!',
+                       confirmButtonColor: '#429f50',
+                     }).then(()=>navigate(routes.admin))
+                }).catch((error)=>{
+                   console.log(error)
+                   Swal.fire({
+                       icon: 'warning',
+                       title:`${error.status}`,
+                       text: `error : ${error.data.error.message}`,
+                       confirmButtonColor: '#de3020',
+                     })
+                })
+               }}
             >
-              생성 수락
+              수정 수락
             </Button>
           </StyledButton>
         </Container>
         <MapContainer
-          lat={Data.docsReqeustLocation.lat}
-          lng={Data.docsReqeustLocation.lng}
+          lat={Data?.docsLocation?.lat}
+          lng={Data?.docsLocation?.lng}
+          //나중에 마커 두개 찍히게 바꿔야겠다....
         ></MapContainer>
       </MainLayout>
     </>

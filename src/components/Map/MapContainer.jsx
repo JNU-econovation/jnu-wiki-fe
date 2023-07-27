@@ -4,7 +4,7 @@ import styled from "styled-components";
 const { kakao } = window;
 const MapDiv = styled.div`
   position: fixed;
-  left: 43rem;
+  left: 20rem;
   top: 6rem;
   z-index: -1;
 `
@@ -20,7 +20,7 @@ const MapContainer = ({lat,lng}) => {
             
             const options = {
                 center: new kakao.maps.LatLng(lat ,lng),
-                level: 3
+                level: 1
             };
             const map = new kakao.maps.Map(container, options);
              // 마커가 표시될 위치입니다 
@@ -43,7 +43,7 @@ const MapContainer = ({lat,lng}) => {
 
     return (
         <MapDiv id='myMap' style={{
-            width: "60%",
+            width: "100%",
             height: "100vh",
         }}></MapDiv>
     );

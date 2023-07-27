@@ -35,7 +35,7 @@ function App() {
               element={<NewDocsReq />}
             />
             <Route
-              path={`${routes.basicInfoEditRequest}/:id`}
+              path={`${routes.basicInfoEditRequest}/:docsId/:docsRequestId`}
               element={<BasicInfoEditReq />}
             />
           </Routes>

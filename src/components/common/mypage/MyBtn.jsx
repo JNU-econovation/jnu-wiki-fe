@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+
 const Btn = styled.button`
    
     font-size: 16px;
@@ -13,10 +13,9 @@ const Btn = styled.button`
     border-radius: 0.3rem;
     border: ${(props) => props.border};`
 
-const MyBtn = ({ route, children, color, backgroundColor, border }) => {
-    const navigate = useNavigate();
+const MyBtn = ({children, color, backgroundColor, border,onClick}) => {
     return (
-        <Btn border={border} color={color} backgroundColor={backgroundColor} onClick={() => { navigate(route); }}>
+        <Btn border={border} color={color} backgroundColor={backgroundColor} onClick={onClick}>
             {children}
         </Btn>
     )
