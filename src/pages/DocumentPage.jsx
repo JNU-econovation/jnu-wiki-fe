@@ -1,12 +1,21 @@
 import Document from "../components/common/document/Document";
 import Map from "../components/common/layout/Map";
+import MainLayout from "../components/common/layout/MainLayout";
+import { useLocation } from "react-router-dom";
 
-const DocumentPage = ({ docs }) => {
-  const { id, docsLocation } = docs;
+const DocumentPage = () => {
+  const location = useLocation();
+  const receivedData = location.state;
+
   return (
     <>
-      <Document id={id} />
-      <Map apiLat={docsLocation.lat} apiLng={docsLocation.lng} />
+      <MainLayout>
+        <Document id={receivedData.id} />
+        <Map
+          apiLat={receivedData.docsLocation.lat}
+          apiLng={receivedData.docsLocation.lng}
+        />
+      </MainLayout>
     </>
   );
 };
