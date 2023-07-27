@@ -70,6 +70,8 @@ console.log(docsRequestId)
         isLoading:modiLoading,
         } = useQuery(['modirequest',docsRequestId],()=>{
             return editDocsRequest(docsRequestId)})
+
+    
             
             
   useEffect(() => {
@@ -230,7 +232,7 @@ console.log(docsRequestId)
           </StyledButton>
         </Container>
         <MapContainer
-          location={Data?.docsRequestLocation}
+          location={ModiData?.docsRequestLocation}
           //나중에 마커 두개 찍히게 바꿔야겠다....
         ></MapContainer>
       </MainLayout>

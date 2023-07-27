@@ -39,12 +39,14 @@ const AdminBox = () => {
         isLoading:isLoading2,
         isError:isError2,
         error:error2
-        } = useQuery(['newInfo2'],newInfoCreateRequest);
+        } = useQuery(['newInfo'],newInfoCreateRequest);
 
-    console.log(data1?.data?.response?.modifiedRequestList)
-    console.log(data2?.data?.response?.createdRequestList)
-    console.log(error1)
-    console.log(error2)
+    
+        console.log(data1?.data?.response?.modifiedRequestList)
+        console.log(data2)
+
+    //location.reload();
+
 
     return (
         <AdminBoxCss>
