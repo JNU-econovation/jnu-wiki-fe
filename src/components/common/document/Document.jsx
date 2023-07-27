@@ -121,6 +121,7 @@ const Document = ({ id }) => {
   };
   const isToastShownRef = useRef(false);
   const handleBasicSave = () => {
+    setEdit(!edit);
     if (!isToastShownRef.current) {
       mutationBasicModify({
         docsId: id,
@@ -128,7 +129,6 @@ const Document = ({ id }) => {
         docsName: valueInit.docsName,
         docsLocation: { lat: getLat, lng: getLng },
       });
-      setEdit(!edit);
       toast.success("관리자 승인 후 갱신됩니다.", {
         position: "top-right",
         autoClose: 3000,
