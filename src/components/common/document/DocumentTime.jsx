@@ -5,6 +5,7 @@ const Container = styled.div`
   color: #89b090;
   float: right;
   text-align: right;
+  margin-left: 5rem;
 `;
 
 const DocumentTime = ({ children }) => {

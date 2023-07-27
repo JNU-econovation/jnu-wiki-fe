@@ -5,16 +5,18 @@ import DocumentTime from "./DocumentTime";
 import DocumentInput from "./DocumentInput";
 import styled from "styled-components";
 import SelectMenu from "./SelectMenu";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { detailDocument } from "../../../services/document";
+import { contentModify } from "../../../services/document";
 import { useSelector, useDispatch } from "react-redux";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import MDEditor from "@uiw/react-md-editor";
 import useInput from "../../../hooks/useInput";
 import Skeleton from "../layout/Skeleton";
 
 const Group = styled.div`
   height: 100vh;
+  max-width: 22rem;
 
   position: fixed;
   left: 20rem;
@@ -60,25 +62,11 @@ const EditorContainer = styled.div`
   max-width: 22rem;
 `;
 
-const Document = (id) => {
-  const [edit, setEdit] = useState(false);
-  const [editContent, setEditContent] = useState(false);
-  const docsTitle = useRef(null);
-
-  const { data, isLoading, isError } = useQuery(
-    // ["detail_document", { id }],
-    // detailDocument(id),
-    ["detail_document"],
-    detailDocument,
-    {
-      onSuccess: (data) => {
-        console.log(data);
-      },
-      staleTime: 10000,
-    }
+const Document = ({ id }) => {
+  // 데이터 요청
+  const { data, isLoading, isError } = useQuery(["detail_document", id], () =>
+    detailDocument(id)
   );
-
-  console.log(data);
 
   const category = useSelector((state) => state.category.category);
   let getLat = useSelector((state) => state.latLng.latitude);
@@ -86,13 +74,17 @@ const Document = (id) => {
 
   const dispatch = useDispatch();
 
-  const docsName = data?.data[0].docsName;
-  const docsCategory = data?.data[0].docsCategory;
-  const docsCreatedAt = data?.data[0].docsCreatedAt;
-  const docsContent = data?.data[0].docsContent;
-
+  // 데이터 선언
+  const docsName = data?.data.response.docsName;
+  const docsCategory = data?.data.response.docsCategory;
+  const docsCreatedAt = data?.data.response.docsCreatedAt;
+  let docsContent = data?.data.response.docsContent;
   const { address } = useSelector((state) => state.address);
 
+  // 업데이트할 내용 담을 객체
+  let updateData = {};
+
+  // 데이터를 커스텀 훅에 선언
   const { valueInit, handleOnChange, reset } = useInput({
     docsCategory,
     docsName,
@@ -100,28 +92,62 @@ const Document = (id) => {
     docsContent,
   });
 
+  // 기본정보 컨트롤 (수정버튼 눌렀을 경우와 누르지 않았을 경우)
+  const [edit, setEdit] = useState(false);
+  const [save, setSave] = useState(false);
+  const [cancel, setCancel] = useState(false);
+
+  const handleInput = () => {
+    setEdit(!edit);
+    setSave(!save);
+
+    // ❗handleInput이 실행되면 항상 docsName으로 초기화되는 문제가 발생
+    valueInit.docsName = docsName;
+  };
+
+  // docsContent의 value
   let [value, setValue] = useState(docsContent);
   const handleOnContentChange = (updateValue) => {
-    setValue(updateValue);
+    setValue(updateValue); // 입력시마다 갱신해주기
   };
 
-  const handleInput = (type) => {
-    type === "basic" ? setEdit(!edit) : setEditContent(!editContent);
-    valueInit.docsName = docsName;
-    setValue(docsContent);
+  const queryClient = useQueryClient();
+
+  const { mutate } = useMutation({
+    mutationFn: contentModify,
+    onSuccess: () => {
+      queryClient.invalidateQueries("detail_document");
+    },
+  });
+
+  const updatePut = () => {
+    if (editContent) {
+      updateData = { docsContent: value };
+    }
+
+    mutate(updateData);
   };
 
-  // const data = {
-  //   docsCategory: category || "카페",
-  //   docsName: valueInit.docsName,
-  //   docsLocation: { lat: getLat, lng: getLng },
-  // };
+  // 내용버튼 컨트롤
+  const [editContent, setEditContent] = useState(false);
+
+  const handleInputContent = () => {
+    setEditContent(!editContent);
+
+    updatePut();
+  };
 
   return (
     <>
       {!isLoading && <Skeleton />}
       <Group>
-        <DocumentHeading className="basic" onClick={() => handleInput("basic")}>
+        <DocumentHeading
+          className="basic"
+          type={edit}
+          save={save}
+          cancel={cancel}
+          onClick={handleInput}
+        >
           기본 정보
         </DocumentHeading>
         <Box>
@@ -133,7 +159,6 @@ const Document = (id) => {
                 placeholder={docsName}
                 value={valueInit.docsName}
                 onChange={handleOnChange}
-                ref={docsTitle}
               />
             ) : (
               docsName
@@ -171,7 +196,8 @@ const Document = (id) => {
         <ContentTime>
           <DocumentHeading
             className="content"
-            onClick={() => handleInput("content")}
+            contentType={editContent}
+            onClick={handleInputContent}
           >
             내용
           </DocumentHeading>
@@ -207,6 +233,8 @@ const Document = (id) => {
                 }}
               />
             </EditorContainer>
+          ) : value ? (
+            value
           ) : (
             docsContent
           )}

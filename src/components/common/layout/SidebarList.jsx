@@ -45,7 +45,7 @@ const MenuIcon = styled.div`
   padding: 0 1rem;
 `;
 
-const MenuList = ({ name, icons, route, onClick}) => {
+const MenuList = ({ name, icons, route, onClick }) => {
   return (
     <>
       <NavStyle

@@ -3,29 +3,23 @@ import { instance } from "./index";
 export const create = (data) => {
   const { docsName, docsCategory, docsLocation } = data;
   return instance.post("/requests/new", {
-    docsCategory,
-    docsName,
-    docsLocation,
+    docsRequestType: "CREATED",
+    docsRequestCategory: docsCategory,
+    docsRequestName: docsName,
+    docsRequestLocation: docsLocation,
   });
 };
 
-export const detailDocument = (id = 0) => {
+export const detailDocument = (id = 1) => {
   if (!id) {
     throw Error("id가 없습니다.");
   }
 
-  return instance.get(
-    "/docs/" + id
-    // "https://a1384822-b40b-4a9e-ae44-598dc20b6ad1.mock.pstmn.io/docs/"
-    // "https://ee2a6993-1122-498c-93db-e16a76c9766e.mock.pstmn.io/docs?id=1"
-  );
+  return instance.get("/docs/" + id);
 };
 
-export const docsList = () => {
-  return instance.get(
-    "/docs/"
-    // "https://ee2a6993-1122-498c-93db-e16a76c9766e.mock.pstmn.io/docs"
-  );
+export const docsList = (page = 0) => {
+  return instance.get("/docs/" + "?page=" + page);
 };
 
 export const basicModify = (data) => {
@@ -35,4 +29,8 @@ export const basicModify = (data) => {
     docsName,
     docsLocation,
   });
+};
+
+export const contentModify = (docs_id, updatedData) => {
+  return instance.put(`/docs/${docs_id}`, updatedData);
 };
