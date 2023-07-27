@@ -49,7 +49,7 @@ const LoginForm = ({ marginBottom }) => {
     (e) => {
       if (valueInit.password.length > 0) {
         setIsPassword(passwordCheck(valueInit.password));
-        setWhatPassword(valueInit.password)
+        setWhatPassword(valueInit.password);
       }
     },
     [valueInit.password]
@@ -58,8 +58,10 @@ const LoginForm = ({ marginBottom }) => {
   return (
     <>
       <Container>
-        <Title fontSize="30px" margin='4.5rem 0 1rem 0'>로그인</Title>
-        <Title fontSize="15px" margin='0 0 3rem 0'>
+        <Title fontSize="30px" margin="4.5rem 0 1rem 0">
+          로그인
+        </Title>
+        <Title fontSize="15px" margin="0 0 3rem 0">
           {" "}
           환영해요! 오늘도 전남대 정보들, 잘 부탁해요 :)
         </Title>
@@ -87,47 +89,52 @@ const LoginForm = ({ marginBottom }) => {
         />
 
         <Button
-          margin='1rem 0 3rem 0'
+          margin="1rem 0 3rem 0"
           onClick={(e) => {
             //e.preventDefault();
             if (isEmail && isPassword) {
               console.log(valueInit.email);
               console.log(valueInit.password);
-              if (whatEmail == '' && whatPassword == '') {
+              if (whatEmail == "" && whatPassword == "") {
                 Swal.fire({
-                  icon: 'warning',
-                  text: '이메일과 비밀번호를 입력해주세요.',
-                  confirmButtonColor: '#429f50',
-                })
+                  icon: "warning",
+                  text: "이메일과 비밀번호를 입력해주세요.",
+                  confirmButtonColor: "#429f50",
+                });
               } else {
                 login({
                   email: valueInit.email,
                   password: valueInit.password,
-                }).then((res) => {
-                  console.log(res);
-                  Swal.fire({
-                    icon: 'success',
-                    title: '로그인 성공!',
-                    text: '홈 화면으로 이동합니다',
-                    confirmButtonColor: '#429f50',
-                  }).then(result => {
-                    if (result.isConfirmed) {
-                      localStorage.setItem("token", res.headers.authorization);
-                      localStorage.setItem("role", res.response.role);
-                      navigate(routes.home);
-                    }
+                })
+                  .then((res) => {
+                    console.log(res);
+                    Swal.fire({
+                      icon: "success",
+                      title: "로그인 성공!",
+                      text: "홈 화면으로 이동합니다",
+                      confirmButtonColor: "#429f50",
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        localStorage.setItem(
+                          "token",
+                          res.headers.authorization
+                        );
+                        localStorage.setItem("role", res.response.role);
+                        navigate(routes.home);
+                      }
+                    });
                   })
-                }).catch((err) => {
-                  console.log(err);
-                  Swal.fire({
-                    icon: 'warning',
-                    text: '회원정보가 없습니다',
-                    confirmButtonColor: '#429f50',
-                  })//swal
-                })//catch
-              }//else
-            }//if
-          }}//onClick5
+                  .catch((err) => {
+                    console.log(err);
+                    Swal.fire({
+                      icon: "warning",
+                      text: "회원정보가 없습니다",
+                      confirmButtonColor: "#429f50",
+                    }); //swal
+                  }); //catch
+              } //else
+            } //if
+          }} //onClick5
         >
           로그인
         </Button>
@@ -136,7 +143,9 @@ const LoginForm = ({ marginBottom }) => {
           onClick={() => {
             navigate(routes.join);
           }}
-        >회원가입</Question>
+        >
+          회원가입
+        </Question>
       </Container>
     </>
   );
