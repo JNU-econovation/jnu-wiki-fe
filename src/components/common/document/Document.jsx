@@ -7,7 +7,7 @@ import styled from "styled-components";
 import SelectMenu from "./SelectMenu";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { detailDocument } from "../../../services/document";
-import { contentModify } from "../../../services/document";
+import { contentModify, basicModify } from "../../../services/document";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import MDEditor from "@uiw/react-md-editor";
@@ -92,6 +92,22 @@ const Document = ({ id }) => {
     docsContent,
   });
 
+  const queryClient = useQueryClient();
+
+  const { mutate: mutationContentModify } = useMutation({
+    mutationFn: contentModify,
+    onSuccess: () => {
+      queryClient.invalidateQueries("detail_document");
+    },
+  });
+
+  const { mutate: mutationBasicModify } = useMutation({
+    mutationFn: basicModify,
+    onSuccess: () => {
+      queryClient.invalidateQueries("detail_document");
+    },
+  });
+
   // 기본정보 컨트롤 (수정버튼 눌렀을 경우와 누르지 않았을 경우)
   const [edit, setEdit] = useState(false);
   const [save, setSave] = useState(false);
@@ -105,27 +121,23 @@ const Document = ({ id }) => {
     valueInit.docsName = docsName;
   };
 
+  const handleBasicSave = () => {
+    mutationBasicModify({
+      docsId: id,
+      docsCategory: category,
+      docsName: valueInit.docsName,
+      docsLocation: { lat: getLat, lng: getLng },
+    });
+  };
+
+  const handleBasicCancel = () => {
+    setEdit(!edit);
+  };
+
   // docsContent의 value
   let [value, setValue] = useState(docsContent);
   const handleOnContentChange = (updateValue) => {
     setValue(updateValue); // 입력시마다 갱신해주기
-  };
-
-  const queryClient = useQueryClient();
-
-  const { mutate } = useMutation({
-    mutationFn: contentModify,
-    onSuccess: () => {
-      queryClient.invalidateQueries("detail_document");
-    },
-  });
-
-  const updatePut = () => {
-    if (editContent) {
-      updateData = { docsContent: value };
-    }
-
-    mutate(updateData);
   };
 
   // 내용버튼 컨트롤
@@ -133,13 +145,21 @@ const Document = ({ id }) => {
 
   const handleInputContent = () => {
     setEditContent(!editContent);
+  };
 
-    updatePut();
+  const handleSave = () => {
+    mutationContentModify({ docs_id: id, docsContent: value });
+    setEditContent(!editContent);
+  };
+
+  const handleCancel = () => {
+    value = docsContent;
+    setEditContent(!editContent);
   };
 
   return (
     <>
-      {!isLoading && <Skeleton />}
+      {isLoading && <Skeleton />}
       <Group>
         <DocumentHeading
           className="basic"
@@ -147,6 +167,8 @@ const Document = ({ id }) => {
           save={save}
           cancel={cancel}
           onClick={handleInput}
+          onBasicSave={handleBasicSave}
+          onBasicCancel={handleBasicCancel}
         >
           기본 정보
         </DocumentHeading>
@@ -198,6 +220,8 @@ const Document = ({ id }) => {
             className="content"
             contentType={editContent}
             onClick={handleInputContent}
+            onSave={handleSave}
+            onCancel={handleCancel}
           >
             내용
           </DocumentHeading>
