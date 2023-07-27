@@ -52,12 +52,12 @@ const BasicInfoEditReq = () => {
   });
 
   const mutation = useMutation({
-    mutationFn:()=>editRequestApprove(Data?.docsRequestId)
+    mutationFn:()=>editRequestApprove(docsRequestId)
  })
 const rejectmutation = useMutation({
-    mutationFn:()=>requestReject(Data?.docsRequestId)
+    mutationFn:()=>requestReject(docsRequestId)
  })
-
+console.log(docsRequestId)
   const {
     data:basicData, 
     isLoading:basicLoading,
@@ -174,8 +174,8 @@ const rejectmutation = useMutation({
               backgroundcolor="white"
               onClick={
                 ()=>{
-                        const payload={docs_request_type:ModiData?.docsRequestType,docs_request_id:ModiData?.docsRequestId}
-                        rejectmutation(payload,{
+                        const payload=ModiData?.docsRequestId
+                        rejectmutation.mutate(payload,{
                             onSuccess:()=>{
     
                             Swal.fire({
@@ -205,9 +205,9 @@ const rejectmutation = useMutation({
               border="none"
               backgroundcolor="primary"
               onClick={(e) => {
-                console.log(Data?.docsRequestId);
-                const updatePayload=Data?.docsRequestId;
-                mutation(updatePayload,{
+                console.log(ModiData?.docsRequestId);
+                const updatePayload=ModiData?.docsRequestId
+                mutation.mutate(updatePayload,{
                     onSuccess:(data)=>{
                         Swal.fire({
                             icon: 'success',

@@ -8,7 +8,8 @@ const RequestContain = ({isLoading,border,datas,route,modi}) => {
     console.log(datas)
     return (
         <RequestContainCss border={border}>
-            {isLoading? <><Loader></Loader></>:null}
+            {/* {isLoading? <><Loader></Loader></>:null} */}
+            
             {datas?.length>0?
                     datas.map((data) =>
                         (<Request key={data.docsRequestId} data={data} route={modi? `${route}/${data.docsId}/${data.docsRequestId}`:`${route}/${data.docsRequestId}`} />)

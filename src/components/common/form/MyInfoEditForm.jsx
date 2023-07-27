@@ -15,6 +15,9 @@ import { styled } from "styled-components";
 import { mypageTestData } from "./MypageTestData";
 import { useQuery,useMutation } from "@tanstack/react-query";
 import { nicknameDoubleCheck } from "../../../services/user";
+import { useNavigate } from "react-router-dom";
+
+
 const ButtonWrap = styled.div`
     display: flex;
     justify-content: space-around;
@@ -22,7 +25,7 @@ const ButtonWrap = styled.div`
 `
 const MyInfoEditForm = () => {
    
-    
+    const navigate = useNavigate();
     //나중에 동일한 닉네임입니다 이런거 추가하기
     const {
         data,
@@ -189,7 +192,7 @@ const MyInfoEditForm = () => {
 
                     }}>수정완료</MyBtn>
                     <MyBtn color='#216D32 ' backgroundColor='white' border='1px solid #216D32'
-                        route={routes.myPage}
+                        onClick={() => { navigate(routes.myPage); }}
                     >취소</MyBtn>
                 </ButtonWrap>
 
