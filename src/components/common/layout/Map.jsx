@@ -48,7 +48,6 @@ const MapDiv = styled.div`
 
 const Map = ({ apiLat, apiLng }) => {
   const dispatch = useDispatch();
-
   useEffect(() => {
     mapscript();
   }, []);
@@ -129,9 +128,23 @@ const Map = ({ apiLat, apiLng }) => {
       searchAddFromCoords(map.getCenter());
     });
   };
+
+  // const requestLatitude = useSelector(
+  //   (state) => state.requestLatLng.requestLat
+  // );
+  // const requestLongitude = useSelector(
+  //   (state) => state.requestLatLng.requestLng
+  // );
+
+  // let requestLat = Math.round(requestLatitude * 10000) / 10000;
+  // let requestLng = Math.round(requestLongitude * 10000) / 10000;
+
   const setAddress = useCallback(() => {
     // 백엔드에서 보내준 좌표대로 주소 출력
     let geocoder = new kakao.maps.services.Geocoder();
+
+    // apiLat === undefined ? requestLat : apiLat;
+    // apiLng === undefined ? requestLng : apiLng;
 
     let coord = new kakao.maps.LatLng(apiLat, apiLng);
     let callback = function (result, status) {
@@ -142,7 +155,6 @@ const Map = ({ apiLat, apiLng }) => {
         dispatch({ type: "getAddress", payload: payloadAddress });
       }
     };
-
     marker.setPosition(new kakao.maps.LatLng(apiLat, apiLng));
     marker.setMap(map);
 
