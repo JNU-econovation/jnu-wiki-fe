@@ -4,7 +4,7 @@ const Container = styled.div`
   color: #216d32;
 
   display: flex;
-  align-items: center;
+  flex-direction: column;
 
   min-width: 15rem;
   max-width: 22rem;
@@ -15,6 +15,7 @@ const Container = styled.div`
     font-size: 1.1rem;
     font-weight: bold;
     margin-right: 0.8rem;
+    margin-bottom: 1.3rem;
   }
 
   span:nth-child(2) {
@@ -24,7 +25,7 @@ const Container = styled.div`
 
 const StyledHr = styled.hr`
   background-color: #8ea192;
-  margin-bottom: 1.5rem;
+  margin: 1.4rem 0;
 `;
 
 const DocsItem = ({ name, category, onClick }) => {
