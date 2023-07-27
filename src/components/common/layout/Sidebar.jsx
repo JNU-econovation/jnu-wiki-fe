@@ -3,7 +3,6 @@ import styled from "styled-components";
 import routes from "../../../routes";
 import MenuList from "./SidebarList";
 import CreateDocument from "../document/CreateDocument";
-import Document from "../document/Document";
 import DocsList from "../search/DocsList";
 import { GoHomeFill } from "react-icons/go";
 import { FaPenSquare } from "react-icons/fa";
@@ -13,7 +12,7 @@ import { SlDocs } from "react-icons/Sl";
 
 const Container = styled.div`
   width: 20rem;
-  height: 50rem;
+  height: 100vh;
   background-color: white;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   position: fixed;
