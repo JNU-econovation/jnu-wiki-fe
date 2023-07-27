@@ -9,6 +9,7 @@ const routes = {
   newDocsRequest: "/newDocsReq",
   basicInfoEditRequest: "/basicInfoEditReq",
   documentPage: "/documentPage",
+  documentList: "/documentList",
 };
 
 export default routes;
