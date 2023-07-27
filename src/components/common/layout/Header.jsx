@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "./Button";
 import routes from "../../../routes";
 import Swal from "sweetalert2";
+import { SlLogout } from "react-icons/Sl";
 const token = localStorage.getItem("token");
 const Header = () => {
   const navigate = useNavigate();
@@ -76,31 +77,27 @@ const Header = () => {
               </Button>
             </>
           ) : (
-            <Button
-              type="click"
-              color="white"
-              border="none"
-              backgroundcolor="primary"
-              onClick={() => {
-                Swal.fire({
-                  icon: "question",
-                  text: "로그아웃 하시겠습니까?",
-                  showCancelButton: true,
-                  confirmButtonText: "예",
-                  cancelButtonText: "아니오",
-                  confirmButtonColor: "#429f50",
-                  cancelButtonColor: "#d33",
-                }).then((result) => {
-                  if (result.isConfirmed) {
-                    localStorage.removeItem("token");
-                    localStorage.removeItem("role");
-                    setJWT(null);
-                  }
-                });
-              }}
-            >
-              로그아웃
-            </Button>
+            <>
+            <div>{name}</div>
+            <button type="click" onClick={() => {
+              Swal.fire({
+                icon: "question",
+                text: "로그아웃 하시겠습니까?",
+                showCancelButton: true,
+                confirmButtonText: "예",
+                cancelButtonText: "아니오",
+                confirmButtonColor: "#429f50",
+                cancelButtonColor: "#d33",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  localStorage.removeItem("token");
+                  localStorage.removeItem("role");
+                  setJWT(null);
+                }
+              });
+            }}><SlLogout size={'21px'}/></button></>
+            
+            
           )}
         </HeaderDiv>
         <Line />

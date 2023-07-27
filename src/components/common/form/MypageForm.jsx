@@ -30,7 +30,7 @@ const MypageForm = () => {
                     {isLoading ? <Loader/>:
                     <>
                      <MyInputGroup data={data?.data?.response?.nickName}>닉네임</MyInputGroup>
-                    <MyInputGroup data='비밀'>비밀번호</MyInputGroup></>
+                    <MyInputGroup data='*******'>비밀번호</MyInputGroup></>
                    
                     }
                     
