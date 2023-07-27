@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import Question from "../Resister/Question";
 import { useState, useEffect } from "react";
 import DoubleCheck from "../Resister/DoubleCheck";
+import { register } from "../../../services/user";
 import {
   emailCheck,
   passwordCheck,
@@ -49,6 +50,7 @@ const ResisterForm = () => {
       })
       .catch((e) => {
         setDoubleEmail(false);
+        console.log(e)
         Swal.fire({
           icon: 'warning',
           text: '동일한 이메일이 존재합니다.'
@@ -77,7 +79,7 @@ const ResisterForm = () => {
     (e) => {
       if (valueInit.username.length > 0) {
         setIsName(true);
-        setWhatName(valueInit.name);
+        setWhatName(valueInit.username);
       }
     },
     [valueInit.username]
@@ -138,7 +140,6 @@ const ResisterForm = () => {
           onClick={(e) => {
             console.log(whatEmail, isEmail)
             if (isEmail === true && whatEmail.length > 0) {
-              e.preventDefault();
               console.log(whatEmail);
               emailDoubleCheck(whatEmail);
             }
@@ -157,7 +158,14 @@ const ResisterForm = () => {
         ></InputGroup>
 
         <DoubleCheck
-          onClick={NameDoubleCheck}
+          onClick={()=>{
+            console.log(whatName)
+            if (isName === true && whatName?.length > 0) {
+              NameDoubleCheck(whatName);
+            }
+          }
+
+          }
         ></DoubleCheck>
 
         <InputGroup
@@ -218,11 +226,11 @@ const ResisterForm = () => {
               isPassword &&
               isPasswordConfirm
             ) {
-              // register({
-              //     "email": valueInit.email,
-              //     "password": valueInit.password,
-              //     "username": valueInit.username
-              // })
+              register({
+                  "email": valueInit.email,
+                  "password": valueInit.password,
+                  "nickName": valueInit.username
+              })
               Swal.fire({
                 icon: 'success',
                 title: '회원가입 성공!',
