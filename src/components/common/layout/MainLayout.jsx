@@ -1,10 +1,10 @@
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 
-const MainLayout = ({ children }) => {
+const MainLayout = ({ active,children }) => {
   return (
     <>
-      <Sidebar />
+      <Sidebar active={active} />
       <Header />
       {children}
     </>

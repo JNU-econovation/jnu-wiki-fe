@@ -2,11 +2,15 @@
 import styled from "styled-components";
 import Request from "./Request";
 import Title from "../Resister/Title";
+import Loader from "../../../constant/Loader";
 
-const RequestContain = ({border,datas,route,modi}) => {
+const RequestContain = ({isLoading,border,datas,route,modi}) => {
+    console.log(datas)
     return (
         <RequestContainCss border={border}>
-            {datas.length>0?
+            {/* {isLoading? <><Loader></Loader></>:null} */}
+            
+            {datas?.length>0?
                     datas.map((data) =>
                         (<Request key={data.docsRequestId} data={data} route={modi? `${route}/${data.docsId}/${data.docsRequestId}`:`${route}/${data.docsRequestId}`} />)
                     )

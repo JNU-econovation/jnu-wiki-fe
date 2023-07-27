@@ -14,7 +14,6 @@ const MyPage = () => {
     }, [JWT]);
 
     // const navigate = useNavigate();
-    console.log(JWT)
     return (
         <>
             <MainLayout>

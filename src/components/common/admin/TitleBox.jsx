@@ -3,7 +3,7 @@ const TitleBox = ({title,data}) => {
     return (
         <TitleBoxCss>
             {title}
-            {data.length>0 ?<Circle backgroundColor='#216D32'></Circle>:<Circle backgroundColor='#B6B6B6'></Circle>}
+            {data?.length>0 ?<Circle backgroundColor='#216D32'></Circle>:<Circle backgroundColor='#B6B6B6'></Circle>}
         </TitleBoxCss>
     );
 };
