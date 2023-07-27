@@ -9,9 +9,9 @@ const MapDiv = styled.div`
   z-index: -1;
 `
 
-const MapContainer = ({lat,lng}) => {
-   
-
+const MapContainer = ({location}) => {
+   const lat =location?.lat
+   const lng=location?.lng
     useEffect(() => {
 
         const container = document.getElementById('myMap');

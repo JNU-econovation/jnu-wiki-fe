@@ -105,24 +105,23 @@ const LoginForm = ({ marginBottom }) => {
                 login({
                   email: valueInit.email,
                   password: valueInit.password,
-                })
-                  .then((res) => {
-                    console.log(res);
-                    Swal.fire({
-                      icon: "success",
-                      title: "로그인 성공!",
-                      text: "홈 화면으로 이동합니다",
-                      confirmButtonColor: "#429f50",
-                    }).then((result) => {
-                      if (result.isConfirmed) {
-                        localStorage.setItem(
-                          "token",
-                          res.headers.authorization
-                        );
-                        localStorage.setItem("role", res.response.role);
-                        navigate(routes.home);
-                      }
-                    });
+                }).then((res) => {
+                  // console.log(JSON.parse(res.data));
+                 
+        
+
+                  Swal.fire({
+                    icon: 'success',
+                    title: '로그인 성공!',
+                    text: '홈 화면으로 이동합니다',
+                    confirmButtonColor: '#429f50',
+                  }).then(result => {
+                    if (result.isConfirmed) {
+                      
+                      localStorage.setItem("token", res.headers.authorization);
+                      localStorage.setItem("role", res.data.response.role);
+                      navigate(routes.home);
+                    }
                   })
                   .catch((err) => {
                     console.log(err);
@@ -133,8 +132,9 @@ const LoginForm = ({ marginBottom }) => {
                     }); //swal
                   }); //catch
               } //else
-            } //if
-          }} //onClick5
+  )} //if
+          }}} //onClick5
+  
         >
           로그인
         </Button>
