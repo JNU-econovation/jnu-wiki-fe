@@ -120,6 +120,7 @@ const LoginForm = ({ marginBottom }) => {
                       
                       localStorage.setItem("token", res.headers.authorization);
                       localStorage.setItem("role", res.data.response.role);
+                      // localStorage.setItem("nickname", res.data.response.nickname);
                       navigate(routes.home);
                     }
                   })
