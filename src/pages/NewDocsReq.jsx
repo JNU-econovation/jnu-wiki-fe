@@ -10,7 +10,7 @@ import { StyledButton } from "../components/common/document/CreateDocument";
 import EditInfo from "../components/common/admin/EditInfo";
 import { TitleP } from "./BasicInfoEditReq";
 import { newDocsRequest,newRequestApprove } from "../services/user";
-import { useQuery } from "@tanstack/react-query";
+import { isError, useQuery } from "@tanstack/react-query";
 import Loader from "../components/common/layout/Loader";
 import Swal from "sweetalert2";
 import routes from "../routes";
@@ -28,6 +28,7 @@ const NewDocsReq = () => {
     const {
         data,
         isLoading,
+        isError
         } = useQuery(['newrequest',id],()=>{
             console.log(id)
             return newDocsRequest(id)})  
@@ -99,7 +100,7 @@ const NewDocsReq = () => {
         <MainLayout>
             <Container>
                 <TitleP>기본 정보</TitleP>
-                {isLoading?<EditInfo><Loader/></EditInfo>:<>
+                {isLoading||isError?<EditInfo></EditInfo>:<>
                 <EditInfo child={Data?.docsRequestName} >문서 제목 </EditInfo>
                 <EditInfo child={Data?.docsRequestCategory} >카테고리</EditInfo>
                 <EditInfo address={address} >위치</EditInfo>
@@ -114,7 +115,7 @@ const NewDocsReq = () => {
             backgroundcolor="white"
             onClick={
                 ()=>{
-                    const payload={docs_request_type:Data?.docsRequestType,docs_request_id:Data?.docsRequestId}
+                    const payload=Data?.docsRequestId
                     rejectmutation.mutate(payload,{
                         onSuccess:()=>{
 
@@ -130,9 +131,7 @@ const NewDocsReq = () => {
                             title:`${error.status}`,
                             text: `error : ${error.data.error.message}`,
                             confirmButtonColor: '#de3020',
-                          })
-                     })
-                        })}}
+                        })})})}}
             >생성 반려</Button>
 
             <Button

@@ -26,24 +26,29 @@ const AdminBox = () => {
     //     Request2();
     // },[]);
     const {
+
         data:data1,
         isLoading:isLoading1,
+        isError:isError1,
+        error:error1
 
-        } = useQuery(['basicInfo'],()=>{
-            return basicInfoEditRequest()
-        })  
+        } = useQuery(['basicInfo'],basicInfoEditRequest)
+
     const {
         data:data2,
         isLoading:isLoading2,
+        isError:isError2,
+        error:error2
+        } = useQuery(['newInfo2'],newInfoCreateRequest);
 
-        } = useQuery(['newInfo'],()=>{
-            return newInfoCreateRequest()
-    }) 
     console.log(data1?.data?.response?.modifiedRequestList)
-    // console.log(data2)
+    console.log(data2?.data?.response?.createdRequestList)
+    console.log(error1)
+    console.log(error2)
 
     return (
         <AdminBoxCss>
+            
             
              <RequestContainerBox
              border=' 2px solid #F5F6FA;'
@@ -52,6 +57,7 @@ const AdminBox = () => {
              route={routes.basicInfoEditRequest}
              modi={true}
              isLoading={isLoading1}
+             isError={isError1}
              />
            
             
@@ -61,6 +67,7 @@ const AdminBox = () => {
             route={routes.newDocsRequest}
             modi={false}
             isLoading={isLoading2}
+            isError={isError2}
             />
             
 

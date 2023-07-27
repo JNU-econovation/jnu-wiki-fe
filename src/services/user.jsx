@@ -59,15 +59,16 @@ export const docsRequest =(docs_id)=>{
 
 
 //admin request 
-export const newRequestApprove =async(docs_request_id)=>{
-    return await instance.post(`admin/approve/new/${docs_request_id}`)
+export const newRequestApprove =async(docsRequestId)=>{
+    return await instance.post(`admin/approve/new/${docsRequestId}`)
 }
 
-export const requestReject =async(docs_request_id)=>{
-    return await instance.post(`admin/reject/${docs_request_id}`)
+export const requestReject =async(docsRequestId)=>{
+    console.log(docsRequestId)
+    return await instance.post(`admin/reject/${docsRequestId}`)
 }
 
-export const editRequestApprove =async(docs_request_id)=>{
-    return await instance.post(`admin/approve/update/${docs_request_id}`)
+export const editRequestApprove =async(docsRequestId)=>{
+    return await instance.post(`admin/approve/update/${docsRequestId}`)
 }
 
