@@ -79,7 +79,8 @@ const DocsList = () => {
         },
       },
     ]);
-    selectedDocs.length > 0 && navigate(routes.documentPage);
+    selectedDocs.length > 0 &&
+      navigate(routes.documentPage, { state: selectedDocs[0] });
   };
 
   if (data && data.pages && Array.isArray(data.pages)) {
@@ -96,7 +97,7 @@ const DocsList = () => {
               onClick={() => handleOnClick(el)}
             />
           ))}
-          {selectedDocs.length > 0 && <DocumentPage docs={selectedDocs[0]} />}
+          {/* {selectedDocs.length > 0 && <DocumentPage docs={selectedDocs[0]} />} */}
           <div style={{ height: "50px" }} ref={bottomObserver}></div>
           {isLoading && !hasNextPage && <Loader />}
         </Container>
