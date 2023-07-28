@@ -49,7 +49,7 @@ const CreateDocument = () => {
   });
 
   const data = {
-    docsCategory: category || "CAFE",
+    docsCategory: category || "카페",
     docsName: valueInit.docsName,
     docsLocation: { lat: latitude, lng: longitude },
   };
