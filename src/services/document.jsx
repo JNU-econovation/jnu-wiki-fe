@@ -19,7 +19,7 @@ export const detailDocument = (id = 1) => {
 };
 
 export const docsList = (page = 0) => {
-  return instance.get("/docs/" + "?page=" + page);
+  return instance.get("/docs" + "?page=" + page);
 };
 
 export const basicModify = (data) => {
