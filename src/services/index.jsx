@@ -2,7 +2,7 @@ import axios from "axios";
 import routes from "../routes";
 
 export const instance = axios.create({
-  baseURL: import.meta.VITE_APP_API_URL,
+  baseURL: "http://localhost:8080",
   timeout: 1000 * 5,
   headers: {
     "Content-Type": "application/json",
@@ -12,7 +12,7 @@ export const instance = axios.create({
 instance.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
   if (token) {
-    config.headers["Authorization"] = `Bearer ${token}`;
+    config.headers["Authorization"] = `${token}`;
   }
   return config;
 });
