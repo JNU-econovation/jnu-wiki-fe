@@ -33,12 +33,11 @@ const DocsList = () => {
       {
         getNextPageParam: (currentPage, allPages) => {
           const nextPage = allPages.length;
-          return nextPage > 2 ? null : nextPage;
+          return nextPage > 3 ? null : nextPage;
         },
       }
     );
 
-  console.log(data);
   useEffect(() => {
     const io = new IntersectionObserver(
       (entries) => {
@@ -97,7 +96,6 @@ const DocsList = () => {
               onClick={() => handleOnClick(el)}
             />
           ))}
-          {/* {selectedDocs.length > 0 && <DocumentPage docs={selectedDocs[0]} />} */}
           <div style={{ height: "50px" }} ref={bottomObserver}></div>
           {isLoading && !hasNextPage && <Loader />}
         </Container>
