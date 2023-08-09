@@ -121,7 +121,7 @@ const Document = ({ id }) => {
     setEdit(!edit);
     mutationBasicModify({
       docsId: id,
-      docsRequestCategory: category,
+      docsRequestCategory: category || docsCategory,
       docsRequestName: valueInit.docsName,
       requestLocation: { lat: getLat, lng: getLng },
     });
