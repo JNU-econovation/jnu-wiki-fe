@@ -90,10 +90,13 @@ const Map = ({ apiLat, apiLng }) => {
         let latposition = mouseEvent.latLng.getLat();
         let lngposition = mouseEvent.latLng.getLng();
 
-        let latitude = Math.round(latposition * 10000) / 10000;
-        let longitude = Math.round(lngposition * 10000) / 10000;
+        // let latitude = Math.round(latposition * 10000) / 10000;
+        // let longitude = Math.round(lngposition * 10000) / 10000;
 
-        dispatch({ type: "getLatLng", payload: { latitude, longitude } });
+        dispatch({
+          type: "getLatLng",
+          payload: { latitude: latposition, longitude: lngposition },
+        });
 
         if (status === kakao.maps.services.Status.OK) {
           let detailAddr = result[0].road_address
@@ -129,22 +132,9 @@ const Map = ({ apiLat, apiLng }) => {
     });
   };
 
-  // const requestLatitude = useSelector(
-  //   (state) => state.requestLatLng.requestLat
-  // );
-  // const requestLongitude = useSelector(
-  //   (state) => state.requestLatLng.requestLng
-  // );
-
-  // let requestLat = Math.round(requestLatitude * 10000) / 10000;
-  // let requestLng = Math.round(requestLongitude * 10000) / 10000;
-
   const setAddress = useCallback(() => {
     // 백엔드에서 보내준 좌표대로 주소 출력
     let geocoder = new kakao.maps.services.Geocoder();
-
-    // apiLat === undefined ? requestLat : apiLat;
-    // apiLng === undefined ? requestLng : apiLng;
 
     let coord = new kakao.maps.LatLng(apiLat, apiLng);
     let callback = function (result, status) {
