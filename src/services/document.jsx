@@ -19,13 +19,14 @@ export const detailDocument = (id = 1) => {
 };
 
 export const docsList = (page = 0) => {
-  return instance.get("/docs" + "?page=" + page);
+  return instance.get("/docs/" + "?page=" + page);
 };
 
 export const basicModify = (data) => {
-  const { docsRequestId, docsRequestCategory, docsRequestName, docsRequestLocation } = data;
+  const { docsId, docsRequestCategory, docsRequestName, docsRequestLocation } =
+    data;
   return instance.post("/requests/update", {
-    docsRequestId,
+    docsId,
     docsRequestCategory,
     docsRequestName,
     docsRequestLocation,

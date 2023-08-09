@@ -2,7 +2,7 @@ import axios from "axios";
 import routes from "../routes";
 
 export const instance = axios.create({
-  baseURL: 'http://localhost:8080/',
+  baseURL: import.meta.VITE_APP_API_URL,
   timeout: 1000 * 5,
   headers: {
     "Content-Type": "application/json",
