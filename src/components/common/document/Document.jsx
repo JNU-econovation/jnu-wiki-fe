@@ -80,12 +80,7 @@ const Document = ({ id }) => {
   const docsCreatedAt = data?.data.response.docsCreatedAt;
   let docsContent = data?.data.response.docsContent;
 
-  const { address } = useSelector((state) => state.address);
-  const [initialAddress, setInitialAddress] = useState("");
-
-  useEffect(() => {
-    setInitialAddress(address);
-  }, []);
+  let { address, initialAddress } = useSelector((state) => state.address);
 
   const { valueInit, handleOnChange, reset } = useInput({
     docsCategory,
@@ -119,7 +114,6 @@ const Document = ({ id }) => {
     setEdit(!edit);
     setSave(!save);
 
-    // ❗handleInput이 실행되면 항상 docsName으로 초기화되는 문제가 발생
     valueInit.docsName = docsName;
   };
 
@@ -216,7 +210,7 @@ const Document = ({ id }) => {
               <StyledInput
                 htmlFor="docsLocation"
                 id="docsLocation"
-                placeholder={address}
+                placeholder={initialAddress}
                 value={address}
                 disabled
                 onChange={handleOnChange}
