@@ -111,7 +111,10 @@ const Map = ({ apiLat, apiLng }) => {
             ? result[0].road_address.address_name
             : result[0].address.address_name;
 
-          dispatch({ type: "getAddress", payload: payloadAddress });
+          dispatch({
+            type: "getAddress",
+            payload: { address: payloadAddress },
+          });
 
           let content = '<div class="bAddr">' + detailAddr + "</div>";
 
@@ -142,7 +145,14 @@ const Map = ({ apiLat, apiLng }) => {
         const payloadAddress = result[0].road_address
           ? result[0].road_address.address_name
           : result[0].address.address_name;
-        dispatch({ type: "getAddress", payload: payloadAddress });
+        dispatch({
+          type: "getAddress",
+          payload: { address: payloadAddress },
+        });
+        dispatch({
+          type: "initialAddress",
+          payload: { initialAddress: payloadAddress },
+        });
       }
     };
     marker.setPosition(new kakao.maps.LatLng(apiLat, apiLng));
