@@ -9,7 +9,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { detailDocument } from "../../../services/document";
 import { contentModify, basicModify } from "../../../services/document";
 import { useSelector, useDispatch } from "react-redux";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import MDEditor from "@uiw/react-md-editor";
 import useInput from "../../../hooks/useInput";
 import Skeleton from "../layout/Skeleton";
@@ -79,9 +79,14 @@ const Document = ({ id }) => {
   const docsCategory = data?.data.response.docsCategory;
   const docsCreatedAt = data?.data.response.docsCreatedAt;
   let docsContent = data?.data.response.docsContent;
-  const { address } = useSelector((state) => state.address);
 
-  // 데이터를 커스텀 훅에 선언
+  const { address } = useSelector((state) => state.address);
+  const [initialAddress, setInitialAddress] = useState("");
+
+  useEffect(() => {
+    setInitialAddress(address);
+  }, []);
+
   const { valueInit, handleOnChange, reset } = useInput({
     docsCategory,
     docsName,
@@ -118,16 +123,13 @@ const Document = ({ id }) => {
     valueInit.docsName = docsName;
   };
 
-  const isToastShownRef = useRef(false);
-
   const handleBasicSave = () => {
     setEdit(!edit);
-
     mutationBasicModify({
       docsId: id,
       docsRequestCategory: category,
       docsRequestName: valueInit.docsName,
-      docsRequestLocation: { lat: getLat, lng: getLng },
+      requestLocation: { lat: getLat, lng: getLng },
     });
 
     toast.info("관리자 승인 후 갱신됩니다.", {
@@ -220,7 +222,7 @@ const Document = ({ id }) => {
                 onChange={handleOnChange}
               />
             ) : (
-              address
+              initialAddress
             )}
           </InfoGroup>
           <InfoGroup htmlFor="category" label="카테고리">
@@ -282,19 +284,6 @@ const Document = ({ id }) => {
             docsContent
           )}
         </Description>
-        <ToastContainer
-          ref={isToastShownRef}
-          position="top-right" // 알람 위치 지정
-          autoClose={3000} // 자동 off 시간
-          hideProgressBar={false} // 진행시간바 숨김
-          closeOnClick // 클릭으로 알람 닫기
-          rtl={false} // 알림 좌우 반전
-          pauseOnFocusLoss // 화면을 벗어나면 알람 정지
-          draggable // 드래그 가능
-          pauseOnHover // 마우스를 올리면 알람 정지
-          theme="light"
-          // limit={1} // 알람 개수 제한
-        />
       </Group>
     </>
   );
