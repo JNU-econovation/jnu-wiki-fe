@@ -23,12 +23,12 @@ export const docsList = (page = 0) => {
 };
 
 export const basicModify = (data) => {
-  const { docsId, docsCategory, docsName, docsLocation } = data;
+  const { docsRequestId, docsRequestCategory, docsRequestName, docsRequestLocation } = data;
   return instance.post("/requests/update", {
-    docsId,
-    docsCategory,
-    docsName,
-    docsLocation,
+    docsRequestId,
+    docsRequestCategory,
+    docsRequestName,
+    docsRequestLocation,
   });
 };
 
