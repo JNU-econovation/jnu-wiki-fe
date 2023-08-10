@@ -17,7 +17,7 @@ const StyledSelected = styled.select`
     outline: 1.5px solid #216d32;
   }
 `;
-const SelectMenu = ({ name, id, value }) => {
+const SelectMenu = ({ name, id, value, placeholder }) => {
   const dispatch = useDispatch();
 
   const handleCategoryChange = () => {
@@ -31,6 +31,7 @@ const SelectMenu = ({ name, id, value }) => {
       id={id}
       value={value}
       onChange={handleCategoryChange}
+      placeholder={placeholder}
       required
     >
       {category.map((item) => (
