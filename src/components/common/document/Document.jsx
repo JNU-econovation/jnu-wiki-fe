@@ -31,7 +31,7 @@ const Group = styled.div`
 
   #docsName,
   #docsLocation,
- {
+  #docsCategory {
     width: fit-content;
     height: fit-content;
     margin-top: -4rem;
