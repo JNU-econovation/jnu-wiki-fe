@@ -136,7 +136,7 @@ console.log(docsRequestId)
   return (
     <>
       <MainLayout>
-        <Container>
+        <Container id='admin'>
           <TitleP>기본 정보</TitleP>
           {basicLoading||modiLoading ? <EditInfo><Loader/></EditInfo>:
           <><EditInfo
