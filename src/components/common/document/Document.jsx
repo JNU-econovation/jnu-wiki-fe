@@ -121,9 +121,10 @@ const Document = ({ id }) => {
     setEdit(!edit);
     mutationBasicModify({
       docsId: id,
+      docsRequestType: "MODIFIED",
       docsRequestCategory: category || docsCategory,
       docsRequestName: valueInit.docsName,
-      requestLocation: { lat: getLat, lng: getLng },
+      docsRequestLocation: { lat: getLat, lng: getLng },
     });
 
     toast.info("관리자 승인 후 갱신됩니다.", {
