@@ -9,7 +9,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { detailDocument } from "../../../services/document";
 import { contentModify, basicModify } from "../../../services/document";
 import { useSelector, useDispatch } from "react-redux";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import MDEditor from "@uiw/react-md-editor";
 import useInput from "../../../hooks/useInput";
 import Skeleton from "../layout/Skeleton";
@@ -42,7 +42,7 @@ const Box = styled.div`
   margin: 1rem 0 2rem 0;
 `;
 
-const ContentTime = styled.div`
+const ContentHeading = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: stretch;
@@ -74,16 +74,14 @@ const Document = ({ id }) => {
   let getLat = useSelector((state) => state.latLng.latitude);
   let getLng = useSelector((state) => state.latLng.longitude);
 
-  const dispatch = useDispatch();
-
   // 데이터 선언
   const docsName = data?.data.response.docsName;
   const docsCategory = data?.data.response.docsCategory;
   const docsCreatedAt = data?.data.response.docsCreatedAt;
   let docsContent = data?.data.response.docsContent;
-  const { address } = useSelector((state) => state.address);
 
-  // 데이터를 커스텀 훅에 선언
+  let { address, initialAddress } = useSelector((state) => state.address);
+
   const { valueInit, handleOnChange, reset } = useInput({
     docsCategory,
     docsName,
@@ -116,34 +114,21 @@ const Document = ({ id }) => {
     setEdit(!edit);
     setSave(!save);
 
-    // ❗handleInput이 실행되면 항상 docsName으로 초기화되는 문제가 발생
     valueInit.docsName = docsName;
   };
-  const isToastShownRef = useRef(false);
+
   const handleBasicSave = () => {
     setEdit(!edit);
-    if (!isToastShownRef.current) {
-      mutationBasicModify({
-        docsId: id,
-        docsCategory: category,
-        docsName: valueInit.docsName,
-        docsLocation: { lat: getLat, lng: getLng },
-      });
-      toast.success("관리자 승인 후 갱신됩니다.", {
-        position: "top-right",
-        autoClose: 3000,
-      });
-      isToastShownRef.current = true;
-    }
+    mutationBasicModify({
+      docsId: id,
+      docsRequestCategory: category || docsCategory,
+      docsRequestName: valueInit.docsName,
+      requestLocation: { lat: getLat, lng: getLng },
+    });
+
     toast.info("관리자 승인 후 갱신됩니다.", {
       position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
+      autoClose: 3000,
     });
   };
 
@@ -182,7 +167,6 @@ const Document = ({ id }) => {
     <>
       {isLoading && <Skeleton />}
       <ToastContainer
-        ref={isToastShownRef}
         position="top-right"
         autoClose={3000}
         hideProgressBar={false}
@@ -226,13 +210,13 @@ const Document = ({ id }) => {
               <StyledInput
                 htmlFor="docsLocation"
                 id="docsLocation"
-                placeholder={address}
+                placeholder={initialAddress}
                 value={address}
                 disabled
                 onChange={handleOnChange}
               />
             ) : (
-              address
+              initialAddress
             )}
           </InfoGroup>
           <InfoGroup htmlFor="category" label="카테고리">
@@ -240,6 +224,7 @@ const Document = ({ id }) => {
               <StyledSpan>
                 <SelectMenu
                   id="docsCategory"
+                  placeholder={valueInit.docsCategory}
                   value={category}
                   onChange={handleOnChange}
                 />
@@ -249,7 +234,7 @@ const Document = ({ id }) => {
             )}
           </InfoGroup>
         </Box>
-        <ContentTime>
+        <ContentHeading>
           <DocumentHeading
             className="content"
             contentType={editContent}
@@ -260,8 +245,7 @@ const Document = ({ id }) => {
             내용
           </DocumentHeading>
           <DocumentTime className="time">{docsCreatedAt}</DocumentTime>
-        </ContentTime>
-        <div className="markarea"></div>
+        </ContentHeading>
         <Description>
           {editContent ? (
             <EditorContainer className="container">
@@ -295,18 +279,6 @@ const Document = ({ id }) => {
             docsContent
           )}
         </Description>
-        <ToastContainer
-          position="top-right" // 알람 위치 지정
-          autoClose={3000} // 자동 off 시간
-          hideProgressBar={false} // 진행시간바 숨김
-          closeOnClick // 클릭으로 알람 닫기
-          rtl={false} // 알림 좌우 반전
-          pauseOnFocusLoss // 화면을 벗어나면 알람 정지
-          draggable // 드래그 가능
-          pauseOnHover // 마우스를 올리면 알람 정지
-          theme="light"
-          // limit={1} // 알람 개수 제한
-        />
       </Group>
     </>
   );
