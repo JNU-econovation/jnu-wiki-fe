@@ -10,10 +10,10 @@ const DocumentPage = () => {
   return (
     <>
       <MainLayout>
-        <Document id={receivedData.id} />
+        <Document id={receivedData?.id} />
         <Map
-          apiLat={receivedData.docsLocation.lat}
-          apiLng={receivedData.docsLocation.lng}
+          apiLat={receivedData?.docsLocation.lat}
+          apiLng={receivedData?.docsLocation.lng}
         />
       </MainLayout>
     </>
