@@ -8,7 +8,7 @@ import { GoHomeFill } from "react-icons/go";
 import { FaPenSquare } from "react-icons/fa";
 import { HiMiniUserGroup } from "react-icons/hi2";
 import { AiTwotoneSetting } from "react-icons/ai";
-import { SlDocs } from "react-icons/Sl";
+import { IoDocumentTextSharp } from "react-icons/io5";
 import { useLocation } from "react-router-dom";
 
 const Container = styled.div`
@@ -90,7 +90,7 @@ function Sidebar() {
             handleClick("viewPost");
           }}
           name="View Posts"
-          icons={<SlDocs />}
+          icons={<IoDocumentTextSharp />}
           // route={routes.documentList}
         ></MenuList>
         <MenuList
