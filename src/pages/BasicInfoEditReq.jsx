@@ -199,7 +199,7 @@ const results = useQueries({
           </StyledButton>
         </Container>
         <MapContainer
-          location={results[1]?.data?.data?.response?.docsRequestLocation}
+          location={results[1]?.data?.data?.response?.docsRequestLocation ? results[1]?.data?.data?.response?.docsRequestLocation:results[0]?.data?.data?.response?.docsLocation}
           //나중에 마커 두개 찍히게 바꿔야겠다....
         ></MapContainer>
       </MainLayout>
