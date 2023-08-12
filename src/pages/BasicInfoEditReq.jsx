@@ -3,20 +3,18 @@ import MainLayout from "../components/common/layout/MainLayout";
 import { Container } from "../components/common/document/CreateDocument";
 import styled from "styled-components";
 import MapContainer from "../components/Map/MapContainer";
-import { Test4 } from "../components/common/admin/TestData";
 import { useState, useEffect } from "react";
 import Button from "../components/common/layout/Button";
 import { StyledButton } from "../components/common/document/CreateDocument";
 import EditInfo from "../components/common/admin/EditInfo";
-import { modifyData } from "../components/common/admin/TestData";
 import { requestReject,editRequestApprove } from "../services/user";
 import Swal from "sweetalert2";
 import routes from "../routes";
 import { useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation ,useQueries } from "@tanstack/react-query";
 import { docsRequest,editDocsRequest } from "../services/user";
 import Loader from "../components/common/layout/Loader";
-import { useMutation } from "@tanstack/react-query";
+
 const { kakao } = window;
 export const TitleP = styled.p`
   font-weight: 900;
@@ -34,22 +32,6 @@ const BasicInfoEditReq = () => {
     const navigate = useNavigate();
   const [address, setAddress] = useState("");
   const [modiAddress, setModiAddress] = useState("");
-  const [Ok1, setOk1] = useState(false);
-  const [Ok2, setOk2] = useState(false);
-
-  const [Data, setData] = useState({
-	"docsId" : "",
-    "docsName" : "",
-    "docsCategory" : "",
-    "docsLocation" :  { lat: "", lng: "" },
-  });
-  const [ModiData, setModiData] = useState({
-    "docsRequestId":'',
-    "docsRequestCategory": "",
-    "docsRequestName": "",
-    "docsReqeustLocation": { lat: "", lng: "" },
-    //이거 경도 위도 주소로 바꾸기
-  });
 
   const mutation = useMutation({
     mutationFn:()=>editRequestApprove(docsRequestId)
@@ -57,46 +39,29 @@ const BasicInfoEditReq = () => {
 const rejectmutation = useMutation({
     mutationFn:()=>requestReject(docsRequestId)
  })
-console.log(docsRequestId)
-  const {
-    data:basicData, 
-    isLoading:basicLoading,
-    } = useQuery(['basicrequest',docsId],()=>{
-        return docsRequest(docsId)})  
 
-     
-    const {
-        data:modiData,
-        isLoading:modiLoading,
-        } = useQuery(['modirequest',docsRequestId],()=>{
-            return editDocsRequest(docsRequestId)})
 
-    
-            
-            
-  useEffect(() => {
-    setData(basicData?.data?.response);
-    setOk1((ok) => !ok);
-  }, [Data]);
-  useEffect(() => {
-    setModiData(modiData?.data?.response);
-    setOk2((ok) => !ok);
-  }, [ModiData]);
+const results = useQueries({
+  queries: [
+    { queryKey: ['basicrequest',docsId], queryFn:async ()=>{return await docsRequest(docsId)}},
+    { queryKey: ['modirequest',docsRequestId], queryFn:async ()=>{return await editDocsRequest(docsRequestId)}}
+  ]
+})          
 
 
   useEffect(() => {
     map();
-  }, [Ok1, Data, ModiData]);
+  }, [results]);
 
   const map = () => {
     const geocoder = new kakao.maps.services.Geocoder();
     const coord = new kakao.maps.LatLng(
-      Data?.docsLocation?.lat,
-      Data?.docsLocation?.lng
+      results[0]?.data?.data?.response?.docsLocation?.lat,
+      results[0]?.data?.data?.response?.docsLocation?.lng
     );
     const coord2 = new kakao.maps.LatLng(
-      ModiData?.docsReqeustLocation?.lat,
-      ModiData?.docsReqeustLocation?.lng
+      results[1]?.data?.data?.response?.docsRequestLocation?.lat,
+      results[1]?.data?.data?.response?.docsRequestLocation?.lng
     );
     const callback1 = function (result, status) {
       if (status === kakao.maps.services.Status.OK) {
@@ -126,34 +91,36 @@ console.log(docsRequestId)
     const LonLaToAdress2 = () => {
       geocoder.coord2Address(coord2.getLng(), coord2.getLat(), callback2);
     };
-    if (Ok1) {
+    if(results[0].isSuccess&&results[1].isSuccess){
       LonLaToAdress1();
-    } else if (Ok2) {
       LonLaToAdress2();
     }
+      
+    
   };
 
   return (
     <>
       <MainLayout>
-        <Container>
+        <Container id='admin'>
           <TitleP>기본 정보</TitleP>
-          {basicLoading||modiLoading ? <EditInfo><Loader/></EditInfo>:
+          {results[0].isLoading||results[1].isLoading ? <EditInfo><Loader/></EditInfo>:
           <><EditInfo
-          child={Data&&ModiData? Data.docsName:null}
-          modify={Data&&ModiData? ModiData.docsRequestName:null}
+          child={results[0].isSuccess? results[0]?.data?.data?.response?.docsName:null}
+          modify={results[0].isSuccess? results[1]?.data?.data?.response?.docsRequestName:null}
           textDecoration={true}
         >
           문서 제목{" "}
         </EditInfo>
         <EditInfo
-          child={Data&&ModiData? Data.docsCategory:null}
-          modify={ Data&&ModiData? ModiData.docsRequestCategory:null}
+          child={results[0].isSuccess? results[0]?.data?.data?.response?.docsCategory:null}
+          modify={ results[0].isSuccess? results[1]?.data?.data?.response?.docsRequestCategory:null}
           textDecoration={true}
         >
           카테고리
         </EditInfo>
-        {address ? (
+        {
+        address ? (
           <EditInfo
             address={address}
             modify={modiAddress}
@@ -176,7 +143,7 @@ console.log(docsRequestId)
               backgroundcolor="white"
               onClick={
                 ()=>{
-                        const payload=ModiData?.docsRequestId
+                        const payload=results[1]?.data?.data?.response?.docsRequestId
                         rejectmutation.mutate(payload,{
                             onSuccess:()=>{
     
@@ -207,8 +174,8 @@ console.log(docsRequestId)
               border="none"
               backgroundcolor="primary"
               onClick={(e) => {
-                console.log(ModiData?.docsRequestId);
-                const updatePayload=ModiData?.docsRequestId
+                console.log(results[1]?.data?.data?.response?.docsRequestId);
+                const updatePayload=results[1]?.data?.data?.response?.docsRequestId
                 mutation.mutate(updatePayload,{
                     onSuccess:(data)=>{
                         Swal.fire({
@@ -232,7 +199,7 @@ console.log(docsRequestId)
           </StyledButton>
         </Container>
         <MapContainer
-          location={ModiData?.docsRequestLocation}
+          location={results[1]?.data?.data?.response?.docsRequestLocation ? results[1]?.data?.data?.response?.docsRequestLocation:results[0]?.data?.data?.response?.docsLocation}
           //나중에 마커 두개 찍히게 바꿔야겠다....
         ></MapContainer>
       </MainLayout>

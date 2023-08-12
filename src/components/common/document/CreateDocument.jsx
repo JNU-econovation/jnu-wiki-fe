@@ -28,6 +28,7 @@ export const Container = styled.div`
     height: 2.4rem;
     margin-top: 0.7rem;
   }
+  width: 22rem;
 `;
 
 export const StyledButton = styled.div`
