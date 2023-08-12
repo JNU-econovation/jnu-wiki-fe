@@ -64,7 +64,6 @@ export const newRequestApprove =async(docsRequestId)=>{
 }
 
 export const requestReject =async(docsRequestId)=>{
-    console.log(docsRequestId)
     return await instance.post(`admin/reject/${docsRequestId}`)
 }
 
