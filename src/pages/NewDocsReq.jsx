@@ -1,9 +1,7 @@
 import { useParams } from "react-router-dom";
 import MainLayout from "../components/common/layout/MainLayout";
 import { Container } from "../components/common/document/CreateDocument";
-import styled from "styled-components";
 import MapContainer from "../components/Map/MapContainer";
-import { Test3 } from "../components/common/admin/TestData";
 import { useEffect, useState } from "react";
 import Button from "../components/common/layout/Button";
 import { StyledButton } from "../components/common/document/CreateDocument";
@@ -16,14 +14,13 @@ import Swal from "sweetalert2";
 import routes from "../routes";
 import { useNavigate } from "react-router-dom";
 import { requestReject } from "../services/user";
-import { useMutation } from "@tanstack/react-query";
-//import { useDispatch } from "react-redux";
+import { useMutation,useQueries } from "@tanstack/react-query";
+
 const { kakao } = window;
 
 const NewDocsReq = () => {
     const { id } = useParams()
-    //console.log(id)
-    //const 
+
     const navigate = useNavigate();
     const {
         data,
@@ -32,11 +29,6 @@ const NewDocsReq = () => {
         } = useQuery(['newrequest',id],()=>{
             console.log(id)
             return newDocsRequest(id)})  
- 
-    // const {mutate} = useMutation({
-    //     mutationFn:newRequestApprove,
-    // })
-
 
 
     const [Ok,setOk]=useState(false);
