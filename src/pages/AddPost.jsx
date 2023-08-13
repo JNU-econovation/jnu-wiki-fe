@@ -1,5 +1,4 @@
-import Sidebar from "../components/common/layout/Sidebar";
-import Header from "../components/common/layout/Header";
+import MainLayout from "../components/common/layout/MainLayout";
 import Map from "../components/common/layout/Map";
 import CreateDocument from "../components/common/document/CreateDocument";
 import { useState } from "react";
@@ -28,9 +27,12 @@ const AddPost = () => {
   };
   return (
     <>
-      <Sidebar onClick={handleShow} />
-      <Header />
-      <DocumentWrapper>{show ? <CreateDocument /> : undefined}</DocumentWrapper>
+      <MainLayout onClick={handleShow} />
+      {show ? (
+        <DocumentWrapper>
+          <CreateDocument />
+        </DocumentWrapper>
+      ) : undefined}
       <Map />
     </>
   );
