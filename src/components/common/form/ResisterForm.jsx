@@ -19,6 +19,16 @@ import Swal from "sweetalert2";
 import { nicknameDoubleCheck } from "../../../services/user";
 import { emailDBCheck } from "../../../services/user";
 import Title from "../Resister/Title";
+import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
+
+export const Icons = styled.div`
+  position: relative;
+  left: 23.5rem;
+  bottom: 4.2rem;
+  font-size: 1.5rem;
+  color: #123e1cb8;
+`;
+
 const ResisterForm = () => {
   //registerform 으로 바꾸기...ㅎ
 
@@ -58,9 +68,9 @@ const ResisterForm = () => {
         });
     }
   };
-  const NameDoubleCheck = (whatName) => {
-    if (isName === true && whatName?.length > 0) {
-      nicknameDoubleCheck(whatName)
+  const NameDoubleCheck = (name) => {
+    if (isName === true && name?.length > 0) {
+      nicknameDoubleCheck(name)
         .then((e) => {
           setDoubleName(true);
           Swal.fire({
@@ -80,9 +90,9 @@ const ResisterForm = () => {
 
   useEffect(
     (e) => {
+      setWhatName(valueInit.username);
       if (valueInit.username.length > 0) {
         setIsName(true);
-        setWhatName(valueInit.username);
       }
     },
     [valueInit.username]
@@ -172,6 +182,44 @@ const ResisterForm = () => {
     }
   };
 
+  const [pwVisible, setpwVisible] = useState({
+    type: "password",
+    visible: false,
+    icons: <AiFillEyeInvisible />,
+  });
+  const [pwVisible2, setpwVisible2] = useState({
+    type: "password",
+    visible: false,
+    icons: <AiFillEyeInvisible />,
+  });
+
+  const handlePasswordType = (e) => {
+    setpwVisible(() => {
+      if (pwVisible.visible) {
+        return {
+          type: "password",
+          visible: false,
+          icons: <AiFillEyeInvisible />,
+        };
+      } else {
+        return { type: "text", visible: true, icons: <AiFillEye /> };
+      }
+    });
+  };
+  const handlePasswordType2 = (e) => {
+    setpwVisible2(() => {
+      if (pwVisible2.visible) {
+        return {
+          type: "password",
+          visible: false,
+          icons: <AiFillEyeInvisible />,
+        };
+      } else {
+        return { type: "text", visible: true, icons: <AiFillEye /> };
+      }
+    });
+  };
+  //이것도 훅으로 만들기......
   return (
     <>
       <Container onKeyPress={EnterJoin}>
@@ -183,7 +231,6 @@ const ResisterForm = () => {
           반가워요! 회원가입 후 <Strong>10</Strong>일이 지나면 글작성이 가능해요
           :)
         </Title>
-
         <InputGroup
           id="email"
           type="email"
@@ -196,8 +243,10 @@ const ResisterForm = () => {
           para={isEmail ? null : "이메일 형식으로 작성해주세요. "}
           margin={true}
         />
-        <DoubleCheck onClick={() => emailDoubleCheck(whatEmail)}></DoubleCheck>
-
+        <DoubleCheck
+          active={isEmail && whatEmail.length > 0 ? "true" : "false"}
+          onClick={() => emailDoubleCheck(whatEmail)}
+        ></DoubleCheck>
         <InputGroup
           id="username"
           type="text"
@@ -208,12 +257,13 @@ const ResisterForm = () => {
           para={isName ? null : "필수 입력사항 입니다."}
           margin={true}
         ></InputGroup>
-
-        <DoubleCheck onClick={(e) => NameDoubleCheck(whatName)}></DoubleCheck>
-
+        <DoubleCheck
+          active={isName && whatName.length > 0 ? "true" : "false"}
+          onClick={(e) => NameDoubleCheck(whatName)}
+        ></DoubleCheck>
         <InputGroup
           id="password"
-          type="password"
+          type={pwVisible.type}
           placeholder="비밀번호를 입력하세요."
           label="비밀번호"
           value={valueInit.password}
@@ -227,9 +277,10 @@ const ResisterForm = () => {
           }
           margin={false}
         />
+        <Icons onClick={handlePasswordType}>{pwVisible.icons}</Icons>
         <InputGroup
           id="passwordConfirm"
-          type="password"
+          type={pwVisible2.type}
           placeholder="비밀번호 확인."
           label="비밀번호 확인"
           value={valueInit.passwordConfirm}
@@ -239,7 +290,7 @@ const ResisterForm = () => {
           para={isPasswordConfirm ? null : "비밀번호가 다릅니다."}
           margin={false}
         />
-
+        <Icons onClick={handlePasswordType2}>{pwVisible2.icons}</Icons>
         <Button margin="1rem 0 3rem 0" onClick={GoJoin}>
           회원가입
         </Button>
