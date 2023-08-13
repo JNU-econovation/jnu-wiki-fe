@@ -45,3 +45,7 @@ export const contentModify = (data) => {
     docsContent,
   });
 };
+
+export const searchDocs = (text) => {
+  return instance.get("/docs/search" + "?search=" + text);
+};
