@@ -1,10 +1,12 @@
 import styled from "styled-components";
 
-const Container = ({ children, marginBottom }) => {
-  return <ContainerCss marginBottom={marginBottom}>{children}</ContainerCss>;
+const Container = ({ children, marginBottom,onKeyPress }) => {
+  return <ContainerCss 
+      onKeyPress={onKeyPress}
+      marginBottom={marginBottom}>{children}</ContainerCss>;
 };
 
-const ContainerCss = styled.div`
+const ContainerCss = styled.form`
   background-color: #ffffff;
   border: 0.5px solid #878787;
   border-radius: 0.5rem;
