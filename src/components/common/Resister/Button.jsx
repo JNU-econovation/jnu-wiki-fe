@@ -15,7 +15,8 @@ const Btn = styled.button`
 
 const Button = ({ onClick, children, margin }) => {
     return (
-        <Btn margin={margin} onClick={(e) => {
+        <Btn margin={margin} 
+            onClick={(e) => {
             e.preventDefault();
             onClick();
         }}>
