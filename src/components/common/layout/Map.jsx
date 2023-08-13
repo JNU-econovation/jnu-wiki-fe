@@ -47,7 +47,6 @@ const MapDiv = styled.div`
 `;
 
 const Map = memo(({ apiLat, apiLng }) => {
-  console.log("map");
   const dispatch = useDispatch();
   useEffect(() => {
     mapscript();
