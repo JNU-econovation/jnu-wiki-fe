@@ -10,6 +10,7 @@ const AddPost = () => {
   const handleShow = () => {
     setShow(!show);
   };
+
   return (
     <>
       <MainLayout onClick={handleShow} />
