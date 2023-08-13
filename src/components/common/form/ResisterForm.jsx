@@ -20,7 +20,6 @@ import { nicknameDoubleCheck } from "../../../services/user";
 import { emailDBCheck } from "../../../services/user";
 import Title from "../Resister/Title";
 const ResisterForm = () => {
-
   //registerform 으로 바꾸기...ㅎ
 
   const navigate = useNavigate();
@@ -39,40 +38,44 @@ const ResisterForm = () => {
   const [isPassword, setIsPassword] = useState(true);
   const [isPasswordConfirm, setIsPasswordConfirm] = useState(true);
 
-  const emailDoubleCheck = (email) => {
-    emailDBCheck(email)
-      .then((e) => {
-        setDoubleEmail(true);
-        Swal.fire({
-          icon: 'success',
-          text: '사용가능한 이메일 입니다.'
+  const emailDoubleCheck = (whatEmail) => {
+    if (isEmail === true && whatEmail.length > 0) {
+      emailDBCheck(whatEmail)
+        .then((e) => {
+          setDoubleEmail(true);
+          Swal.fire({
+            icon: "success",
+            text: "사용가능한 이메일 입니다.",
+          });
+        })
+        .catch((e) => {
+          setDoubleEmail(false);
+          console.log(e);
+          Swal.fire({
+            icon: "warning",
+            text: "동일한 이메일이 존재합니다.",
+          });
         });
-      })
-      .catch((e) => {
-        setDoubleEmail(false);
-        console.log(e)
-        Swal.fire({
-          icon: 'warning',
-          text: '동일한 이메일이 존재합니다.'
-        });
-      });
+    }
   };
-  const NameDoubleCheck = (name) => {
-    nicknameDoubleCheck(name)
-      .then((e) => {
-        setDoubleName(true);
-        Swal.fire({
-          icon: 'success',
-          text: '사용가능한 닉네임 입니다.'
+  const NameDoubleCheck = (whatName) => {
+    if (isName === true && whatName?.length > 0) {
+      nicknameDoubleCheck(whatName)
+        .then((e) => {
+          setDoubleName(true);
+          Swal.fire({
+            icon: "success",
+            text: "사용가능한 닉네임 입니다.",
+          });
+        })
+        .catch((e) => {
+          setDoubleName(false);
+          Swal.fire({
+            icon: "warning",
+            text: "동일한 닉네임이 존재합니다.",
+          });
         });
-      })
-      .catch((e) => {
-        setDoubleName(false);
-        Swal.fire({
-          icon: 'warning',
-          text: '동일한 닉네임이 존재합니다.'
-        });
-      });
+    }
   };
 
   useEffect(
@@ -113,12 +116,69 @@ const ResisterForm = () => {
     },
     [valueInit.passwordConfirm]
   );
+  const GoJoin = (e) => {
+    e.preventDefault();
+    if (doubleEmail === false) {
+      Swal.fire({
+        icon: "warning",
+        text: "이메일 중복확인을 해주세요🥲",
+        confirmButtonText: "예",
+        confirmButtonColor: "#429f50",
+      });
+    } else if (doubleName === false) {
+      Swal.fire({
+        icon: "warning",
+        text: "닉네임 중복확인을 해주세요🥲",
+        confirmButtonText: "예",
+        confirmButtonColor: "#429f50",
+      });
+    }
+
+    //회원가입 요청
+    if (
+      doubleName &&
+      doubleEmail &&
+      isName &&
+      isEmail &&
+      isPassword &&
+      isPasswordConfirm
+    ) {
+      register({
+        email: valueInit.email,
+        password: valueInit.password,
+        nickName: valueInit.username,
+      });
+      Swal.fire({
+        icon: "success",
+        title: "회원가입 성공!",
+        text: "로그인 페이지로 이동하시겠습니까?",
+        confirmButtonText: "예",
+        cancelButtonText: "아니오",
+        confirmButtonColor: "#429f50",
+        cancelButtonColor: "#d33",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          location.href = routes.login;
+        } else if (result.isDismissed) {
+          location.href = routes.home;
+        }
+        //resister .then 으로 위에 모달창 넣어주기.
+      });
+    }
+  };
+  const EnterJoin = (e) => {
+    if (e.key === "Enter") {
+      GoJoin(e);
+    }
+  };
 
   return (
     <>
-      <Container>
-        <Title fontSize="30px" margin='4.5rem 0 1rem 0'>회원가입</Title>
-        <Title fontSize="15px" margin='0 0 3rem 0'>
+      <Container onKeyPress={EnterJoin}>
+        <Title fontSize="30px" margin="4.5rem 0 1rem 0">
+          회원가입
+        </Title>
+        <Title fontSize="15px" margin="0 0 3rem 0">
           {" "}
           반가워요! 회원가입 후 <Strong>10</Strong>일이 지나면 글작성이 가능해요
           :)
@@ -136,15 +196,7 @@ const ResisterForm = () => {
           para={isEmail ? null : "이메일 형식으로 작성해주세요. "}
           margin={true}
         />
-        <DoubleCheck
-          onClick={(e) => {
-            console.log(whatEmail, isEmail)
-            if (isEmail === true && whatEmail.length > 0) {
-              console.log(whatEmail);
-              emailDoubleCheck(whatEmail);
-            }
-          }}
-        ></DoubleCheck>
+        <DoubleCheck onClick={() => emailDoubleCheck(whatEmail)}></DoubleCheck>
 
         <InputGroup
           id="username"
@@ -157,16 +209,7 @@ const ResisterForm = () => {
           margin={true}
         ></InputGroup>
 
-        <DoubleCheck
-          onClick={()=>{
-            console.log(whatName)
-            if (isName === true && whatName?.length > 0) {
-              NameDoubleCheck(whatName);
-            }
-          }
-
-          }
-        ></DoubleCheck>
+        <DoubleCheck onClick={(e) => NameDoubleCheck(whatName)}></DoubleCheck>
 
         <InputGroup
           id="password"
@@ -197,68 +240,17 @@ const ResisterForm = () => {
           margin={false}
         />
 
-        <Button
-          margin='1rem 0 3rem 0'
-          onClick={() => {
-            if (doubleEmail === false) {
-              Swal.fire({
-                icon: 'warning',
-                text: '이메일 중복확인을 해주세요🥲',
-                confirmButtonText: '예',
-                confirmButtonColor: '#429f50',
-              })
-            }
-            else if (doubleName === false) {
-              Swal.fire({
-                icon: 'warning',
-                text: '닉네임 중복확인을 해주세요🥲',
-                confirmButtonText: '예',
-                confirmButtonColor: '#429f50',
-              })
-            }
-
-            //회원가입 요청
-            if (
-              doubleName &&
-              doubleEmail &&
-              isName &&
-              isEmail &&
-              isPassword &&
-              isPasswordConfirm
-            ) {
-              register({
-                  "email": valueInit.email,
-                  "password": valueInit.password,
-                  "nickName": valueInit.username
-              })
-              Swal.fire({
-                icon: 'success',
-                title: '회원가입 성공!',
-                text: '로그인 페이지로 이동하시겠습니까?',
-                confirmButtonText: '예',
-                cancelButtonText: '아니오',
-                confirmButtonColor: '#429f50',
-                cancelButtonColor: '#d33',
-              }).then(result => {
-                if (result.isConfirmed) {
-                  location.href = routes.login
-                } else if (result.isDismissed) {
-                  location.href = routes.home
-                }
-                //resister .then 으로 위에 모달창 넣어주기.
-              })
-            }
-          }}
-        >
+        <Button margin="1rem 0 3rem 0" onClick={GoJoin}>
           회원가입
         </Button>
         <Question
           para="이미 계정이 있으신가요?"
-          children="로그인"
           onClick={() => {
             navigate(routes.login);
           }}
-        ></Question>
+        >
+          로그인
+        </Question>
       </Container>
     </>
   );

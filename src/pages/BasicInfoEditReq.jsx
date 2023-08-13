@@ -85,15 +85,15 @@ const results = useQueries({
         }
       }
     };
-    const LonLaToAdress1 = () => {
+    const LonLaToAddress1 = () => {
       geocoder.coord2Address(coord.getLng(), coord.getLat(), callback1);
     };
-    const LonLaToAdress2 = () => {
+    const LonLaToAddress2 = () => {
       geocoder.coord2Address(coord2.getLng(), coord2.getLat(), callback2);
     };
     if(results[0].isSuccess&&results[1].isSuccess){
-      LonLaToAdress1();
-      LonLaToAdress2();
+      LonLaToAddress1();
+      LonLaToAddress2();
     }
       
     
@@ -149,7 +149,7 @@ const results = useQueries({
     
                             Swal.fire({
                                 icon: 'success',
-                                text: '생성이 반려됐습니다!',
+                                text: '수정 요청이 반려됐습니다!',
                                 confirmButtonColor: '#429f50',
                               }).then(()=>navigate(routes.admin))},
                          onError:((error)=>{
@@ -180,7 +180,7 @@ const results = useQueries({
                     onSuccess:(data)=>{
                         Swal.fire({
                             icon: 'success',
-                            text: '생성 수락!',
+                            text: '수정 요청이 수락되었습니다!',
                             confirmButtonColor: '#429f50',
                         }).then(()=>navigate(routes.admin))
                     },
