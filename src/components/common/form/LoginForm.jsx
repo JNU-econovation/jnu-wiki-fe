@@ -20,20 +20,9 @@ const LoginForm = ({ marginBottom }) => {
     passwordConfirm: "",
   });
   const [isEmail, setIsEmail] = useState(true);
-  const [whatEmail, setWhatEmail] = useState("");
+  const [whatEmail, setWhatEmail] = useState(null);
   const [isPassword, setIsPassword] = useState(true);
-  const [whatPassword, setWhatPassword] = useState("");
-
-  // const loginCheck = (data) => {
-  //     login(data).then((res) => {
-  //         localStorage.setItem('jwt', res.headers.get("Authorization"));
-  //         alert("로그인 성공!");
-  //         navigate(routes.home);
-  //     })
-  //         .catch((e) => {
-  //             alert("인증되지 않았습니다.");
-  //         });
-  // };
+  const [whatPassword, setWhatPassword] = useState(null);
 
   useEffect(
     (e) => {
@@ -55,9 +44,66 @@ const LoginForm = ({ marginBottom }) => {
     [valueInit.password]
   );
 
+  const GoLogin = (e) => {
+    //e.preventDefault();
+    if (isEmail && isPassword) {
+      if (whatEmail === null || whatPassword === null) {
+        Swal.fire({
+          icon: "warning",
+          text: "이메일과 비밀번호를 입력해주세요.",
+          confirmButtonColor: "#429f50",
+        });
+      } else {
+        login({
+          email: valueInit.email,
+          password: valueInit.password,
+        })
+          .then(
+            (res) => {
+              // console.log(JSON.parse(res.data));
+
+              Swal.fire({
+                icon: "success",
+                title: "로그인 성공!",
+                text: "홈 화면으로 이동합니다",
+                confirmButtonColor: "#429f50",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  localStorage.setItem("token", res.headers.authorization);
+                  localStorage.setItem("role", res.data.response.role);
+                  // localStorage.setItem("nickname", res.data.response.nickname);
+                  navigate(routes.home);
+                }
+              });
+            } //else
+          )
+          .catch((err) => {
+            console.log(err);
+            Swal.fire({
+              icon: "warning",
+              title: "회원정보가 없습니다",
+              text: `이메일과 비밀번호를 확인해주세요`,
+              confirmButtonColor: "#2d790d",
+            });
+          });
+      } //if
+    } else {
+      Swal.fire({
+        icon: "warning",
+        text: "이메일, 비밀번호를 형식에 맞게 입력해주세요.",
+        confirmButtonColor: "#429f50",
+      });
+    }
+  };
+  const EnterLogin = (e) => {
+    if (e.key === "Enter") {
+      GoLogin(e);
+    }
+  };
+
   return (
     <>
-      <Container>
+      <Container onKeyPress={EnterLogin}>
         <Title fontSize="30px" margin="4.5rem 0 1rem 0">
           로그인
         </Title>
@@ -90,52 +136,7 @@ const LoginForm = ({ marginBottom }) => {
 
         <Button
           margin="1rem 0 3rem 0"
-          onClick={(e) => {
-            //e.preventDefault();
-            if (isEmail && isPassword) {
-              console.log(valueInit.email);
-              console.log(valueInit.password);
-              if (whatEmail == "" && whatPassword == "") {
-                Swal.fire({
-                  icon: "warning",
-                  text: "이메일과 비밀번호를 입력해주세요.",
-                  confirmButtonColor: "#429f50",
-                });
-              } else {
-                login({
-                  email: valueInit.email,
-                  password: valueInit.password,
-                }).then((res) => {
-                  // console.log(JSON.parse(res.data));
-                 
-        
-
-                  Swal.fire({
-                    icon: 'success',
-                    title: '로그인 성공!',
-                    text: '홈 화면으로 이동합니다',
-                    confirmButtonColor: '#429f50',
-                  }).then(result => {
-                    if (result.isConfirmed) {
-                      
-                      localStorage.setItem("token", res.headers.authorization);
-                      localStorage.setItem("role", res.data.response.role);
-                      // localStorage.setItem("nickname", res.data.response.nickname);
-                      navigate(routes.home);
-                    }
-                  })
-                  .catch((err) => {
-                    console.log(err);
-                    Swal.fire({
-                      icon: "warning",
-                      text: "회원정보가 없습니다",
-                      confirmButtonColor: "#429f50",
-                    }); //swal
-                  }); //catch
-              } //else
-  )} //if
-          }}} //onClick5
-  
+          onClick={GoLogin} //onClick5
         >
           로그인
         </Button>
