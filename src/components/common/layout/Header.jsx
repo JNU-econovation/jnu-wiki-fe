@@ -7,7 +7,10 @@ import Button from "./Button";
 import routes from "../../../routes";
 import Swal from "sweetalert2";
 import { SlLogout } from "react-icons/Sl";
+import SearchBar from "../search/SearchBar";
+
 const token = localStorage.getItem("token");
+
 const Header = () => {
   const navigate = useNavigate();
   const focusRef = useRef(null);
@@ -49,7 +52,6 @@ const Header = () => {
           </LogoTitle>
           <SearchBar
             type="search"
-            placeholder="      검색"
             ref={focusRef}
             onFocus={onFocusSearchBar}
             onBlur={onBlurSearchBar}
@@ -78,26 +80,30 @@ const Header = () => {
             </>
           ) : (
             <>
-            <div>{name}</div>
-            <button type="click" onClick={() => {
-              Swal.fire({
-                icon: "question",
-                text: "로그아웃 하시겠습니까?",
-                showCancelButton: true,
-                confirmButtonText: "예",
-                cancelButtonText: "아니오",
-                confirmButtonColor: "#429f50",
-                cancelButtonColor: "#d33",
-              }).then((result) => {
-                if (result.isConfirmed) {
-                  localStorage.removeItem("token");
-                  localStorage.removeItem("role");
-                  setJWT(null);
-                }
-              });
-            }}><SlLogout size={'21px'}/></button></>
-            
-            
+              <div>{name}</div>
+              <button
+                type="click"
+                onClick={() => {
+                  Swal.fire({
+                    icon: "question",
+                    text: "로그아웃 하시겠습니까?",
+                    showCancelButton: true,
+                    confirmButtonText: "예",
+                    cancelButtonText: "아니오",
+                    confirmButtonColor: "#429f50",
+                    cancelButtonColor: "#d33",
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      localStorage.removeItem("token");
+                      localStorage.removeItem("role");
+                      setJWT(null);
+                    }
+                  });
+                }}
+              >
+                <SlLogout size={"21px"} />
+              </button>
+            </>
           )}
         </HeaderDiv>
         <Line />
@@ -132,25 +138,6 @@ const LogoTitle = styled.span`
   color: #3f8e49;
   width: 15rem;
   cursor: pointer;
-`;
-
-export const SearchBar = styled.input`
-  width: 60rem;
-  height: 3rem;
-  padding: 1.3rem;
-  margin-right: 7rem;
-
-  border: 0.5px solid #71717118;
-  border-radius: 10px;
-  box-shadow: 0px 0px 1px 0px rgba(9, 30, 66, 0.31),
-    0px 4px 4px 0px rgba(0, 0, 0, 0.2);
-
-  &::-webkit-input-placeholder {
-    background-image: url(https://cdn1.iconfinder.com/data/icons/hawcons/32/698627-icon-111-search-256.png);
-    background-size: contain;
-    background-repeat: no-repeat;
-    text-indent: 0;
-  }
 `;
 
 const Line = styled.hr`
