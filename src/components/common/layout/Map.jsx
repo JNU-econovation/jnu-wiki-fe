@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, memo } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -46,7 +46,7 @@ const MapDiv = styled.div`
   }
 `;
 
-const Map = ({ apiLat, apiLng }) => {
+const Map = memo(({ apiLat, apiLng }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     mapscript();
@@ -176,6 +176,8 @@ const Map = ({ apiLat, apiLng }) => {
       />
     </>
   );
-};
+});
+
+Map.displayName = "Map";
 
 export default Map;

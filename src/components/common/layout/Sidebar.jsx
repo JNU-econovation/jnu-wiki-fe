@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import routes from "../../../routes";
 import MenuList from "./SidebarList";
-import CreateDocument from "../document/CreateDocument";
-import DocsList from "../search/DocsList";
 import { GoHomeFill } from "react-icons/go";
 import { FaPenSquare } from "react-icons/fa";
 import { HiMiniUserGroup } from "react-icons/hi2";
@@ -27,38 +25,8 @@ const Container = styled.div`
   z-index: 3;
 `;
 
-const DocumentWrapper = styled.div`
-  animation: fade-in 0.4s;
-  -webkit-animation: fade-in 0.4s;
-
-  @-webkit-keyframes fade-in {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-`;
-
-function Sidebar() {
+function Sidebar({ onClick }) {
   const location = useLocation();
-  const [addShow, setAddShow] = useState(false);
-  const [viewShow, setViewShow] = useState(false);
-
-  const handleClick = (type) => {
-    if (type === "addPost") {
-      setAddShow((addShow) => !addShow);
-      setViewShow(false);
-    } else if (type === "viewPost") {
-      setViewShow((viewShow) => !viewShow);
-      if (location.pathname !== "/") window.location.replace("/");
-      setAddShow(false);
-    } else {
-      setAddShow(false);
-      setViewShow(false);
-    }
-  };
 
   const [role, setRole] = useState(window.localStorage.getItem("role"));
   useEffect(() => {
@@ -67,52 +35,43 @@ function Sidebar() {
   //회원정보 가져오기, 이때 회원정보 중
 
   return (
-    <>
-      <Container>
-        <MenuList
-          onClick={() => handleClick("home")}
-          name="Home"
-          icons={<GoHomeFill />}
-          route={routes.home}
-        ></MenuList>
+    <Container>
+      <MenuList
+        onClick={onClick}
+        name="Home"
+        icons={<GoHomeFill />}
+        route={routes.home}
+      ></MenuList>
 
-        <MenuList
-          onClick={() => {
-            handleClick("addPost");
-          }}
-          name="Add Posts"
-          icons={<FaPenSquare />}
-          // route={routes.addPost}
-        ></MenuList>
+      <MenuList
+        onClick={onClick}
+        name="Add Posts"
+        icons={<FaPenSquare />}
+        route={routes.addPost}
+      ></MenuList>
 
-        <MenuList
-          onClick={() => {
-            handleClick("viewPost");
-          }}
-          name="View Posts"
-          icons={<IoDocumentTextSharp />}
-          // route={routes.documentList}
-        ></MenuList>
-        <MenuList
-          name="Mypage"
-          icons={<HiMiniUserGroup />}
-          route={routes.myPage}
-        ></MenuList>
-        {role === "ADMIN" ? (
-          <MenuList
-            name="Admin"
-            icons={<AiTwotoneSetting />}
-            route={routes.admin}
-          ></MenuList>
-        ) : null}
-      </Container>
+      <MenuList
+        onClick={onClick}
+        name="View Posts"
+        icons={<IoDocumentTextSharp />}
+        route={routes.documentList}
+      ></MenuList>
 
-      <DocumentWrapper>
-        {addShow ? <CreateDocument /> : undefined}
-        {viewShow ? <DocsList /> : undefined}
-        {/* {searchShow ? <Search /> : undefined} */}
-      </DocumentWrapper>
-    </>
+      <MenuList
+        onClick={onClick}
+        name="Mypage"
+        icons={<HiMiniUserGroup />}
+        route={routes.myPage}
+      ></MenuList>
+
+      {role === "ADMIN" ? (
+        <MenuList
+          name="Admin"
+          icons={<AiTwotoneSetting />}
+          route={routes.admin}
+        ></MenuList>
+      ) : null}
+    </Container>
   );
 }
 
