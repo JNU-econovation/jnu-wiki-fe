@@ -146,6 +146,7 @@ const MyInfoEditForm = () => {
           margin={false}
         ></InputGroup>
         <DoubleCheck
+          active={Newnickname?.length > 0 ? "true" : "false"}
           onClick={(e) => {
             if (Isnewnickname === true && Newnickname?.length > 0) {
               NameDoubleCheck(Newnickname);
