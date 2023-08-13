@@ -10,6 +10,8 @@ import { emailCheck, passwordCheck } from "../../../services/regex";
 import Title from "../Resister/Title";
 import { login } from "../../../services/user";
 import Swal from "sweetalert2";
+import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
+import { Icons } from "./ResisterForm";
 
 const LoginForm = ({ marginBottom }) => {
   const navigate = useNavigate();
@@ -101,6 +103,25 @@ const LoginForm = ({ marginBottom }) => {
     }
   };
 
+  const [pwVisible, setpwVisible] = useState({
+    type: "password",
+    visible: false,
+    icons: <AiFillEyeInvisible />,
+  });
+  const handlePasswordType = (e) => {
+    setpwVisible(() => {
+      if (pwVisible.visible) {
+        return {
+          type: "password",
+          visible: false,
+          icons: <AiFillEyeInvisible />,
+        };
+      } else {
+        return { type: "text", visible: true, icons: <AiFillEye /> };
+      }
+    });
+  };
+
   return (
     <>
       <Container onKeyPress={EnterLogin}>
@@ -122,7 +143,7 @@ const LoginForm = ({ marginBottom }) => {
         />
         <InputGroup
           id="password"
-          type="password"
+          type={pwVisible.type}
           placeholder="비밀번호를 입력해주세요"
           label="비밀번호"
           value={valueInit.password}
@@ -133,6 +154,7 @@ const LoginForm = ({ marginBottom }) => {
               : "비밀번호는 영문, 숫자, 특수문자가 포함된 8~20자로 구성되어야 합니다."
           }
         />
+        <Icons onClick={handlePasswordType}>{pwVisible.icons}</Icons>
 
         <Button
           margin="1rem 0 3rem 0"
