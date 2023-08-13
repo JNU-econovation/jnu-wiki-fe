@@ -37,6 +37,7 @@ function Sidebar({ onClick }) {
   return (
     <Container>
       <MenuList
+        onClick={onClick}
         name="Home"
         icons={<GoHomeFill />}
         route={routes.home}
@@ -50,12 +51,14 @@ function Sidebar({ onClick }) {
       ></MenuList>
 
       <MenuList
+        onClick={onClick}
         name="View Posts"
         icons={<IoDocumentTextSharp />}
         route={routes.documentList}
       ></MenuList>
 
       <MenuList
+        onClick={onClick}
         name="Mypage"
         icons={<HiMiniUserGroup />}
         route={routes.myPage}
