@@ -1,5 +1,13 @@
 import styled from "styled-components";
-import { forwardRef } from "react";
+import { forwardRef, useEffect, useState, useRef } from "react";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { searchDocs } from "../../../services/document";
+import Loader from "../layout/Loader";
+import DocsItem from "./DocsItem";
+import { useNavigate } from "react-router-dom";
+import routes from "../../../routes";
+import debounce from "lodash/debounce";
+import throttle from "lodash/throttle";
 
 const StyledSearchBar = styled.input`
   width: 60rem;
@@ -20,15 +28,119 @@ const StyledSearchBar = styled.input`
   }
 `;
 
+const Container = styled.div`
+  overflow: hidden;
+  position: absolute;
+  left: 20rem;
+  overflow-x: hidden;
+  top: 6rem;
+  padding: 2rem 2rem 0 2rem;
+
+  background-color: white;
+  box-shadow: 10px 0px 5px 0px rgba(0, 0, 0, 0.106);
+`;
+
 const SearchBar = forwardRef(({ type, onFocus, onBlur }, ref) => {
+  const [inputValue, setInputValue] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const navigate = useNavigate();
+
+  const debouncedSearchDocs = debounce(async (value) => {
+    const datas = await searchDocs(value);
+    setSearchResults(datas.data.response);
+  }, 300);
+
+  const throttledSearchDocs = throttle((value) => {
+    searchDocs(value);
+  }, 300);
+
+  const bottomObserver = useRef(null);
+
+  const { data, isLoading, isError, fetchNextPage, hasNextPage } =
+    useInfiniteQuery(["search", inputValue], () => searchDocs(inputValue), {
+      getNextPageParam: (currentPage, allPages) => {
+        const nextPage = allPages.length;
+        return nextPage > 3 ? null : nextPage;
+      },
+    });
+
+  useEffect(() => {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !isLoading && hasNextPage) {
+            fetchNextPage();
+          }
+        });
+      },
+      {
+        threshold: 1.0,
+      }
+    );
+
+    if (bottomObserver.current) {
+      io.observe(bottomObserver.current);
+    }
+
+    return () => {
+      if (bottomObserver.current) {
+        io.unobserve(bottomObserver.current);
+      }
+    };
+  }, [isLoading, hasNextPage, fetchNextPage]);
+
+  const docsData = data?.pages.flatMap((x) => x.data.response);
+  const docsListArray = docsData || [];
+  const [selectedDocs, setSelectedDocs] = useState([]);
+
+  const handleOnClick = (el) => {
+    setSelectedDocs((prev) => [
+      ...prev,
+      {
+        id: el.docsId,
+        docsLocation: {
+          lat: el.docsLocation.lat,
+          lng: el.docsLocation.lng,
+        },
+      },
+    ]);
+    selectedDocs.length > 0 &&
+      navigate(routes.documentPage, { state: selectedDocs[0] });
+  };
+
   return (
-    <StyledSearchBar
-      type={type}
-      placeholder="      검색"
-      onFocus={onFocus}
-      onBlur={onBlur}
-      ref={ref}
-    />
+    <>
+      <StyledSearchBar
+        type={type}
+        placeholder="      검색"
+        onFocus={onFocus}
+        onBlur={onBlur}
+        ref={ref}
+        value={inputValue}
+        onChange={(e) => {
+          setInputValue(e.target.value);
+          debouncedSearchDocs(e.target.value);
+          throttledSearchDocs(e.target.value);
+        }}
+      />
+      {inputValue && hasNextPage && (
+        <Container>
+          {isLoading && <Loader />}
+          {/* {isError && <div>error</div>} */}
+          {searchResults &&
+            searchResults.map((el) => (
+              <DocsItem
+                key={el.docsId}
+                name={el.docsName}
+                category={el.docsCategory}
+                onClick={() => handleOnClick(el)}
+              />
+            ))}
+          <div ref={bottomObserver}></div>
+          {isLoading && !hasNextPage && <Loader />}
+        </Container>
+      )}
+    </>
   );
 });
 
