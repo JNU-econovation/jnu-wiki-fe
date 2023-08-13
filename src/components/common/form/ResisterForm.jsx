@@ -58,9 +58,9 @@ const ResisterForm = () => {
         });
     }
   };
-  const NameDoubleCheck = (whatName) => {
-    if (isName === true && whatName?.length > 0) {
-      nicknameDoubleCheck(whatName)
+  const NameDoubleCheck = (name) => {
+    if (isName === true && name?.length > 0) {
+      nicknameDoubleCheck(name)
         .then((e) => {
           setDoubleName(true);
           Swal.fire({
@@ -80,9 +80,9 @@ const ResisterForm = () => {
 
   useEffect(
     (e) => {
+      setWhatName(valueInit.username);
       if (valueInit.username.length > 0) {
         setIsName(true);
-        setWhatName(valueInit.username);
       }
     },
     [valueInit.username]
@@ -196,7 +196,10 @@ const ResisterForm = () => {
           para={isEmail ? null : "이메일 형식으로 작성해주세요. "}
           margin={true}
         />
-        <DoubleCheck onClick={() => emailDoubleCheck(whatEmail)}></DoubleCheck>
+        <DoubleCheck
+          active={isEmail && whatEmail.length > 0 ? "true" : "false"}
+          onClick={() => emailDoubleCheck(whatEmail)}
+        ></DoubleCheck>
 
         <InputGroup
           id="username"
@@ -209,7 +212,10 @@ const ResisterForm = () => {
           margin={true}
         ></InputGroup>
 
-        <DoubleCheck onClick={(e) => NameDoubleCheck(whatName)}></DoubleCheck>
+        <DoubleCheck
+          active={isName && whatName.length > 0 ? "true" : "false"}
+          onClick={(e) => NameDoubleCheck(whatName)}
+        ></DoubleCheck>
 
         <InputGroup
           id="password"
