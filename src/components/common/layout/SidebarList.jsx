@@ -32,12 +32,12 @@ const NavStyle = styled(NavLink)`
     color: rgba(33, 109, 50, 1);
     font-weight: 600;
   }
-  /* &.act{
+  &.active {
     background-color: rgba(222, 233, 224, 1);
     color: rgba(33, 109, 50, 1);
     font-size: 1rem;
     font-weight: 600;
-  } */
+  }
 `;
 
 const MenuIcon = styled.div`
@@ -49,7 +49,7 @@ const MenuList = ({ name, icons, route, onClick }) => {
   return (
     <>
       <NavStyle
-        // className={({ isActive }) => (isActive ? "active" : "")}
+        className={({ isActive }) => (isActive ? "active" : "")}
         to={route}
         onClick={onClick}
       >
