@@ -25,7 +25,7 @@ const Container = styled.div`
   z-index: 3;
 `;
 
-function Sidebar({ onClick }) {
+function Sidebar({ onClick, viewActive, adminActive }) {
   const location = useLocation();
 
   const [role, setRole] = useState(window.localStorage.getItem("role"));
@@ -55,6 +55,7 @@ function Sidebar({ onClick }) {
         name="View Posts"
         icons={<IoDocumentTextSharp />}
         route={routes.documentList}
+        isActive={viewActive}
       ></MenuList>
 
       <MenuList
@@ -69,6 +70,7 @@ function Sidebar({ onClick }) {
           name="Admin"
           icons={<AiTwotoneSetting />}
           route={routes.admin}
+          isActive={adminActive}
         ></MenuList>
       ) : null}
     </Container>

@@ -9,7 +9,7 @@ const DocumentPage = () => {
 
   return (
     <>
-      <MainLayout>
+      <MainLayout viewActive={true}>
         <Document id={receivedData?.id} />
         <Map
           apiLat={receivedData?.docsLocation.lat}
