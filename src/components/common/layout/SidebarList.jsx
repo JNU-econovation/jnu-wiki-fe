@@ -53,7 +53,6 @@ const MenuIcon = styled.div`
 
 const MenuList = ({ isActive, name, icons, route, onClick }) => {
   const act = isActive;
-  console.log(act);
   return (
     <>
       <NavStyle
