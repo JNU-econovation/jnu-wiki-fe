@@ -7,12 +7,12 @@ import { useState, useEffect } from "react";
 import Button from "../components/common/layout/Button";
 import { StyledButton } from "../components/common/document/CreateDocument";
 import EditInfo from "../components/common/admin/EditInfo";
-import { requestReject,editRequestApprove } from "../services/user";
+import { requestReject, editRequestApprove } from "../services/user";
 import Swal from "sweetalert2";
 import routes from "../routes";
 import { useNavigate } from "react-router-dom";
-import { useMutation ,useQueries } from "@tanstack/react-query";
-import { docsRequest,editDocsRequest } from "../services/user";
+import { useMutation, useQueries } from "@tanstack/react-query";
+import { docsRequest, editDocsRequest } from "../services/user";
 import Loader from "../components/common/layout/Loader";
 
 const { kakao } = window;
@@ -25,29 +25,36 @@ export const TitleP = styled.p`
 `;
 
 const BasicInfoEditReq = () => {
-    
-    const { docsId,docsRequestId } = useParams();
-    // console.log(docsId)
-    // console.log(docsRequestId )
-    const navigate = useNavigate();
+  const { docsId, docsRequestId } = useParams();
+  // console.log(docsId)
+  // console.log(docsRequestId )
+  const navigate = useNavigate();
   const [address, setAddress] = useState("");
   const [modiAddress, setModiAddress] = useState("");
 
   const mutation = useMutation({
-    mutationFn:()=>editRequestApprove(docsRequestId)
- })
-const rejectmutation = useMutation({
-    mutationFn:()=>requestReject(docsRequestId)
- })
+    mutationFn: () => editRequestApprove(docsRequestId),
+  });
+  const rejectmutation = useMutation({
+    mutationFn: () => requestReject(docsRequestId),
+  });
 
-
-const results = useQueries({
-  queries: [
-    { queryKey: ['basicrequest',docsId], queryFn:async ()=>{return await docsRequest(docsId)}},
-    { queryKey: ['modirequest',docsRequestId], queryFn:async ()=>{return await editDocsRequest(docsRequestId)}}
-  ]
-})          
-
+  const results = useQueries({
+    queries: [
+      {
+        queryKey: ["basicrequest", docsId],
+        queryFn: async () => {
+          return await docsRequest(docsId);
+        },
+      },
+      {
+        queryKey: ["modirequest", docsRequestId],
+        queryFn: async () => {
+          return await editDocsRequest(docsRequestId);
+        },
+      },
+    ],
+  });
 
   useEffect(() => {
     map();
@@ -91,79 +98,94 @@ const results = useQueries({
     const LonLaToAddress2 = () => {
       geocoder.coord2Address(coord2.getLng(), coord2.getLat(), callback2);
     };
-    if(results[0].isSuccess&&results[1].isSuccess){
+    if (results[0].isSuccess && results[1].isSuccess) {
       LonLaToAddress1();
       LonLaToAddress2();
     }
-      
-    
   };
 
   return (
     <>
-      <MainLayout>
-        <Container id='admin'>
+      <MainLayout adminActive={true}>
+        <Container id="admin">
           <TitleP>기본 정보</TitleP>
-          {results[0].isLoading||results[1].isLoading ? <EditInfo><Loader/></EditInfo>:
-          <><EditInfo
-          child={results[0].isSuccess? results[0]?.data?.data?.response?.docsName:null}
-          modify={results[0].isSuccess? results[1]?.data?.data?.response?.docsRequestName:null}
-          textDecoration={true}
-        >
-          문서 제목{" "}
-        </EditInfo>
-        <EditInfo
-          child={results[0].isSuccess? results[0]?.data?.data?.response?.docsCategory:null}
-          modify={ results[0].isSuccess? results[1]?.data?.data?.response?.docsRequestCategory:null}
-          textDecoration={true}
-        >
-          카테고리
-        </EditInfo>
-        {
-        address ? (
-          <EditInfo
-            address={address}
-            modify={modiAddress}
-            textDecoration={true}
-          >
-            위치
-          </EditInfo>
-        ) : (
-          <EditInfo>위치</EditInfo>
-        )}
-</>
+          {results[0].isLoading || results[1].isLoading ? (
+            <EditInfo>
+              <Loader />
+            </EditInfo>
+          ) : (
+            <>
+              <EditInfo
+                child={
+                  results[0].isSuccess
+                    ? results[0]?.data?.data?.response?.docsName
+                    : null
+                }
+                modify={
+                  results[0].isSuccess
+                    ? results[1]?.data?.data?.response?.docsRequestName
+                    : null
+                }
+                textDecoration={true}
+              >
+                문서 제목{" "}
+              </EditInfo>
+              <EditInfo
+                child={
+                  results[0].isSuccess
+                    ? results[0]?.data?.data?.response?.docsCategory
+                    : null
+                }
+                modify={
+                  results[0].isSuccess
+                    ? results[1]?.data?.data?.response?.docsRequestCategory
+                    : null
+                }
+                textDecoration={true}
+              >
+                카테고리
+              </EditInfo>
+              {address ? (
+                <EditInfo
+                  address={address}
+                  modify={modiAddress}
+                  textDecoration={true}
+                >
+                  위치
+                </EditInfo>
+              ) : (
+                <EditInfo>위치</EditInfo>
+              )}
+            </>
+          )}
 
-          }
-          
           <StyledButton>
             <Button
               type="click"
               color="primary"
               border="1px solid #216D32"
               backgroundcolor="white"
-              onClick={
-                ()=>{
-                        const payload=results[1]?.data?.data?.response?.docsRequestId
-                        rejectmutation.mutate(payload,{
-                            onSuccess:()=>{
-    
-                            Swal.fire({
-                                icon: 'success',
-                                text: '수정 요청이 반려됐습니다!',
-                                confirmButtonColor: '#429f50',
-                              }).then(()=>navigate(routes.admin))},
-                         onError:((error)=>{
-                            console.log(error)
-                            Swal.fire({
-                                icon: 'warning',
-                                title:`${error.status}`,
-                                text: `error : ${error.data.error.message}`,
-                                confirmButtonColor: '#de3020',
-                              })
-                         })
-                            })
-                }
-            }
+              onClick={() => {
+                const payload = results[1]?.data?.data?.response?.docsRequestId;
+                rejectmutation.mutate(payload, {
+                  onSuccess: () => {
+                    Swal.fire({
+                      icon: "success",
+                      text: "수정 요청이 반려됐습니다!",
+                      confirmButtonColor: "#429f50",
+                    }).then(() => navigate(routes.admin));
+                  },
+                  onError: (error) => {
+                    console.log(error);
+                    Swal.fire({
+                      icon: "warning",
+                      title: `${error.status}`,
+                      text: `error : ${error.data.error.message}`,
+                      confirmButtonColor: "#de3020",
+                    });
+                  },
+                });
+              }}
             >
               수정 반려
             </Button>
@@ -175,31 +197,37 @@ const results = useQueries({
               backgroundcolor="primary"
               onClick={(e) => {
                 console.log(results[1]?.data?.data?.response?.docsRequestId);
-                const updatePayload=results[1]?.data?.data?.response?.docsRequestId
-                mutation.mutate(updatePayload,{
-                    onSuccess:(data)=>{
-                        Swal.fire({
-                            icon: 'success',
-                            text: '수정 요청이 수락되었습니다!',
-                            confirmButtonColor: '#429f50',
-                        }).then(()=>navigate(routes.admin))
-                    },
-                    onError:(error)=>{
-                        Swal.fire({
-                            icon: 'warning',
-                            title:`${error.status}`,
-                            text: `error : ${error.data.error.message}`,
-                            confirmButtonColor: '#de3020',
-                        })
-                    }})
-                }}
+                const updatePayload =
+                  results[1]?.data?.data?.response?.docsRequestId;
+                mutation.mutate(updatePayload, {
+                  onSuccess: (data) => {
+                    Swal.fire({
+                      icon: "success",
+                      text: "수정 요청이 수락되었습니다!",
+                      confirmButtonColor: "#429f50",
+                    }).then(() => navigate(routes.admin));
+                  },
+                  onError: (error) => {
+                    Swal.fire({
+                      icon: "warning",
+                      title: `${error.status}`,
+                      text: `error : ${error.data.error.message}`,
+                      confirmButtonColor: "#de3020",
+                    });
+                  },
+                });
+              }}
             >
               수정 수락
             </Button>
           </StyledButton>
         </Container>
         <MapContainer
-          location={results[1]?.data?.data?.response?.docsRequestLocation ? results[1]?.data?.data?.response?.docsRequestLocation:results[0]?.data?.data?.response?.docsLocation}
+          location={
+            results[1]?.data?.data?.response?.docsRequestLocation
+              ? results[1]?.data?.data?.response?.docsRequestLocation
+              : results[0]?.data?.data?.response?.docsLocation
+          }
           //나중에 마커 두개 찍히게 바꿔야겠다....
         ></MapContainer>
       </MainLayout>

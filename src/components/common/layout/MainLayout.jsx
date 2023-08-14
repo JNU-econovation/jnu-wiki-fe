@@ -1,10 +1,14 @@
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 
-const MainLayout = ({ active, children, onClick }) => {
+const MainLayout = ({ viewActive, adminActive, children, onClick }) => {
   return (
     <>
-      <Sidebar active={active} onClick={onClick} />
+      <Sidebar
+        viewActive={viewActive}
+        adminActive={adminActive}
+        onClick={onClick}
+      />
       <Header />
       {children}
     </>
