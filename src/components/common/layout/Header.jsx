@@ -13,15 +13,6 @@ const token = localStorage.getItem("token");
 
 const Header = () => {
   const navigate = useNavigate();
-  const focusRef = useRef(null);
-
-  const onFocusSearchBar = () => {
-    focusRef.current.placeholder = "";
-  };
-
-  const onBlurSearchBar = () => {
-    focusRef.current.placeholder = "      검색";
-  };
 
   const [JWT, setJWT] = useState(token);
   useEffect(() => {
@@ -50,12 +41,7 @@ const Header = () => {
             <br />
             위키
           </LogoTitle>
-          <SearchBar
-            type="search"
-            ref={focusRef}
-            onFocus={onFocusSearchBar}
-            onBlur={onBlurSearchBar}
-          />
+          <SearchBar />
           {!JWT ? (
             <>
               {" "}
