@@ -38,11 +38,11 @@ export const getChangeInfo = (data) => {
 };
 
 //admin List
-export const basicInfoEditRequest = () => {
-  return instance.get("admin/requests/update");
+export const basicInfoEditRequest = (page) => {
+  return instance.get("admin/requests/update" + "?page=" + page);
 };
-export const newInfoCreateRequest = () => {
-  return instance.get("admin/requests/new");
+export const newInfoCreateRequest = (page) => {
+  return instance.get("admin/requests/new" + "?page=" + page);
 };
 
 //admin detail
