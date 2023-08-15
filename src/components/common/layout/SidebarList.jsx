@@ -38,6 +38,12 @@ const NavStyle = styled(NavLink)`
     font-size: 1rem;
     font-weight: 600;
   }
+  &#active {
+    background-color: rgba(222, 233, 224, 1);
+    color: rgba(33, 109, 50, 1);
+    font-size: 1rem;
+    font-weight: 600;
+  }
 `;
 
 const MenuIcon = styled.div`
@@ -45,13 +51,15 @@ const MenuIcon = styled.div`
   padding: 0 1rem;
 `;
 
-const MenuList = ({ name, icons, route, onClick }) => {
+const MenuList = ({ isActive, name, icons, route, onClick }) => {
+  const act = isActive;
   return (
     <>
       <NavStyle
         className={({ isActive }) => (isActive ? "active" : "")}
         to={route}
         onClick={onClick}
+        id={act ? "active" : null}
       >
         <MenuIcon>{icons}</MenuIcon>
         {name}
