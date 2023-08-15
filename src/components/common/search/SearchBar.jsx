@@ -3,7 +3,7 @@ import { forwardRef, useEffect, useState, useRef } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { searchDocs } from "../../../services/document";
 import Loader from "../layout/Loader";
-import DocsItem from "./DocsItem";
+import DocsItem from "../document/DocsItem";
 import { useNavigate } from "react-router-dom";
 import routes from "../../../routes";
 import debounce from "lodash/debounce";
@@ -40,7 +40,16 @@ const Container = styled.div`
   box-shadow: 10px 0px 5px 0px rgba(0, 0, 0, 0.106);
 `;
 
-const SearchBar = forwardRef(({ type, onFocus, onBlur }, ref) => {
+const SearchBar = () => {
+  const focusRef = useRef(null);
+
+  const onFocusSearchBar = () => {
+    focusRef.current.placeholder = "";
+  };
+
+  const onBlurSearchBar = () => {
+    focusRef.current.placeholder = "      검색";
+  };
   const [inputValue, setInputValue] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const navigate = useNavigate();
@@ -111,11 +120,11 @@ const SearchBar = forwardRef(({ type, onFocus, onBlur }, ref) => {
   return (
     <>
       <StyledSearchBar
-        type={type}
+        type="search"
         placeholder="      검색"
-        onFocus={onFocus}
-        onBlur={onBlur}
-        ref={ref}
+        ref={focusRef}
+        onFocus={onFocusSearchBar}
+        onBlur={onBlurSearchBar}
         value={inputValue}
         onChange={(e) => {
           setInputValue(e.target.value);
@@ -123,6 +132,7 @@ const SearchBar = forwardRef(({ type, onFocus, onBlur }, ref) => {
           throttledSearchDocs(e.target.value);
         }}
       />
+
       {inputValue && hasNextPage && (
         <Container>
           {isLoading && <Loader />}
@@ -142,7 +152,7 @@ const SearchBar = forwardRef(({ type, onFocus, onBlur }, ref) => {
       )}
     </>
   );
-});
+};
 
 SearchBar.displayName = "SearchBar";
 
