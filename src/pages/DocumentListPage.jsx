@@ -1,5 +1,5 @@
 import MainLayout from "../components/common/layout/MainLayout";
-import DocsList from "../components/common/search/DocsList";
+import DocsList from "../components/common/document/DocsList";
 import Map from "../components/common/layout/Map";
 import DocumentWrapper from "../components/common/document/DocumentWrapper";
 import { useState } from "react";
