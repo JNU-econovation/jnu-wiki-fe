@@ -17,17 +17,17 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Group = styled.div`
-  height: 100vh;
+  height: 81vh;
   max-width: 22rem;
 
   position: fixed;
   left: 20rem;
-  top: 6rem;
+  top: 12.5vh;
   padding: 2rem;
 
   background-color: white;
   box-shadow: 10px 0px 5px 0px rgba(0, 0, 0, 0.106);
-  overflow: hidden;
+  overflow: scroll;
 
   #docsName,
   #docsLocation,
@@ -251,9 +251,7 @@ const Document = ({ id }) => {
           {editContent ? (
             <EditorContainer className="container">
               <MDEditor
-                height="15rem"
-                overflow="scroll"
-                value={value ? value : docsContent}
+                value={value || value === "" ? value : docsContent}
                 onChange={handleOnContentChange}
                 preview="edit"
                 components={{
@@ -277,7 +275,10 @@ const Document = ({ id }) => {
               />
             </EditorContainer>
           ) : (
-            docsContent
+            <MDEditor.Markdown
+              source={docsContent}
+              style={{ whiteSpace: "pre-wrap" }}
+            />
           )}
         </Description>
       </Group>
