@@ -52,7 +52,7 @@ const Group = styled.div`
 `;
 
 const Box = styled.div`
-  margin: 1rem 0 2rem 0;
+  margin: 1rem 0 3rem 0;
 `;
 
 const ContentHeading = styled.div`
