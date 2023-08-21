@@ -17,17 +17,30 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Group = styled.div`
-  height: 81vh;
-  max-width: 22rem;
+  height: 100%;
+  max-width: 25rem;
 
   position: fixed;
   left: 20rem;
-  top: 12.5vh;
-  padding: 2rem;
+  top: 5.5rem;
+  padding: 2rem 2rem 8rem 2rem;
 
   background-color: white;
   box-shadow: 10px 0px 5px 0px rgba(0, 0, 0, 0.106);
+  box-sizing: border-box;
   overflow: scroll;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    border-radius: 6px;
+    background: rgba(237, 214, 214, 0.4);
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(86, 77, 77, 0.3);
+    border-radius: 6px;
+  }
 
   #docsName,
   #docsLocation,
