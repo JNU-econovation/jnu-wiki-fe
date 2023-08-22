@@ -176,14 +176,15 @@ const Map = memo(({ apiLat, apiLng }) => {
       position: coord,
     });
 
+    marker.setPosition(new kakao.maps.LatLng(apiLat, apiLng));
     marker.setMap(map);
 
     geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
-  }, [apiLat, apiLng, dispatch, map]);
+  }, [apiLat, apiLng, dispatch, map, marker]);
 
   useEffect(() => {
     setAddress();
-  }, [apiLat, apiLng, map, setAddress]);
+  }, [apiLat, apiLng, map, marker, setAddress]);
 
   return (
     <>
