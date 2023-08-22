@@ -1,6 +1,6 @@
-import { useEffect, useCallback, memo } from "react";
+import { useEffect, useCallback, memo, useRef } from "react";
 import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const { kakao } = window;
 
@@ -48,6 +48,8 @@ const MapDiv = styled.div`
 
 const Map = memo(({ apiLat, apiLng }) => {
   const dispatch = useDispatch();
+  const markerRef = useRef(null);
+
   useEffect(() => {
     mapscript();
   }, []);
@@ -58,7 +60,7 @@ const Map = memo(({ apiLat, apiLng }) => {
   const initialMap = () => {
     const container = document.getElementById("map");
     const options = {
-      center: new kakao.maps.LatLng(35.175636, 126.907136),
+      center: new kakao.maps.LatLng(35.176151, 126.909788),
       level: 4,
     };
     map = new kakao.maps.Map(container, options);
@@ -89,9 +91,6 @@ const Map = memo(({ apiLat, apiLng }) => {
       searchDetailAddrFromCoords(mouseEvent.latLng, function (result, status) {
         let latposition = mouseEvent.latLng.getLat();
         let lngposition = mouseEvent.latLng.getLng();
-
-        // let latitude = Math.round(latposition * 10000) / 10000;
-        // let longitude = Math.round(lngposition * 10000) / 10000;
 
         dispatch({
           type: "getLatLng",
@@ -133,6 +132,19 @@ const Map = memo(({ apiLat, apiLng }) => {
     kakao.maps.event.addListener(map, "idle", function () {
       searchAddFromCoords(map.getCenter());
     });
+
+    // 마커 여러개
+    if (apiLat?.length > 0 && apiLng?.length > 0) {
+      const markers = [];
+
+      for (let i = 0; i < apiLat.length; i++) {
+        let marker = new kakao.maps.Marker({
+          position: new kakao.maps.LatLng(apiLat[i], apiLng[i]),
+        });
+        markers.push(marker);
+        markers[i].setMap(map);
+      }
+    }
   };
 
   const setAddress = useCallback(() => {
@@ -155,6 +167,15 @@ const Map = memo(({ apiLat, apiLng }) => {
         });
       }
     };
+
+    if (markerRef.current) {
+      markerRef.current.setMap(null);
+    }
+
+    markerRef.current = new kakao.maps.Marker({
+      position: coord,
+    });
+
     marker.setPosition(new kakao.maps.LatLng(apiLat, apiLng));
     marker.setMap(map);
 
