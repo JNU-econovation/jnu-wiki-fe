@@ -17,17 +17,30 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Group = styled.div`
-  height: 100vh;
-  max-width: 22rem;
+  height: 100%;
+  max-width: 25rem;
 
   position: fixed;
   left: 20rem;
-  top: 6rem;
-  padding: 2rem;
+  top: 5.5rem;
+  padding: 2rem 2rem 8rem 2rem;
 
   background-color: white;
   box-shadow: 10px 0px 5px 0px rgba(0, 0, 0, 0.106);
-  overflow: hidden;
+  box-sizing: border-box;
+  overflow: scroll;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    border-radius: 6px;
+    background: rgba(237, 214, 214, 0.4);
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(86, 77, 77, 0.3);
+    border-radius: 6px;
+  }
 
   #docsName,
   #docsLocation,
@@ -39,7 +52,7 @@ const Group = styled.div`
 `;
 
 const Box = styled.div`
-  margin: 1rem 0 2rem 0;
+  margin: 1rem 0 3rem 0;
 `;
 
 const ContentHeading = styled.div`
@@ -251,9 +264,7 @@ const Document = ({ id }) => {
           {editContent ? (
             <EditorContainer className="container">
               <MDEditor
-                height="15rem"
-                overflow="scroll"
-                value={value ? value : docsContent}
+                value={value || value === "" ? value : docsContent}
                 onChange={handleOnContentChange}
                 preview="edit"
                 components={{
@@ -277,7 +288,10 @@ const Document = ({ id }) => {
               />
             </EditorContainer>
           ) : (
-            docsContent
+            <MDEditor.Markdown
+              source={docsContent}
+              style={{ whiteSpace: "pre-wrap" }}
+            />
           )}
         </Description>
       </Group>
