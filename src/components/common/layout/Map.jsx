@@ -46,7 +46,7 @@ const MapDiv = styled.div`
   }
 `;
 
-const Map = memo(({ apiLat, apiLng }) => {
+const Map = memo(({ title, apiLat, apiLng }) => {
   const dispatch = useDispatch();
   const markerRef = useRef(null);
 
@@ -140,6 +140,7 @@ const Map = memo(({ apiLat, apiLng }) => {
       for (let i = 0; i < apiLat.length; i++) {
         let marker = new kakao.maps.Marker({
           position: new kakao.maps.LatLng(apiLat[i], apiLng[i]),
+          title: title[i],
         });
         markers.push(marker);
         markers[i].setMap(map);
