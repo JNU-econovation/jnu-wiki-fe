@@ -13,7 +13,7 @@ const Home = () => {
   return (
     <>
       <MainLayout>
-        {!isLoading && !isError && (
+        {data && !isLoading && !isError && (
           <Map title={title} apiLat={latitude} apiLng={longitude} />
         )}
       </MainLayout>
