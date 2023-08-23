@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { useState } from "react";
 
 const Container = styled.div`
   color: #216d32;
@@ -11,16 +13,24 @@ const Container = styled.div`
 
   cursor: pointer;
 
-  span:nth-child(1) {
+  .title {
     font-size: 1.1rem;
     font-weight: bold;
+
     margin-right: 0.8rem;
     margin-bottom: 1.3rem;
+
+    display: flex;
+    justify-content: space-between;
   }
 
-  span:nth-child(2) {
+  .category {
     font-size: 0.8rem;
   }
+`;
+
+const StyledHeart = styled(AiOutlineHeart)`
+  float: right;
 `;
 
 const StyledHr = styled.hr`
@@ -29,11 +39,24 @@ const StyledHr = styled.hr`
 `;
 
 const DocsItem = ({ name, category, onClick }) => {
+  const [scrap, setScrap] = useState(false);
+
+  const handleOnClick = () => {
+    setScrap(!scrap);
+  };
+
   return (
     <>
       <Container onClick={onClick}>
-        <span>{name}</span>
-        <span>{category}</span>
+        <div className="title">
+          <span>{name}</span>
+          {!scrap ? (
+            <StyledHeart onClick={handleOnClick} />
+          ) : (
+            <AiFillHeart onClick={handleOnClick} />
+          )}
+        </div>
+        <span className="category">{category}</span>
       </Container>
       <StyledHr />
     </>
