@@ -10,7 +10,7 @@ const DocumentPage = () => {
   return (
     <>
       <MainLayout viewActive={true}>
-        <Document id={receivedData?.id} />
+        <Document id={receivedData?.docsId} />
         <Map
           apiLat={receivedData?.docsLocation.lat}
           apiLng={receivedData?.docsLocation.lng}
