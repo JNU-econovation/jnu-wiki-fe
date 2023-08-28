@@ -8,6 +8,10 @@ import React from "react";
 
 //prop 으로 data 넘겨주기...
 
+const Bottom = styled.div`
+  color: white;
+`;
+
 const RequestContainerBox = React.forwardRef(
   ({ title, border, data, route, modi, isLoading, isError, children }, ref) => {
     return (
@@ -23,7 +27,7 @@ const RequestContainerBox = React.forwardRef(
         >
           {/* {isLoading && <Loader />} */}
           {/* 아래의 div가 관찰대상!!! */}
-          {!isLoading && <div ref={ref}>_</div>}
+          {!isLoading && <Bottom ref={ref}>l </Bottom>}
         </RequestContain>
       </RequestContainerBoxCss>
     );
