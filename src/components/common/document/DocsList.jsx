@@ -3,6 +3,8 @@ import DocsItem from "./DocsItem";
 import { useNavigate } from "react-router-dom";
 import routes from "../../../routes";
 import styled from "styled-components";
+import { useMutation } from "@tanstack/react-query";
+import { scrapCreate } from "../../../services/scrap";
 
 const Container = styled.div`
   overflow: hidden;
@@ -21,21 +23,36 @@ const DocsList = ({ data }) => {
 
   const docsData = data?.pages.flatMap((x) => x.data.response);
   const docsListArray = docsData || [];
-  const [selectedDocs, setSelectedDocs] = useState([]);
+  const [scrapList, setScrapList] = useState([]);
 
   const handleOnClick = (el) => {
-    setSelectedDocs((prev) => [
-      ...prev,
-      {
-        id: el.docsId,
-        docsLocation: {
-          lat: el.docsLocation.lat,
-          lng: el.docsLocation.lng,
+    navigate(routes.documentPage, { state: el });
+  };
+
+  const { mutate: createScrap } = useMutation({
+    mutationFn: scrapCreate,
+  });
+
+  const { mutate: deleteScrap } = useMutation({
+    mutationFn: scrapCreate,
+  });
+
+  const handleOnScrap = (el, scrap) => {
+    const isSelected = scrapList.find((option) => option.id === el.docsId);
+
+    if (scrap) {
+      setScrapList((prev) => [
+        ...prev,
+        {
+          id: el.docsId,
+          scrap: scrap,
         },
-      },
-    ]);
-    selectedDocs.length > 0 &&
-      navigate(routes.documentPage, { state: selectedDocs[0] });
+      ]);
+      createScrap({ docsId: el.docsId });
+    } else {
+      setScrapList(scrapList.filter((x) => x !== isSelected));
+      deleteScrap({ docsId: el.docsId });
+    }
   };
 
   if (data && data.pages && Array.isArray(data.pages)) {
@@ -43,12 +60,13 @@ const DocsList = ({ data }) => {
       <>
         <Container>
           {docsListArray.map((el) => (
-            <DocsItem
-              key={el.docsId}
-              name={el.docsName}
-              category={el.docsCategory}
-              onClick={() => handleOnClick(el)}
-            />
+            <div key={el.docsId} onClick={() => handleOnClick(el)}>
+              <DocsItem
+                name={el.docsName}
+                category={el.docsCategory}
+                onScrapClick={(scrap) => handleOnScrap(el, scrap)}
+              />
+            </div>
           ))}
         </Container>
       </>
@@ -57,4 +75,5 @@ const DocsList = ({ data }) => {
     return null;
   }
 };
+
 export default DocsList;
