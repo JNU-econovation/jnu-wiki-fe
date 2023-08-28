@@ -18,6 +18,10 @@ export const detailDocument = (id = 1) => {
   return instance.get("/docs/" + id);
 };
 
+export const mapDocument = () => {
+  return instance.get("/docs");
+};
+
 export const docsList = (page = 0) => {
   return instance.get("/docs/" + "?page=" + page);
 };
