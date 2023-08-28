@@ -29,7 +29,7 @@ const AdminBox = () => {
     {
       getNextPageParam: (currentPage, allPages) => {
         const nextPage = allPages.length;
-        return nextPage > 3 ? null : nextPage;
+        return nextPage > 1 ? null : nextPage;
       },
     }
   );
@@ -37,17 +37,18 @@ const AdminBox = () => {
     data: data2,
     isLoading: isLoading2,
     fetchNextPage: fetchNextPage2,
+    isFetchingNextPage: isFetchingNextPage2,
     hasNextPage: hasNextPage2,
     error: error2,
   } = useInfiniteQuery(
     ["newInfo"],
     ({ pageParam = 0 }) => newInfoCreateRequest(pageParam),
     {
-      getNextPageParam: (currentPage, allPages) => {
-        const nextPage = allPages.length;
-        console.log(currentPage);
-        return nextPage > 1 ? null : nextPage;
-        // 여기를 원래 currentPage 이용해서 현재페이지랑 전체 페이지 비교해야하는데 현재페이지 못구함
+      getNextPageParam: (lastPage, allPages) => {
+        const nextPage = allPages.length - 1; // 현재 페이지
+        console.log(lastPage.nextPage);
+        return nextPage == 1 ? null : nextPage + 1;
+        // 전체 ㅔ페이지 수 어떻게 구하지
       },
     }
   );
@@ -81,7 +82,12 @@ const AdminBox = () => {
     const io2 = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting && !isLoading2 && hasNextPage2) {
+          if (
+            entry.isIntersecting &&
+            !isLoading2 &&
+            hasNextPage2 &&
+            !isFetchingNextPage2
+          ) {
             fetchNextPage2();
           }
         });
