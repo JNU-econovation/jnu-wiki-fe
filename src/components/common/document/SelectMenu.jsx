@@ -17,6 +17,7 @@ const StyledSelected = styled.select`
     outline: 1.5px solid #216d32;
   }
 `;
+
 const SelectMenu = ({ name, id, value, placeholder }) => {
   const dispatch = useDispatch();
 
@@ -42,4 +43,5 @@ const SelectMenu = ({ name, id, value, placeholder }) => {
     </StyledSelected>
   );
 };
+
 export default SelectMenu;

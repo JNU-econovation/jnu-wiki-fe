@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 
 export const Container = styled.div`
+  width: 22rem;
   height: 100vh;
 
   position: fixed;
@@ -28,7 +29,6 @@ export const Container = styled.div`
     height: 2.4rem;
     margin-top: 0.7rem;
   }
-  width: 22rem;
 `;
 
 export const StyledButton = styled.div`
