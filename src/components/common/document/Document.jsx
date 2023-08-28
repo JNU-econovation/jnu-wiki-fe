@@ -15,6 +15,7 @@ import useInput from "../../../hooks/useInput";
 import Skeleton from "../layout/Skeleton";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ScrapBtn from "./ScrapBtn";
 
 const Group = styled.div`
   height: 100%;
@@ -75,6 +76,11 @@ const StyledSpan = styled.span`
 const EditorContainer = styled.div`
   width: fit-content;
   max-width: 22rem;
+`;
+
+const BasicInfo = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
 
 const Document = ({ id }) => {
@@ -193,17 +199,20 @@ const Document = ({ id }) => {
       />
 
       <Group>
-        <DocumentHeading
-          className="basic"
-          type={edit}
-          save={save}
-          cancel={cancel}
-          onClick={handleInput}
-          onBasicSave={handleBasicSave}
-          onBasicCancel={handleBasicCancel}
-        >
-          기본 정보
-        </DocumentHeading>
+        <BasicInfo>
+          <DocumentHeading
+            className="basic"
+            type={edit}
+            save={save}
+            cancel={cancel}
+            onClick={handleInput}
+            onBasicSave={handleBasicSave}
+            onBasicCancel={handleBasicCancel}
+          >
+            기본 정보
+          </DocumentHeading>
+          <ScrapBtn />
+        </BasicInfo>
         <Box>
           <InfoGroup htmlFor="title" label="문서 제목">
             {edit ? (
