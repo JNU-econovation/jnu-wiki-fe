@@ -23,7 +23,7 @@ const DocumentListPage = () => {
       {
         getNextPageParam: (currentPage, allPages) => {
           const nextPage = allPages.length;
-          return nextPage > 3 ? null : nextPage;
+          return nextPage > 1 ? null : nextPage;
         },
       }
     );

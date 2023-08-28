@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import ScrapBtn from "./ScrapBtn";
+import { useState } from "react";
 
 const Container = styled.div`
   color: #216d32;
@@ -11,14 +13,18 @@ const Container = styled.div`
 
   cursor: pointer;
 
-  span:nth-child(1) {
+  .title {
     font-size: 1.1rem;
     font-weight: bold;
+
     margin-right: 0.8rem;
     margin-bottom: 1.3rem;
+
+    display: flex;
+    justify-content: space-between;
   }
 
-  span:nth-child(2) {
+  .category {
     font-size: 0.8rem;
   }
 `;
@@ -28,12 +34,28 @@ const StyledHr = styled.hr`
   margin: 1.4rem 0;
 `;
 
-const DocsItem = ({ name, category, onClick }) => {
+const DocsItem = ({ name, category, onScrapClick }) => {
+  const [scrap, setScrap] = useState(false);
+
+  const handleOnScrapFill = () => {
+    onScrapClick(!scrap);
+    setScrap(!scrap);
+  };
+
   return (
     <>
-      <Container onClick={onClick}>
-        <span>{name}</span>
-        <span>{category}</span>
+      <Container>
+        <div className="title">
+          <div>{name}</div>
+          <ScrapBtn
+            onClick={(e) => {
+              e.stopPropagation();
+              handleOnScrapFill();
+            }}
+            scrap={scrap}
+          />
+        </div>
+        <span className="category">{category}</span>
       </Container>
       <StyledHr />
     </>
