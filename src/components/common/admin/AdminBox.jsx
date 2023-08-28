@@ -22,7 +22,7 @@ const AdminBox = () => {
     isLoading: isLoading1,
     fetchNextPage: fetchNextPage1,
     hasNextPage: hasNextPage1,
-    isError: isError1,
+    error: error1,
   } = useInfiniteQuery(
     ["basicInfo"],
     ({ pageParam = 0 }) => basicInfoEditRequest(pageParam),
@@ -38,14 +38,16 @@ const AdminBox = () => {
     isLoading: isLoading2,
     fetchNextPage: fetchNextPage2,
     hasNextPage: hasNextPage2,
-    isError: isError2,
+    error: error2,
   } = useInfiniteQuery(
     ["newInfo"],
     ({ pageParam = 0 }) => newInfoCreateRequest(pageParam),
     {
       getNextPageParam: (currentPage, allPages) => {
         const nextPage = allPages.length;
-        return nextPage > 3 ? null : nextPage;
+        console.log(currentPage);
+        return nextPage > 1 ? null : nextPage;
+        // 여기를 원래 currentPage 이용해서 현재페이지랑 전체 페이지 비교해야하는데 현재페이지 못구함
       },
     }
   );
@@ -102,7 +104,6 @@ const AdminBox = () => {
   const Data2 = data2?.pages.flatMap((x) => x.data.response);
   const DataArr2 = Data2 || [];
   const DataArr1 = Data1 || [];
-  console.log(DataArr2);
 
   return (
     <AdminBoxCss>
@@ -113,7 +114,7 @@ const AdminBox = () => {
         route={routes.basicInfoEditRequest}
         modi={true}
         isLoading={isLoading1}
-        isError={isError1}
+        error={error1}
         ref={bottomObserver1}
       ></RequestContainerBox>
       <RequestContainerBox
@@ -122,7 +123,7 @@ const AdminBox = () => {
         route={routes.newDocsRequest}
         modi={false}
         isLoading={isLoading2}
-        isError={isError2}
+        error={error2}
         ref={bottomObserver2}
       ></RequestContainerBox>
     </AdminBoxCss>
