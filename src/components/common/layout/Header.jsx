@@ -100,11 +100,14 @@ const Header = () => {
 
 const Container = styled.div`
   position: fixed;
+  top: 0;
+  left: 0;
   width: 100vw;
-  height: 6rem;
   background-color: white;
   z-index: 3;
+  box-sizing: border-box;
 `;
+
 const HeaderDiv = styled.header`
   display: flex;
   align-items: center;
@@ -129,5 +132,6 @@ const LogoTitle = styled.span`
 const Line = styled.hr`
   background-color: #216d32;
   height: 0.7px;
+  margin: 0;
 `;
 export default Header;

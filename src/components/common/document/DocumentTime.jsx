@@ -6,6 +6,7 @@ const Container = styled.div`
   float: right;
   text-align: right;
   margin-left: 5rem;
+  width: 7rem;
 `;
 
 const DocumentTime = ({ children }) => {

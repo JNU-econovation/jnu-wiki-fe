@@ -1,13 +1,18 @@
 import styled from "styled-components";
-import { PiPencilLineThin } from "react-icons/Pi";
-import { TfiSave } from "react-icons/Tfi";
-import { MdOutlineCancel } from "react-icons/Md";
 
 const Group = styled.span`
   display: flex;
   align-items: center;
   color: #216d32;
+
+  .icon {
+    cursor: pointer;
+    font-size: 0.8rem;
+    margin: 0 0.5rem;
+    color: #736e6e;
+  }
 `;
+
 const StyledHeading = styled.p`
   font-size: 1.4rem;
   font-weight: bold;
@@ -15,22 +20,6 @@ const StyledHeading = styled.p`
   margin-right: 0.5rem;
   color: #216d32;
   float: left;
-`;
-
-const StyledPencil = styled(PiPencilLineThin)`
-  cursor: pointer;
-  font-size: 1.3rem;
-  margin: 0 0.5rem;
-`;
-
-const StyledSave = styled(TfiSave)`
-  cursor: pointer;
-  margin: 0 0.5rem;
-`;
-
-const StyledCancel = styled(MdOutlineCancel)`
-  cursor: pointer;
-  font-size: 1.3rem;
 `;
 
 const DocumentHeading = ({
@@ -51,22 +40,34 @@ const DocumentHeading = ({
         {className === "basic" ? (
           <>
             {type === false ? (
-              <StyledPencil onClick={onClick} />
+              <span className="icon" onClick={onClick}>
+                편집
+              </span>
             ) : (
               <>
-                <StyledSave className="save" onClick={onBasicSave} />
-                <StyledCancel className="cancel" onClick={onBasicCancel} />
+                <span className="icon save" onClick={onBasicSave}>
+                  저장
+                </span>
+                <span className="icon cancel" onClick={onBasicCancel}>
+                  취소
+                </span>
               </>
             )}
           </>
         ) : (
           <>
             {contentType === false ? (
-              <StyledPencil onClick={onClick} />
+              <span className="icon" onClick={onClick}>
+                편집
+              </span>
             ) : (
               <>
-                <StyledSave className="save" onClick={onSave} />
-                <StyledCancel className="cancel" onClick={onCancel} />
+                <span className="icon save" onClick={onSave}>
+                  저장
+                </span>
+                <span className="icon cancel" onClick={onCancel}>
+                  취소
+                </span>
               </>
             )}
           </>
