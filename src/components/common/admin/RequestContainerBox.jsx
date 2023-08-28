@@ -15,7 +15,7 @@ const RequestContainerBox = React.forwardRef(
     console.log(error?.response?.status);
     return (
       <RequestContainerBoxCss>
-        <TitleBox title={title} data={data} error={error} />
+        <TitleBox title={title} isLoading={isLoading} error={error} />
         <RequestContain
           border={border}
           datas={data}

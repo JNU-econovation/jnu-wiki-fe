@@ -1,10 +1,12 @@
 import styled from "styled-components";
-const TitleBox = ({ title, data, isError }) => {
+const TitleBox = ({ title, error, isLoading }) => {
   return (
     <TitleBoxCss>
       {title}
       <Circle
-        backgroundColor={data?.length > 0 && !isError ? "#216D32" : "#B6B6B6"}
+        backgroundColor={
+          error?.response?.status != 404 && !isLoading ? "#216D32" : "#B6B6B6"
+        }
       />
     </TitleBoxCss>
   );
