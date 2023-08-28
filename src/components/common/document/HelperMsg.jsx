@@ -4,6 +4,7 @@ const HelperMsg = styled.p`
   margin-top: 0.5rem;
 
   color: #ff3838;
+
   font-size: 0.8rem;
   font-weight: 400;
 `;
