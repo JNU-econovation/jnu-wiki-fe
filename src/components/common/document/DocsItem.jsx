@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import ScrapBtn from "./ScrapBtn";
 import { useState } from "react";
 
 const Container = styled.div`
@@ -29,32 +29,32 @@ const Container = styled.div`
   }
 `;
 
-const StyledHeart = styled(AiOutlineHeart)`
-  float: right;
-`;
-
 const StyledHr = styled.hr`
   background-color: #8ea192;
   margin: 1.4rem 0;
 `;
 
-const DocsItem = ({ name, category, onClick }) => {
+const DocsItem = ({ name, category, onScrapClick }) => {
   const [scrap, setScrap] = useState(false);
 
-  const handleOnClick = () => {
+  const handleOnScrapFill = () => {
+    onScrapClick(!scrap);
     setScrap(!scrap);
   };
 
   return (
     <>
-      <Container onClick={onClick}>
+      <Container>
         <div className="title">
-          <span>{name}</span>
-          {!scrap ? (
-            <StyledHeart onClick={handleOnClick} />
-          ) : (
-            <AiFillHeart onClick={handleOnClick} />
-          )}
+          <div>{name}</div>
+          <ScrapBtn
+            className="scrap"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleOnScrapFill();
+            }}
+            scrap={scrap}
+          />
         </div>
         <span className="category">{category}</span>
       </Container>
