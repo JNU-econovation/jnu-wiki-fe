@@ -48,7 +48,6 @@ const DocsItem = ({ name, category, onScrapClick }) => {
         <div className="title">
           <div>{name}</div>
           <ScrapBtn
-            className="scrap"
             onClick={(e) => {
               e.stopPropagation();
               handleOnScrapFill();
