@@ -6,10 +6,13 @@ import DocumentInput from "./DocumentInput";
 import styled from "styled-components";
 import SelectMenu from "./SelectMenu";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { detailDocument } from "../../../services/document";
-import { contentModify, basicModify } from "../../../services/document";
-import { useSelector, useDispatch } from "react-redux";
-import { useState, useRef, useEffect } from "react";
+import {
+  detailDocument,
+  contentModify,
+  basicModify,
+} from "../../../services/document";
+import { useSelector } from "react-redux";
+import { useState } from "react";
 import MDEditor from "@uiw/react-md-editor";
 import useInput from "../../../hooks/useInput";
 import Skeleton from "../layout/Skeleton";
