@@ -15,7 +15,7 @@ import BasicInfoEditReq from "./pages/BasicInfoEditReq.jsx";
 import NewDocsReq from "./pages/NewDocsReq.jsx";
 import DocumentPage from "./pages/DocumentPage.jsx";
 import DocumentListPage from "./pages/DocumentListPage.jsx";
-
+import Scrap from "./pages/Scrap.jsx";
 function App() {
   return (
     <>
@@ -31,6 +31,7 @@ function App() {
             <Route path={routes.login} element={<Login />} />
             <Route path={routes.join} element={<Join />} />
             <Route path={routes.admin} element={<Admin />} />
+            <Route path={routes.scrap} element={<Scrap />} />
             {/* <Route path={routes.documentList} element={<DocumentListPage />} /> */}
             <Route
               path={`${routes.newDocsRequest}/:id`}

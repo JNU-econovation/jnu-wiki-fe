@@ -1,14 +1,13 @@
-import MypageForm from "../components/common/form/MypageForm.jsx";
 import Swal from "sweetalert2";
 import routes from "../routes.js";
-import MainLayout from "../components/common/layout/MainLayout.jsx";
-
-const MyPage = () => {
+import MainLayout from "../components/common/layout/MainLayout";
+import MypageScrap from "../components/common/mypage/MypageScrap.jsx";
+const Scrap = () => {
   return (
     <>
       <MainLayout myActive={true}>
         {localStorage.getItem("token") ? (
-          <MypageForm></MypageForm>
+          <MypageScrap></MypageScrap>
         ) : (
           Swal.fire({
             icon: "info",
@@ -32,4 +31,4 @@ const MyPage = () => {
   );
 };
 
-export default MyPage;
+export default Scrap;
