@@ -41,6 +41,7 @@ function Sidebar({ onClick, viewActive, adminActive }) {
         name="Home"
         icons={<GoHomeFill />}
         route={routes.home}
+        isActive={viewActive}
       ></MenuList>
 
       <MenuList
@@ -50,13 +51,13 @@ function Sidebar({ onClick, viewActive, adminActive }) {
         route={routes.addPost}
       ></MenuList>
 
-      <MenuList
+      {/* <MenuList
         onClick={onClick}
         name="View Posts"
         icons={<IoDocumentTextSharp />}
         route={routes.documentList}
         isActive={viewActive}
-      ></MenuList>
+      ></MenuList> */}
 
       <MenuList
         onClick={onClick}
