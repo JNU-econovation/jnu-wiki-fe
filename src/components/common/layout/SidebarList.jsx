@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
+import MypageSidebar from "./MypageSidebar";
+import { useState } from "react";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 const NavStyle = styled(NavLink)`
   display: flex;
@@ -50,20 +53,35 @@ const MenuIcon = styled.div`
   font-size: 2rem;
   padding: 0 1rem;
 `;
+const Ic = styled.div`
+  position: absolute;
+  right: 15%;
+  color: ${(props) => props.color};
+`;
 
-const MenuList = ({ isActive, name, icons, route, onClick }) => {
+const MenuList = ({ name, icons, route, isActive, active, onClick }) => {
   const act = isActive;
   return (
     <>
       <NavStyle
-        className={({ isActive }) => (isActive ? "active" : "")}
+        className={({ isActive }) => (isActive ? "active" : null)}
         to={route}
-        onClick={onClick}
+        // onClick={}
         id={act ? "active" : null}
+        onClick={onClick}
       >
         <MenuIcon>{icons}</MenuIcon>
         {name}
+        {/* {name === "마이페이지" ? (
+          <Ic>
+            <FaChevronUp />{" "}
+          </Ic>
+        ) : null} 
+        ^ 아이콘 추후에 추가*/}
       </NavStyle>
+      {name === "마이페이지" ? (
+        <>{isActive ? <MypageSidebar></MypageSidebar> : null}</>
+      ) : null}
     </>
   );
 };

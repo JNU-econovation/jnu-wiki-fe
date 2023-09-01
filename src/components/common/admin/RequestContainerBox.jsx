@@ -1,29 +1,32 @@
 import styled from "styled-components";
 import TitleBox from "../admin/TitleBox";
 import RequestContain from "../admin/RequestContain";
-import { useEffect } from "react";
-import Loader from "../layout/Loader";
-import { forwardRef } from "react";
+
 import React from "react";
 
 //prop 으로 data 넘겨주기...
 
+const Bottom = styled.div`
+  color: white;
+`;
+
 const RequestContainerBox = React.forwardRef(
-  ({ title, border, data, route, modi, isLoading, isError, children }, ref) => {
+  ({ title, border, data, route, modi, isLoading, error, children }, ref) => {
+    console.log(error?.response?.status);
     return (
       <RequestContainerBoxCss>
-        <TitleBox title={title} data={data} isError={isError} />
+        <TitleBox title={title} isLoading={isLoading} error={error} />
         <RequestContain
           border={border}
           datas={data}
           route={route}
           modi={modi}
           isLoading={isLoading}
-          isError={isError}
+          error={error}
         >
-          {isLoading && <Loader />}
+          {/* {isLoading && <Loader />} */}
           {/* 아래의 div가 관찰대상!!! */}
-          {!isLoading && <div ref={ref}>.</div>}
+          {!isLoading && <Bottom ref={ref}>. </Bottom>}
         </RequestContain>
       </RequestContainerBoxCss>
     );
