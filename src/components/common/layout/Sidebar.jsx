@@ -8,6 +8,7 @@ import { HiMiniUserGroup } from "react-icons/hi2";
 import { AiTwotoneSetting } from "react-icons/ai";
 import { IoDocumentTextSharp } from "react-icons/io5";
 import { useLocation } from "react-router-dom";
+import MypageSidebar from "./MypageSidebar";
 
 const Container = styled.div`
   width: 20rem;
@@ -25,9 +26,8 @@ const Container = styled.div`
   z-index: 3;
 `;
 
-function Sidebar({ onClick, viewActive, adminActive }) {
+function Sidebar({ onClick, viewActive, adminActive, myActive }) {
   const location = useLocation();
-
   const [role, setRole] = useState(window.localStorage.getItem("role"));
   useEffect(() => {
     setRole(window.localStorage.getItem("role"));
@@ -38,36 +38,39 @@ function Sidebar({ onClick, viewActive, adminActive }) {
     <Container>
       <MenuList
         onClick={onClick}
-        name="Home"
+        name="홈"
         icons={<GoHomeFill />}
         route={routes.home}
-      ></MenuList>
-
-      <MenuList
-        onClick={onClick}
-        name="Add Posts"
-        icons={<FaPenSquare />}
-        route={routes.addPost}
-      ></MenuList>
-
-      <MenuList
-        onClick={onClick}
-        name="View Posts"
-        icons={<IoDocumentTextSharp />}
-        route={routes.documentList}
         isActive={viewActive}
       ></MenuList>
 
       <MenuList
         onClick={onClick}
-        name="Mypage"
+        name="게시글 작성"
+        icons={<FaPenSquare />}
+        route={routes.addPost}
+      ></MenuList>
+
+      {/* <MenuList
+        onClick={onClick}
+        name="View Posts"
+        icons={<IoDocumentTextSharp />}
+        route={routes.documentList}
+        isActive={viewActive}
+      ></MenuList> */}
+
+      <MenuList
+        name="마이페이지"
         icons={<HiMiniUserGroup />}
         route={routes.myPage}
+        isActive={myActive}
+        onClick={onClick}
+        // active={active}
       ></MenuList>
 
       {role === "ADMIN" ? (
         <MenuList
-          name="Admin"
+          name="관리자"
           icons={<AiTwotoneSetting />}
           route={routes.admin}
           isActive={adminActive}

@@ -5,6 +5,7 @@ const routes = {
   join: "/join",
   login: "/login",
   myPage: "/mypage",
+  scrap: "/scrap",
   myInfoEdit: "/myinfo-edit",
   newDocsRequest: "/newDocsReq",
   basicInfoEditRequest: "/basicInfoEditReq",

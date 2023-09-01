@@ -6,7 +6,7 @@ import Loader from "../layout/Loader";
 import { useState } from "react";
 
 const RequestContain = ({
-  isError,
+  error,
   isLoading,
   border,
   datas,
@@ -20,13 +20,14 @@ const RequestContain = ({
   //   } else {
   //     setLen(datas[0].modifiedRequestList.length);
   //   }
+
   return (
     <RequestContainCss border={border}>
       {isLoading ? (
         <Loader />
       ) : (
         <>
-          {!isLoading ? (
+          {error?.response?.status != 404 ? (
             <>
               {datas?.map((pageData) => {
                 if (pageData) {
@@ -44,7 +45,7 @@ const RequestContain = ({
                             ? `${route}/${data?.docsId}/${data?.docsRequestId}`
                             : `${route}/${data?.docsRequestId}`
                         }
-                      />
+                      /> //아마 이쯤에 로딩처리하기
                     );
                   });
                 }
