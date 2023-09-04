@@ -19,6 +19,8 @@ import Skeleton from "../layout/Skeleton";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ScrapBtn from "./ScrapBtn";
+import { useEffect } from "react";
+import { scrapCreate, scrapDelete } from "../../../services/scrap";
 
 const Group = styled.div`
   height: 100%;
@@ -186,6 +188,28 @@ const Document = ({ id }) => {
     setEditContent(!editContent);
   };
 
+  const [scrap, setScrap] = useState(false);
+
+  const handleOnScrapFill = () => {
+    setScrap(!scrap);
+  };
+
+  const { mutate: scrapDetailCreate } = useMutation({
+    mutationFn: scrapCreate,
+  });
+
+  const { mutate: scrapDetailDelete } = useMutation({
+    mutationFn: scrapDelete,
+  });
+
+  useEffect(() => {
+    if (scrap) {
+      scrapDetailCreate({ docsId: id });
+    } else {
+      scrapDetailDelete({ docsId: id });
+    }
+  }, [scrap, id, scrapDetailCreate, scrapDetailDelete]);
+
   return (
     <>
       {isLoading && <Skeleton />}
@@ -214,7 +238,7 @@ const Document = ({ id }) => {
           >
             기본 정보
           </DocumentHeading>
-          <ScrapBtn />
+          <ScrapBtn onClick={handleOnScrapFill} scrap={scrap} />
         </BasicInfo>
         <Box>
           <InfoGroup htmlFor="title" label="문서 제목">
