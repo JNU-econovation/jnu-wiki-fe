@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import routes from "../../../routes";
 import styled from "styled-components";
 import { useMutation } from "@tanstack/react-query";
-import { scrapCreate } from "../../../services/scrap";
+import { scrapCreate, scrapDelete } from "../../../services/scrap";
 
 const Container = styled.div`
   overflow: hidden;
@@ -34,7 +34,7 @@ const DocsList = ({ data }) => {
   });
 
   const { mutate: deleteScrap } = useMutation({
-    mutationFn: scrapCreate,
+    mutationFn: scrapDelete,
   });
 
   const handleOnScrap = (el, scrap) => {
