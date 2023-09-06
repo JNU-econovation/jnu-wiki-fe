@@ -21,6 +21,15 @@ import "react-toastify/dist/ReactToastify.css";
 import ScrapBtn from "./ScrapBtn";
 import { useEffect } from "react";
 import { scrapCreate, scrapDelete } from "../../../services/scrap";
+import { IoIosArrowForward } from "react-icons/io";
+
+const StyledIcon = styled(IoIosArrowForward)`
+  z-index: 10000;
+  height: 100%;
+  /* position: absolute; */
+  /* position: relative; */
+  /* left: 20rem; */
+`;
 
 const Group = styled.div`
   height: 100%;
@@ -55,6 +64,12 @@ const Group = styled.div`
     height: fit-content;
     margin-top: -4rem;
   }
+`;
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Box = styled.div`
@@ -235,112 +250,118 @@ const Document = ({ id }) => {
         theme="light"
       />
 
-      <Group>
-        <BasicInfo>
-          <DocumentHeading
-            className="basic"
-            type={edit}
-            save={save}
-            cancel={cancel}
-            onClick={handleInput}
-            onBasicSave={handleBasicSave}
-            onBasicCancel={handleBasicCancel}
-          >
-            기본 정보
-          </DocumentHeading>
-          <ScrapBtn onClick={handleOnScrapFill} scrap={scrap} />
-        </BasicInfo>
-        <Box>
-          <InfoGroup htmlFor="title" label="문서 제목">
-            {edit ? (
-              <StyledInput
-                htmlFor="docsName"
-                id="docsName"
-                placeholder={docsName}
-                value={valueInit.docsName}
-                onChange={handleOnChange}
-              />
-            ) : (
-              docsName
-            )}
-          </InfoGroup>
-
-          <InfoGroup className="location" htmlFor="location" label="위치">
-            {edit ? (
-              <StyledInput
-                htmlFor="docsLocation"
-                id="docsLocation"
-                placeholder={initialAddress}
-                value={address}
-                disabled
-                onChange={handleOnChange}
-              />
-            ) : (
-              initialAddress
-            )}
-          </InfoGroup>
-          <InfoGroup htmlFor="category" label="카테고리">
-            {edit ? (
-              <StyledSpan>
-                <SelectMenu
-                  id="docsCategory"
-                  placeholder={valueInit.docsCategory}
-                  value={category}
+      <Container>
+        <Group>
+          <BasicInfo>
+            <DocumentHeading
+              className="basic"
+              type={edit}
+              save={save}
+              cancel={cancel}
+              onClick={handleInput}
+              onBasicSave={handleBasicSave}
+              onBasicCancel={handleBasicCancel}
+            >
+              기본 정보
+            </DocumentHeading>
+            <ScrapBtn onClick={handleOnScrapFill} scrap={scrap} />
+          </BasicInfo>
+          <Box>
+            <InfoGroup htmlFor="title" label="문서 제목">
+              {edit ? (
+                <StyledInput
+                  htmlFor="docsName"
+                  id="docsName"
+                  placeholder={docsName}
+                  value={valueInit.docsName}
                   onChange={handleOnChange}
                 />
-              </StyledSpan>
+              ) : (
+                docsName
+              )}
+            </InfoGroup>
+
+            <InfoGroup className="location" htmlFor="location" label="위치">
+              {edit ? (
+                <StyledInput
+                  htmlFor="docsLocation"
+                  id="docsLocation"
+                  placeholder={initialAddress}
+                  value={address}
+                  disabled
+                  onChange={handleOnChange}
+                />
+              ) : (
+                initialAddress
+              )}
+            </InfoGroup>
+
+            <InfoGroup htmlFor="category" label="카테고리">
+              {edit ? (
+                <StyledSpan>
+                  <SelectMenu
+                    id="docsCategory"
+                    placeholder={valueInit.docsCategory}
+                    value={category}
+                    onChange={handleOnChange}
+                  />
+                </StyledSpan>
+              ) : (
+                docsCategory
+              )}
+            </InfoGroup>
+          </Box>
+          <ContentHeading>
+            <DocumentHeading
+              className="content"
+              contentType={editContent}
+              onClick={handleInputContent}
+              onSave={handleSave}
+              onCancel={handleCancel}
+            >
+              내용
+            </DocumentHeading>
+            <DocumentTime className="time">{docsCreatedAt}</DocumentTime>
+          </ContentHeading>
+          <Description>
+            {editContent ? (
+              <EditorContainer className="container">
+                <MDEditor
+                  value={value || value === "" ? value : docsContent}
+                  onChange={handleOnContentChange}
+                  preview="edit"
+                  components={{
+                    toolbar: (command, disabled, executeCommand) => {
+                      if (command.keyCommand === "code") {
+                        return (
+                          <button
+                            aria-label="Insert code"
+                            disabled={disabled}
+                            onClick={(evn) => {
+                              evn.stopPropagation();
+                              executeCommand(command, command.groupName);
+                            }}
+                          >
+                            Code
+                          </button>
+                        );
+                      }
+                    },
+                  }}
+                />
+              </EditorContainer>
             ) : (
-              docsCategory
-            )}
-          </InfoGroup>
-        </Box>
-        <ContentHeading>
-          <DocumentHeading
-            className="content"
-            contentType={editContent}
-            onClick={handleInputContent}
-            onSave={handleSave}
-            onCancel={handleCancel}
-          >
-            내용
-          </DocumentHeading>
-          <DocumentTime className="time">{docsCreatedAt}</DocumentTime>
-        </ContentHeading>
-        <Description>
-          {editContent ? (
-            <EditorContainer className="container">
-              <MDEditor
-                value={value || value === "" ? value : docsContent}
-                onChange={handleOnContentChange}
-                preview="edit"
-                components={{
-                  toolbar: (command, disabled, executeCommand) => {
-                    if (command.keyCommand === "code") {
-                      return (
-                        <button
-                          aria-label="Insert code"
-                          disabled={disabled}
-                          onClick={(evn) => {
-                            evn.stopPropagation();
-                            executeCommand(command, command.groupName);
-                          }}
-                        >
-                          Code
-                        </button>
-                      );
-                    }
-                  },
-                }}
+              <MDEditor.Markdown
+                source={docsContent}
+                style={{ whiteSpace: "pre-wrap" }}
               />
-            </EditorContainer>
-          ) : (
-            <MDEditor.Markdown
-              source={docsContent}
-              style={{ whiteSpace: "pre-wrap" }}
-            />
-          )}
-        </Description>
-      </Group>
+            )}
+          </Description>
+        </Group>
+        <div>
+          <StyledIcon />
+        </div>
+      </Container>
     </>
   );
 };
