@@ -25,10 +25,8 @@ import { IoIosArrowForward } from "react-icons/io";
 
 const StyledIcon = styled(IoIosArrowForward)`
   z-index: 10000;
-  height: 100%;
-  /* position: absolute; */
-  /* position: relative; */
-  /* left: 20rem; */
+  position: relative;
+  left: 20rem;
 `;
 
 const Group = styled.div`
