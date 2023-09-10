@@ -77,13 +77,7 @@ const CreateDocument = () => {
     );
   };
 
-  const handleValidation = () => {
-    handleSetNameMsg("docsName", valueInit.docsName);
-    handleSetLocationMsg("docsLocation", { lat: latitude, lng: longitude });
-  };
-
-  const handleSubmit = () => {
-    handleValidation();
+  const handleRegisterAlert = () => {
     if (data.docsName != "" && data.docsLocation != "") {
       swalWithBootstrapButtons
         .fire({
@@ -99,12 +93,12 @@ const CreateDocument = () => {
         })
         .then((result) => {
           if (result.isConfirmed) {
+            handleRequest();
             swalWithBootstrapButtons.fire(
               "문서 등록 요청 완료!",
               "관리자의 승인 후 등록이 완료됩니다.",
               "success"
             );
-            handleRequest();
           } else if (result.dismiss === Swal.DismissReason.cancel) {
             swalWithBootstrapButtons.fire(
               "취소 완료",
@@ -114,6 +108,12 @@ const CreateDocument = () => {
           }
         });
     }
+  };
+
+  const handleSubmit = () => {
+    handleSetNameMsg("docsName", valueInit.docsName);
+    handleSetLocationMsg("docsLocation", { lat: latitude, lng: longitude });
+    handleRegisterAlert();
   };
 
   const handleRequest = () => {
