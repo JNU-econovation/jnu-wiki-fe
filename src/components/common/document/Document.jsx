@@ -157,7 +157,6 @@ const Document = ({ id }) => {
     if (!getLat) {
       addressInfo = docsLocation;
     }
-
     return addressInfo;
   };
 
@@ -173,10 +172,7 @@ const Document = ({ id }) => {
       docsRequestLocation: addressInfo,
     });
 
-    toast.info("관리자 승인 후 갱신됩니다.", {
-      position: "top-right",
-      autoClose: 3000,
-    });
+    toast.info("관리자 승인 후 갱신됩니다.");
   };
 
   const handleBasicCancel = () => {
@@ -187,15 +183,13 @@ const Document = ({ id }) => {
     setValue(updateValue);
   };
 
-  // 내용버튼 컨트롤
-
   const handleInputContent = () => {
     setEditContent(true);
   };
 
   const handleContentSave = () => {
-    mutationContentModify({ docs_id: id, docsContent: value });
     setEditContent(false);
+    mutationContentModify({ docs_id: id, docsContent: value });
     toast.success("내용이 수정되었습니다!", {
       position: "top-right",
       autoClose: 3000,
@@ -212,25 +206,22 @@ const Document = ({ id }) => {
 
   const { mutate: scrapDetailCreate } = useMutation({
     mutationFn: scrapCreate,
+    onError: (error) => {
+      console.error(error);
+    },
   });
 
   const { mutate: scrapDetailDelete } = useMutation({
     mutationFn: scrapDelete,
+    onError: (error) => {
+      console.error(error);
+    },
   });
 
   useEffect(() => {
     if (scrap) {
       scrapDetailCreate({ docsId: id });
-      toast("스크랩 되었습니다!", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast("스크랩 되었습니다!");
     } else {
       scrapDetailDelete({ docsId: id });
     }
