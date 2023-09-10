@@ -60,6 +60,10 @@ const CreateDocument = () => {
   const { msg: locationMsg, handleSetMsg: handleSetLocationMsg } =
     useValidation("");
 
+  const { mutate } = useMutation({
+    mutationFn: create,
+  });
+
   const swalWithBootstrapButtons = Swal.mixin({
     customClass: {
       confirmButton: "btn btn-success",
@@ -68,9 +72,21 @@ const CreateDocument = () => {
     buttonsStyling: true,
   });
 
-  const handleCancel = () => {
-    reset();
-    dispatch({ type: "clearAddress" });
+  const askAlert = () => {
+    return swalWithBootstrapButtons.fire({
+      title: "문서를 등록하시겠습니까?",
+      html: `문서제목: ${inputData.docsName}<br/>
+      위치: ${address}<br/>
+      카테고리: ${inputData.docsCategory}`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "등록 요청",
+      cancelButtonText: "취소",
+      reverseButtons: true,
+    });
+  };
+
+  const cancelAlert = () => {
     swalWithBootstrapButtons.fire(
       "취소 완료",
       "문서 등록 요청을 취소합니다.",
@@ -78,50 +94,20 @@ const CreateDocument = () => {
     );
   };
 
-  const handleRegisterAlert = () => {
-    if (inputData.docsName != "" && inputData.docsLocation != "") {
-      swalWithBootstrapButtons
-        .fire({
-          title: "문서를 등록하시겠습니까?",
-          html: `문서제목: ${inputData.docsName}<br/>
-          위치: ${address}<br/>
-          카테고리: ${inputData.docsCategory}`,
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonText: "등록 요청",
-          cancelButtonText: "취소",
-          reverseButtons: true,
-        })
-        .then((result) => {
-          if (result.isConfirmed) {
-            handleRequest();
-            swalWithBootstrapButtons.fire(
-              "문서 등록 요청 완료!",
-              "관리자의 승인 후 등록이 완료됩니다.",
-              "success"
-            );
-          } else if (result.dismiss === Swal.DismissReason.cancel) {
-            swalWithBootstrapButtons.fire(
-              "취소 완료",
-              "문서 등록 요청을 취소합니다.",
-              "error"
-            );
-          }
-        });
-    }
+  const requestAlert = () => {
+    swalWithBootstrapButtons.fire(
+      "문서 등록 요청 완료!",
+      "관리자의 승인 후 등록이 완료됩니다.",
+      "success"
+    );
   };
 
-  const handleSubmit = () => {
-    handleSetNameMsg("docsName", valueInit.docsName);
-    handleSetLocationMsg("docsLocation", { lat: latitude, lng: longitude });
-    handleRegisterAlert();
+  const handleClear = () => {
+    reset();
+    dispatch({ type: "clearAddress" });
   };
 
-  const { mutate } = useMutation({
-    mutationFn: create,
-  });
-
-  const handleRequest = () => {
+  const sendRequest = () => {
     mutate(inputData, {
       onSuccess: () => {},
       onError: (error) => {
@@ -129,6 +115,31 @@ const CreateDocument = () => {
         console.log(error);
       },
     });
+  };
+
+  const handleRegisterAlert = () => {
+    if (inputData.docsName !== "" && inputData.docsLocation !== "") {
+      askAlert().then((result) => {
+        if (result.isConfirmed) {
+          sendRequest();
+          requestAlert();
+          handleClear();
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          handleCancel();
+        }
+      });
+    }
+  };
+
+  const handleCancel = () => {
+    cancelAlert();
+    handleClear();
+  };
+
+  const handleSubmit = () => {
+    handleSetNameMsg("docsName", valueInit.docsName);
+    handleSetLocationMsg("docsLocation", { lat: latitude, lng: longitude });
+    handleRegisterAlert();
   };
 
   return (
@@ -179,9 +190,7 @@ const CreateDocument = () => {
             color="white"
             border="none"
             backgroundcolor="primary"
-            onClick={(e) => {
-              handleSubmit(e);
-            }}
+            onClick={handleSubmit}
           >
             등록 요청
           </Button>
