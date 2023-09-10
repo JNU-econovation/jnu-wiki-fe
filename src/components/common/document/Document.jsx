@@ -12,21 +12,20 @@ import {
   basicModify,
 } from "../../../services/document";
 import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import MDEditor from "@uiw/react-md-editor";
 import useInput from "../../../hooks/useInput";
 import Skeleton from "../layout/Skeleton";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ScrapBtn from "./ScrapBtn";
-import { useEffect } from "react";
 import { scrapCreate, scrapDelete } from "../../../services/scrap";
 import { IoIosArrowForward } from "react-icons/io";
 
 const StyledIcon = styled(IoIosArrowForward)`
   z-index: 10000;
-  position: relative;
-  left: 20rem;
+  /* position: relative; */
+  /* left: 20rem; */
 `;
 
 const Group = styled.div`
@@ -102,7 +101,6 @@ const BasicInfo = styled.div`
 `;
 
 const Document = ({ id }) => {
-  // 데이터 요청
   const { data, isLoading, isError } = useQuery(["detail_document", id], () =>
     detailDocument(id)
   );
@@ -110,14 +108,10 @@ const Document = ({ id }) => {
   const category = useSelector((state) => state.category.category);
   let getLat = useSelector((state) => state.latLng.latitude);
   let getLng = useSelector((state) => state.latLng.longitude);
-
-  // 데이터 선언
-  const docsName = data?.data.response.docsName;
-  const docsCategory = data?.data.response.docsCategory;
-  const docsCreatedAt = data?.data.response.docsCreatedAt;
-  let docsContent = data?.data.response.docsContent;
-
   let { address, initialAddress } = useSelector((state) => state.address);
+
+  const { docsName, docsCategory, docsCreatedAt, docsContent } =
+    data?.data.response || {};
 
   const { valueInit, handleOnChange, reset } = useInput({
     docsCategory,
