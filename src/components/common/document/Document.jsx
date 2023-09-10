@@ -121,8 +121,8 @@ const Document = ({ id }) => {
     docsContent,
   });
 
-  const [edit, setEdit] = useState(false); // 기본정보 컨트롤 (수정버튼 눌렀을 경우와 누르지 않았을 경우)
-  let [value, setValue] = useState(docsContent);
+  const [basicEdit, setBasicEdit] = useState(false);
+  const [contentValue, setContentValue] = useState(docsContent);
   const [editContent, setEditContent] = useState(false);
   const [scrap, setScrap] = useState(false);
 
@@ -149,7 +149,7 @@ const Document = ({ id }) => {
   });
 
   const handleSetInput = () => {
-    setEdit(true);
+    setBasicEdit(true);
     valueInit.docsName = docsName;
   };
 
@@ -161,7 +161,7 @@ const Document = ({ id }) => {
   };
 
   const handleBasicSave = () => {
-    setEdit(false);
+    setBasicEdit(false);
     handleAddressInfo();
 
     mutationBasicModify({
@@ -176,20 +176,21 @@ const Document = ({ id }) => {
   };
 
   const handleBasicCancel = () => {
-    setEdit(false);
+    setBasicEdit(false);
   };
 
   const handleOnContentChange = (updateValue) => {
-    setValue(updateValue);
+    setContentValue(updateValue);
   };
 
   const handleInputContent = () => {
     setEditContent(true);
+    setContentValue(docsContent);
   };
 
   const handleContentSave = () => {
     setEditContent(false);
-    mutationContentModify({ docs_id: id, docsContent: value });
+    mutationContentModify({ docs_id: id, docsContent: contentValue });
     toast.success("내용이 수정되었습니다!");
   };
 
@@ -244,7 +245,7 @@ const Document = ({ id }) => {
           <BasicInfo>
             <DocumentHeading
               className="basic"
-              type={edit}
+              type={basicEdit}
               clickEdit={handleSetInput}
               basicSave={handleBasicSave}
               basicCancel={handleBasicCancel}
@@ -256,7 +257,7 @@ const Document = ({ id }) => {
 
           <Box>
             <InfoGroup htmlFor="title" label="문서 제목">
-              {edit ? (
+              {basicEdit ? (
                 <StyledInput
                   htmlFor="docsName"
                   id="docsName"
@@ -269,7 +270,7 @@ const Document = ({ id }) => {
               )}
             </InfoGroup>
             <InfoGroup className="location" htmlFor="location" label="위치">
-              {edit ? (
+              {basicEdit ? (
                 <StyledInput
                   htmlFor="docsLocation"
                   id="docsLocation"
@@ -283,7 +284,7 @@ const Document = ({ id }) => {
               )}
             </InfoGroup>
             <InfoGroup htmlFor="category" label="카테고리">
-              {edit ? (
+              {basicEdit ? (
                 <StyledSpan>
                   <SelectMenu
                     id="docsCategory"
@@ -315,7 +316,7 @@ const Document = ({ id }) => {
             {editContent ? (
               <EditorContainer className="container">
                 <MDEditor
-                  value={value || value === "" ? value : docsContent}
+                  value={contentValue}
                   onChange={handleOnContentChange}
                   preview="edit"
                   components={{
