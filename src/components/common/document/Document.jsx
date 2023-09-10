@@ -190,10 +190,7 @@ const Document = ({ id }) => {
   const handleContentSave = () => {
     setEditContent(false);
     mutationContentModify({ docs_id: id, docsContent: value });
-    toast.success("내용이 수정되었습니다!", {
-      position: "top-right",
-      autoClose: 3000,
-    });
+    toast.success("내용이 수정되었습니다!");
   };
 
   const handleContentcCancel = () => {
