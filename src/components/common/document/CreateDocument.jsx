@@ -9,6 +9,7 @@ import useValidation from "../../../hooks/useValidation";
 import { create } from "../../../services/document";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
+import { useMutation } from "@tanstack/react-query";
 
 export const Container = styled.div`
   width: 22rem;
@@ -49,7 +50,7 @@ const CreateDocument = () => {
     docsLocation: "",
   });
 
-  const data = {
+  const inputData = {
     docsCategory: category || "카페",
     docsName: valueInit.docsName,
     docsLocation: { lat: latitude, lng: longitude },
@@ -59,6 +60,10 @@ const CreateDocument = () => {
   const { msg: locationMsg, handleSetMsg: handleSetLocationMsg } =
     useValidation("");
 
+  const { mutate } = useMutation({
+    mutationFn: create,
+  });
+
   const swalWithBootstrapButtons = Swal.mixin({
     customClass: {
       confirmButton: "btn btn-success",
@@ -67,9 +72,21 @@ const CreateDocument = () => {
     buttonsStyling: true,
   });
 
-  const handleCancel = () => {
-    reset();
-    dispatch({ type: "clearAddress" });
+  const askAlert = () => {
+    return swalWithBootstrapButtons.fire({
+      title: "문서를 등록하시겠습니까?",
+      html: `문서제목: ${inputData.docsName}<br/>
+      위치: ${address}<br/>
+      카테고리: ${inputData.docsCategory}`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "등록 요청",
+      cancelButtonText: "취소",
+      reverseButtons: true,
+    });
+  };
+
+  const cancelAlert = () => {
     swalWithBootstrapButtons.fire(
       "취소 완료",
       "문서 등록 요청을 취소합니다.",
@@ -77,54 +94,52 @@ const CreateDocument = () => {
     );
   };
 
-  const handleValidation = () => {
-    handleSetNameMsg("docsName", valueInit.docsName);
-    handleSetLocationMsg("docsLocation", { lat: latitude, lng: longitude });
+  const requestAlert = () => {
+    swalWithBootstrapButtons.fire(
+      "문서 등록 요청 완료!",
+      "관리자의 승인 후 등록이 완료됩니다.",
+      "success"
+    );
   };
 
-  const handleSubmit = () => {
-    handleValidation();
-    if (data.docsName != "" && data.docsLocation != "") {
-      swalWithBootstrapButtons
-        .fire({
-          title: "문서를 등록하시겠습니까?",
-          html: `문서제목: ${data.docsName}<br/>
-          위치: ${address}<br/>
-          카테고리: ${data.docsCategory}`,
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonText: "등록 요청",
-          cancelButtonText: "취소",
-          reverseButtons: true,
-        })
-        .then((result) => {
-          if (result.isConfirmed) {
-            swalWithBootstrapButtons.fire(
-              "문서 등록 요청 완료!",
-              "관리자의 승인 후 등록이 완료됩니다.",
-              "success"
-            );
-            handleRequest();
-          } else if (result.dismiss === Swal.DismissReason.cancel) {
-            swalWithBootstrapButtons.fire(
-              "취소 완료",
-              "문서 등록 요청을 취소합니다.",
-              "error"
-            );
-          }
-        });
+  const handleClear = () => {
+    reset();
+    dispatch({ type: "clearAddress" });
+  };
+
+  const sendRequest = () => {
+    mutate(inputData, {
+      onSuccess: () => {},
+      onError: (error) => {
+        alert("문서 생성에 실패했습니다. 관리자에게 문의하세요.");
+        console.log(error);
+      },
+    });
+  };
+
+  const handleRegisterAlert = () => {
+    if (inputData.docsName !== "" && inputData.docsLocation !== "") {
+      askAlert().then((result) => {
+        if (result.isConfirmed) {
+          sendRequest();
+          requestAlert();
+          handleClear();
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          handleCancel();
+        }
+      });
     }
   };
 
-  const handleRequest = () => {
-    create(data)
-      .then((response) => {
-        if (response.status === 200) {
-          alert("문서가 생성되었습니다.");
-          console.log(data);
-        }
-      })
-      .catch((error) => console.log(error));
+  const handleCancel = () => {
+    cancelAlert();
+    handleClear();
+  };
+
+  const handleSubmit = () => {
+    handleSetNameMsg("docsName", valueInit.docsName);
+    handleSetLocationMsg("docsLocation", { lat: latitude, lng: longitude });
+    handleRegisterAlert();
   };
 
   return (
@@ -157,7 +172,7 @@ const CreateDocument = () => {
         <DocumentLabel>카테고리</DocumentLabel>
         <SelectMenu
           id="docsCategory"
-          value={data.docsCategory}
+          value={inputData.docsCategory}
           onChange={handleOnChange}
         />
         <StyledButton>
@@ -175,9 +190,7 @@ const CreateDocument = () => {
             color="white"
             border="none"
             backgroundcolor="primary"
-            onClick={(e) => {
-              handleSubmit(e);
-            }}
+            onClick={handleSubmit}
           >
             등록 요청
           </Button>
