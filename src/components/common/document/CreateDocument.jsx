@@ -9,6 +9,7 @@ import useValidation from "../../../hooks/useValidation";
 import { create } from "../../../services/document";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
+import { useMutation } from "@tanstack/react-query";
 
 export const Container = styled.div`
   width: 22rem;
@@ -49,7 +50,7 @@ const CreateDocument = () => {
     docsLocation: "",
   });
 
-  const data = {
+  const inputData = {
     docsCategory: category || "카페",
     docsName: valueInit.docsName,
     docsLocation: { lat: latitude, lng: longitude },
@@ -78,13 +79,13 @@ const CreateDocument = () => {
   };
 
   const handleRegisterAlert = () => {
-    if (data.docsName != "" && data.docsLocation != "") {
+    if (inputData.docsName != "" && inputData.docsLocation != "") {
       swalWithBootstrapButtons
         .fire({
           title: "문서를 등록하시겠습니까?",
-          html: `문서제목: ${data.docsName}<br/>
+          html: `문서제목: ${inputData.docsName}<br/>
           위치: ${address}<br/>
-          카테고리: ${data.docsCategory}`,
+          카테고리: ${inputData.docsCategory}`,
           icon: "warning",
           showCancelButton: true,
           confirmButtonText: "등록 요청",
@@ -116,15 +117,18 @@ const CreateDocument = () => {
     handleRegisterAlert();
   };
 
+  const { mutate } = useMutation({
+    mutationFn: create,
+  });
+
   const handleRequest = () => {
-    create(data)
-      .then((response) => {
-        if (response.status === 200) {
-          alert("문서가 생성되었습니다.");
-          console.log(data);
-        }
-      })
-      .catch((error) => console.log(error));
+    mutate(inputData, {
+      onSuccess: () => {},
+      onError: (error) => {
+        alert("문서 생성에 실패했습니다. 관리자에게 문의하세요.");
+        console.log(error);
+      },
+    });
   };
 
   return (
@@ -157,7 +161,7 @@ const CreateDocument = () => {
         <DocumentLabel>카테고리</DocumentLabel>
         <SelectMenu
           id="docsCategory"
-          value={data.docsCategory}
+          value={inputData.docsCategory}
           onChange={handleOnChange}
         />
         <StyledButton>
