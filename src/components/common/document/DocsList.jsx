@@ -31,10 +31,16 @@ const DocsList = ({ data }) => {
 
   const { mutate: createScrap } = useMutation({
     mutationFn: scrapCreate,
+    onError: (error) => {
+      console.error(error);
+    },
   });
 
   const { mutate: deleteScrap } = useMutation({
     mutationFn: scrapDelete,
+    onError: (error) => {
+      console.error(error);
+    },
   });
 
   const handleOnScrap = (el, scrap) => {
