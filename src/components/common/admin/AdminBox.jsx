@@ -29,6 +29,7 @@ const AdminBox = () => {
     {
       getNextPageParam: (currentPage, allPages) => {
         const nextPage = allPages.length;
+        // console.log(currentPage);
 
         return nextPage == 1 ? null : nextPage;
       },
@@ -48,7 +49,6 @@ const AdminBox = () => {
     {
       getNextPageParam: (lastPage, allPages) => {
         const nextPage = allPages.length - 1; // 현재 페이지
-        console.log(lastPage);
         return nextPage == 1 ? null : nextPage + 1;
         // 전체 ㅔ페이지 수 어떻게 구하지
       },
