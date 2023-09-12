@@ -68,14 +68,14 @@ const DocumentListPage = () => {
   return (
     <>
       <MainLayout onClick={handleShow} />
-      {show ? (
+      {show && (
         <DocumentWrapper>
           <Suspense fallback={<Loader />}>
             <DocsList data={data} />
             <div style={{ height: "50px" }} ref={bottomObserver}></div>
           </Suspense>
         </DocumentWrapper>
-      ) : undefined}
+      )}
       {isLoading || error || !data ? (
         <Loader />
       ) : (
