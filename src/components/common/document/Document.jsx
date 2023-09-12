@@ -12,15 +12,21 @@ import {
   basicModify,
 } from "../../../services/document";
 import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import MDEditor from "@uiw/react-md-editor";
 import useInput from "../../../hooks/useInput";
 import Skeleton from "../layout/Skeleton";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ScrapBtn from "./ScrapBtn";
-import { useEffect } from "react";
 import { scrapCreate, scrapDelete } from "../../../services/scrap";
+import { IoIosArrowForward } from "react-icons/io";
+
+const StyledIcon = styled(IoIosArrowForward)`
+  z-index: 10000;
+  /* position: relative; */
+  /* left: 20rem; */
+`;
 
 const Group = styled.div`
   height: 100%;
@@ -57,6 +63,12 @@ const Group = styled.div`
   }
 `;
 
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const Box = styled.div`
   margin: 1rem 0 3rem 0;
 `;
@@ -89,22 +101,18 @@ const BasicInfo = styled.div`
 `;
 
 const Document = ({ id }) => {
-  // 데이터 요청
   const { data, isLoading, isError } = useQuery(["detail_document", id], () =>
     detailDocument(id)
   );
 
   const category = useSelector((state) => state.category.category);
-  let getLat = useSelector((state) => state.latLng.latitude);
-  let getLng = useSelector((state) => state.latLng.longitude);
+  const getLat = useSelector((state) => state.latLng.latitude);
+  const getLng = useSelector((state) => state.latLng.longitude);
+  const { address, initialAddress } = useSelector((state) => state.address);
+  let addressInfo = { lat: getLat, lng: getLng };
 
-  // 데이터 선언
-  const docsName = data?.data.response.docsName;
-  const docsCategory = data?.data.response.docsCategory;
-  const docsCreatedAt = data?.data.response.docsCreatedAt;
-  let docsContent = data?.data.response.docsContent;
-
-  let { address, initialAddress } = useSelector((state) => state.address);
+  const { docsName, docsLocation, docsCategory, docsCreatedAt, docsContent } =
+    data?.data.response || {};
 
   const { valueInit, handleOnChange, reset } = useInput({
     docsCategory,
@@ -113,82 +121,82 @@ const Document = ({ id }) => {
     docsContent,
   });
 
-  const queryClient = useQueryClient();
+  const [basicEdit, setBasicEdit] = useState(false);
+  const [contentValue, setContentValue] = useState(docsContent);
+  const [editContent, setEditContent] = useState(false);
+  const [scrap, setScrap] = useState(false);
 
-  const { mutate: mutationContentModify } = useMutation({
-    mutationFn: contentModify,
-    onSuccess: () => {
-      queryClient.invalidateQueries("detail_document");
-    },
-  });
+  const queryClient = useQueryClient();
 
   const { mutate: mutationBasicModify } = useMutation({
     mutationFn: basicModify,
     onSuccess: () => {
       queryClient.invalidateQueries("detail_document");
     },
+    onError: (error) => {
+      console.error(error);
+    },
   });
 
-  // 기본정보 컨트롤 (수정버튼 눌렀을 경우와 누르지 않았을 경우)
-  const [edit, setEdit] = useState(false);
-  const [save, setSave] = useState(false);
-  const [cancel, setCancel] = useState(false);
+  const { mutate: mutationContentModify } = useMutation({
+    mutationFn: contentModify,
+    onSuccess: () => {
+      queryClient.invalidateQueries("detail_document");
+    },
+    onError: (error) => {
+      console.error(error);
+    },
+  });
 
-  const handleInput = () => {
-    setEdit(!edit);
-    setSave(!save);
-
+  const handleSetInput = () => {
+    setBasicEdit(true);
     valueInit.docsName = docsName;
   };
 
+  const handleAddressInfo = () => {
+    if (!getLat) {
+      addressInfo = docsLocation;
+    }
+    return addressInfo;
+  };
+
   const handleBasicSave = () => {
-    setEdit(!edit);
+    setBasicEdit(false);
+    handleAddressInfo();
+
     mutationBasicModify({
       docsId: id,
       docsRequestType: "MODIFIED",
       docsRequestCategory: category || docsCategory,
       docsRequestName: valueInit.docsName,
-      docsRequestLocation: { lat: getLat, lng: getLng },
+      docsRequestLocation: addressInfo,
     });
 
-    toast.info("관리자 승인 후 갱신됩니다.", {
-      position: "top-right",
-      autoClose: 3000,
-    });
+    toast.info("관리자 승인 후 갱신됩니다.");
   };
 
   const handleBasicCancel = () => {
-    setEdit(!edit);
+    setBasicEdit(false);
   };
 
-  // docsContent의 value
-  let [value, setValue] = useState(docsContent);
   const handleOnContentChange = (updateValue) => {
-    setValue(updateValue); // 입력시마다 갱신해주기
+    setContentValue(updateValue);
   };
-
-  // 내용버튼 컨트롤
-  const [editContent, setEditContent] = useState(false);
 
   const handleInputContent = () => {
-    setEditContent(!editContent);
+    setEditContent(true);
+    setContentValue(docsContent);
   };
 
-  const handleSave = () => {
-    mutationContentModify({ docs_id: id, docsContent: value });
-    setEditContent(!editContent);
-    toast.success("내용이 수정되었습니다!", {
-      position: "top-right",
-      autoClose: 3000,
-    });
+  const handleContentSave = () => {
+    setEditContent(false);
+    mutationContentModify({ docs_id: id, docsContent: contentValue });
+    toast.success("내용이 수정되었습니다!");
   };
 
-  const handleCancel = () => {
-    value = docsContent;
-    setEditContent(!editContent);
+  const handleContentcCancel = () => {
+    setEditContent(false);
   };
-
-  const [scrap, setScrap] = useState(false);
 
   const handleOnScrapFill = () => {
     setScrap(!scrap);
@@ -196,25 +204,22 @@ const Document = ({ id }) => {
 
   const { mutate: scrapDetailCreate } = useMutation({
     mutationFn: scrapCreate,
+    onError: (error) => {
+      console.error(error);
+    },
   });
 
   const { mutate: scrapDetailDelete } = useMutation({
     mutationFn: scrapDelete,
+    onError: (error) => {
+      console.error(error);
+    },
   });
 
   useEffect(() => {
     if (scrap) {
       scrapDetailCreate({ docsId: id });
-      toast("스크랩 되었습니다!", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast("스크랩 되었습니다!");
     } else {
       scrapDetailDelete({ docsId: id });
     }
@@ -235,112 +240,117 @@ const Document = ({ id }) => {
         theme="light"
       />
 
-      <Group>
-        <BasicInfo>
-          <DocumentHeading
-            className="basic"
-            type={edit}
-            save={save}
-            cancel={cancel}
-            onClick={handleInput}
-            onBasicSave={handleBasicSave}
-            onBasicCancel={handleBasicCancel}
-          >
-            기본 정보
-          </DocumentHeading>
-          <ScrapBtn onClick={handleOnScrapFill} scrap={scrap} />
-        </BasicInfo>
-        <Box>
-          <InfoGroup htmlFor="title" label="문서 제목">
-            {edit ? (
-              <StyledInput
-                htmlFor="docsName"
-                id="docsName"
-                placeholder={docsName}
-                value={valueInit.docsName}
-                onChange={handleOnChange}
-              />
-            ) : (
-              docsName
-            )}
-          </InfoGroup>
+      <Container>
+        <Group>
+          <BasicInfo>
+            <DocumentHeading
+              className="basic"
+              type={basicEdit}
+              clickEdit={handleSetInput}
+              basicSave={handleBasicSave}
+              basicCancel={handleBasicCancel}
+            >
+              기본 정보
+            </DocumentHeading>
+            <ScrapBtn onClick={handleOnScrapFill} scrap={scrap} />
+          </BasicInfo>
 
-          <InfoGroup className="location" htmlFor="location" label="위치">
-            {edit ? (
-              <StyledInput
-                htmlFor="docsLocation"
-                id="docsLocation"
-                placeholder={initialAddress}
-                value={address}
-                disabled
-                onChange={handleOnChange}
-              />
-            ) : (
-              initialAddress
-            )}
-          </InfoGroup>
-          <InfoGroup htmlFor="category" label="카테고리">
-            {edit ? (
-              <StyledSpan>
-                <SelectMenu
-                  id="docsCategory"
-                  placeholder={valueInit.docsCategory}
-                  value={category}
+          <Box>
+            <InfoGroup htmlFor="title" label="문서 제목">
+              {basicEdit ? (
+                <StyledInput
+                  htmlFor="docsName"
+                  id="docsName"
+                  placeholder={docsName}
+                  value={valueInit.docsName}
                   onChange={handleOnChange}
                 />
-              </StyledSpan>
+              ) : (
+                docsName
+              )}
+            </InfoGroup>
+            <InfoGroup className="location" htmlFor="location" label="위치">
+              {basicEdit ? (
+                <StyledInput
+                  htmlFor="docsLocation"
+                  id="docsLocation"
+                  placeholder={initialAddress}
+                  value={address}
+                  disabled
+                  onChange={handleOnChange}
+                />
+              ) : (
+                initialAddress
+              )}
+            </InfoGroup>
+            <InfoGroup htmlFor="category" label="카테고리">
+              {basicEdit ? (
+                <StyledSpan>
+                  <SelectMenu
+                    id="docsCategory"
+                    placeholder={valueInit.docsCategory}
+                    value={category}
+                    onChange={handleOnChange}
+                  />
+                </StyledSpan>
+              ) : (
+                docsCategory
+              )}
+            </InfoGroup>
+          </Box>
+
+          <ContentHeading>
+            <DocumentHeading
+              className="content"
+              contentType={editContent}
+              clickEdit={handleInputContent}
+              contentSave={handleContentSave}
+              contentCancel={handleContentcCancel}
+            >
+              내용
+            </DocumentHeading>
+            <DocumentTime className="time">{docsCreatedAt}</DocumentTime>
+          </ContentHeading>
+
+          <Description>
+            {editContent ? (
+              <EditorContainer className="container">
+                <MDEditor
+                  value={contentValue}
+                  onChange={handleOnContentChange}
+                  preview="edit"
+                  components={{
+                    toolbar: (command, disabled, executeCommand) => {
+                      if (command.keyCommand === "code") {
+                        return (
+                          <button
+                            aria-label="Insert code"
+                            disabled={disabled}
+                            onClick={(evn) => {
+                              evn.stopPropagation();
+                              executeCommand(command, command.groupName);
+                            }}
+                          >
+                            Code
+                          </button>
+                        );
+                      }
+                    },
+                  }}
+                />
+              </EditorContainer>
             ) : (
-              docsCategory
-            )}
-          </InfoGroup>
-        </Box>
-        <ContentHeading>
-          <DocumentHeading
-            className="content"
-            contentType={editContent}
-            onClick={handleInputContent}
-            onSave={handleSave}
-            onCancel={handleCancel}
-          >
-            내용
-          </DocumentHeading>
-          <DocumentTime className="time">{docsCreatedAt}</DocumentTime>
-        </ContentHeading>
-        <Description>
-          {editContent ? (
-            <EditorContainer className="container">
-              <MDEditor
-                value={value || value === "" ? value : docsContent}
-                onChange={handleOnContentChange}
-                preview="edit"
-                components={{
-                  toolbar: (command, disabled, executeCommand) => {
-                    if (command.keyCommand === "code") {
-                      return (
-                        <button
-                          aria-label="Insert code"
-                          disabled={disabled}
-                          onClick={(evn) => {
-                            evn.stopPropagation();
-                            executeCommand(command, command.groupName);
-                          }}
-                        >
-                          Code
-                        </button>
-                      );
-                    }
-                  },
-                }}
+              <MDEditor.Markdown
+                source={docsContent}
+                style={{ whiteSpace: "pre-wrap" }}
               />
-            </EditorContainer>
-          ) : (
-            <MDEditor.Markdown
-              source={docsContent}
-              style={{ whiteSpace: "pre-wrap" }}
-            />
-          )}
-        </Description>
-      </Group>
+            )}
+          </Description>
+        </Group>
+        <div>
+          <StyledIcon />
+        </div>
+      </Container>
     </>
   );
 };
