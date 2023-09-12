@@ -109,7 +109,10 @@ const CreateDocument = () => {
 
   const sendRequest = () => {
     mutate(inputData, {
-      onSuccess: () => {},
+      onSuccess: () => {
+        requestAlert();
+        handleClear();
+      },
       onError: (error) => {
         alert("문서 생성에 실패했습니다. 관리자에게 문의하세요.");
         console.error(error);
@@ -118,12 +121,11 @@ const CreateDocument = () => {
   };
 
   const handleRegisterAlert = () => {
+    console.log(inputData);
     if (inputData.docsName !== "" && inputData.docsLocation !== "") {
       askAlert().then((result) => {
         if (result.isConfirmed) {
           sendRequest();
-          requestAlert();
-          handleClear();
         } else if (result.dismiss === Swal.DismissReason.cancel) {
           handleCancel();
         }
