@@ -3,6 +3,7 @@ import DocumentHeading from "./DocumentHeading";
 import Description from "./Description";
 import DocumentTime from "./DocumentTime";
 import DocumentInput from "./DocumentInput";
+import ToggleBtn from "./ToggleBtn";
 import styled from "styled-components";
 import SelectMenu from "./SelectMenu";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -20,13 +21,6 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ScrapBtn from "./ScrapBtn";
 import { scrapCreate, scrapDelete } from "../../../services/scrap";
-import { IoIosArrowForward } from "react-icons/io";
-
-const StyledIcon = styled(IoIosArrowForward)`
-  z-index: 10000;
-  /* position: relative; */
-  /* left: 20rem; */
-`;
 
 const Group = styled.div`
   height: 100%;
@@ -64,9 +58,7 @@ const Group = styled.div`
 `;
 
 const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  position: relative;
 `;
 
 const Box = styled.div`
@@ -125,6 +117,7 @@ const Document = ({ id }) => {
   const [contentValue, setContentValue] = useState(docsContent);
   const [editContent, setEditContent] = useState(false);
   const [scrap, setScrap] = useState(false);
+  const [toggle, setToggle] = useState(true);
 
   const queryClient = useQueryClient();
 
@@ -225,6 +218,10 @@ const Document = ({ id }) => {
     }
   }, [scrap, id, scrapDetailCreate, scrapDetailDelete]);
 
+  const clickToggle = () => {
+    setToggle((prev) => !prev);
+  };
+
   return (
     <>
       {isLoading && <Skeleton />}
@@ -239,117 +236,116 @@ const Document = ({ id }) => {
         pauseOnHover
         theme="light"
       />
-
       <Container>
-        <Group>
-          <BasicInfo>
-            <DocumentHeading
-              className="basic"
-              type={basicEdit}
-              clickEdit={handleSetInput}
-              basicSave={handleBasicSave}
-              basicCancel={handleBasicCancel}
-            >
-              기본 정보
-            </DocumentHeading>
-            <ScrapBtn onClick={handleOnScrapFill} scrap={scrap} />
-          </BasicInfo>
+        {toggle && (
+          <Group>
+            <BasicInfo>
+              <DocumentHeading
+                className="basic"
+                type={basicEdit}
+                clickEdit={handleSetInput}
+                basicSave={handleBasicSave}
+                basicCancel={handleBasicCancel}
+              >
+                기본 정보
+              </DocumentHeading>
+              <ScrapBtn onClick={handleOnScrapFill} scrap={scrap} />
+            </BasicInfo>
 
-          <Box>
-            <InfoGroup htmlFor="title" label="문서 제목">
-              {basicEdit ? (
-                <StyledInput
-                  htmlFor="docsName"
-                  id="docsName"
-                  placeholder={docsName}
-                  value={valueInit.docsName}
-                  onChange={handleOnChange}
-                />
-              ) : (
-                docsName
-              )}
-            </InfoGroup>
-            <InfoGroup className="location" htmlFor="location" label="위치">
-              {basicEdit ? (
-                <StyledInput
-                  htmlFor="docsLocation"
-                  id="docsLocation"
-                  placeholder={initialAddress}
-                  value={address}
-                  disabled
-                  onChange={handleOnChange}
-                />
-              ) : (
-                initialAddress
-              )}
-            </InfoGroup>
-            <InfoGroup htmlFor="category" label="카테고리">
-              {basicEdit ? (
-                <StyledSpan>
-                  <SelectMenu
-                    id="docsCategory"
-                    placeholder={valueInit.docsCategory}
-                    value={category}
+            <Box>
+              <InfoGroup htmlFor="title" label="문서 제목">
+                {basicEdit ? (
+                  <StyledInput
+                    htmlFor="docsName"
+                    id="docsName"
+                    placeholder={docsName}
+                    value={valueInit.docsName}
                     onChange={handleOnChange}
                   />
-                </StyledSpan>
+                ) : (
+                  docsName
+                )}
+              </InfoGroup>
+              <InfoGroup className="location" htmlFor="location" label="위치">
+                {basicEdit ? (
+                  <StyledInput
+                    htmlFor="docsLocation"
+                    id="docsLocation"
+                    placeholder={initialAddress}
+                    value={address}
+                    disabled
+                    onChange={handleOnChange}
+                  />
+                ) : (
+                  initialAddress
+                )}
+              </InfoGroup>
+              <InfoGroup htmlFor="category" label="카테고리">
+                {basicEdit ? (
+                  <StyledSpan>
+                    <SelectMenu
+                      id="docsCategory"
+                      placeholder={valueInit.docsCategory}
+                      value={category}
+                      onChange={handleOnChange}
+                    />
+                  </StyledSpan>
+                ) : (
+                  docsCategory
+                )}
+              </InfoGroup>
+            </Box>
+
+            <ContentHeading>
+              <DocumentHeading
+                className="content"
+                contentType={editContent}
+                clickEdit={handleInputContent}
+                contentSave={handleContentSave}
+                contentCancel={handleContentcCancel}
+              >
+                내용
+              </DocumentHeading>
+              <DocumentTime className="time">{docsCreatedAt}</DocumentTime>
+            </ContentHeading>
+
+            <Description>
+              {editContent ? (
+                <EditorContainer className="container">
+                  <MDEditor
+                    value={contentValue}
+                    onChange={handleOnContentChange}
+                    preview="edit"
+                    components={{
+                      toolbar: (command, disabled, executeCommand) => {
+                        if (command.keyCommand === "code") {
+                          return (
+                            <button
+                              aria-label="Insert code"
+                              disabled={disabled}
+                              onClick={(evn) => {
+                                evn.stopPropagation();
+                                executeCommand(command, command.groupName);
+                              }}
+                            >
+                              Code
+                            </button>
+                          );
+                        }
+                      },
+                    }}
+                  />
+                </EditorContainer>
               ) : (
-                docsCategory
-              )}
-            </InfoGroup>
-          </Box>
-
-          <ContentHeading>
-            <DocumentHeading
-              className="content"
-              contentType={editContent}
-              clickEdit={handleInputContent}
-              contentSave={handleContentSave}
-              contentCancel={handleContentcCancel}
-            >
-              내용
-            </DocumentHeading>
-            <DocumentTime className="time">{docsCreatedAt}</DocumentTime>
-          </ContentHeading>
-
-          <Description>
-            {editContent ? (
-              <EditorContainer className="container">
-                <MDEditor
-                  value={contentValue}
-                  onChange={handleOnContentChange}
-                  preview="edit"
-                  components={{
-                    toolbar: (command, disabled, executeCommand) => {
-                      if (command.keyCommand === "code") {
-                        return (
-                          <button
-                            aria-label="Insert code"
-                            disabled={disabled}
-                            onClick={(evn) => {
-                              evn.stopPropagation();
-                              executeCommand(command, command.groupName);
-                            }}
-                          >
-                            Code
-                          </button>
-                        );
-                      }
-                    },
-                  }}
+                <MDEditor.Markdown
+                  source={docsContent}
+                  style={{ whiteSpace: "pre-wrap" }}
                 />
-              </EditorContainer>
-            ) : (
-              <MDEditor.Markdown
-                source={docsContent}
-                style={{ whiteSpace: "pre-wrap" }}
-              />
-            )}
-          </Description>
-        </Group>
-        <div>
-          <StyledIcon />
-        </div>
+              )}
+            </Description>
+          </Group>
+        )}
+        <ToggleBtn toggle={toggle} onClick={clickToggle} />
       </Container>
     </>
   );
