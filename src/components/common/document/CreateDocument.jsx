@@ -121,7 +121,6 @@ const CreateDocument = () => {
   };
 
   const handleRegisterAlert = () => {
-    console.log(inputData);
     if (inputData.docsName !== "" && inputData.docsLocation !== "") {
       askAlert().then((result) => {
         if (result.isConfirmed) {
