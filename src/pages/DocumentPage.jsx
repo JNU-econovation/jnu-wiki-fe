@@ -11,11 +11,11 @@ const DocumentPage = () => {
     <>
       <MainLayout viewActive={true}>
         <Document id={receivedData?.docsId} />
-        <Map
-          apiLat={receivedData?.docsLocation.lat}
-          apiLng={receivedData?.docsLocation.lng}
-        />
       </MainLayout>
+      <Map
+        apiLat={receivedData?.docsLocation.lat}
+        apiLng={receivedData?.docsLocation.lng}
+      />
     </>
   );
 };
