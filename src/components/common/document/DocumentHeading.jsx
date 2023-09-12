@@ -24,14 +24,14 @@ const StyledHeading = styled.p`
 
 const DocumentHeading = ({
   children,
-  onClick,
+  clickEdit,
   type = false,
   contentType = false,
   className,
-  onSave,
-  onCancel,
-  onBasicSave,
-  onBasicCancel,
+  contentSave,
+  contentCancel,
+  basicSave,
+  basicCancel,
 }) => {
   return (
     <>
@@ -40,15 +40,15 @@ const DocumentHeading = ({
         {className === "basic" ? (
           <>
             {type === false ? (
-              <span className="icon" onClick={onClick}>
+              <span className="icon" onClick={clickEdit}>
                 편집
               </span>
             ) : (
               <>
-                <span className="icon save" onClick={onBasicSave}>
+                <span className="icon save" onClick={basicSave}>
                   저장
                 </span>
-                <span className="icon cancel" onClick={onBasicCancel}>
+                <span className="icon cancel" onClick={basicCancel}>
                   취소
                 </span>
               </>
@@ -57,15 +57,15 @@ const DocumentHeading = ({
         ) : (
           <>
             {contentType === false ? (
-              <span className="icon" onClick={onClick}>
+              <span className="icon" onClick={clickEdit}>
                 편집
               </span>
             ) : (
               <>
-                <span className="icon save" onClick={onSave}>
+                <span className="icon save" onClick={contentSave}>
                   저장
                 </span>
-                <span className="icon cancel" onClick={onCancel}>
+                <span className="icon cancel" onClick={contentCancel}>
                   취소
                 </span>
               </>
