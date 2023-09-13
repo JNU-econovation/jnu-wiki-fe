@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import ScrapBtn from "../document/ScrapBtn";
 import DocsItem from "../document/DocsItem";
+import { useNavigate } from "react-router-dom";
+import routes from "../../../routes";
 
 const ScrapStyle = styled.div`
   color: #216d32;
@@ -34,11 +36,15 @@ const StyledHr = styled.hr`
 `;
 
 const ScrapList = ({ datas }) => {
+  const navigate = useNavigate();
+  const gotoDetail = (data) => {
+    navigate(routes.documentPage, { state: data });
+  };
   return (
     <>
       {datas?.map((data) => (
         <>
-          <ScrapStyle key={data.docsId}>
+          <ScrapStyle key={data.docsId} onClick={() => gotoDetail(data)}>
             <div className="title">
               <div>{data.docsName}</div>
               <ScrapBtn />

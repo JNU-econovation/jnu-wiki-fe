@@ -83,7 +83,7 @@ const MypageScrap = () => {
         <DocumentWrapper>
           <Container>
             <Title>{nickname}님이 스크랩한 장소입니다 :)</Title>
-            🐦 스크랩 한 게시물이 없습니다
+            <p>🐦 스크랩 한 게시물이 없습니다</p>
           </Container>
         </DocumentWrapper>
       )}
