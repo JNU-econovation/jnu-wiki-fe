@@ -49,23 +49,16 @@ const ScrapList = ({ datas }) => {
       deleteScrap({ docsId: el.docsId });
     }
   };
-  console.log(datas);
+  // console.log(docsListArray[0]?.scrapList);
   return (
     <>
-      {docsListArray?.map((data) => (
+      {docsListArray[0]?.scrapList?.map((data) => (
         <div key={data.docsId} onClick={() => gotoDetail(data)}>
           <ScrapDocs
             name={data.docsName}
             category={data.docsCategory}
             onScrapClick={(scrap) => handleOnScrap(data, scrap)}
-          >
-            {/* <div key={data.docsId} onClick={() => gotoDetail(data)}></div>
-          <DocsItem
-            name={data.docsId}
-            category={data.docsCategory}
-            onScrapClick={(scrap) => handleOnScrap(data, scrap)}
-          /> */}
-          </ScrapDocs>
+          ></ScrapDocs>
         </div>
       ))}
     </>
