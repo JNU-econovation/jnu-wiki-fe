@@ -7,10 +7,13 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { mypagescrap } from "../../../services/mypage";
 import Loader from "../layout/Loader";
 import { Suspense } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { scrapCreate, scrapDelete } from "../../../services/scrap";
 
 let nickname = "쿠 zl";
 
 const MypageScrap = () => {
+  /** 무한스크롤 */
   const bottomObserver = useRef(null);
 
   const { data, isLoading, error, fetchNextPage, hasNextPage } =
@@ -65,16 +68,15 @@ const MypageScrap = () => {
   // const longitude = data?.pages
   //   .flatMap((x) => x.data.response)
   //   .map((x) => x.docsLocation.lng);
-  const datas = data?.pages[0]?.data?.response;
-  console.log(datas);
+
   return (
     <>
-      {datas ? (
+      {data ? (
         <DocumentWrapper>
           <Container>
             <Suspense fallback={<Loader />}>
               <Title> {nickname}님이 스크랩한 장소입니다 :)</Title>
-              <ScrapList datas={datas} />
+              <ScrapList datas={data} />
               <div style={{ height: "50px" }} ref={bottomObserver}></div>
             </Suspense>
           </Container>
