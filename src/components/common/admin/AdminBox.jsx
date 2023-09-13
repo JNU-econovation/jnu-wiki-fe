@@ -8,6 +8,7 @@ import routes from "../../../routes";
 import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
 import { useRef, useEffect } from "react";
 import Loader from "../layout/Loader";
+import { current } from "@reduxjs/toolkit";
 
 const AdminBox = () => {
   /**
@@ -28,10 +29,13 @@ const AdminBox = () => {
     ({ pageParam = 0 }) => basicInfoEditRequest(pageParam),
     {
       getNextPageParam: (currentPage, allPages) => {
+        // console.log(allPages);
         const nextPage = allPages.length;
-        // console.log(currentPage);
-
-        return nextPage == 1 ? null : nextPage;
+        // console.log(nextPage);
+        const totalPage = currentPage?.data?.response?.totalPages;
+        return nextPage >= totalPage ? null : nextPage;
+        //토탈:1
+        //다음페이지는 현재 보내진 페이지수 =
       },
     }
   );
@@ -47,9 +51,12 @@ const AdminBox = () => {
     ["newInfo"],
     ({ pageParam = 0 }) => newInfoCreateRequest(pageParam),
     {
-      getNextPageParam: (lastPage, allPages) => {
-        const nextPage = allPages.length - 1; // 현재 페이지
-        return nextPage == 1 ? null : nextPage + 1;
+      getNextPageParam: (currentPage, allPages) => {
+        // console.log(allPages);
+        const nextPage = allPages.length;
+        // console.log(nextPage);
+        const totalPage = currentPage?.data?.response?.totalPages;
+        return nextPage >= totalPage ? null : nextPage;
       },
     }
   );

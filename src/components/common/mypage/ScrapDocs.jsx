@@ -35,6 +35,7 @@ const StyledHr = styled.hr`
 
 const ScrapDocs = ({ name, category, onScrapClick }) => {
   const [scrap, setScrap] = useState(true);
+  //   console.log(name);
 
   const handleOnScrapFill = () => {
     onScrapClick(!scrap);
