@@ -22,9 +22,11 @@ const MypageScrap = () => {
       ({ pageParam = 0 }) => mypagescrap(pageParam),
       {
         getNextPageParam: (currentPage, allPages) => {
+          // console.log(allPages);
           const nextPage = allPages.length;
-          const totalPage = currentPage.totalPages;
-          return nextPage > totalPage ? null : nextPage;
+          // console.log(nextPage);
+          const totalPage = currentPage?.data?.response?.totalPages;
+          return nextPage >= totalPage ? null : nextPage;
         },
       }
     );
