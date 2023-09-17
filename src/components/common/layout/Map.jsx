@@ -54,7 +54,7 @@ const Map = memo(({ title, apiLat, apiLng }) => {
     mapscript();
   }, []);
 
-  let map;
+  let map, bounds, swLatlng, neLatlng;
   let marker = new kakao.maps.Marker();
 
   const initialMap = () => {
@@ -66,9 +66,21 @@ const Map = memo(({ title, apiLat, apiLng }) => {
     map = new kakao.maps.Map(container, options);
   };
 
+  const setSwNe = () => {
+    bounds = map.getBounds();
+    swLatlng = bounds.getSouthWest();
+    neLatlng = bounds.getNorthEast();
+
+    dispatch({
+      type: "getSwNe",
+      payload: { swLatlng, neLatlng },
+    });
+  };
+
   const mapscript = () => {
     // map 기본 세팅
     initialMap();
+    setSwNe();
 
     function searchAddFromCoords(coords, callback) {
       // 좌표로 행정동 주소 정보를 요청
@@ -146,6 +158,10 @@ const Map = memo(({ title, apiLat, apiLng }) => {
         markers[i].setMap(map);
       }
     }
+
+    kakao.maps.event.addListener(map, "bounds_changed", function () {
+      setSwNe();
+    });
   };
 
   const setAddress = useCallback(() => {
