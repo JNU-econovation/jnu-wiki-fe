@@ -3,7 +3,7 @@ import Request from "./Request";
 import Title from "../Resister/Title";
 // import Loader from "../../../constant/Loader";
 import Loader from "../layout/Loader";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const RequestContain = ({
   error,
@@ -14,12 +14,14 @@ const RequestContain = ({
   modi,
   children,
 }) => {
-  //   const { len, setLen } = useState(null);
-  //   if (modi) {
-  //     setLen(datas[0].createdRequestList.length);
-  //   } else {
-  //     setLen(datas[0].modifiedRequestList.length);
-  //   }
+  const [errorState, setErrorState] = useState(false);
+  // const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    error?.status == 404 ? setErrorState(true) : setErrorState(false);
+  }, [error]);
+  // useEffect(() => {
+  //   setLoading(isLoading);
+  // }, [isLoading]);
 
   return (
     <RequestContainCss border={border}>
@@ -27,7 +29,11 @@ const RequestContain = ({
         <Loader />
       ) : (
         <>
-          {error?.response?.status != 404 ? (
+          {errorState ? (
+            <Title margin="10rem 0 0 5rem" fontSize="17px">
+              요청이 들어오지 않았네요 :(
+            </Title>
+          ) : (
             <>
               {datas?.map((pageData) => {
                 if (pageData) {
@@ -35,7 +41,6 @@ const RequestContain = ({
                     pageData?.modifiedRequestList ||
                     pageData?.createdRequestList;
                   return arr?.map((data) => {
-                    // console.log(data);
                     return (
                       <Request
                         key={data?.docsRequestId}
@@ -51,10 +56,6 @@ const RequestContain = ({
                 }
               })}
             </>
-          ) : (
-            <Title margin="10rem 0 0 5rem" fontSize="17px">
-              요청이 들어오지 않았네요 :(
-            </Title>
           )}
         </>
       )}

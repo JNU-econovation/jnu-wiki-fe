@@ -11,11 +11,15 @@ const Bottom = styled.div`
 `;
 
 const RequestContainerBox = React.forwardRef(
-  ({ title, border, data, route, modi, isLoading, error, children }, ref) => {
-    console.log(error?.response?.status);
+  ({ title, border, data, route, modi, isLoading, error, isError }, ref) => {
     return (
       <RequestContainerBoxCss>
-        <TitleBox title={title} isLoading={isLoading} error={error} />
+        <TitleBox
+          title={title}
+          isLoading={isLoading}
+          error={error}
+          isError={isError}
+        />
         <RequestContain
           border={border}
           datas={data}
