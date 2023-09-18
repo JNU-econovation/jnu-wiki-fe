@@ -13,7 +13,7 @@ const ContainCss = styled.div`
   margin: 0;
 
   position: relative;
-  left: 35%;
+  left: 30%;
   top: 11rem;
 `;
 

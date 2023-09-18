@@ -69,6 +69,7 @@ const RequestContainCss = styled.div`
   display: flex;
   flex-direction: column;
   height: 24rem;
+  padding-right: 2rem;
 
   border-right: ${(props) => (props ? props.border : null)};
   overflow: scroll;
