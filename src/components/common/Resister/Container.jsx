@@ -18,12 +18,8 @@ const ContainerCss = styled.form`
   width: 26rem;
   padding: 0 3rem 0 3rem;
 
-  display: flex;
-  justify-content: end;
-  flex-direction: column;
-
   position: relative;
-  left: 35rem;
+  left: 40%;
   top: 15rem;
   z-index: 1;
   margin-bottom: 30rem;
