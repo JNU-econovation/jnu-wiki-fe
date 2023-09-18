@@ -15,6 +15,8 @@ import routes from "../routes";
 import { useNavigate } from "react-router-dom";
 import { requestReject } from "../services/user";
 import { useMutation, useQueries } from "@tanstack/react-query";
+import { AiOutlineClose } from "react-icons/ai";
+import { MenuIconX } from "./BasicInfoEditReq";
 
 const { kakao } = window;
 
@@ -87,6 +89,9 @@ const NewDocsReq = () => {
     <>
       <MainLayout adminActive={true}>
         <Container>
+          <MenuIconX onClick={() => navigate(-1)}>
+            <AiOutlineClose />
+          </MenuIconX>
           <TitleP>기본 정보</TitleP>
           {isLoading || isError ? (
             <EditInfo></EditInfo>
