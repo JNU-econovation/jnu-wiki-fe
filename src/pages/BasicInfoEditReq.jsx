@@ -82,10 +82,8 @@ const BasicInfoEditReq = () => {
       if (status === kakao.maps.services.Status.OK) {
         if (result[0].address_name) {
           setAddress(result[0].address_name);
-          console.log(result[0].address_name);
         } else {
           setAddress(result[0].address.address_name);
-          console.log(result[0].address.address_name);
         }
       }
     };
@@ -93,10 +91,8 @@ const BasicInfoEditReq = () => {
       if (status === kakao.maps.services.Status.OK) {
         if (result[0].address_name) {
           setModiAddress(result[0].address_name);
-          console.log(result[0].address_name);
         } else {
           setModiAddress(result[0].address.address_name);
-          console.log(result[0].address.address_name);
         }
       }
     };

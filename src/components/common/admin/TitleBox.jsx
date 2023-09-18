@@ -1,13 +1,15 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-const TitleBox = ({ title, error, isLoading }) => {
+const TitleBox = ({ title, error, isLoading, isError }) => {
+  const [none, setNone] = useState(true);
+  useEffect(() => {
+    error?.status == 404 || isLoading ? setNone(true) : setNone(false);
+  }, [error, none, isLoading]);
+
   return (
     <TitleBoxCss>
       {title}
-      <Circle
-        backgroundColor={
-          error?.response?.status != 404 && !isLoading ? "#216D32" : "#B6B6B6"
-        }
-      />
+      <Circle backgroundColor={none ? "#B6B6B6" : "#216D32"} />
     </TitleBoxCss>
   );
 };
