@@ -72,6 +72,20 @@ const RequestContainCss = styled.div`
 
   border-right: ${(props) => (props ? props.border : null)};
   overflow: scroll;
+
+  &::-webkit-scrollbar {
+    width: 8px; /* 스크롤바의 너비 */
+    height: 0px; /*스크롤바의 높이 */
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(33, 109, 50, 0.69); /* 스크롤바의 색상 */
+    border-radius: 20px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(222, 233, 224, 0.56); /*스크롤바 뒷 배경 색상*/
+  }
 `;
 
 export default RequestContain;
