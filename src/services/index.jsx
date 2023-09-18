@@ -17,17 +17,17 @@ instance.interceptors.request.use((config) => {
   return config;
 });
 
-// instance.interceptors.response.use(
-//   (response) => {
-//     return response;
-//   },
-//   (error) => {
-//     if (error.response.status === 401) {
-//       localStorage.removeItem("token");
-//       window.location.href = `${routes.home}`;
-//       return Promise.resolve(error.response.data.error.message);
-//     }
-//     return Promise.reject(error.response);
-//   }
-// );
+instance.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (error.response.status === 401) {
+      localStorage.removeItem("token");
+      window.location.href = `${routes.home}`;
+      return Promise.resolve(error.response.data.error.message);
+    }
+    return Promise.reject(error.response);
+  }
+); //refresh token
 //401 에러 캐치(jwt 만료)

@@ -37,6 +37,7 @@ RequestContainerBox.displayName = "RequestContainerBox";
 const RequestContainerBoxCss = styled.div`
   display: flex;
   flex-direction: column;
+  margin-left: 1.5rem;
 `;
 
 export default RequestContainerBox;
