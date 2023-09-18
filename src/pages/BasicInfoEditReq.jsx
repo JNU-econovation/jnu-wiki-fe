@@ -14,7 +14,15 @@ import { useNavigate } from "react-router-dom";
 import { useMutation, useQueries } from "@tanstack/react-query";
 import { docsRequest, editDocsRequest } from "../services/user";
 import Loader from "../components/common/layout/Loader";
+import { AiOutlineClose } from "react-icons/ai";
+import { MenuIcon } from "../components/common/layout/SidebarList";
 
+export const MenuIconX = styled(MenuIcon)`
+  font-size: 1.3rem;
+  color: #8a8a8a;
+  display: flex;
+  justify-content: flex-end;
+`;
 const { kakao } = window;
 export const TitleP = styled.p`
   font-weight: 900;
@@ -108,6 +116,9 @@ const BasicInfoEditReq = () => {
     <>
       <MainLayout adminActive={true}>
         <Container id="admin">
+          <MenuIconX onClick={() => navigate(-1)}>
+            <AiOutlineClose />
+          </MenuIconX>
           <TitleP>기본 정보</TitleP>
           {results[0].isLoading || results[1].isLoading ? (
             <EditInfo>

@@ -49,7 +49,7 @@ const NavStyle = styled(NavLink)`
   }
 `;
 
-const MenuIcon = styled.div`
+export const MenuIcon = styled.div`
   font-size: 2rem;
   padding: 0 1rem;
 `;
