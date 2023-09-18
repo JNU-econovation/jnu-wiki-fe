@@ -33,7 +33,7 @@ const AdminBox = () => {
         const nextPage = allPages.length;
         // console.log(nextPage);
         const totalPage = currentPage?.data?.response?.totalPages;
-        return nextPage >= totalPage ? null : nextPage;
+        return nextPage > totalPage || nextPage == totalPage ? null : nextPage;
         //토탈:1
         //다음페이지는 현재 보내진 페이지수 =
       },
@@ -56,7 +56,7 @@ const AdminBox = () => {
         const nextPage = allPages.length;
         // console.log(nextPage);
         const totalPage = currentPage?.data?.response?.totalPages;
-        return nextPage >= totalPage ? null : nextPage;
+        return nextPage > totalPage || nextPage == totalPage ? null : nextPage;
       },
     }
   );
