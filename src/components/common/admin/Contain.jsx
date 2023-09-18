@@ -5,16 +5,16 @@ const Contain = ({ children, marginBottom }) => {
 };
 
 const ContainCss = styled.div`
-  width: 700px;
+  width: 800px;
   height: 25rem;
 
   display: flex;
   flex-direction: column;
-  margin:0;
+  margin: 0;
 
   position: relative;
-  left:27rem;
-  top:11rem;
+  left: 30%;
+  top: 11rem;
 `;
 
 export default Contain;
