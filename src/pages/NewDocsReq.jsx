@@ -25,7 +25,6 @@ const NewDocsReq = () => {
 
   const navigate = useNavigate();
   const { data, isLoading, isError } = useQuery(["newrequest", id], () => {
-    console.log(id);
     return newDocsRequest(id);
   });
 
@@ -52,9 +51,8 @@ const NewDocsReq = () => {
       setOk(true);
     }
   }, [data]);
-  console.log();
+
   useEffect(() => {
-    console.log(Data?.docsRequestLocation?.lng);
     map();
   }, [Ok, Data]);
 
@@ -64,15 +62,13 @@ const NewDocsReq = () => {
       Data?.docsRequestLocation?.lat,
       Data?.docsRequestLocation?.lng
     );
-    console.log(Data?.docsRequestLocation?.lat);
+
     const callback = function (result, status) {
       if (status === kakao.maps.services.Status.OK) {
         if (result[0].address_name) {
           setAddress(result[0].address_name);
-          console.log(result[0].address_name);
         } else {
           setAddress(result[0].address.address_name);
-          console.log(result[0].address.address_name);
         }
       }
     };
@@ -120,7 +116,6 @@ const NewDocsReq = () => {
                     }).then(() => navigate(routes.admin));
                   },
                   onError: (error) => {
-                    console.log(error);
                     Swal.fire({
                       icon: "warning",
                       title: `${error.status}`,

@@ -11,10 +11,6 @@ import Loader from "../layout/Loader";
 import { current } from "@reduxjs/toolkit";
 
 const AdminBox = () => {
-  /**
-   * 무한스크롤 구현 -> 나중에 훅으로 빼든가하기
-   */
-
   const bottomObserver1 = useRef(null);
   const bottomObserver2 = useRef(null);
 
@@ -24,18 +20,15 @@ const AdminBox = () => {
     fetchNextPage: fetchNextPage1,
     hasNextPage: hasNextPage1,
     error: error1,
+    isError: isError1,
   } = useInfiniteQuery(
     ["basicInfo"],
     ({ pageParam = 0 }) => basicInfoEditRequest(pageParam),
     {
       getNextPageParam: (currentPage, allPages) => {
-        // console.log(allPages);
         const nextPage = allPages.length;
-        // console.log(nextPage);
         const totalPage = currentPage?.data?.response?.totalPages;
         return nextPage > totalPage || nextPage == totalPage ? null : nextPage;
-        //토탈:1
-        //다음페이지는 현재 보내진 페이지수 =
       },
     }
   );
@@ -47,14 +40,13 @@ const AdminBox = () => {
     isFetchingNextPage: isFetchingNextPage2,
     hasNextPage: hasNextPage2,
     error: error2,
+    isError: isError2,
   } = useInfiniteQuery(
     ["newInfo"],
     ({ pageParam = 0 }) => newInfoCreateRequest(pageParam),
     {
       getNextPageParam: (currentPage, allPages) => {
-        // console.log(allPages);
         const nextPage = allPages.length;
-        // console.log(nextPage);
         const totalPage = currentPage?.data?.response?.totalPages;
         return nextPage > totalPage || nextPage == totalPage ? null : nextPage;
       },
@@ -118,7 +110,6 @@ const AdminBox = () => {
   const Data2 = data2?.pages.flatMap((x) => x.data.response);
   const DataArr2 = Data2 || [];
   const DataArr1 = Data1 || [];
-
   return (
     <AdminBoxCss>
       <RequestContainerBox
@@ -130,6 +121,7 @@ const AdminBox = () => {
         isLoading={isLoading1}
         error={error1}
         ref={bottomObserver1}
+        isError={isError1}
       ></RequestContainerBox>
       <RequestContainerBox
         title="새 장소 신청 요청"
@@ -139,6 +131,7 @@ const AdminBox = () => {
         isLoading={isLoading2}
         error={error2}
         ref={bottomObserver2}
+        isError={isError2}
       ></RequestContainerBox>
     </AdminBoxCss>
   );
@@ -148,7 +141,7 @@ const AdminBoxCss = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 
-  /* grid-gap:2rem; */
+  /* grid-gap: 2rem; */
   margin: 1rem 0;
   width: 100%;
   max-width: inherit;
