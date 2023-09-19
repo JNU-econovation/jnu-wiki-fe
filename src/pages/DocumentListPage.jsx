@@ -6,6 +6,7 @@ import { useState, Suspense, useRef, useEffect } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { docsList } from "../services/document";
 import Loader from "../components/common/layout/Loader";
+import { useSelector } from "react-redux";
 
 const DocumentListPage = () => {
   const [show, setShow] = useState(true);
@@ -16,10 +17,18 @@ const DocumentListPage = () => {
 
   const bottomObserver = useRef(null);
 
+  const rightUp = useSelector((state) => state.SwNe.swLatlng);
+  const leftDown = useSelector((state) => state.SwNe.neLatlng);
+  const rightUpLa = rightUp?.La;
+  const rightUpMa = rightUp?.Ma;
+  const leftDownLa = leftDown?.La;
+  const leftDownMa = leftDown?.Ma;
+
   const { data, isLoading, error, fetchNextPage, hasNextPage } =
     useInfiniteQuery(
-      ["docs_list"],
-      ({ pageParam = 0 }) => docsList(pageParam),
+      ["docs_list", rightUpLa, rightUpMa, leftDownLa, leftDownMa],
+      ({ pageParam = 0 }) =>
+        docsList({ pageParam, rightUpLa, rightUpMa, leftDownLa, leftDownMa }),
       {
         getNextPageParam: (currentPage, allPages) => {
           const nextPage = allPages.length;
@@ -77,10 +86,9 @@ const DocumentListPage = () => {
         </DocumentWrapper>
       )}
       {isLoading || error || !data ? (
-        <Loader />
+        <Map />
       ) : (
-        data &&
-        !error && <Map title={title} apiLat={latitude} apiLng={longitude} />
+        data && <Map title={title} apiLat={latitude} apiLng={longitude} />
       )}
     </>
   );
