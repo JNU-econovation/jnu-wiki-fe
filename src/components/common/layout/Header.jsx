@@ -1,13 +1,13 @@
 import styled from "styled-components";
 import "/public/fonts/pretendard.css";
-import jnuLogo from "/public/jnu-logo.png";
+import mainLogo from "/public/main-logo.png";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "./Button";
 import routes from "../../../routes";
 import Swal from "sweetalert2";
 import { SlLogout } from "react-icons/Sl";
-import SearchBar from "../search/SearchBar";
+import SearchBar from "../../search/SearchBar";
 
 const token = localStorage.getItem("token");
 
@@ -24,23 +24,13 @@ const Header = () => {
       <Container>
         <HeaderDiv>
           <LogoImg
-            src={jnuLogo}
+            src={mainLogo}
             alt="jnu-logo"
             onClick={() => {
               navigate(routes.home);
               location.reload();
             }}
           />
-          <LogoTitle
-            onClick={() => {
-              navigate(routes.home);
-              location.reload();
-            }}
-          >
-            전대
-            <br />
-            위키
-          </LogoTitle>
           <SearchBar />
           {!JWT ? (
             <>
@@ -116,16 +106,8 @@ const HeaderDiv = styled.header`
 `;
 
 const LogoImg = styled.img`
-  width: 3.2rem;
-  cursor: pointer;
-`;
-
-const LogoTitle = styled.span`
-  font-family: var(--font-pretendard-light);
-  font-size: 25px;
-  margin: 1rem;
-  color: #3f8e49;
-  width: 15rem;
+  width: 8rem;
+  margin: 1rem 8rem 0.7rem 1rem;
   cursor: pointer;
 `;
 
