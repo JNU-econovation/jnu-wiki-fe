@@ -13,8 +13,14 @@ const DocumentPage = () => {
         <Document id={receivedData?.docsId} />
       </MainLayout>
       <Map
-        apiLat={receivedData?.docsLocation.lat}
-        apiLng={receivedData?.docsLocation.lng}
+        apiLat={
+          receivedData?.docsLocation?.lat ||
+          receivedData?.docsRequestLocation?.lat
+        }
+        apiLng={
+          receivedData?.docsLocation?.lng ||
+          receivedData?.docsRequestLocation?.lng
+        }
       />
     </>
   );
