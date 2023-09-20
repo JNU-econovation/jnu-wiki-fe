@@ -117,4 +117,10 @@ const Line = styled.hr`
   height: 0.7px;
   margin: 0;
 `;
+
+const ButtonGroup = styled.div`
+  position: fixed;
+  right: 2rem;
+`;
+
 export default Header;
