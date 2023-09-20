@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-const TitleBox = ({ title, error, isLoading, isError }) => {
+const TitleBox = ({ title, error, isLoading }) => {
   const [none, setNone] = useState(true);
   useEffect(() => {
-    error?.status == 404 || isLoading ? setNone(true) : setNone(false);
+    error || isLoading ? setNone(true) : setNone(false);
   }, [error, none, isLoading]);
 
   return (
