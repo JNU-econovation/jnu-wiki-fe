@@ -9,7 +9,7 @@ import throttle from "lodash/throttle";
 import SearchItem from "./SearchItem";
 
 const StyledSearchBar = styled.input`
-  width: 50rem;
+  width: 40rem;
   height: 3rem;
   padding: 1.3rem;
   z-index: 100000;
@@ -34,7 +34,7 @@ const Container = styled.div`
   position: absolute;
   top: 3rem;
 
-  width: 47.3rem;
+  width: 37.3rem;
   height: 20rem;
 
   padding: 3rem 1.3rem;
