@@ -73,6 +73,7 @@ const Header = () => {
                       localStorage.removeItem("token");
                       localStorage.removeItem("role");
                       setJWT(null);
+                      window.location.reload();
                     }
                   });
                 }}
