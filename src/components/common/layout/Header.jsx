@@ -33,7 +33,7 @@ const Header = () => {
           />
           <SearchBar />
           {!JWT ? (
-            <ButtonGroup>
+            <>
               {" "}
               <Button
                 type="click"
@@ -53,9 +53,9 @@ const Header = () => {
               >
                 로그인
               </Button>
-            </ButtonGroup>
+            </>
           ) : (
-            <ButtonGroup>
+            <>
               <div>{name}</div>
               <button
                 type="click"
@@ -73,13 +73,14 @@ const Header = () => {
                       localStorage.removeItem("token");
                       localStorage.removeItem("role");
                       setJWT(null);
+                      window.location.reload();
                     }
                   });
                 }}
               >
                 <SlLogout size={"21px"} />
               </button>
-            </ButtonGroup>
+            </>
           )}
         </HeaderDiv>
         <Line />
@@ -106,9 +107,8 @@ const HeaderDiv = styled.header`
 `;
 
 const LogoImg = styled.img`
-  margin: 0.7rem;
   width: 8rem;
-  margin: 1rem 8rem 0.7rem 0.5rem;
+  margin: 1rem 8rem 0.7rem 1rem;
   cursor: pointer;
 `;
 
@@ -122,4 +122,5 @@ const ButtonGroup = styled.div`
   position: fixed;
   right: 2rem;
 `;
+
 export default Header;
