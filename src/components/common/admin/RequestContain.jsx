@@ -15,13 +15,10 @@ const RequestContain = ({
   children,
 }) => {
   const [errorState, setErrorState] = useState(false);
-  // const [loading, setLoading] = useState(false);
   useEffect(() => {
     error?.status == 404 ? setErrorState(true) : setErrorState(false);
   }, [error]);
-  // useEffect(() => {
-  //   setLoading(isLoading);
-  // }, [isLoading]);
+  console.log(error);
 
   return (
     <RequestContainCss border={border}>
@@ -29,7 +26,7 @@ const RequestContain = ({
         <Loader />
       ) : (
         <>
-          {errorState ? (
+          {errorState || error ? (
             <Title margin="10rem 0 0 5rem" fontSize="17px">
               요청이 들어오지 않았네요 :(
             </Title>
