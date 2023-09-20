@@ -22,8 +22,16 @@ export const mapDocument = () => {
   return instance.get("/docs");
 };
 
-export const docsList = (page = 0) => {
-  return instance.get("/docs/" + "?page=" + page);
+export const docsList = ({
+  pageParam,
+  rightUpLa,
+  rightUpMa,
+  leftDownLa,
+  leftDownMa,
+}) => {
+  return instance.get(
+    `/docs?rightUp[lat]=${rightUpLa}&rightUp[lng]=${rightUpMa}&leftDown[lat]=${leftDownLa}&leftDown[lng]=${leftDownMa}&page=${pageParam}`
+  );
 };
 
 export const basicModify = (data) => {
