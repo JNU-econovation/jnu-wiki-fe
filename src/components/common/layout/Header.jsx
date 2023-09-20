@@ -33,7 +33,7 @@ const Header = () => {
           />
           <SearchBar />
           {!JWT ? (
-            <>
+            <ButtonGroup>
               {" "}
               <Button
                 type="click"
@@ -53,9 +53,9 @@ const Header = () => {
               >
                 로그인
               </Button>
-            </>
+            </ButtonGroup>
           ) : (
-            <>
+            <ButtonGroup>
               <div>{name}</div>
               <button
                 type="click"
@@ -80,7 +80,7 @@ const Header = () => {
               >
                 <SlLogout size={"21px"} />
               </button>
-            </>
+            </ButtonGroup>
           )}
         </HeaderDiv>
         <Line />
