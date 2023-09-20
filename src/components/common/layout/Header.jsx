@@ -120,6 +120,6 @@ const Line = styled.hr`
 
 const ButtonGroup = styled.div`
   position: fixed;
-  right: 5rem;
+  right: 2rem;
 `;
 export default Header;
