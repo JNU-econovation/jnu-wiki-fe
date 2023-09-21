@@ -8,10 +8,13 @@ import { useMutation } from "@tanstack/react-query";
 import { scrapCreate, scrapDelete } from "../../../services/scrap";
 import ScrapDocs from "./ScrapDocs";
 
-const ScrapList = ({ datas }) => {
+const ScrapList = ({ datas, mypage }) => {
   const navigate = useNavigate();
   const gotoDetail = (data) => {
     navigate(routes.documentPage, { state: data });
+  };
+  const gotoMyDetail = (data) => {
+    navigate(routes.scrapDetailPage, { state: data });
   };
 
   const docsData = datas?.pages.flatMap((x) => x.data.response);
@@ -53,7 +56,10 @@ const ScrapList = ({ datas }) => {
   return (
     <>
       {docsListArray[0]?.scrapList?.map((data) => (
-        <div key={data.docsId} onClick={() => gotoDetail(data)}>
+        <div
+          key={data.docsId}
+          onClick={() => (mypage ? gotoMyDetail(data) : gotoDetail(data))}
+        >
           <ScrapDocs
             name={data.docsName}
             category={data.docsCategory}
