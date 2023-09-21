@@ -11,6 +11,8 @@ const routes = {
   basicInfoEditRequest: "/basicInfoEditReq",
   documentPage: "/documentPage",
   documentList: "/documentList",
+  scrapDetailPage: "/scrapDetailPage",
+  scrapDetail: "/scrapDetail",
 };
 
 export default routes;

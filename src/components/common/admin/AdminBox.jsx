@@ -7,8 +7,6 @@ import {
 import routes from "../../../routes";
 import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
 import { useRef, useEffect } from "react";
-import Loader from "../layout/Loader";
-import { current } from "@reduxjs/toolkit";
 
 const AdminBox = () => {
   const bottomObserver1 = useRef(null);

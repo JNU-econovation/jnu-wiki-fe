@@ -1,11 +1,11 @@
-import InfoGroup from "./InfoGroup";
-import DocumentHeading from "./DocumentHeading";
-import Description from "./Description";
-import DocumentTime from "./DocumentTime";
-import DocumentInput from "./DocumentInput";
-import ToggleBtn from "./ToggleBtn";
+import InfoGroup from "../document/InfoGroup";
+import DocumentHeading from "../document/DocumentHeading";
+import Description from "../document/Description";
+import DocumentTime from "../document/DocumentTime";
+import DocumentInput from "../document/HelperMsg";
+import ToggleBtn from "../document/ToggleBtn";
 import styled from "styled-components";
-import SelectMenu from "./SelectMenu";
+import SelectMenu from "../document/SelectMenu";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   detailDocument,
@@ -19,8 +19,9 @@ import useInput from "../../../hooks/useInput";
 import Skeleton from "../layout/Skeleton";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ScrapBtn from "./ScrapBtn";
+import ScrapBtn from "../document/ScrapBtn";
 import { scrapCreate, scrapDelete } from "../../../services/scrap";
+import MainLayout from "../layout/MainLayout";
 
 const Group = styled.div`
   height: 100%;
@@ -94,11 +95,11 @@ const BasicInfo = styled.div`
   justify-content: space-between;
 `;
 
-const Document = ({ id }) => {
+const MypageScrapDetail = ({ id }) => {
   const { data, isLoading } = useQuery(["detail_document", id], () =>
     detailDocument(id)
   );
-
+  console.log(id);
   const category = useSelector((state) => state.category.category);
   const getLat = useSelector((state) => state.latLng.latitude);
   const getLng = useSelector((state) => state.latLng.longitude);
@@ -183,6 +184,9 @@ const Document = ({ id }) => {
     setContentValue(docsContent);
   };
 
+  /**
+   * 내용수정 뮤테이션
+   */
   const handleContentSave = () => {
     setEditContent(false);
     mutationContentModify({ docs_id: id, docsContent: contentValue });
@@ -353,4 +357,4 @@ const Document = ({ id }) => {
   );
 };
 
-export default Document;
+export default MypageScrapDetail;

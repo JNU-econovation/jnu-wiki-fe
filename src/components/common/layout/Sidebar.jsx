@@ -26,7 +26,7 @@ const Container = styled.div`
   z-index: 3;
 `;
 
-function Sidebar({ onClick, viewActive, adminActive, myActive }) {
+function Sidebar({ onClick, viewActive, adminActive, myActive, scrapActive }) {
   const location = useLocation();
   const [role, setRole] = useState(window.localStorage.getItem("role"));
   useEffect(() => {
@@ -65,6 +65,7 @@ function Sidebar({ onClick, viewActive, adminActive, myActive }) {
         route={routes.myPage}
         isActive={myActive}
         onClick={onClick}
+        scrapActive={scrapActive}
         // active={active}
       ></MenuList>
 

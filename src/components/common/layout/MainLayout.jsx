@@ -8,6 +8,7 @@ const MainLayout = ({
   myActive,
   children,
   onClick,
+  scrapActive,
 }) => {
   return (
     <>
@@ -16,6 +17,7 @@ const MainLayout = ({
         adminActive={adminActive}
         myActive={myActive}
         onClick={onClick}
+        scrapActive={scrapActive}
       />
       <Header />
       {children}

@@ -59,7 +59,15 @@ const Ic = styled.div`
   color: ${(props) => props.color};
 `;
 
-const MenuList = ({ name, icons, route, isActive, active, onClick }) => {
+const MenuList = ({
+  name,
+  icons,
+  route,
+  isActive,
+
+  onClick,
+  scrapActive,
+}) => {
   const act = isActive;
   return (
     <>
@@ -80,7 +88,11 @@ const MenuList = ({ name, icons, route, isActive, active, onClick }) => {
         ^ 아이콘 추후에 추가*/}
       </NavStyle>
       {name === "마이페이지" ? (
-        <>{isActive ? <MypageSidebar></MypageSidebar> : null}</>
+        <>
+          {isActive || scrapActive ? (
+            <MypageSidebar scrapActive={scrapActive}></MypageSidebar>
+          ) : null}
+        </>
       ) : null}
     </>
   );

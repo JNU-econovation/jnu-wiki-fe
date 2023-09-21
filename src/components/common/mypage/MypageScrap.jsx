@@ -2,13 +2,11 @@ import Map from "../layout/Map";
 import ScrapList from "./ScrapList";
 import DocumentWrapper from "../document/DocumentWrapper";
 import { Container, Title } from "./MypageStyle";
-import { useState, useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { mypagescrap } from "../../../services/mypage";
 import Loader from "../layout/Loader";
 import { Suspense } from "react";
-import { useMutation } from "@tanstack/react-query";
-import { scrapCreate, scrapDelete } from "../../../services/scrap";
 
 let nickname = "쿠 zl";
 
@@ -22,9 +20,7 @@ const MypageScrap = () => {
       ({ pageParam = 0 }) => mypagescrap(pageParam),
       {
         getNextPageParam: (currentPage, allPages) => {
-          // console.log(allPages);
           const nextPage = allPages.length;
-          // console.log(nextPage);
           const totalPage = currentPage?.data?.response?.totalPages;
           return nextPage >= totalPage ? null : nextPage;
         },
@@ -59,17 +55,15 @@ const MypageScrap = () => {
   /**
    * 지도에서 사용할거
    */
-  // const title = data?.pages
-  //   .flatMap((x) => x.data.response)
-  //   .map((x) => x.title);
+  const title = data?.pages.flatMap((x) => x.data.response).map((x) => x.title);
 
-  // const latitude = data?.pages
-  //   .flatMap((x) => x.data.response)
-  //   .map((x) => x.docsLocation.lat);
+  const latitude = data?.pages
+    .flatMap((x) => x.data?.response)
+    .map((x) => x.docsRequestLocation?.lat);
 
-  // const longitude = data?.pages
-  //   .flatMap((x) => x.data.response)
-  //   .map((x) => x.docsLocation.lng);
+  const longitude = data?.pages
+    .flatMap((x) => x.data?.response)
+    .map((x) => x.docsRequestLocation?.lng);
 
   return (
     <>
@@ -78,7 +72,7 @@ const MypageScrap = () => {
           <Container>
             <Suspense fallback={<Loader />}>
               <Title> {nickname}님이 스크랩한 장소입니다 :)</Title>
-              <ScrapList datas={data} />
+              <ScrapList datas={data} mypage={true} />
               <div style={{ height: "50px" }} ref={bottomObserver}></div>
             </Suspense>
           </Container>
@@ -93,8 +87,7 @@ const MypageScrap = () => {
       )}
 
       {isLoading || error || !data ? <Loader /> : data && !error && <Map />}
-      {/* data.lat lng 넘겨주기 */}
-      {/* <Map title={title} apiLat={latitude} apiLng={longitude} /> */}
+      <Map title={title} apiLat={latitude} apiLng={longitude} />
     </>
   );
 };

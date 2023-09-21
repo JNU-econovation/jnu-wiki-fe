@@ -18,7 +18,6 @@ const RequestContain = ({
   useEffect(() => {
     error?.status == 404 ? setErrorState(true) : setErrorState(false);
   }, [error]);
-  console.log(error);
 
   return (
     <RequestContainCss border={border}>
