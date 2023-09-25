@@ -133,10 +133,10 @@ const NewDocsReq = () => {
               color="white"
               border="none"
               backgroundcolor="primary"
-              onClick={(e) => {
+              onClick={() => {
                 const updatePayload = Data?.docsRequestId;
                 mutation.mutate(updatePayload, {
-                  onSuccess: (data) => {
+                  onSuccess: () => {
                     Swal.fire({
                       icon: "success",
                       text: "생성 수락!",
