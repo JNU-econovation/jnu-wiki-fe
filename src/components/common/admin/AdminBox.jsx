@@ -61,7 +61,7 @@ const AdminBox = () => {
         });
       },
       {
-        threshold: 0.5,
+        threshold: 0.7,
       }
     );
 
@@ -90,7 +90,7 @@ const AdminBox = () => {
           }
         });
       },
-      { threshold: 0.5 }
+      { threshold: 0.7 }
     );
 
     if (bottomObserver2.current) {

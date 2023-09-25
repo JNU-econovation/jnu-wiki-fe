@@ -14,7 +14,7 @@ const NavStyle = styled(NavLink)`
   background-color: white;
   color: rgba(95, 150, 107, 1);
 
-  width: 17rem;
+  width: 13rem;
   margin: 0.5rem;
   height: 3rem;
   border-radius: 0.2rem;
