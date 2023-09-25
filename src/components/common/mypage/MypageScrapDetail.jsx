@@ -2,7 +2,7 @@ import InfoGroup from "../document/InfoGroup";
 import DocumentHeading from "../document/DocumentHeading";
 import Description from "../document/Description";
 import DocumentTime from "../document/DocumentTime";
-import DocumentInput from "../document/HelperMsg";
+import DocumentInput from "../document/DocumentInput";
 import ToggleBtn from "../document/ToggleBtn";
 import styled from "styled-components";
 import SelectMenu from "../document/SelectMenu";
@@ -119,7 +119,7 @@ const MypageScrapDetail = ({ id }) => {
   const [basicEdit, setBasicEdit] = useState(false);
   const [contentValue, setContentValue] = useState(docsContent);
   const [editContent, setEditContent] = useState(false);
-  const [scrap, setScrap] = useState(false);
+  const [scrap, setScrap] = useState(true);
   const [toggle, setToggle] = useState(true);
 
   const queryClient = useQueryClient();
@@ -148,7 +148,6 @@ const MypageScrapDetail = ({ id }) => {
     setBasicEdit(true);
     valueInit.docsName = docsName;
   };
-
   const handleAddressInfo = () => {
     if (!getLat) {
       addressInfo = docsLocation;
@@ -198,6 +197,12 @@ const MypageScrapDetail = ({ id }) => {
   };
 
   const handleOnScrapFill = () => {
+    if (scrap) {
+      scrapDetailDelete({ docsId: id });
+    } else {
+      scrapDetailCreate({ docsId: id });
+      toast("스크랩 되었습니다!");
+    }
     setScrap(!scrap);
   };
 
@@ -214,15 +219,6 @@ const MypageScrapDetail = ({ id }) => {
       console.error(error);
     },
   });
-
-  useEffect(() => {
-    if (scrap) {
-      scrapDetailCreate({ docsId: id });
-      toast("스크랩 되었습니다!");
-    } else {
-      scrapDetailDelete({ docsId: id });
-    }
-  }, [scrap, id, scrapDetailCreate, scrapDetailDelete]);
 
   const clickToggle = () => {
     setToggle((prev) => !prev);
