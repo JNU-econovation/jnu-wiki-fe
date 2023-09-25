@@ -8,13 +8,12 @@ import { StyledButton } from "../components/common/document/CreateDocument";
 import EditInfo from "../components/common/admin/EditInfo";
 import { TitleP } from "./BasicInfoEditReq";
 import { newDocsRequest, newRequestApprove } from "../services/user";
-import { isError, useQuery } from "@tanstack/react-query";
-import Loader from "../components/common/layout/Loader";
+import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import routes from "../routes";
 import { useNavigate } from "react-router-dom";
 import { requestReject } from "../services/user";
-import { useMutation, useQueries } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { AiOutlineClose } from "react-icons/ai";
 import { MenuIconX } from "./BasicInfoEditReq";
 
@@ -83,7 +82,7 @@ const NewDocsReq = () => {
 
   return (
     <>
-      <MainLayout adminActive={true}>
+      <MainLayout>
         <Container>
           <MenuIconX onClick={() => navigate(-1)}>
             <AiOutlineClose />

@@ -9,7 +9,7 @@ const MypageScrapDetailPage = () => {
 
   return (
     <>
-      <MainLayout myActive={true} scrapActive={true}>
+      <MainLayout myActive={true}>
         <MypageScrapDetail id={receivedData?.docsId} />
       </MainLayout>
       <Map
