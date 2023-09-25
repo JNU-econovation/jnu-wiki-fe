@@ -6,12 +6,10 @@ import { GoHomeFill } from "react-icons/go";
 import { FaPenSquare } from "react-icons/fa";
 import { HiMiniUserGroup } from "react-icons/hi2";
 import { AiTwotoneSetting } from "react-icons/ai";
-import { IoDocumentTextSharp } from "react-icons/io5";
 import { useLocation } from "react-router-dom";
-import MypageSidebar from "./MypageSidebar";
 
 const Container = styled.div`
-  width: 20rem;
+  width: 15rem;
   height: 100vh;
   background-color: white;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);

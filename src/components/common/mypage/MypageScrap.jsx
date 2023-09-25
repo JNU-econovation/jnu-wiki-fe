@@ -8,8 +8,6 @@ import { mypagescrap } from "../../../services/mypage";
 import Loader from "../layout/Loader";
 import { Suspense } from "react";
 
-let nickname = "쿠 zl";
-
 const MypageScrap = () => {
   /** 무한스크롤 */
   const bottomObserver = useRef(null);
@@ -65,25 +63,23 @@ const MypageScrap = () => {
     .flatMap((x) => x.data?.response)
     .map((x) => x.docsRequestLocation?.lng);
 
+  const nickname = data?.pages[0].data.response.scrapList[1].member;
+
   return (
     <>
       {data ? (
-        <DocumentWrapper>
-          <Container>
-            <Suspense fallback={<Loader />}>
-              <Title> {nickname}님이 스크랩한 장소입니다 :)</Title>
-              <ScrapList datas={data} mypage={true} />
-              <div style={{ height: "50px" }} ref={bottomObserver}></div>
-            </Suspense>
-          </Container>
-        </DocumentWrapper>
+        <Container>
+          <Suspense fallback={<Loader />}>
+            <Title> {nickname}님이 스크랩한 장소입니다 :)</Title>
+            <ScrapList datas={data} mypage={true} />
+            <div style={{ height: "50px" }} ref={bottomObserver}></div>
+          </Suspense>
+        </Container>
       ) : (
-        <DocumentWrapper>
-          <Container>
-            <Title>{nickname}님이 스크랩한 장소입니다 :)</Title>
-            <p>🐦 스크랩 한 게시물이 없습니다</p>
-          </Container>
-        </DocumentWrapper>
+        <Container>
+          <Title>{nickname}님이 스크랩한 장소입니다 :)</Title>
+          <p>🐦 스크랩 한 게시물이 없습니다</p>
+        </Container>
       )}
 
       {isLoading || error || !data ? <Loader /> : data && !error && <Map />}

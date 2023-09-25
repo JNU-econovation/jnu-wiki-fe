@@ -28,7 +28,7 @@ const Group = styled.div`
   max-width: 25rem;
 
   position: fixed;
-  left: 20rem;
+  left: 15rem;
   top: 5.5rem;
   padding: 2rem 2rem 8rem 2rem;
 
@@ -99,7 +99,7 @@ const MypageScrapDetail = ({ id }) => {
   const { data, isLoading } = useQuery(["detail_document", id], () =>
     detailDocument(id)
   );
-  console.log(id);
+
   const category = useSelector((state) => state.category.category);
   const getLat = useSelector((state) => state.latLng.latitude);
   const getLng = useSelector((state) => state.latLng.longitude);
