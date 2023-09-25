@@ -30,7 +30,7 @@ export const docsList = ({
   leftDownMa,
 }) => {
   return instance.get(
-    `/docs?rightUp[lat]=${rightUpLa}&rightUp[lng]=${rightUpMa}&leftDown[lat]=${leftDownLa}&leftDown[lng]=${leftDownMa}&page=${pageParam}`
+    `/docs?rightLat=${rightUpMa}&rightLng=${rightUpLa}&leftLat=${leftDownMa}&leftLng=${leftDownLa}&page=${pageParam}`
   );
 };
 

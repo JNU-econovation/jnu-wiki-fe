@@ -17,8 +17,8 @@ const DocumentListPage = () => {
 
   const bottomObserver = useRef(null);
 
-  const rightUp = useSelector((state) => state.SwNe.swLatlng);
-  const leftDown = useSelector((state) => state.SwNe.neLatlng);
+  const leftDown = useSelector((state) => state.SwNe.swLatlng);
+  const rightUp = useSelector((state) => state.SwNe.neLatlng);
   const rightUpLa = rightUp?.La;
   const rightUpMa = rightUp?.Ma;
   const leftDownLa = leftDown?.La;
@@ -63,15 +63,15 @@ const DocumentListPage = () => {
   }, [isLoading, hasNextPage, fetchNextPage]);
 
   const title = data?.pages
-    .flatMap((x) => x.data.response)
+    .flatMap((x) => x.data.response.docsList)
     .map((x) => x.docsName);
 
   const latitude = data?.pages
-    .flatMap((x) => x.data.response)
+    .flatMap((x) => x.data.response.docsList)
     .map((x) => x.docsLocation.lat);
 
   const longitude = data?.pages
-    .flatMap((x) => x.data.response)
+    .flatMap((x) => x.data.response.docsList)
     .map((x) => x.docsLocation.lng);
 
   return (
