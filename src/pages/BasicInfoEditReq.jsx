@@ -110,7 +110,7 @@ const BasicInfoEditReq = () => {
 
   return (
     <>
-      <MainLayout adminActive={true}>
+      <MainLayout>
         <Container id="admin">
           <MenuIconX onClick={() => navigate(-1)}>
             <AiOutlineClose />
