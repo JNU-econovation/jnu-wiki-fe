@@ -7,7 +7,6 @@ import { useMutation } from "@tanstack/react-query";
 import { scrapCreate, scrapDelete } from "../../../services/scrap";
 
 const Container = styled.div`
-  overflow: hidden;
   position: absolute;
   left: 20rem;
   overflow-x: hidden;
@@ -21,7 +20,7 @@ const Container = styled.div`
 const DocsList = ({ data }) => {
   const navigate = useNavigate();
 
-  const docsData = data?.pages.flatMap((x) => x.data.response);
+  const docsData = data?.pages.flatMap((x) => x.data.response.docsList);
   const docsListArray = docsData || [];
   const [scrapList, setScrapList] = useState([]);
 
