@@ -12,7 +12,7 @@ import Swal from "sweetalert2";
 import { useMutation } from "@tanstack/react-query";
 
 export const Container = styled.div`
-  width: 22rem;
+  width: 20rem;
   height: 100vh;
 
   position: fixed;
@@ -26,7 +26,7 @@ export const Container = styled.div`
   #docsName,
   #docsLocation,
   #docsCategory {
-    width: 22rem;
+    width: 20rem;
     height: 2.4rem;
     margin-top: 0.7rem;
   }
