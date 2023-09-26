@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import styled from "styled-components";
+
 const { kakao } = window;
 const MapDiv = styled.div`
   position: fixed;

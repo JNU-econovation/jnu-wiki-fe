@@ -4,10 +4,10 @@ import mainLogo from "/public/main-logo.png";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "./Button";
-import routes from "../../../routes";
+import routes from "@/routes";
 import Swal from "sweetalert2";
 import { SlLogout } from "react-icons/Sl";
-import SearchBar from "../../search/SearchBar";
+import SearchBar from "@/components/search/SearchBar";
 
 const token = localStorage.getItem("token");
 

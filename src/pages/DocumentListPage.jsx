@@ -1,11 +1,11 @@
-import MainLayout from "../components/common/layout/MainLayout";
-import DocsList from "../components/common/document/DocsList";
-import Map from "../components/common/layout/Map";
-import DocumentWrapper from "../components/common/document/DocumentWrapper";
+import MainLayout from "@/components/common/layout/MainLayout";
+import DocsList from "@/components/document/DocsList";
+import Map from "@/components/common/layout/Map";
+import DocumentWrapper from "@/components/document/DocumentWrapper";
 import { useState, Suspense, useRef, useEffect } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { docsList } from "../services/document";
-import Loader from "../components/common/layout/Loader";
+import { docsList } from "@/services/document";
+import Loader from "@/components/common/layout/Loader";
 import { useSelector } from "react-redux";
 
 const DocumentListPage = () => {

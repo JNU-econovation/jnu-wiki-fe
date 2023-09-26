@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import routes from "../../../routes";
+import routes from "@/routes";
 import { NavLink } from "react-router-dom";
+
 const ListBox = styled.div`
   background-color: rgba(222, 233, 224, 0.27);
   position: relative;

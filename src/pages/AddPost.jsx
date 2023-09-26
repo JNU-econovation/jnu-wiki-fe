@@ -1,7 +1,7 @@
-import MainLayout from "../components/common/layout/MainLayout";
-import Map from "../components/common/layout/Map";
-import CreateDocument from "../components/common/document/CreateDocument";
-import DocumentWrapper from "../components/common/document/DocumentWrapper";
+import MainLayout from "@/components/common/layout/MainLayout";
+import Map from "@/components/common/layout/Map";
+import CreateDocument from "@/components/document/CreateDocument";
+import DocumentWrapper from "@/components/document/DocumentWrapper";
 import { useState } from "react";
 
 const AddPost = () => {

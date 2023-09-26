@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 import MypageSidebar from "./MypageSidebar";
 
@@ -75,10 +74,6 @@ const MenuList = ({ name, icons, route, isActive, onClick }) => {
       ) : null}
     </>
   );
-};
-
-MenuList.propTypes = {
-  name: PropTypes.string,
 };
 
 export default MenuList;
