@@ -1,21 +1,21 @@
 import { useParams } from "react-router-dom";
-import MainLayout from "../components/common/layout/MainLayout";
-import { Container } from "../components/common/document/CreateDocument";
+import MainLayout from "@/components/common/layout/MainLayout";
+import { Container } from "@/components/document/CreateDocument";
 import styled from "styled-components";
-import MapContainer from "../components/Map/MapContainer";
+import MapContainer from "@/components/Map/MapContainer";
 import { useState, useEffect } from "react";
-import Button from "../components/common/layout/Button";
-import { StyledButton } from "../components/common/document/CreateDocument";
-import EditInfo from "../components/common/admin/EditInfo";
-import { requestReject, editRequestApprove } from "../services/user";
+import Button from "@/components/common/layout/Button";
+import { StyledButton } from "@/components/document/CreateDocument";
+import EditInfo from "@/components/admin/EditInfo";
+import { requestReject, editRequestApprove } from "@/services/user";
 import Swal from "sweetalert2";
-import routes from "../routes";
+import routes from "@/routes";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQueries } from "@tanstack/react-query";
-import { docsRequest, editDocsRequest } from "../services/user";
-import Loader from "../components/common/layout/Loader";
+import { docsRequest, editDocsRequest } from "@/services/user";
+import Loader from "@/components/common/layout/Loader";
 import { AiOutlineClose } from "react-icons/ai";
-import { MenuIcon } from "../components/common/layout/SidebarList";
+import { MenuIcon } from "@/components/common/layout/SidebarList";
 
 export const MenuIconX = styled(MenuIcon)`
   font-size: 1.3rem;
