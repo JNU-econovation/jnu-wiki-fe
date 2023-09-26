@@ -16,7 +16,7 @@ export const Container = styled.div`
   height: 100vh;
 
   position: fixed;
-  left: 20rem;
+  left: 15rem;
   top: 6rem;
   padding: 2rem;
 
