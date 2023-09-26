@@ -6,7 +6,7 @@ const { kakao } = window;
 
 const MapDiv = styled.div`
   position: fixed;
-  left: 20rem;
+  left: 15rem;
   top: 6rem;
   z-index: -1;
 

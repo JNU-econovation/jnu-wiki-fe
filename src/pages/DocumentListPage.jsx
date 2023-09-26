@@ -1,11 +1,11 @@
-import MainLayout from "../components/common/layout/MainLayout";
-import DocsList from "../components/common/document/DocsList";
-import Map from "../components/common/layout/Map";
-import DocumentWrapper from "../components/common/document/DocumentWrapper";
+import MainLayout from "@/components/common/layout/MainLayout";
+import DocsList from "@/components/document/DocsList";
+import Map from "@/components/common/layout/Map";
+import DocumentWrapper from "@/components/document/DocumentWrapper";
 import { useState, Suspense, useRef, useEffect } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { docsList } from "../services/document";
-import Loader from "../components/common/layout/Loader";
+import { docsList } from "@/services/document";
+import Loader from "@/components/common/layout/Loader";
 import { useSelector } from "react-redux";
 
 const DocumentListPage = () => {
@@ -17,8 +17,8 @@ const DocumentListPage = () => {
 
   const bottomObserver = useRef(null);
 
-  const rightUp = useSelector((state) => state.SwNe.swLatlng);
-  const leftDown = useSelector((state) => state.SwNe.neLatlng);
+  const leftDown = useSelector((state) => state.SwNe.swLatlng);
+  const rightUp = useSelector((state) => state.SwNe.neLatlng);
   const rightUpLa = rightUp?.La;
   const rightUpMa = rightUp?.Ma;
   const leftDownLa = leftDown?.La;
@@ -63,15 +63,15 @@ const DocumentListPage = () => {
   }, [isLoading, hasNextPage, fetchNextPage]);
 
   const title = data?.pages
-    .flatMap((x) => x.data.response)
+    .flatMap((x) => x.data.response.docsList)
     .map((x) => x.docsName);
 
   const latitude = data?.pages
-    .flatMap((x) => x.data.response)
+    .flatMap((x) => x.data.response.docsList)
     .map((x) => x.docsLocation.lat);
 
   const longitude = data?.pages
-    .flatMap((x) => x.data.response)
+    .flatMap((x) => x.data.response.docsList)
     .map((x) => x.docsLocation.lng);
 
   return (

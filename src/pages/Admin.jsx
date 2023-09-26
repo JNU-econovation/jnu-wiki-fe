@@ -1,7 +1,7 @@
-import MainLayout from "../components/common/layout/MainLayout.jsx";
-import AdminForm from "../components/common/form/AdminForm.jsx";
+import MainLayout from "@/components/common/layout/MainLayout.jsx";
+import AdminForm from "@/components/common/form/AdminForm.jsx";
 import Swal from "sweetalert2";
-import routes from "../routes.js";
+import routes from "@/routes.js";
 // window.localStorage.removeItem('role');
 //근데 이렇게 하면 로컬에 role =admin만 수정하면 관리자 페이지 입장 가능하지 않나?
 // window.localStorage.setItem('role', 'admin');

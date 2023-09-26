@@ -1,7 +1,7 @@
-import MainLayout from "../components/common/layout/MainLayout";
-import Map from "../components/common/layout/Map";
+import MainLayout from "@/components/common/layout/MainLayout";
+import Map from "@/components/common/layout/Map";
 import { useQuery } from "@tanstack/react-query";
-import { mapDocument } from "../services/document";
+import { mapDocument } from "@/services/document";
 
 const Home = () => {
   const { data, isLoading, isError } = useQuery(["valid_pin"], mapDocument);
