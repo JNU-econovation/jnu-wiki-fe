@@ -1,7 +1,7 @@
-import Map from "../components/common/layout/Map";
-import MainLayout from "../components/common/layout/MainLayout";
+import Map from "@/components/common/layout/Map";
+import MainLayout from "@/components/common/layout/MainLayout";
 import { useLocation } from "react-router-dom";
-import MypageScrapDetail from "../components/common/mypage/MypageScrapDetail";
+import MypageScrapDetail from "@/components/mypage/MypageScrapDetail";
 
 const MypageScrapDetailPage = () => {
   const location = useLocation();

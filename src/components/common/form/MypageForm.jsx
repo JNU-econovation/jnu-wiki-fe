@@ -1,12 +1,12 @@
-import MyInputGroup from "../mypage/MyInfoGroup";
-import Container from "../Resister/Container";
-import Title from "../Resister/Title";
+import MyInputGroup from "@/components/mypage/MyInfoGroup";
+import Container from "@/components/register/Container";
+import Title from "@/components/register/Title";
 import styled from "styled-components";
-import MyBtn from "../mypage/MyBtn";
-import { getUserInfo } from "../../../services/user";
-import routes from "../../../routes";
+import MyBtn from "@/components/mypage/MyBtn";
+import { getUserInfo } from "@/services/user";
+import routes from "@/routes";
 import { useQuery } from "@tanstack/react-query";
-import Loader from "../layout/Loader";
+import Loader from "@/components/common/layout/Loader";
 import { useNavigate } from "react-router-dom";
 
 //데이터 받아아오기

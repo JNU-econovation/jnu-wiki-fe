@@ -1,7 +1,8 @@
-import MainLayout from "../components/common/layout/MainLayout";
-import MypageScrap from "../components/common/mypage/MypageScrap";
-import routes from "../routes.js";
+import MainLayout from "@/components/common/layout/MainLayout";
+import MypageScrap from "@/components/mypage/MypageScrap";
+import routes from "@/routes.js";
 import Swal from "sweetalert2";
+
 const Scrap = () => {
   return (
     <>
