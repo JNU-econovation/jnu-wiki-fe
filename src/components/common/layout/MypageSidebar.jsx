@@ -14,7 +14,7 @@ const MyList = styled(NavLink)`
   font-weight: 300;
   color: rgba(83, 90, 97, 1);
 
-  width: 14rem;
+  width: 10rem;
   margin: 0.5rem;
   margin-left: 0.7rem;
   height: 3rem;
@@ -33,19 +33,11 @@ const MyList = styled(NavLink)`
 
   cursor: pointer;
 `;
-const MypageSidebar = () => {
+const MypageSidebar = ({ scrapActive }) => {
   return (
     <ListBox>
-      <MyList
-        className={({ isActive }) => (isActive ? "active" : "")}
-        to={routes.myPage}
-      >
-        - 회원정보 수정
-      </MyList>
-      <MyList
-        className={({ isActive }) => (isActive ? "active" : "")}
-        to={routes.scrap}
-      >
+      <MyList to={routes.myPage}>- 회원정보 수정</MyList>
+      <MyList className={scrapActive ? "active" : ""} to={routes.scrap}>
         - 스크랩
       </MyList>
     </ListBox>

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import TitleBox from "../admin/TitleBox";
 import RequestContain from "../admin/RequestContain";
+import Loader from "../layout/Loader";
 
 import React from "react";
 
@@ -28,7 +29,7 @@ const RequestContainerBox = React.forwardRef(
           isLoading={isLoading}
           error={error}
         >
-          {/* {isLoading && <Loader />} */}
+          {isLoading && <Loader />}
           {/* 아래의 div가 관찰대상!!! */}
           {!isLoading && <Bottom ref={ref}>. </Bottom>}
         </RequestContain>

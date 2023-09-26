@@ -19,7 +19,7 @@ const ContainerCss = styled.form`
   padding: 0 3rem 0 3rem;
 
   position: relative;
-  left: 40%;
+  left: 37%;
   top: 15rem;
   z-index: 1;
   margin-bottom: 30rem;
