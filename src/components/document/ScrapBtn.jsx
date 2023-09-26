@@ -5,9 +5,9 @@ const ScrapBtn = ({ onClick, scrap }) => {
     <>
       <div onClick={onClick}>
         {scrap ? (
-          <AiFillHeart color="#216d32" />
+          <AiFillHeart size="1.2rem" color="#216d32" />
         ) : (
-          <AiOutlineHeart color="#216d32" />
+          <AiOutlineHeart size="1.2rem" color="#216d32" />
         )}
       </div>
     </>
