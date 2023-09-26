@@ -1,11 +1,11 @@
-import InfoGroup from "./InfoGroup";
-import DocumentHeading from "./DocumentHeading";
-import Description from "./Description";
-import DocumentTime from "./DocumentTime";
-import DocumentInput from "./DocumentInput";
-import ToggleBtn from "./ToggleBtn";
+import InfoGroup from "../document/InfoGroup";
+import DocumentHeading from "../document/DocumentHeading";
+import Description from "../document/Description";
+import DocumentTime from "../document/DocumentTime";
+import DocumentInput from "../document/DocumentInput";
+import ToggleBtn from "../document/ToggleBtn";
 import styled from "styled-components";
-import SelectMenu from "./SelectMenu";
+import SelectMenu from "../document/SelectMenu";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   detailDocument,
@@ -19,15 +19,16 @@ import useInput from "../../../hooks/useInput";
 import Skeleton from "../layout/Skeleton";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ScrapBtn from "./ScrapBtn";
+import ScrapBtn from "../document/ScrapBtn";
 import { scrapCreate, scrapDelete } from "../../../services/scrap";
+import MainLayout from "../layout/MainLayout";
 
 const Group = styled.div`
   height: 100%;
   max-width: 25rem;
 
   position: fixed;
-  left: 20rem;
+  left: 15rem;
   top: 5.5rem;
   padding: 2rem 2rem 8rem 2rem;
 
@@ -94,7 +95,7 @@ const BasicInfo = styled.div`
   justify-content: space-between;
 `;
 
-const Document = ({ id }) => {
+const MypageScrapDetail = ({ id }) => {
   const { data, isLoading } = useQuery(["detail_document", id], () =>
     detailDocument(id)
   );
@@ -118,7 +119,7 @@ const Document = ({ id }) => {
   const [basicEdit, setBasicEdit] = useState(false);
   const [contentValue, setContentValue] = useState(docsContent);
   const [editContent, setEditContent] = useState(false);
-  const [scrap, setScrap] = useState(false);
+  const [scrap, setScrap] = useState(true);
   const [toggle, setToggle] = useState(true);
 
   const queryClient = useQueryClient();
@@ -147,7 +148,6 @@ const Document = ({ id }) => {
     setBasicEdit(true);
     valueInit.docsName = docsName;
   };
-
   const handleAddressInfo = () => {
     if (!getLat) {
       addressInfo = docsLocation;
@@ -183,6 +183,9 @@ const Document = ({ id }) => {
     setContentValue(docsContent);
   };
 
+  /**
+   * 내용수정 뮤테이션
+   */
   const handleContentSave = () => {
     setEditContent(false);
     mutationContentModify({ docs_id: id, docsContent: contentValue });
@@ -194,6 +197,12 @@ const Document = ({ id }) => {
   };
 
   const handleOnScrapFill = () => {
+    if (scrap) {
+      scrapDetailDelete({ docsId: id });
+    } else {
+      scrapDetailCreate({ docsId: id });
+      toast("스크랩 되었습니다!");
+    }
     setScrap(!scrap);
   };
 
@@ -210,15 +219,6 @@ const Document = ({ id }) => {
       console.error(error);
     },
   });
-
-  useEffect(() => {
-    if (scrap) {
-      scrapDetailCreate({ docsId: id });
-      toast("스크랩 되었습니다!");
-    } else {
-      scrapDetailDelete({ docsId: id });
-    }
-  }, [scrap, id, scrapDetailCreate, scrapDetailDelete]);
 
   const clickToggle = () => {
     setToggle((prev) => !prev);
@@ -353,4 +353,4 @@ const Document = ({ id }) => {
   );
 };
 
-export default Document;
+export default MypageScrapDetail;

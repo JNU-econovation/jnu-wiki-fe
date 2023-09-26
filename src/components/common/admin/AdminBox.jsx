@@ -7,8 +7,6 @@ import {
 import routes from "../../../routes";
 import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
 import { useRef, useEffect } from "react";
-import Loader from "../layout/Loader";
-import { current } from "@reduxjs/toolkit";
 
 const AdminBox = () => {
   const bottomObserver1 = useRef(null);
@@ -63,7 +61,7 @@ const AdminBox = () => {
         });
       },
       {
-        threshold: 0.5,
+        threshold: 0.7,
       }
     );
 
@@ -92,7 +90,7 @@ const AdminBox = () => {
           }
         });
       },
-      { threshold: 0.5 }
+      { threshold: 0.7 }
     );
 
     if (bottomObserver2.current) {

@@ -1,22 +1,10 @@
 import Sidebar from "./Sidebar";
 import Header from "./Header";
-import { mypageTestData } from "../form/MypageTestData";
 
-const MainLayout = ({
-  viewActive,
-  adminActive,
-  myActive,
-  children,
-  onClick,
-}) => {
+const MainLayout = ({ viewActive, myActive, children, onClick }) => {
   return (
     <>
-      <Sidebar
-        viewActive={viewActive}
-        adminActive={adminActive}
-        myActive={myActive}
-        onClick={onClick}
-      />
+      <Sidebar viewActive={viewActive} myActive={myActive} onClick={onClick} />
       <Header />
       {children}
     </>

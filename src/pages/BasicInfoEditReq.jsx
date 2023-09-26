@@ -110,7 +110,7 @@ const BasicInfoEditReq = () => {
 
   return (
     <>
-      <MainLayout adminActive={true}>
+      <MainLayout>
         <Container id="admin">
           <MenuIconX onClick={() => navigate(-1)}>
             <AiOutlineClose />
@@ -202,12 +202,12 @@ const BasicInfoEditReq = () => {
               color="white"
               border="none"
               backgroundcolor="primary"
-              onClick={(e) => {
+              onClick={() => {
                 console.log(results[1]?.data?.data?.response?.docsRequestId);
                 const updatePayload =
                   results[1]?.data?.data?.response?.docsRequestId;
                 mutation.mutate(updatePayload, {
-                  onSuccess: (data) => {
+                  onSuccess: () => {
                     Swal.fire({
                       icon: "success",
                       text: "수정 요청이 수락되었습니다!",
