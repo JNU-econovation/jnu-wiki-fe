@@ -1,18 +1,18 @@
-import InputGroup from "../Input/InputGroup";
-import Button from "../Resister/Button";
-import Container from "../Resister/Container";
-import Title from "../Resister/Title";
-import DoubleCheck from "../Resister/DoubleCheck";
+import InputGroup from "@/components/common/Input/InputGroup";
+import Button from "@/components/register/Button";
+import Container from "@/components/register/Container";
+import Title from "@/components/register/Title";
+import DoubleCheck from "@/components/register/DoubleCheck";
 import { useState, useEffect } from "react";
-import { getUserInfo, getChangeInfo } from "../../../services/user";
+import { getUserInfo, getChangeInfo } from "@/services/user";
 import Swal from "sweetalert2";
-import routes from "../../../routes";
-import { passwordCheck } from "../../../services/regex";
-import MyBtn from "../mypage/MyBtn";
+import routes from "@/routes";
+import { passwordCheck } from "@/utils/regex";
+import MyBtn from "@/components/mypage/MyBtn";
 import { styled } from "styled-components";
 import { mypageTestData } from "./MypageTestData";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { nicknameDoubleCheck } from "../../../services/user";
+import { nicknameDoubleCheck } from "@/services/user";
 import { useNavigate } from "react-router-dom";
 
 const ButtonWrap = styled.div`

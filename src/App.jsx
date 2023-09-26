@@ -16,7 +16,7 @@ import NewDocsReq from "./pages/NewDocsReq.jsx";
 import DocumentPage from "./pages/DocumentPage.jsx";
 import DocumentListPage from "./pages/DocumentListPage.jsx";
 import Scrap from "./pages/Scrap.jsx";
-import MypageScrapDetail from "./components/common/mypage/MypageScrapDetail.jsx";
+import MypageScrapDetail from "./components/mypage/MypageScrapDetail.jsx";
 import MypageScrapDetailPage from "./pages/MypageScrapDetailPage.jsx";
 function App() {
   return (

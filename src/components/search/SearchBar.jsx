@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { useState, useRef, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { searchDocs } from "../../services/document";
+import { searchDocs } from "@/services/document";
 import { useNavigate } from "react-router-dom";
-import routes from "../../routes";
+import routes from "@/routes";
 import debounce from "lodash/debounce";
 import throttle from "lodash/throttle";
 import SearchItem from "./SearchItem";

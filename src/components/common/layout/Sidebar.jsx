@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import routes from "../../../routes";
+import routes from "@/routes";
 import MenuList from "./SidebarList";
 import { GoHomeFill } from "react-icons/go";
 import { FaPenSquare } from "react-icons/fa";
