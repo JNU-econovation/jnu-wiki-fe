@@ -1,6 +1,6 @@
-import Title from "../Resister/Title";
-import Contain from "../admin/Contain";
-import AdminBox from "../admin/AdminBox";
+import Title from "@/components/register/Title";
+import Contain from "@/components/admin/Contain";
+import AdminBox from "@/components/admin/AdminBox";
 
 const AdminForm = () => {
   return (

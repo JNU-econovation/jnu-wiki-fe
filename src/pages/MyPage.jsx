@@ -1,7 +1,7 @@
-import MypageForm from "../components/common/form/MypageForm.jsx";
+import MypageForm from "@/components/common/form/MypageForm.jsx";
 import Swal from "sweetalert2";
-import routes from "../routes.js";
-import MainLayout from "../components/common/layout/MainLayout.jsx";
+import routes from "@/routes.js";
+import MainLayout from "@/components/common/layout/MainLayout.jsx";
 
 const MyPage = () => {
   return (
