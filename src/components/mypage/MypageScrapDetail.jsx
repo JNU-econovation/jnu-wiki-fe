@@ -24,12 +24,12 @@ import { scrapCreate, scrapDelete } from "@/services/scrap";
 import MainLayout from "@/components/common/layout/MainLayout";
 
 const Group = styled.div`
-  height: 100%;
-  max-width: 25rem;
+  width: 22rem;
+  height: 90%;
 
   position: fixed;
   left: 15rem;
-  top: 5.5rem;
+  top: 6.2rem;
   padding: 2rem 2rem 8rem 2rem;
 
   background-color: white;
@@ -54,7 +54,6 @@ const Group = styled.div`
   #docsCategory {
     width: fit-content;
     height: fit-content;
-    margin-top: -4rem;
   }
 `;
 
@@ -74,12 +73,6 @@ const ContentHeading = styled.div`
   align-items: stretch;
 `;
 
-const StyledInput = styled(DocumentInput)`
-  display: inline;
-  width: 60%;
-  height: 1.6rem;
-`;
-
 const StyledSpan = styled.span`
   display: inline-block;
   height: 1rem;
@@ -93,6 +86,17 @@ const EditorContainer = styled.div`
 const BasicInfo = styled.div`
   display: flex;
   justify-content: space-between;
+`;
+
+const DocsContent = styled.div`
+  display: inline-block;
+  width: 12rem;
+`;
+
+const DocsInfo = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.8rem;
 `;
 
 const MypageScrapDetail = ({ id }) => {
@@ -255,9 +259,10 @@ const MypageScrapDetail = ({ id }) => {
             </BasicInfo>
 
             <Box>
-              <InfoGroup htmlFor="title" label="문서 제목">
+              <DocsInfo>
+                <InfoGroup htmlFor="title" label="문서 제목" />
                 {basicEdit ? (
-                  <StyledInput
+                  <DocumentInput
                     htmlFor="docsName"
                     id="docsName"
                     placeholder={docsName}
@@ -265,12 +270,17 @@ const MypageScrapDetail = ({ id }) => {
                     onChange={handleOnChange}
                   />
                 ) : (
-                  docsName
+                  <DocsContent>{docsName}</DocsContent>
                 )}
-              </InfoGroup>
-              <InfoGroup className="location" htmlFor="location" label="위치">
+              </DocsInfo>
+              <DocsInfo>
+                <InfoGroup
+                  className="location"
+                  htmlFor="location"
+                  label="위치"
+                />
                 {basicEdit ? (
-                  <StyledInput
+                  <DocumentInput
                     htmlFor="docsLocation"
                     id="docsLocation"
                     placeholder={initialAddress}
@@ -279,9 +289,9 @@ const MypageScrapDetail = ({ id }) => {
                     onChange={handleOnChange}
                   />
                 ) : (
-                  initialAddress
+                  <DocsContent>{initialAddress}</DocsContent>
                 )}
-              </InfoGroup>
+              </DocsInfo>
               <InfoGroup htmlFor="category" label="카테고리">
                 {basicEdit ? (
                   <StyledSpan>
