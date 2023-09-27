@@ -24,7 +24,7 @@ import { scrapCreate, scrapDelete } from "@/services/scrap";
 
 const Group = styled.div`
   width: 22rem;
-  height: 100%;
+  height: 90%;
 
   position: fixed;
   left: 15rem;
