@@ -68,6 +68,7 @@ const MypageScrap = () => {
   return (
     <>
       {data ? (
+        // <DocumentWrapper>
         <Container>
           <Suspense fallback={<Loader />}>
             <Title> {nickname}님이 스크랩한 장소입니다 :)</Title>
@@ -76,10 +77,13 @@ const MypageScrap = () => {
           </Suspense>
         </Container>
       ) : (
+        // </DocumentWrapper>
+        // <DocumentWrapper>
         <Container>
           <Title>{nickname}님이 스크랩한 장소입니다 :)</Title>
           <p>🐦 스크랩 한 게시물이 없습니다</p>
         </Container>
+        // </DocumentWrapper>
       )}
 
       {isLoading || error || !data ? <Loader /> : data && !error && <Map />}
