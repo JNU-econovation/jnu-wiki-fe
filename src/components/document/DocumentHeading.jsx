@@ -4,6 +4,8 @@ const Group = styled.span`
   display: flex;
   align-items: center;
   color: #216d32;
+  margin-bottom: 0.5rem;
+  width: 12rem;
 
   .icon {
     cursor: pointer;

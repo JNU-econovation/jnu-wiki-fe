@@ -11,8 +11,10 @@ import { useLocation } from "react-router-dom";
 const Container = styled.div`
   width: 15rem;
   height: 100vh;
+
   background-color: white;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
   position: fixed;
   top: 6rem;
   left: 0;
