@@ -15,16 +15,14 @@ const StyledClosedToggle = styled(IoIosArrowForward)`
 
 const OpenToggleBtn = styled.div`
   position: absolute;
-  height: 100%;
-  left: 43rem;
-  top: 26rem;
+  left: 37rem;
+  top: 24rem;
 `;
 
 const ClosedToggleBtn = styled.div`
   position: absolute;
-  height: 100%;
-  left: 20rem;
-  top: 26rem;
+  left: 15rem;
+  top: 24rem;
 `;
 
 const ToggleBtn = ({ toggle, onClick }) => {

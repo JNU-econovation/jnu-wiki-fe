@@ -108,7 +108,7 @@ const HeaderDiv = styled.header`
 
 const LogoImg = styled.img`
   width: 8rem;
-  margin: 1rem 8rem 0.7rem 1rem;
+  margin: 1rem 8rem 1rem 1rem;
   cursor: pointer;
 `;
 
