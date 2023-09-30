@@ -21,6 +21,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ScrapBtn from "./ScrapBtn";
 import { scrapCreate, scrapDelete } from "@/services/scrap";
+import { getUserInfo } from "@/services/user";
 
 const Group = styled.div`
   width: 22rem;
@@ -125,6 +126,9 @@ const Document = ({ id }) => {
   const [scrap, setScrap] = useState(false);
   const [toggle, setToggle] = useState(true);
 
+  const { data: getUser } = useQuery(["member_info"], getUserInfo);
+  const memberId = getUser?.data?.response.id;
+
   const queryClient = useQueryClient();
 
   const { mutate: mutationBasicModify } = useMutation({
@@ -217,10 +221,10 @@ const Document = ({ id }) => {
 
   useEffect(() => {
     if (scrap) {
-      scrapDetailCreate({ docsId: id });
+      scrapDetailCreate({ memberId, docsId: id });
       toast("스크랩 되었습니다!");
     } else {
-      scrapDetailDelete({ docsId: id });
+      scrapDetailDelete({ memberId, docsId: id });
     }
   }, [scrap, id, scrapDetailCreate, scrapDetailDelete]);
 
