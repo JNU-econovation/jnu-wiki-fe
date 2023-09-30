@@ -174,7 +174,7 @@ const CreateDocument = () => {
         >
           위치
         </DocumentInputGroup>
-        <DocumentLabel>카테고리</DocumentLabel>
+        <DocumentLabel htmlFor="docsCategory">카테고리</DocumentLabel>
         <SelectMenu
           id="docsCategory"
           value={inputData.docsCategory}
