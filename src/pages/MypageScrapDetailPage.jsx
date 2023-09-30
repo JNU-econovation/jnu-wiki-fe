@@ -1,16 +1,16 @@
-import Document from "@/components/document/Document";
 import Map from "@/components/common/layout/Map";
 import MainLayout from "@/components/common/layout/MainLayout";
 import { useLocation } from "react-router-dom";
+import MypageScrapDetail from "@/components/mypage/MypageScrapDetail";
 
-const DocumentPage = () => {
+const MypageScrapDetailPage = () => {
   const location = useLocation();
   const receivedData = location.state;
 
   return (
     <>
-      <MainLayout viewActive={true}>
-        <Document id={receivedData?.docsId} />
+      <MainLayout myActive={true}>
+        <MypageScrapDetail id={receivedData?.docsId} />
       </MainLayout>
       <Map
         apiLat={
@@ -26,4 +26,4 @@ const DocumentPage = () => {
   );
 };
 
-export default DocumentPage;
+export default MypageScrapDetailPage;

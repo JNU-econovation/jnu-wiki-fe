@@ -1,8 +1,8 @@
 import Input from "./Input";
-import Box from "../Resister/Box";
-import Label from "../Resister/Label";
-import AlertMessage from "../Resister/AlertMessage";
-import DoubleCheck from "../Resister/DoubleCheck";
+import Box from "@/components/register/Box";
+import Label from "@/components/register/Label";
+import AlertMessage from "@/components/register/AlertMessage";
+import DoubleCheck from "@/components/register/DoubleCheck";
 
 const InputGroup = ({
   id,

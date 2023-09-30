@@ -2,9 +2,9 @@ import styled from "styled-components";
 import "/public/fonts/pretendard.css";
 
 const Btn = styled.button`
-  width: 6.5rem;
-  height: 3rem;
-  border-radius: 99999px;
+  width: 6rem;
+  height: 2.5rem;
+  border-radius: 10px;
   font-size: 1rem;
   margin: 0 0.5rem;
   cursor: pointer;
@@ -22,11 +22,11 @@ const colors = {
 
 const Button = ({
   children,
-  type,
   color,
   border,
   backgroundcolor,
   onClick,
+  type = "click",
 }) => {
   return (
     <Btn
