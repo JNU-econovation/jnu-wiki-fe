@@ -3,8 +3,9 @@ import DocsItem from "./DocsItem";
 import { useNavigate } from "react-router-dom";
 import routes from "@/routes";
 import styled from "styled-components";
-import { useMutation } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { scrapCreate, scrapDelete } from "@/services/scrap";
+import { getUserInfo } from "@/services/user";
 
 const Container = styled.div`
   position: absolute;
@@ -23,6 +24,9 @@ const DocsList = ({ data }) => {
   const docsData = data?.pages.flatMap((x) => x.data.response.docsList);
   const docsListArray = docsData || [];
   const [scrapList, setScrapList] = useState([]);
+
+  const { data: getUser } = useQuery(["member_info"], getUserInfo);
+  const memberId = getUser?.data?.response.id;
 
   const handleOnClick = (el) => {
     navigate(routes.documentPage, { state: el });
@@ -53,10 +57,10 @@ const DocsList = ({ data }) => {
           scrap: scrap,
         },
       ]);
-      createScrap({ docsId: el.docsId });
+      createScrap({ memberId, docsId: el.docsId });
     } else {
       setScrapList(scrapList.filter((x) => x !== isSelected));
-      deleteScrap({ docsId: el.docsId });
+      deleteScrap({ memberId, docsId: el.docsId });
     }
   };
 
