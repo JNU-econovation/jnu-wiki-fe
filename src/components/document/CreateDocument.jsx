@@ -114,8 +114,12 @@ const CreateDocument = () => {
         handleClear();
       },
       onError: (error) => {
-        alert("문서 생성에 실패했습니다. 관리자에게 문의하세요.");
-        console.error(error);
+        if (localStorage.getItem("token") === null) {
+          alert("로그인 후 이용 가능합니다.");
+        } else {
+          alert("문서 생성에 실패했습니다. 관리자에게 문의하세요.");
+          console.error(error);
+        }
       },
     });
   };
@@ -178,9 +182,9 @@ const CreateDocument = () => {
         />
         <StyledButton>
           <Button
-            type="click"
             color="primary"
-            border="1px solid #216D32"
+            border="1px solid"
+            border-color="primary"
             backgroundcolor="white"
             onClick={handleCancel}
           >
@@ -189,7 +193,6 @@ const CreateDocument = () => {
           <Button
             type="submit"
             color="white"
-            border="none"
             backgroundcolor="primary"
             onClick={handleSubmit}
           >
