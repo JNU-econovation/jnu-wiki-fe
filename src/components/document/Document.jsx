@@ -260,7 +260,7 @@ const Document = ({ id }) => {
 
             <Box>
               <DocsInfo>
-                <InfoGroup htmlFor="title" label="문서 제목" />
+                <InfoGroup htmlFor="docsName" label="문서 제목" />
                 {basicEdit ? (
                   <DocumentInput
                     htmlFor="docsName"
@@ -276,7 +276,7 @@ const Document = ({ id }) => {
               <DocsInfo>
                 <InfoGroup
                   className="location"
-                  htmlFor="location"
+                  htmlFor="docsLocation"
                   label="위치"
                 />
                 {basicEdit ? (
@@ -292,7 +292,7 @@ const Document = ({ id }) => {
                   <DocsContent>{initialAddress}</DocsContent>
                 )}
               </DocsInfo>
-              <InfoGroup htmlFor="category" label="카테고리">
+              <InfoGroup htmlFor="docsCategory" label="카테고리">
                 {basicEdit ? (
                   <StyledSpan>
                     <SelectMenu
