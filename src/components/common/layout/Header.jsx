@@ -1,20 +1,41 @@
 import styled from "styled-components";
-import "/public/fonts/pretendard.css";
 import mainLogo from "/public/main-logo.png";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "./Button";
-import routes from "../../../routes";
+import routes from "@/routes";
 import Swal from "sweetalert2";
 import { SlLogout } from "react-icons/Sl";
-import SearchBar from "../../search/SearchBar";
+import SearchBar from "@/components/search/SearchBar";
+import { getUserInfo } from "@/services/user";
+import { useQuery } from "@tanstack/react-query";
 
 const token = localStorage.getItem("token");
 
 const Header = () => {
   const navigate = useNavigate();
-
   const [JWT, setJWT] = useState(token);
+  const { data } = useQuery(["member_info"], getUserInfo);
+  const nickName = data?.data?.response.nickName;
+
+  const popUpLogout = () => {
+    return Swal.fire({
+      icon: "question",
+      text: "로그아웃 하시겠습니까?",
+      showCancelButton: true,
+      confirmButtonText: "예",
+      cancelButtonText: "아니오",
+      confirmButtonColor: "#429f50",
+      cancelButtonColor: "#d33",
+    });
+  };
+
+  const logOutUser = () => {
+    localStorage.clear();
+    setJWT(null);
+    location.reload();
+  };
+
   useEffect(() => {
     setJWT(localStorage.getItem("token"));
   }, [JWT]);
@@ -34,20 +55,16 @@ const Header = () => {
           <SearchBar />
           {!JWT ? (
             <ButtonGroup>
-              {" "}
               <Button
-                type="click"
                 color="primary"
-                border="1px solid #216D32"
-                backgroundcolor="white"
+                border="1px solid"
+                border-color="primary"
                 onClick={() => navigate(routes.join)}
               >
                 회원가입
               </Button>
               <Button
-                type="click"
                 color="white"
-                border="none"
                 backgroundcolor="primary"
                 onClick={() => navigate(routes.login)}
               >
@@ -56,30 +73,21 @@ const Header = () => {
             </ButtonGroup>
           ) : (
             <ButtonGroup>
-              <div>{name}</div>
-              <button
-                type="click"
-                onClick={() => {
-                  Swal.fire({
-                    icon: "question",
-                    text: "로그아웃 하시겠습니까?",
-                    showCancelButton: true,
-                    confirmButtonText: "예",
-                    cancelButtonText: "아니오",
-                    confirmButtonColor: "#429f50",
-                    cancelButtonColor: "#d33",
-                  }).then((result) => {
-                    if (result.isConfirmed) {
-                      localStorage.removeItem("token");
-                      localStorage.removeItem("role");
-                      setJWT(null);
-                      window.location.reload();
-                    }
-                  });
-                }}
-              >
-                <SlLogout size={"21px"} />
-              </button>
+              <NameInfo>
+                <div>{nickName}</div>
+                <button
+                  className="logout-btn"
+                  onClick={() => {
+                    popUpLogout().then((result) => {
+                      if (result.isConfirmed) {
+                        logOutUser();
+                      }
+                    });
+                  }}
+                >
+                  <SlLogout size={"21px"} />
+                </button>
+              </NameInfo>
             </ButtonGroup>
           )}
         </HeaderDiv>
@@ -91,8 +99,6 @@ const Header = () => {
 
 const Container = styled.div`
   position: fixed;
-  top: 0;
-  left: 0;
   width: 100vw;
   background-color: white;
   z-index: 3;
@@ -108,7 +114,7 @@ const HeaderDiv = styled.header`
 
 const LogoImg = styled.img`
   width: 8rem;
-  margin: 1rem 8rem 0.7rem 1rem;
+  margin: 1rem 8rem 1rem 1rem;
   cursor: pointer;
 `;
 
@@ -120,7 +126,17 @@ const Line = styled.hr`
 
 const ButtonGroup = styled.div`
   position: fixed;
-  right: 2rem;
+  right: 4rem;
+`;
+
+const NameInfo = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .logout-btn {
+    margin-left: 2rem;
+  }
 `;
 
 export default Header;

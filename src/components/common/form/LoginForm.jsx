@@ -1,17 +1,17 @@
-import Container from "../Resister/Container";
-import InputGroup from "../Input/InputGroup";
-import Button from "../Resister/Button";
-import useInput from "../../../hooks/useInput";
-import routes from "../../../routes";
+import Container from "@/components/register/Container";
+import InputGroup from "@/components/common/Input/InputGroup";
+import Button from "@/components/register/Button";
+import useInput from "@/hooks/useInput";
+import routes from "@/routes";
 import { useNavigate } from "react-router-dom";
-import Question from "../Resister/Question";
+import Question from "@/components/register/Question";
 import { useState, useEffect } from "react";
-import { emailCheck, passwordCheck } from "../../../services/regex";
-import Title from "../Resister/Title";
-import { login } from "../../../services/user";
+import { emailCheck, passwordCheck } from "@/utils/regex";
+import Title from "@/components/register/Title";
+import { login } from "@/services/user";
 import Swal from "sweetalert2";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
-import { Icons } from "./ResisterForm";
+import { Icons } from "./RegisterForm";
 
 const LoginForm = ({ marginBottom }) => {
   const navigate = useNavigate();

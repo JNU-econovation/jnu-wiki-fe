@@ -16,6 +16,8 @@ import NewDocsReq from "./pages/NewDocsReq.jsx";
 import DocumentPage from "./pages/DocumentPage.jsx";
 import DocumentListPage from "./pages/DocumentListPage.jsx";
 import Scrap from "./pages/Scrap.jsx";
+import MypageScrapDetail from "./components/mypage/MypageScrapDetail.jsx";
+import MypageScrapDetailPage from "./pages/MypageScrapDetailPage.jsx";
 function App() {
   return (
     <>
@@ -32,6 +34,12 @@ function App() {
             <Route path={routes.join} element={<Join />} />
             <Route path={routes.admin} element={<Admin />} />
             <Route path={routes.scrap} element={<Scrap />} />
+            <Route
+              path={routes.scrapDetailPage}
+              element={<MypageScrapDetailPage />}
+            />
+            <Route path={routes.scrapDetail} element={<MypageScrapDetail />} />
+
             {/* <Route path={routes.documentList} element={<DocumentListPage />} /> */}
             <Route
               path={`${routes.newDocsRequest}/:id`}

@@ -1,20 +1,19 @@
 import { useParams } from "react-router-dom";
-import MainLayout from "../components/common/layout/MainLayout";
-import { Container } from "../components/common/document/CreateDocument";
-import MapContainer from "../components/Map/MapContainer";
+import MainLayout from "@/components/common/layout/MainLayout";
+import { Container } from "@/components/document/CreateDocument";
+import MapContainer from "@/components/Map/MapContainer";
 import { useEffect, useState } from "react";
-import Button from "../components/common/layout/Button";
-import { StyledButton } from "../components/common/document/CreateDocument";
-import EditInfo from "../components/common/admin/EditInfo";
+import Button from "@/components/common/layout/Button";
+import { StyledButton } from "@/components/document/CreateDocument";
+import EditInfo from "@/components/admin/EditInfo";
 import { TitleP } from "./BasicInfoEditReq";
-import { newDocsRequest, newRequestApprove } from "../services/user";
-import { isError, useQuery } from "@tanstack/react-query";
-import Loader from "../components/common/layout/Loader";
+import { newDocsRequest, newRequestApprove } from "@/services/user";
+import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
-import routes from "../routes";
+import routes from "@/routes";
 import { useNavigate } from "react-router-dom";
-import { requestReject } from "../services/user";
-import { useMutation, useQueries } from "@tanstack/react-query";
+import { requestReject } from "@/services/user";
+import { useMutation } from "@tanstack/react-query";
 import { AiOutlineClose } from "react-icons/ai";
 import { MenuIconX } from "./BasicInfoEditReq";
 
@@ -83,7 +82,7 @@ const NewDocsReq = () => {
 
   return (
     <>
-      <MainLayout adminActive={true}>
+      <MainLayout>
         <Container>
           <MenuIconX onClick={() => navigate(-1)}>
             <AiOutlineClose />
@@ -134,10 +133,10 @@ const NewDocsReq = () => {
               color="white"
               border="none"
               backgroundcolor="primary"
-              onClick={(e) => {
+              onClick={() => {
                 const updatePayload = Data?.docsRequestId;
                 mutation.mutate(updatePayload, {
-                  onSuccess: (data) => {
+                  onSuccess: () => {
                     Swal.fire({
                       icon: "success",
                       text: "생성 수락!",
