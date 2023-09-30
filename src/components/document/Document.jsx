@@ -297,9 +297,9 @@ const Document = ({ id }) => {
                   <StyledSpan>
                     <SelectMenu
                       id="docsCategory"
-                      placeholder={valueInit.docsCategory}
                       value={category}
                       onChange={handleOnChange}
+                      selected={docsCategory}
                     />
                   </StyledSpan>
                 ) : (
