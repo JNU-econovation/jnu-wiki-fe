@@ -15,7 +15,9 @@ const token = localStorage.getItem("token");
 const Header = () => {
   const navigate = useNavigate();
   const [JWT, setJWT] = useState(token);
-  const { data } = useQuery(["member_info"], getUserInfo);
+  const { data } = useQuery(["member_info"], getUserInfo, {
+    staleTime: Infinity,
+  });
   const nickName = data?.data?.response.nickName;
 
   const popUpLogout = () => {

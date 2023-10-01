@@ -126,7 +126,9 @@ const Document = ({ id }) => {
   const [scrap, setScrap] = useState(false);
   const [toggle, setToggle] = useState(true);
 
-  const { data: getUser } = useQuery(["member_info"], getUserInfo);
+  const { data: getUser } = useQuery(["member_info"], getUserInfo, {
+    staleTime: Infinity,
+  });
   const memberId = getUser?.data?.response.id;
 
   const queryClient = useQueryClient();
