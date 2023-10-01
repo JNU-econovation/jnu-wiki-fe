@@ -87,7 +87,12 @@ const SearchBar = () => {
 
   const { data, isLoading, isError, error } = useQuery(
     ["search_docs", inputValue],
-    () => searchDocs(inputValue)
+    () => searchDocs(inputValue),
+    {
+      enabled: !!inputValue,
+      staleTime: 6 * 10 * 1000,
+      cacheTime: 6 * 10 * 1000,
+    }
   );
 
   const handleOnClick = (el) => {
