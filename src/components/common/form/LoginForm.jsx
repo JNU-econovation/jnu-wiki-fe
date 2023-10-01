@@ -71,8 +71,8 @@ const LoginForm = ({ marginBottom }) => {
                 confirmButtonColor: "#429f50",
               }).then((result) => {
                 if (result.isConfirmed) {
-                  localStorage.setItem("token", res.headers.authorization);
-                  localStorage.setItem("role", res.data.response.role);
+                  // localStorage.setItem("token", res.headers.authorization);
+                  // localStorage.setItem("role", res.data.response.role);
                   // localStorage.setItem("nickname", res.data.response.nickname);
                   navigate(routes.home);
                 }
