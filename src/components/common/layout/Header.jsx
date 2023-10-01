@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import mainLogo from "/public/main-logo.png";
+import mainLogo from "/main-logo.png";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "./Button";
