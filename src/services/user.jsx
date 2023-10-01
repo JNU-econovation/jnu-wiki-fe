@@ -8,13 +8,6 @@ export const login = async (data) => {
   });
 };
 
-export const nicknameDoubleCheck = (name) => {
-  return instance.post("members/check/nickname", { nickname: name });
-};
-export const emailDBCheck = (email) => {
-  return instance.post("members/check/email", { email });
-};
-
 export const register = (data) => {
   const { email, password, nickName } = data;
   return instance.post("members/join", {
@@ -22,6 +15,13 @@ export const register = (data) => {
     password,
     nickName,
   });
+};
+
+export const nicknameDoubleCheck = (name) => {
+  return instance.post("members/check/nickname", { nickname: name });
+};
+export const emailDBCheck = (email) => {
+  return instance.post("members/check/email", { email });
 };
 
 ///mypage
