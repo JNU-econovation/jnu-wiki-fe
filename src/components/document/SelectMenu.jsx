@@ -18,7 +18,7 @@ const StyledSelected = styled.select`
   }
 `;
 
-const SelectMenu = ({ name, id, value, placeholder }) => {
+const SelectMenu = ({ name, id, value, selected }) => {
   const dispatch = useDispatch();
 
   const handleCategoryChange = () => {
@@ -32,11 +32,10 @@ const SelectMenu = ({ name, id, value, placeholder }) => {
       id={id}
       value={value}
       onChange={handleCategoryChange}
-      placeholder={placeholder}
       required
     >
       {category.map((item) => (
-        <option key={item} value={item}>
+        <option key={item} value={item} selected={selected === item}>
           {item}
         </option>
       ))}

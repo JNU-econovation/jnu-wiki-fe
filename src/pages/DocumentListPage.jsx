@@ -17,12 +17,10 @@ const DocumentListPage = () => {
 
   const bottomObserver = useRef(null);
 
-  const leftDown = useSelector((state) => state.SwNe.swLatlng);
-  const rightUp = useSelector((state) => state.SwNe.neLatlng);
-  const rightUpLa = rightUp?.La;
-  const rightUpMa = rightUp?.Ma;
-  const leftDownLa = leftDown?.La;
-  const leftDownMa = leftDown?.Ma;
+  const { La: rightUpLa, Ma: rightUpMa } =
+    useSelector((state) => state.SwNe.neLatlng) || {};
+  const { La: leftDownLa, Ma: leftDownMa } =
+    useSelector((state) => state.SwNe.swLatlng) || {};
 
   const { data, isLoading, error, fetchNextPage, hasNextPage } =
     useInfiniteQuery(
@@ -80,7 +78,7 @@ const DocumentListPage = () => {
       {show && (
         <DocumentWrapper>
           <Suspense fallback={<Loader />}>
-            <DocsList data={data} />
+            {title?.length && <DocsList data={data} />}
             <div style={{ height: "50px" }} ref={bottomObserver}></div>
           </Suspense>
         </DocumentWrapper>
