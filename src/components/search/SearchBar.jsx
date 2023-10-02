@@ -85,7 +85,7 @@ const SearchBar = () => {
     searchDocs(value);
   }, 300);
 
-  const { data, isLoading, isError, error } = useQuery(
+  const { isSuccess } = useQuery(
     ["search_docs", inputValue],
     () => searchDocs(inputValue),
     {
@@ -112,37 +112,39 @@ const SearchBar = () => {
 
   return (
     <div>
-      <div>
-        <StyledSearchBar
-          type="search"
-          placeholder="      검색"
-          ref={focusRef}
-          onFocus={onFocusSearchBar}
-          onBlur={onBlurSearchBar}
-          value={inputValue}
-          onChange={(e) => {
-            setInputValue(e.target.value);
-            debouncedSearchDocs(e.target.value);
-            throttledSearchDocs(e.target.value);
-          }}
-        />
-      </div>
-
-      {clickedSearch && searchResults.length !== 0 && (
-        <Container ref={searchRef}>
-          {isError && <div>{error}</div>}
-          {searchResults &&
-            searchResults
-              .slice(0, 8)
-              .map((el) => (
-                <SearchItem
-                  key={el.docsId}
-                  name={el.docsName}
-                  onClick={() => handleOnClick(el)}
-                />
-              ))}
-        </Container>
-      )}
+      <StyledSearchBar
+        type="search"
+        placeholder="      검색"
+        ref={focusRef}
+        onFocus={onFocusSearchBar}
+        onBlur={onBlurSearchBar}
+        value={inputValue}
+        onChange={(e) => {
+          setInputValue(e.target.value);
+          debouncedSearchDocs(e.target.value);
+          throttledSearchDocs(e.target.value);
+        }}
+      />
+      {isSuccess
+        ? clickedSearch &&
+          inputValue && (
+            <Container ref={searchRef}>
+              {searchResults &&
+                searchResults
+                  .slice(0, 8)
+                  .map((el) => (
+                    <SearchItem
+                      key={el.docsId}
+                      name={el.docsName}
+                      onClick={() => handleOnClick(el)}
+                    />
+                  ))}
+            </Container>
+          )
+        : clickedSearch &&
+          inputValue && (
+            <Container ref={searchRef}>검색 결과가 없습니다. 🥲</Container>
+          )}
     </div>
   );
 };
