@@ -34,8 +34,8 @@ const StyledHr = styled.hr`
   margin: 1.4rem 0;
 `;
 
-const DocsItem = ({ name, category, onScrapClick }) => {
-  const [scrap, setScrap] = useState(false);
+const DocsItem = ({ name, category, isScraped, onScrapClick }) => {
+  const [scrap, setScrap] = useState(isScraped);
 
   const handleOnScrapFill = () => {
     onScrapClick(!scrap);

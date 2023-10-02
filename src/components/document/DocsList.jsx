@@ -73,6 +73,7 @@ const DocsList = ({ data }) => {
               <DocsItem
                 name={el.docsName}
                 category={el.docsCategory}
+                isScraped={el.scrap}
                 onScrapClick={(scrap) => handleOnScrap(el, scrap)}
               />
             </div>
