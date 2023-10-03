@@ -54,16 +54,6 @@ const Map = ({ title, apiLat, apiLng }) => {
     mapscript();
   }, []);
 
-  function searchAddFromCoords(coords, callback) {
-    // 좌표로 행정동 주소 정보를 요청
-    geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);
-  }
-
-  function searchDetailAddrFromCoords(coords, callback) {
-    // 좌표로 법정동 상세 주소 정보를 요청
-    geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
-  }
-
   let map, bounds, swLatlng, neLatlng;
   let marker = new kakao.maps.Marker();
   let geocoder = new kakao.maps.services.Geocoder();
@@ -71,7 +61,7 @@ const Map = ({ title, apiLat, apiLng }) => {
   const initialMap = () => {
     const container = document.getElementById("map");
     const options = {
-      center: new kakao.maps.LatLng(35.176151, 126.909788),
+      center: new kakao.maps.LatLng(35.17614029042555, 126.90977266483199),
       level: 4,
     };
     map = new kakao.maps.Map(container, options);
@@ -93,8 +83,20 @@ const Map = ({ title, apiLat, apiLng }) => {
     initialMap();
     setSwNe();
 
+    function searchAddFromCoords(coords, callback) {
+      // 좌표로 행정동 주소 정보를 요청
+      geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);
+    }
+
+    function searchDetailAddrFromCoords(coords, callback) {
+      // 좌표로 법정동 상세 주소 정보를 요청
+      geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
+    }
+
     let marker = new kakao.maps.Marker(),
       infowindow = new kakao.maps.InfoWindow({ zindex: 1 });
+
+    searchAddFromCoords(map.getCenter());
 
     kakao.maps.event.addListener(map, "click", function (mouseEvent) {
       searchDetailAddrFromCoords(mouseEvent.latLng, function (result, status) {
@@ -187,10 +189,9 @@ const Map = ({ title, apiLat, apiLng }) => {
 
   const setAddress = useCallback(() => {
     // 백엔드에서 보내준 좌표대로 주소 출력
-
     let geocoder = new kakao.maps.services.Geocoder();
-
     let coord = new kakao.maps.LatLng(apiLat, apiLng);
+
     let callback = function (result, status) {
       if (status === kakao.maps.services.Status.OK) {
         const payloadAddress = result[0].road_address
