@@ -2,12 +2,15 @@ import MainLayout from "@/components/common/layout/MainLayout";
 import MypageScrap from "@/components/mypage/MypageScrap";
 import routes from "@/routes.js";
 import Swal from "sweetalert2";
+import { useSelector } from "react-redux";
 
 const Scrap = () => {
+  const user = useSelector((state) => state.user);
+
   return (
     <>
       <MainLayout myActive={true}>
-        {localStorage.getItem("token") ? (
+        {user.isLogin ? (
           <MypageScrap />
         ) : (
           Swal.fire({

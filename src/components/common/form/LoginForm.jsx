@@ -12,8 +12,12 @@ import { login } from "@/services/user";
 import Swal from "sweetalert2";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { Icons } from "./RegisterForm";
+import { useDispatch } from "react-redux";
+import { loginState } from "@/store/userReducer";
+import { setCookie } from "../../../utils/CookieFunc";
 
 const LoginForm = ({ marginBottom }) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { valueInit, handleOnChange } = useInput({
     username: "",
@@ -62,7 +66,7 @@ const LoginForm = ({ marginBottom }) => {
         })
           .then(
             (res) => {
-              // console.log(JSON.parse(res.data));
+              //로그인 성공시
 
               Swal.fire({
                 icon: "success",
@@ -71,9 +75,21 @@ const LoginForm = ({ marginBottom }) => {
                 confirmButtonColor: "#429f50",
               }).then((result) => {
                 if (result.isConfirmed) {
-                  // localStorage.setItem("token", res.headers.authorization);
-                  // localStorage.setItem("role", res.data.response.role);
-                  // localStorage.setItem("nickname", res.data.response.nickname);
+                  // localStorage.setItem(
+                  //   "nickname",
+                  //   res?.headers.response.name || ""
+                  // );
+                  // res.setHeader("Access-Control-Allow-Credentials", "true");
+                  setCookie("refreshToken", res.headers.cookie);
+                  localStorage.setItem("token", res.headers.authorization);
+                  dispatch(
+                    loginState({
+                      nickname: res.data.response.nickName,
+                      email: res.data.response.email,
+                      role: res.data.response.role,
+                      isLogin: true,
+                    })
+                  );
                   navigate(routes.home);
                 }
               });
