@@ -7,16 +7,11 @@ import ToggleBtn from "./ToggleBtn";
 import styled from "styled-components";
 import SelectMenu from "./SelectMenu";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import {
-  detailDocument,
-  contentModify,
-  basicModify,
-} from "@/services/document";
+import { contentModify, basicModify } from "@/services/document";
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import MDEditor from "@uiw/react-md-editor";
 import useInput from "@/hooks/useInput";
-import Skeleton from "@/components/common/layout/Skeleton";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ScrapBtn from "./ScrapBtn";
@@ -99,19 +94,30 @@ const DocsInfo = styled.div`
   margin-bottom: 1.8rem;
 `;
 
-const Document = ({ id }) => {
-  const { data, isLoading } = useQuery(["detail_document", id], () =>
-    detailDocument(id)
-  );
+const Document = ({ data }) => {
+  const queryClient = useQueryClient();
 
-  const category = useSelector((state) => state.category.category);
-  const getLat = useSelector((state) => state.latLng.latitude);
-  const getLng = useSelector((state) => state.latLng.longitude);
+  const { data: memberId } = useQuery(["member_info"], getUserInfo, {
+    staleTime: Infinity,
+    select: (data) => data?.data?.response.id,
+  });
+
+  const {
+    id,
+    docsName,
+    docsLocation,
+    docsCategory,
+    docsCreatedAt,
+    docsContent,
+    scrap: isScraped,
+  } = data || {};
+
+  const { category } = useSelector((state) => state.category);
+  const { latitude: getLat, longitude: getLng } = useSelector(
+    (state) => state.latLng
+  );
   const { address, initialAddress } = useSelector((state) => state.address);
   let addressInfo = { lat: getLat, lng: getLng };
-
-  const { docsName, docsLocation, docsCategory, docsCreatedAt, docsContent } =
-    data?.data.response || {};
 
   const { valueInit, handleOnChange, reset } = useInput({
     docsCategory,
@@ -123,13 +129,8 @@ const Document = ({ id }) => {
   const [basicEdit, setBasicEdit] = useState(false);
   const [contentValue, setContentValue] = useState(docsContent);
   const [editContent, setEditContent] = useState(false);
-  const [scrap, setScrap] = useState(false);
+  const [scraped, setScrap] = useState(isScraped);
   const [toggle, setToggle] = useState(true);
-
-  const { data: getUser } = useQuery(["member_info"], getUserInfo);
-  const memberId = getUser?.data?.response.id;
-
-  const queryClient = useQueryClient();
 
   const { mutate: mutationBasicModify } = useMutation({
     mutationFn: basicModify,
@@ -151,22 +152,31 @@ const Document = ({ id }) => {
     },
   });
 
+  const { mutate: scrapDetailCreate } = useMutation({
+    mutationFn: scrapCreate,
+    onError: (error) => {
+      console.error(error);
+    },
+  });
+
+  const { mutate: scrapDetailDelete } = useMutation({
+    mutationFn: scrapDelete,
+    onError: (error) => {
+      console.error(error);
+    },
+  });
+
   const handleSetInput = () => {
     setBasicEdit(true);
     valueInit.docsName = docsName;
   };
 
   const handleAddressInfo = () => {
-    if (!getLat) {
-      addressInfo = docsLocation;
-    }
+    !getLat && (addressInfo = docsLocation);
     return addressInfo;
   };
 
-  const handleBasicSave = () => {
-    setBasicEdit(false);
-    handleAddressInfo();
-
+  const saveBasicInfo = () => {
     mutationBasicModify({
       docsId: id,
       docsRequestType: "MODIFIED",
@@ -176,6 +186,12 @@ const Document = ({ id }) => {
     });
 
     toast.info("관리자 승인 후 갱신됩니다.");
+  };
+
+  const handleBasicSave = () => {
+    setBasicEdit(false);
+    handleAddressInfo();
+    saveBasicInfo();
   };
 
   const handleBasicCancel = () => {
@@ -191,42 +207,32 @@ const Document = ({ id }) => {
     setContentValue(docsContent);
   };
 
-  const handleContentSave = () => {
-    setEditContent(false);
+  const saveContentInfo = () => {
     mutationContentModify({ docs_id: id, docsContent: contentValue });
     toast.success("내용이 수정되었습니다!");
+  };
+
+  const handleContentSave = () => {
+    setEditContent(false);
+    saveContentInfo();
   };
 
   const handleContentcCancel = () => {
     setEditContent(false);
   };
 
-  const handleOnScrapFill = () => {
-    setScrap(!scrap);
-  };
-
-  const { mutate: scrapDetailCreate } = useMutation({
-    mutationFn: scrapCreate,
-    onError: (error) => {
-      console.error(error);
-    },
-  });
-
-  const { mutate: scrapDetailDelete } = useMutation({
-    mutationFn: scrapDelete,
-    onError: (error) => {
-      console.error(error);
-    },
-  });
-
   useEffect(() => {
-    if (scrap) {
+    setScrap(isScraped);
+  }, [isScraped]);
+
+  const handleOnScrapFill = () => {
+    setScrap((prev) => !prev);
+    if (!scraped) {
       scrapDetailCreate({ memberId, docsId: id });
-      toast("스크랩 되었습니다!");
     } else {
       scrapDetailDelete({ memberId, docsId: id });
     }
-  }, [scrap, id, scrapDetailCreate, scrapDetailDelete]);
+  };
 
   const clickToggle = () => {
     setToggle((prev) => !prev);
@@ -234,7 +240,6 @@ const Document = ({ id }) => {
 
   return (
     <>
-      {isLoading && <Skeleton />}
       <ToastContainer
         position="top-right"
         autoClose={3000}
@@ -259,7 +264,7 @@ const Document = ({ id }) => {
               >
                 기본 정보
               </DocumentHeading>
-              <ScrapBtn onClick={handleOnScrapFill} scrap={scrap} />
+              <ScrapBtn onClick={handleOnScrapFill} scrap={scraped} />
             </BasicInfo>
 
             <Box>

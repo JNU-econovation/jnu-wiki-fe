@@ -28,9 +28,11 @@ const DocumentListPage = () => {
       ({ pageParam = 0 }) =>
         docsList({ pageParam, rightUpLa, rightUpMa, leftDownLa, leftDownMa }),
       {
-        getNextPageParam: (currentPage, allPages) => {
-          const nextPage = allPages.length;
-          return nextPage > 1 ? null : nextPage;
+        getNextPageParam: (lastPage, allPages) => {
+          const nextPage = allPages.length + 1;
+          return lastPage.currentPage < lastPage.totalPages
+            ? nextPage
+            : undefined;
         },
       }
     );

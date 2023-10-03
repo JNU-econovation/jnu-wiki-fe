@@ -1,4 +1,4 @@
-import { useEffect, useCallback, memo, useRef } from "react";
+import { useEffect, useCallback, useRef } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 
@@ -46,7 +46,7 @@ const MapDiv = styled.div`
   }
 `;
 
-const Map = memo(({ title, apiLat, apiLng }) => {
+const Map = ({ title, apiLat, apiLng }) => {
   const dispatch = useDispatch();
   const markerRef = useRef(null);
 
@@ -56,11 +56,12 @@ const Map = memo(({ title, apiLat, apiLng }) => {
 
   let map, bounds, swLatlng, neLatlng;
   let marker = new kakao.maps.Marker();
+  let geocoder = new kakao.maps.services.Geocoder();
 
   const initialMap = () => {
     const container = document.getElementById("map");
     const options = {
-      center: new kakao.maps.LatLng(35.176151, 126.909788),
+      center: new kakao.maps.LatLng(35.17614029042555, 126.90977266483199),
       level: 4,
     };
     map = new kakao.maps.Map(container, options);
@@ -91,8 +92,6 @@ const Map = memo(({ title, apiLat, apiLng }) => {
       // 좌표로 법정동 상세 주소 정보를 요청
       geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
     }
-
-    let geocoder = new kakao.maps.services.Geocoder();
 
     let marker = new kakao.maps.Marker(),
       infowindow = new kakao.maps.InfoWindow({ zindex: 1 });
@@ -140,10 +139,16 @@ const Map = memo(({ title, apiLat, apiLng }) => {
       });
     });
 
-    // 중심 좌표나 확대 수준이 변경됐을 때 지도 중심 좌표에 대한 주소 정보를 표시하도록 이벤트를 등록
-    kakao.maps.event.addListener(map, "idle", function () {
-      searchAddFromCoords(map.getCenter());
-    });
+    // // 중심 좌표나 확대 수준이 변경됐을 때 지도 중심 좌표에 대한 주소 정보를 표시하도록 이벤트를 등록
+    // kakao.maps.event.addListener(map, "idle", function () {
+    //   searchAddFromCoords(map.getCenter());
+    //   searchDetailAddrFromCoords(map.getCenter());
+    //   map.relayout();
+    // });
+
+    // kakao.maps.event.addListener(map, "bounds_changed", function () {
+    //   setSwNe();
+    // });
 
     // 마커 여러개
     if (apiLat?.length > 0 && apiLng?.length > 0) {
@@ -152,23 +157,41 @@ const Map = memo(({ title, apiLat, apiLng }) => {
       for (let i = 0; i < apiLat.length; i++) {
         let marker = new kakao.maps.Marker({
           position: new kakao.maps.LatLng(apiLat[i], apiLng[i]),
-          title: title[i],
         });
         markers.push(marker);
         markers[i].setMap(map);
+
+        var info = new kakao.maps.InfoWindow({
+          content: title[i],
+        });
+
+        kakao.maps.event.addListener(
+          marker,
+          "mouseover",
+          makeOverListener(map, marker, info)
+        );
+        kakao.maps.event.addListener(marker, "mouseout", makeOutListener(info));
       }
     }
 
-    kakao.maps.event.addListener(map, "bounds_changed", function () {
-      setSwNe();
-    });
+    function makeOverListener(map, marker, infowindow) {
+      return function () {
+        infowindow.open(map, marker);
+      };
+    }
+
+    function makeOutListener(infowindow) {
+      return function () {
+        infowindow.close();
+      };
+    }
   };
 
   const setAddress = useCallback(() => {
     // 백엔드에서 보내준 좌표대로 주소 출력
     let geocoder = new kakao.maps.services.Geocoder();
-
     let coord = new kakao.maps.LatLng(apiLat, apiLng);
+
     let callback = function (result, status) {
       if (status === kakao.maps.services.Status.OK) {
         const payloadAddress = result[0].road_address
@@ -214,8 +237,6 @@ const Map = memo(({ title, apiLat, apiLng }) => {
       />
     </>
   );
-});
-
-Map.displayName = "Map";
+};
 
 export default Map;
