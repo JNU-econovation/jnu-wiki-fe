@@ -110,8 +110,9 @@ const Document = ({ id }) => {
     }
   );
 
-  const { data: getUser } = useQuery(["member_info"], getUserInfo, {
+  const { data: memberId } = useQuery(["member_info"], getUserInfo, {
     staleTime: Infinity,
+    select: (data) => data?.data?.response.id,
   });
 
   const {
@@ -122,8 +123,6 @@ const Document = ({ id }) => {
     docsContent,
     scrap: isScraped,
   } = data?.data.response || {};
-
-  const memberId = getUser?.data?.response.id;
 
   const { category } = useSelector((state) => state.category);
   const { latitude: getLat, longitude: getLng } = useSelector(
