@@ -10,7 +10,6 @@ const routes = {
   newDocsRequest: "/admin/newDocsReq",
   basicInfoEditRequest: "/admin/basicInfoEditReq",
   documentPage: "/documentPage",
-  documentList: "/documentList",
   scrapDetailPage: "/mypage/scrap/scrapDetailPage",
 };
 
