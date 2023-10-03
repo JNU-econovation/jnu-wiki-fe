@@ -27,13 +27,13 @@ const StyledHeading = styled.p`
 const DocumentHeading = ({
   children,
   clickEdit,
-  type = false,
-  contentType = false,
   className,
   contentSave,
   contentCancel,
   basicSave,
   basicCancel,
+  type = false,
+  contentType = false,
 }) => {
   return (
     <>

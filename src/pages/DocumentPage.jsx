@@ -1,26 +1,24 @@
 import Document from "@/components/document/Document";
 import Map from "@/components/common/layout/Map";
 import MainLayout from "@/components/common/layout/MainLayout";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { detailDocument } from "@/services/document";
+import { useQuery } from "@tanstack/react-query";
 
 const DocumentPage = () => {
-  const location = useLocation();
-  const receivedData = location.state;
+  const { id } = useParams();
+  const { data } = useQuery(["detail_document", id], () => detailDocument(id), {
+    select: (data) => data?.data?.response,
+  });
 
   return (
     <>
       <MainLayout viewActive={true}>
-        <Document id={receivedData?.docsId} />
+        <Document data={data} />
       </MainLayout>
       <Map
-        apiLat={
-          receivedData?.docsLocation?.lat ||
-          receivedData?.docsRequestLocation?.lat
-        }
-        apiLng={
-          receivedData?.docsLocation?.lng ||
-          receivedData?.docsRequestLocation?.lng
-        }
+        apiLat={data?.docsLocation.lat || data?.docsRequestLocation?.lat}
+        apiLng={data?.docsLocation.lng || data?.docsRequestLocation?.lng}
       />
     </>
   );

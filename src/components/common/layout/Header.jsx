@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import mainLogo from "/public/main-logo.png";
+import mainLogo from "/main-logo.png";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "./Button";
@@ -15,8 +15,11 @@ const token = localStorage.getItem("token");
 const Header = () => {
   const navigate = useNavigate();
   const [JWT, setJWT] = useState(token);
-  const { data } = useQuery(["member_info"], getUserInfo);
-  const nickName = data?.data?.response.nickName;
+  const { data: nickName } = useQuery(["member_info"], getUserInfo, {
+    staleTime: Infinity,
+    enabled: !!JWT,
+    select: (data) => data?.data?.response.nickName,
+  });
 
   const popUpLogout = () => {
     return Swal.fire({
