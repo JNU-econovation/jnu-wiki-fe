@@ -24,9 +24,13 @@ const DocsList = ({ data }) => {
   const docsData = data?.pages.flatMap((x) => x.data.response.docsList);
   const docsListArray = docsData || [];
   const [scrapList, setScrapList] = useState([]);
+  const token = localStorage.getItem("token");
 
-  const { data: getUser } = useQuery(["member_info"], getUserInfo);
-  const memberId = getUser?.data?.response.id;
+  const { data: memberId } = useQuery(["member_info"], getUserInfo, {
+    staleTime: Infinity,
+    select: (data) => data?.data?.response.id,
+    enabled: !!token,
+  });
 
   const handleOnClick = (el) => {
     navigate(routes.documentPage, { state: el });
