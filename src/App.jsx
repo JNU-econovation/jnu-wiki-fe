@@ -1,7 +1,5 @@
-import { BrowserRouter } from "react-router-dom";
-import { Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import routes from "./routes.js";
-import Home from "./pages/Home.jsx";
 import AddPost from "./pages/AddPost.jsx";
 import MyPage from "./pages/MyPage.jsx";
 import Login from "./pages/Login.jsx";
@@ -18,6 +16,7 @@ import DocumentListPage from "./pages/DocumentListPage.jsx";
 import Scrap from "./pages/Scrap.jsx";
 import MypageScrapDetail from "./components/mypage/MypageScrapDetail.jsx";
 import MypageScrapDetailPage from "./pages/MypageScrapDetailPage.jsx";
+
 function App() {
   return (
     <>
@@ -39,8 +38,6 @@ function App() {
               element={<MypageScrapDetailPage />}
             />
             <Route path={routes.scrapDetail} element={<MypageScrapDetail />} />
-
-            {/* <Route path={routes.documentList} element={<DocumentListPage />} /> */}
             <Route
               path={`${routes.newDocsRequest}/:id`}
               element={<NewDocsReq />}
