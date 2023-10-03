@@ -21,6 +21,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ScrapBtn from "@/components/document/ScrapBtn";
 import { scrapCreate, scrapDelete } from "@/services/scrap";
+import { getUserInfo } from "../../services/user";
 import MainLayout from "@/components/common/layout/MainLayout";
 
 const Group = styled.div`
@@ -100,6 +101,8 @@ const DocsInfo = styled.div`
 `;
 
 const MypageScrapDetail = ({ id }) => {
+  const { data: getUser } = useQuery(["member_info"], getUserInfo);
+  const memberId = getUser?.data?.response.id;
   const { data, isLoading } = useQuery(["detail_document", id], () =>
     detailDocument(id)
   );
@@ -202,9 +205,9 @@ const MypageScrapDetail = ({ id }) => {
 
   const handleOnScrapFill = () => {
     if (scrap) {
-      scrapDetailDelete({ docsId: id });
+      scrapDetailDelete({ memberId, docsId: id });
     } else {
-      scrapDetailCreate({ docsId: id });
+      scrapDetailCreate({ memberId, docsId: id });
       toast("스크랩 되었습니다!");
     }
     setScrap(!scrap);

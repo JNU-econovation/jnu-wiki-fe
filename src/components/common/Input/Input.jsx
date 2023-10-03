@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
-const Input = ({ type, name, value, onChange, placeholder, id }) => {
+const Input = ({ mypage, type, name, value, onChange, placeholder, id }) => {
+  console.log(mypage);
   return (
     <InputField
       id={id}
@@ -10,14 +11,21 @@ const Input = ({ type, name, value, onChange, placeholder, id }) => {
       placeholder={placeholder}
       onChange={onChange}
       autoComplete="off"
+      mypage={mypage}
     />
   );
 };
 
 const InputField = styled.input`
   height: 3rem;
-  border-radius: 0.3rem;
-  border: 0.6px solid #282828;
+  border-radius: ${(mypage) => {
+    mypage ? 0 : "0.3rem";
+  }};
+  /* border: 0.6px solid #282828; */
+  outline: none;
+  border: none;
+  border-bottom: 1.5px solid #216d32;
+  width: ${({ mypage }) => (mypage ? "340px" : "95%")};
   padding-left: 1rem;
 
   &::placeholder {

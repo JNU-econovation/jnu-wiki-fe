@@ -1,26 +1,45 @@
 import Map from "@/components/common/layout/Map";
 import ScrapList from "./ScrapList";
-import DocumentWrapper from "@/components/document/DocumentWrapper";
-import { Container, Title } from "./MypageStyle";
 import { useRef, useEffect } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { mypagescrap } from "@/services/mypage";
 import Loader from "@/components/common/layout/Loader";
 import { Suspense } from "react";
+import { useSelector } from "react-redux";
+import { useState } from "react";
+import MainLayout from "../common/layout/MainLayout";
+import DocumentWrapper from "../document/DocumentWrapper";
 
 const MypageScrap = () => {
   /** 무한스크롤 */
+  const [show, setShow] = useState(true);
+
+  const handleShow = () => {
+    setShow(!show);
+  };
+
   const bottomObserver = useRef(null);
+
+  const { La: rightUpLa, Ma: rightUpMa } =
+    useSelector((state) => state.SwNe.neLatlng) || {};
+  const { La: leftDownLa, Ma: leftDownMa } =
+    useSelector((state) => state.SwNe.swLatlng) || {};
 
   const { data, isLoading, error, fetchNextPage, hasNextPage } =
     useInfiniteQuery(
-      ["mypage_list"],
-      ({ pageParam = 0 }) => mypagescrap(pageParam),
+      ["mypage_list", rightUpLa, rightUpMa, leftDownLa, leftDownMa],
+      ({ pageParam = 0 }) =>
+        mypagescrap({
+          pageParam,
+          rightUpLa,
+          rightUpMa,
+          leftDownLa,
+          leftDownMa,
+        }),
       {
         getNextPageParam: (currentPage, allPages) => {
           const nextPage = allPages.length;
-          const totalPage = currentPage?.data?.response?.totalPages;
-          return nextPage >= totalPage ? null : nextPage;
+          return nextPage > 1 ? null : nextPage;
         },
       }
     );
@@ -50,46 +69,35 @@ const MypageScrap = () => {
     };
   }, [isLoading, hasNextPage, fetchNextPage]);
 
-  /**
-   * 지도에서 사용할거
-   */
-  const title = data?.pages.flatMap((x) => x.data.response).map((x) => x.title);
+  const title = data?.pages
+    .flatMap((x) => x.data.response.docsList)
+    .map((x) => x.docsName);
 
   const latitude = data?.pages
-    .flatMap((x) => x.data?.response)
-    .map((x) => x.docsRequestLocation?.lat);
+    .flatMap((x) => x.data.response.docsList)
+    .map((x) => x.docsLocation.lat);
 
   const longitude = data?.pages
-    .flatMap((x) => x.data?.response)
-    .map((x) => x.docsRequestLocation?.lng);
-
-  const nickname = data?.pages[0].data.response.scrapList[1].member;
+    .flatMap((x) => x.data.response.docsList)
+    .map((x) => x.docsLocation.lng);
 
   return (
     <>
-      {data ? (
-        // <DocumentWrapper>
-        <Container>
+      <MainLayout onClick={handleShow} />
+      {show && (
+        <DocumentWrapper>
           <Suspense fallback={<Loader />}>
-            <Title> {nickname}님이 스크랩한 장소입니다 :)</Title>
-            <ScrapList datas={data} mypage={true} />
+            {title?.length && <ScrapList data={data} />}
             <div style={{ height: "50px" }} ref={bottomObserver}></div>
           </Suspense>
-        </Container>
-      ) : (
-        // </DocumentWrapper>
-        // <DocumentWrapper>
-        <Container>
-          <Title>{nickname}님이 스크랩한 장소입니다 :)</Title>
-          <p>🐦 스크랩 한 게시물이 없습니다</p>
-        </Container>
-        // </DocumentWrapper>
+        </DocumentWrapper>
       )}
-
-      {isLoading || error || !data ? <Loader /> : data && !error && <Map />}
-      <Map title={title} apiLat={latitude} apiLng={longitude} />
+      {isLoading || error || !data ? (
+        <Map />
+      ) : (
+        data && <Map title={title} apiLat={latitude} apiLng={longitude} />
+      )}
     </>
   );
 };
-
 export default MypageScrap;

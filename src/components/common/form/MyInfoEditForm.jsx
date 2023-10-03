@@ -1,5 +1,4 @@
 import InputGroup from "@/components/common/Input/InputGroup";
-import Button from "@/components/register/Button";
 import Container from "@/components/register/Container";
 import Title from "@/components/register/Title";
 import DoubleCheck from "@/components/register/DoubleCheck";
@@ -10,7 +9,6 @@ import routes from "@/routes";
 import { passwordCheck } from "@/utils/regex";
 import MyBtn from "@/components/mypage/MyBtn";
 import { styled } from "styled-components";
-import { mypageTestData } from "./MypageTestData";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { nicknameDoubleCheck } from "@/services/user";
 import { useNavigate } from "react-router-dom";
@@ -22,7 +20,7 @@ const ButtonWrap = styled.div`
 `;
 const MyInfoEditForm = () => {
   const navigate = useNavigate();
-  //나중에 동일한 닉네임입니다 이런거 추가하기
+
   const { data, isLoading, isError, error } = useQuery(["mypage"], () => {
     return getUserInfo();
   });
@@ -139,6 +137,8 @@ const MyInfoEditForm = () => {
           placeholder="수정할 새 닉네임을 입력해주세요."
           label="닉네임"
           value={Newnickname}
+          mypage={true}
+          btn={true}
           onChange={(e) => {
             handleNicknameChange(e);
           }}
@@ -146,6 +146,7 @@ const MyInfoEditForm = () => {
           margin={false}
         ></InputGroup>
         <DoubleCheck
+          left={true}
           active={Newnickname?.length > 0 ? "true" : "false"}
           onClick={(e) => {
             if (Isnewnickname === true && Newnickname?.length > 0) {
@@ -159,6 +160,7 @@ const MyInfoEditForm = () => {
           placeholder="새 비밀번호를 입력해주세요."
           label="새 비밀번호"
           value={Newpassword}
+          mypage={true}
           onChange={(e) => {
             handlePasswordChange(e);
           }}
@@ -169,19 +171,29 @@ const MyInfoEditForm = () => {
           }
           margin={false}
         ></InputGroup>
+        <InputGroup
+          id="newPassword"
+          type="password"
+          placeholder="비밀번호를 재입력해주세요."
+          label="새 비밀번호 확인"
+          value={Newpassword}
+          mypage={true}
+          btn={true}
+          onChange={(e) => {
+            handlePasswordChange(e);
+          }}
+          para={Isnewpassword ? null : "비밀번호가 다릅니다."}
+          margin={false}
+        ></InputGroup>
         <ButtonWrap>
-          <MyBtn color="white" backgroundColor="#216D32" onClick={GoEdit}>
-            수정완료
-          </MyBtn>
           <MyBtn
-            color="#216D32 "
-            backgroundColor="white"
-            border="1px solid #216D32"
+            color="white"
+            backgroundColor="#216D32"
             onClick={() => {
               navigate(routes.myPage);
             }}
           >
-            취소
+            완료
           </MyBtn>
         </ButtonWrap>
 
