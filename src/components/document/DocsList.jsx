@@ -1,7 +1,6 @@
 import { useState } from "react";
 import DocsItem from "./DocsItem";
 import { useNavigate } from "react-router-dom";
-import routes from "@/routes";
 import styled from "styled-components";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { scrapCreate, scrapDelete } from "@/services/scrap";
