@@ -99,16 +99,8 @@ const DocsInfo = styled.div`
   margin-bottom: 1.8rem;
 `;
 
-const Document = ({ id }) => {
+const Document = ({ data }) => {
   const queryClient = useQueryClient();
-
-  const { data, isLoading } = useQuery(
-    ["detail_document", id],
-    () => detailDocument(id),
-    {
-      staleTime: Infinity,
-    }
-  );
 
   const { data: memberId } = useQuery(["member_info"], getUserInfo, {
     staleTime: Infinity,
@@ -116,13 +108,14 @@ const Document = ({ id }) => {
   });
 
   const {
+    id,
     docsName,
     docsLocation,
     docsCategory,
     docsCreatedAt,
     docsContent,
     scrap: isScraped,
-  } = data?.data.response || {};
+  } = data || {};
 
   const { category } = useSelector((state) => state.category);
   const { latitude: getLat, longitude: getLng } = useSelector(
@@ -252,7 +245,6 @@ const Document = ({ id }) => {
 
   return (
     <>
-      {isLoading && <Skeleton />}
       <ToastContainer
         position="top-right"
         autoClose={3000}
