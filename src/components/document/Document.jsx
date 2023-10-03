@@ -7,16 +7,11 @@ import ToggleBtn from "./ToggleBtn";
 import styled from "styled-components";
 import SelectMenu from "./SelectMenu";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import {
-  detailDocument,
-  contentModify,
-  basicModify,
-} from "@/services/document";
+import { contentModify, basicModify } from "@/services/document";
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import MDEditor from "@uiw/react-md-editor";
 import useInput from "@/hooks/useInput";
-import Skeleton from "@/components/common/layout/Skeleton";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ScrapBtn from "./ScrapBtn";
