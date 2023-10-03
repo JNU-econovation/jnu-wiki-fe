@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import mainLogo from "/public/main-logo.png";
+import mainLogo from "/main-logo.png";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "./Button";
@@ -14,11 +14,20 @@ import { useDispatch, useSelector } from "react-redux";
 
 const Header = () => {
   const navigate = useNavigate();
+<<<<<<< HEAD
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 
   const { data } = useQuery(["member_info"], getUserInfo);
   const nickName = data?.data?.response.nickName;
+=======
+  const [JWT, setJWT] = useState(token);
+  const { data: nickName } = useQuery(["member_info"], getUserInfo, {
+    staleTime: Infinity,
+    enabled: !!JWT,
+    select: (data) => data?.data?.response.nickName,
+  });
+>>>>>>> 4fa540c2aa48ff4e39ba55feb7f05fb4b311cff2
 
   const popUpLogout = () => {
     return Swal.fire({

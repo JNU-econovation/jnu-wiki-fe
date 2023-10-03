@@ -33,9 +33,10 @@ const SelectMenu = ({ name, id, value, selected }) => {
       value={value}
       onChange={handleCategoryChange}
       required
+      defaultValue={selected}
     >
       {category.map((item) => (
-        <option key={item} value={item} selected={selected === item}>
+        <option key={item} value={item}>
           {item}
         </option>
       ))}
