@@ -9,7 +9,7 @@ const routes = {
   myInfoEdit: "/myinfo-edit",
   newDocsRequest: "/admin/newDocsReq",
   basicInfoEditRequest: "/admin/basicInfoEditReq",
-  documentPage: "/documentPage",
+  documentPage: "/document/:id",
   scrapDetailPage: "/mypage/scrap/scrapDetailPage",
 };
 
