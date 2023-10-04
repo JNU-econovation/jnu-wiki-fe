@@ -58,7 +58,6 @@ const Ic = styled.div`
 
 const MenuList = ({ name, icons, route, isActive, onClick, scrapActive }) => {
   const act = isActive;
-  console.log(isActive, name);
   return (
     <>
       <NavStyle

@@ -71,7 +71,7 @@ const ScrapList = ({ datas }) => {
           name={el.docsName}
           category={el.docsCategory}
           onClick={() => navigate(`/document/${el.docsId}`)}
-          isScraped={el.scrap}
+          isScraped={true}
           onScrapClick={(scrap) => handleOnScrap(el, scrap)}
         />
       ))}
