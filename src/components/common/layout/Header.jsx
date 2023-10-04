@@ -17,8 +17,12 @@ const Header = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 
-  const { data } = useQuery(["member_info"], getUserInfo);
-  const nickName = data?.data?.response.nickName;
+  const token = localStorage.getItem("token");
+  const { data: nickName } = useQuery(["member_info"], getUserInfo, {
+    staleTime: Infinity,
+    enabled: !!token,
+    select: (data) => data?.data?.response.nickName,
+  });
 
   const popUpLogout = () => {
     return Swal.fire({
