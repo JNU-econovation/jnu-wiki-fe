@@ -26,10 +26,7 @@ export const register = (data) => {
 
 export const onSilentRefresh = () => {
   instance
-    .post(
-      "/members/refresh-token"
-      //  { withCredentials: true }
-    )
+    .post("/members/refresh-token", { withCredentials: true })
     .then((response) => {
       alert("성공");
     })
@@ -52,19 +49,6 @@ export const nicknameDoubleCheck = (name) => {
 
 export const emailDBCheck = (email) => {
   return instance.post("members/check/email", { email });
-};
-
-///mypage
-export const getUserInfo = () => {
-  return instance.get("members/info");
-};
-
-export const getChangeInfo = (data) => {
-  const { Newnickname, Newpassword } = data;
-  return instance.post("members/modify/change", {
-    nickname: Newnickname,
-    password: Newpassword,
-  });
 };
 
 //admin List
