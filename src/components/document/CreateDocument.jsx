@@ -10,6 +10,7 @@ import { create } from "@/services/document";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { useMutation } from "@tanstack/react-query";
+import { toast, ToastContainer } from "react-toastify";
 
 export const Container = styled.div`
   width: 20rem;
@@ -43,6 +44,7 @@ const CreateDocument = () => {
   const address = useSelector((state) => state.address.address);
   const category = useSelector((state) => state.category.category);
   const dispatch = useDispatch();
+  const token = localStorage.getItem("token");
 
   const { valueInit, handleOnChange, reset } = useInput({
     docsCategory: "",
@@ -142,13 +144,28 @@ const CreateDocument = () => {
   };
 
   const handleSubmit = () => {
-    handleSetNameMsg("docsName", valueInit.docsName);
-    handleSetLocationMsg("docsLocation", { lat: latitude, lng: longitude });
-    handleRegisterAlert();
+    if (!token) {
+      toast.warning("로그인 후 작성 가능합니다.");
+    } else {
+      handleSetNameMsg("docsName", valueInit.docsName);
+      handleSetLocationMsg("docsLocation", { lat: latitude, lng: longitude });
+      handleRegisterAlert();
+    }
   };
 
   return (
     <>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <Container>
         <DocumentInputGroup
           htmlFor="docsName"
