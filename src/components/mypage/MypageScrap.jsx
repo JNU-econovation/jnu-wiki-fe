@@ -21,22 +21,10 @@ const MypageScrap = () => {
 
   const bottomObserver = useRef(null);
 
-  const { La: rightUpLa, Ma: rightUpMa } =
-    useSelector((state) => state.SwNe.neLatlng) || {};
-  const { La: leftDownLa, Ma: leftDownMa } =
-    useSelector((state) => state.SwNe.swLatlng) || {};
-
   const { data, isLoading, error, fetchNextPage, hasNextPage } =
     useInfiniteQuery(
-      ["mypage_list", rightUpLa, rightUpMa, leftDownLa, leftDownMa],
-      ({ pageParam = 0 }) =>
-        mypagescrap({
-          pageParam,
-          rightUpLa,
-          rightUpMa,
-          leftDownLa,
-          leftDownMa,
-        }),
+      ["mypage_list"],
+      ({ pageParam = 0 }) => mypagescrap(pageParam),
       {
         getNextPageParam: (lastPage, allPages) => {
           const nextPage = allPages.length + 1;
@@ -46,7 +34,6 @@ const MypageScrap = () => {
         },
       }
     );
-
   useEffect(() => {
     const io = new IntersectionObserver(
       (entries) => {
@@ -73,33 +60,21 @@ const MypageScrap = () => {
   }, [isLoading, hasNextPage, fetchNextPage]);
 
   const title = data?.pages
-    .flatMap((x) => x.data.response.docsList)
-    .map((x) => x.docsName);
-
-  const latitude = data?.pages
-    .flatMap((x) => x.data.response.docsList)
-    .map((x) => x.docsLocation.lat);
-
-  const longitude = data?.pages
-    .flatMap((x) => x.data.response.docsList)
-    .map((x) => x.docsLocation.lng);
+    .flatMap((x) => x?.data?.response.scrapList)
+    .map((x) => x?.docsName);
 
   return (
     <>
-      <MainLayout onClick={handleShow} />
+      <MainLayout myActive={true} onClick={handleShow} />
       {show && (
         <DocumentWrapper>
           <Suspense fallback={<Loader />}>
-            {title?.length && <DocsList data={data} />}
+            {title?.length && <ScrapList datas={data} />}
             <div style={{ height: "50px" }} ref={bottomObserver}></div>
           </Suspense>
         </DocumentWrapper>
       )}
-      {isLoading || error || !data ? (
-        <Map />
-      ) : (
-        data && <Map title={title} apiLat={latitude} apiLng={longitude} />
-      )}
+      <Map />
     </>
   );
 };
