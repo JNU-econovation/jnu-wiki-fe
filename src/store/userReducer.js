@@ -15,13 +15,11 @@ export const userSlice = createSlice({
   reducers: {
     loginState: (state, action) => {
       state.nickname = action.payload.nickname;
-      state.email = action.payload.email;
       state.role = action.payload.role;
       state.isLogin = true;
     },
     logoutState: (state) => {
       state.nickname = "";
-      state.email = "";
       state.role = "";
       state.isLogin = false;
     },
