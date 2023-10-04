@@ -138,15 +138,36 @@ const CreateDocument = () => {
     }
   };
 
+  const handleNullToken = () => {
+    toast.warning("로그인 후 작성 가능합니다.");
+  };
+
+  const handleDisabled = () => {
+    return (
+      <Button
+        color="primary"
+        border="1px solid"
+        border-color="primary"
+        backgroundcolor="white"
+        disabled
+        onClick={handleCancel}
+      >
+        등록 취소
+      </Button>
+    );
+  };
+
   const handleCancel = () => {
-    cancelAlert();
-    handleClear();
+    if (!token) handleDisabled();
+    else {
+      cancelAlert();
+      handleClear();
+    }
   };
 
   const handleSubmit = () => {
-    if (!token) {
-      toast.warning("로그인 후 작성 가능합니다.");
-    } else {
+    if (!token) handleNullToken();
+    else {
       handleSetNameMsg("docsName", valueInit.docsName);
       handleSetLocationMsg("docsLocation", { lat: latitude, lng: longitude });
       handleRegisterAlert();
