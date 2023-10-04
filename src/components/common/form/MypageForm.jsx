@@ -3,7 +3,7 @@ import Container from "@/components/register/Container";
 import Title from "@/components/register/Title";
 import styled from "styled-components";
 import MyBtn from "@/components/mypage/MyBtn";
-import { getUserInfo } from "@/services/user";
+import { getUserInfo } from "@/services/mypage";
 import routes from "@/routes";
 import { useQuery } from "@tanstack/react-query";
 import Loader from "@/components/common/layout/Loader";
@@ -30,7 +30,7 @@ const MypageForm = () => {
             <Loader />
           ) : (
             <>
-              <MyInputGroup data={data?.data?.response?.nickName}>
+              <MyInputGroup data={data?.data.response?.nickName}>
                 닉네임
               </MyInputGroup>
               <MyInputGroup data="*******">비밀번호</MyInputGroup>
