@@ -1,18 +1,17 @@
 import { instance } from "./index";
 
+const JWT_EXPIRRY_TIME = 24 * 3600 * 1000;
+
 export const login = async (data) => {
   const { email, password } = data;
-  return await instance.post("members/login", {
-    email,
-    password,
-  });
-};
-
-export const nicknameDoubleCheck = (name) => {
-  return instance.post("members/check/nickname", { nickname: name });
-};
-export const emailDBCheck = (email) => {
-  return instance.post("members/check/email", { email });
+  return await instance.post(
+    "members/login",
+    {
+      email,
+      password,
+    },
+    { withCredentials: true }
+  );
 };
 
 export const register = (data) => {
@@ -22,6 +21,37 @@ export const register = (data) => {
     password,
     nickName,
   });
+};
+//리프레시토큰 재 요청
+
+export const onSilentRefresh = () => {
+  instance
+    .post(
+      "/members/refresh-token"
+      //  { withCredentials: true }
+    )
+    .then((response) => {
+      alert("성공");
+    })
+    .catch((error) => {
+      alert(error);
+    });
+};
+// //로그인 성공 시
+// export const onLoginSuccess = (response) => {
+//   const accessToken = response.headers.authorization;
+//   localStorage.setItem("token", accessToken);
+
+//   // accessToken 만료하기 1분 전에 로그인 연장
+//   setTimeout(onSilentRefresh, JWT_EXPIRRY_TIME - 60000);
+
+// 닉네임 이메일 중복체크
+export const nicknameDoubleCheck = (name) => {
+  return instance.post("members/check/nickname", { nickname: name });
+};
+
+export const emailDBCheck = (email) => {
+  return instance.post("members/check/email", { email });
 };
 
 ///mypage
