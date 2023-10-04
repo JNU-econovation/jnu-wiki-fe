@@ -16,7 +16,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ScrapBtn from "./ScrapBtn";
 import { scrapCreate, scrapDelete } from "@/services/scrap";
-import { getUserInfo } from "@/services/user";
+import { getUserInfo } from "@/services/mypage";
 
 const Group = styled.div`
   width: 22rem;

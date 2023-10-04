@@ -21,7 +21,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ScrapBtn from "@/components/document/ScrapBtn";
 import { scrapCreate, scrapDelete } from "@/services/scrap";
-import { getUserInfo } from "../../services/user";
+import { getUserInfo } from "../../services/mypage";
 import MainLayout from "@/components/common/layout/MainLayout";
 
 const Group = styled.div`

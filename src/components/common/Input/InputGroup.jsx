@@ -17,6 +17,7 @@ const InputGroup = ({
   mypage,
   margin,
   btn,
+  onClick,
 }) => {
   return (
     <Box>
@@ -32,7 +33,7 @@ const InputGroup = ({
           mypage={mypage}
           btn={btn}
         />
-        {btn ? <button>변경</button> : null}
+        {btn ? <button onClick={(e) => onClick(e)}>변경</button> : null}
       </InputCss>
 
       <AlertMessage para={para}></AlertMessage>
