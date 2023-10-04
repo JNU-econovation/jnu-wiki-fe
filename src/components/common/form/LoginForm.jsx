@@ -85,8 +85,7 @@ const LoginForm = ({ marginBottom }) => {
                   localStorage.setItem("token", res.data.headers.Authorization);
                   dispatch(
                     loginState({
-                      nickname: "n",
-                      email: "d",
+                      nickname: "닉네임",
                       role: res.data.body.response.role,
                       isLogin: true,
                     })
