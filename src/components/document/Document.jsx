@@ -96,9 +96,11 @@ const DocsInfo = styled.div`
 
 const Document = ({ data }) => {
   const queryClient = useQueryClient();
+  const token = localStorage.getItem("token");
 
   const { data: memberId } = useQuery(["member_info"], getUserInfo, {
     staleTime: Infinity,
+    enabled: !!token,
     select: (data) => data?.data?.response.id,
   });
 
