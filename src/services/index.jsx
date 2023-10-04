@@ -23,14 +23,13 @@ instance.interceptors.response.use(
   },
   (error) => {
     const {
-      config,
+      // config,
       response: { status },
     } = error;
     if (status === 403 || status === 500) {
-      const originalRequest = config;
+      // const originalRequest = config;
       //refresh token 쿠키에서 꺼내서 헤더에 넣어 보내주기
       // const { data } = instance.post("/members/refresh-token");
-
       // localStorage.setItem("token", data.res.headers.authorization);
     }
     if (status == 401) {

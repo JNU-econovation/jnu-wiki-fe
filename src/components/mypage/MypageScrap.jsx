@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { useState } from "react";
 import MainLayout from "../common/layout/MainLayout";
 import DocumentWrapper from "../document/DocumentWrapper";
+import DocsList from "../document/DocsList";
 
 const MypageScrap = () => {
   /** 무한스크롤 */
@@ -37,9 +38,11 @@ const MypageScrap = () => {
           leftDownMa,
         }),
       {
-        getNextPageParam: (currentPage, allPages) => {
-          const nextPage = allPages.length;
-          return nextPage > 1 ? null : nextPage;
+        getNextPageParam: (lastPage, allPages) => {
+          const nextPage = allPages.length + 1;
+          return lastPage.currentPage < lastPage.totalPages
+            ? nextPage
+            : undefined;
         },
       }
     );
@@ -87,7 +90,7 @@ const MypageScrap = () => {
       {show && (
         <DocumentWrapper>
           <Suspense fallback={<Loader />}>
-            {title?.length && <ScrapList data={data} />}
+            {title?.length && <DocsList data={data} />}
             <div style={{ height: "50px" }} ref={bottomObserver}></div>
           </Suspense>
         </DocumentWrapper>
