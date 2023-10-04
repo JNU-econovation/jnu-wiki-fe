@@ -25,12 +25,17 @@ const MyInfoEditForm = () => {
   const { data } = useQuery(["mypage"], () => {
     return getUserInfo();
   });
-
-  const changeNickname = useMutation({
+  const { mutate: changeNickname } = useMutation({
     mutationFn: getChangeNickname,
+    onError: (error) => {
+      console.error(error);
+    },
   });
-  const changePassword = useMutation({
+  const { mutate: changePassword } = useMutation({
     mutationFn: getChangePassword,
+    onError: (error) => {
+      console.error(error);
+    },
   });
 
   const [Data, setData] = useState(data?.data?.response);
@@ -87,7 +92,7 @@ const MyInfoEditForm = () => {
   const GoEditPassword = (e) => {
     e.preventDefault();
     if (Isnewpassword) {
-      const updatePayload = { Newpassword };
+      const updatePayload = Newpassword;
       console.log(updatePayload);
       //payload 는 바디같은거//...!
       changePassword(updatePayload, {
@@ -123,7 +128,7 @@ const MyInfoEditForm = () => {
       });
     }
     if (Doublenewnickname && Isnewnickname) {
-      const updatePayload = { Newnickname };
+      const updatePayload = Newnickname;
       console.log(updatePayload);
       //payload 는 바디같은거//...!
       changeNickname(updatePayload, {

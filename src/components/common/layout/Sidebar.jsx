@@ -48,14 +48,6 @@ function Sidebar({ onClick, viewActive, adminActive, myActive, scrapActive }) {
         route={routes.addPost}
       ></MenuList>
 
-      {/* <MenuList
-        onClick={onClick}
-        name="View Posts"
-        icons={<IoDocumentTextSharp />}
-        route={routes.documentList}
-        isActive={viewActive}
-      ></MenuList> */}
-
       <MenuList
         name="마이페이지"
         icons={<HiMiniUserGroup />}
@@ -63,7 +55,6 @@ function Sidebar({ onClick, viewActive, adminActive, myActive, scrapActive }) {
         isActive={myActive}
         onClick={onClick}
         scrapActive={scrapActive}
-        // active={active}
       ></MenuList>
 
       {role === "ADMIN" ? (

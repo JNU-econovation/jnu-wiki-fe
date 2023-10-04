@@ -7,20 +7,30 @@ import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { scrapCreate, scrapDelete } from "@/services/scrap";
 import ScrapDocs from "./ScrapDocs";
+import { getUserInfo } from "@/services/mypage";
+import { useQuery } from "@tanstack/react-query";
+const Container = styled.div`
+  position: absolute;
+  left: 15rem;
+  overflow-x: hidden;
+  top: 6rem;
+  padding: 2rem;
 
-const ScrapList = ({ datas, mypage }) => {
+  background-color: white;
+  box-shadow: 10px 0px 5px 0px rgba(0, 0, 0, 0.106);
+`;
+const ScrapList = ({ datas }) => {
   const navigate = useNavigate();
-  const gotoDetail = (data) => {
-    navigate(routes.documentPage, { state: data });
-  };
-  const gotoMyDetail = (data) => {
-    navigate(routes.scrapDetailPage, { state: data });
-  };
 
-  const docsData = datas?.pages.flatMap((x) => x.data.response);
-  const docsListArray = docsData || [];
+  const docsData = datas?.pages.flatMap((x) => x.data.response.scrapList) || [];
   const [scrapList, setScrapList] = useState([]);
+  const token = localStorage.getItem("token");
 
+  const { data: memberId } = useQuery(["member_scrap"], getUserInfo, {
+    staleTime: Infinity,
+    select: (data) => data?.data?.response.id,
+    enabled: !!token,
+  });
   const { mutate: createScrap } = useMutation({
     mutationFn: scrapCreate,
     onError: (error) => {
@@ -46,28 +56,26 @@ const ScrapList = ({ datas, mypage }) => {
           scrap: scrap,
         },
       ]);
-      createScrap({ docsId: el.docsId });
+      createScrap({ memberId, docsId: el.docsId });
     } else {
       setScrapList(scrapList.filter((x) => x !== isSelected));
-      deleteScrap({ docsId: el.docsId });
+      deleteScrap({ memberId, docsId: el.docsId });
     }
   };
-  // console.log(docsListArray[0]?.scrapList);
+
   return (
-    <>
-      {docsListArray[0]?.scrapList?.map((data) => (
-        <div
-          key={data.docsId}
-          onClick={() => (mypage ? gotoMyDetail(data) : gotoDetail(data))}
-        >
-          <ScrapDocs
-            name={data.docsName}
-            category={data.docsCategory}
-            onScrapClick={(scrap) => handleOnScrap(data, scrap)}
-          ></ScrapDocs>
-        </div>
+    <Container>
+      {docsData.map((el) => (
+        <DocsItem
+          key={el.docsId}
+          name={el.docsName}
+          category={el.docsCategory}
+          onClick={() => navigate(`/document/${el.docsId}`)}
+          isScraped={el.scrap}
+          onScrapClick={(scrap) => handleOnScrap(el, scrap)}
+        />
       ))}
-    </>
+    </Container>
   );
 };
 

@@ -4,13 +4,12 @@ const routes = {
   admin: "/admin",
   join: "/join",
   login: "/login",
-  myPage: "/mypage/user",
-  scrap: "/mypage/scrap",
-  myInfoEdit: "/mypage/user/myinfo-edit",
+  myPage: "/mypage",
+  scrap: "/scrap",
+  myInfoEdit: "/mypage/myinfo-edit",
   newDocsRequest: "/admin/newDocsReq",
   basicInfoEditRequest: "/admin/basicInfoEditReq",
   documentPage: "/document/:id",
-  scrapDetailPage: "/mypage/scrap/scrapDetailPage",
 };
 
 export default routes;
