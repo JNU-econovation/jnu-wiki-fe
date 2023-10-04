@@ -3,7 +3,8 @@ import Container from "@/components/register/Container";
 import Title from "@/components/register/Title";
 import DoubleCheck from "@/components/register/DoubleCheck";
 import { useState, useEffect } from "react";
-import { getUserInfo, getChangeInfo } from "@/services/user";
+import { getUserInfo } from "@/services/mypage";
+import { getChangeNickname, getChangePassword } from "@/services/mypage";
 import Swal from "sweetalert2";
 import routes from "@/routes";
 import { passwordCheck } from "@/utils/regex";
@@ -21,16 +22,18 @@ const ButtonWrap = styled.div`
 const MyInfoEditForm = () => {
   const navigate = useNavigate();
 
-  const { data, isLoading, isError, error } = useQuery(["mypage"], () => {
+  const { data } = useQuery(["mypage"], () => {
     return getUserInfo();
   });
 
-  const { mutate } = useMutation({
-    mutationFn: getChangeInfo,
+  const changeNickname = useMutation({
+    mutationFn: getChangeNickname,
   });
-  const [Data, setData] = useState(data?.data?.response);
-  //const Data= data?.data?.response?.member;
+  const changePassword = useMutation({
+    mutationFn: getChangePassword,
+  });
 
+  const [Data, setData] = useState(data?.data?.response);
   const [Newnickname, setNewnickname] = useState(Data?.nickName);
   const [Isnewnickname, setIsnewnickname] = useState(true);
   const [Doublenewnickname, setDoublenewnickname] = useState(false);
@@ -81,21 +84,13 @@ const MyInfoEditForm = () => {
       });
   };
 
-  const GoEdit = () => {
-    console.log(Doublenewnickname, Isnewnickname, Isnewpassword);
-    if (Doublenewnickname === false) {
-      Swal.fire({
-        icon: "warning",
-        text: "닉네임 중복확인을 해주세요🥲",
-        confirmButtonText: "예",
-        confirmButtonColor: "#429f50",
-      });
-    }
-    if (Doublenewnickname && Isnewnickname && Isnewpassword) {
-      const updatePayload = { Newnickname, Newpassword };
+  const GoEditPassword = (e) => {
+    e.preventDefault();
+    if (Isnewpassword) {
+      const updatePayload = { Newpassword };
       console.log(updatePayload);
       //payload 는 바디같은거//...!
-      mutate(updatePayload, {
+      changePassword(updatePayload, {
         onSuccess: (data) => {
           Swal.fire({
             icon: "success",
@@ -103,7 +98,7 @@ const MyInfoEditForm = () => {
             confirmButtonColor: "#429f50",
           }).then((result) => {
             if (result.isConfirmed) {
-              location.href = routes.myPage;
+              location.reload();
             }
           });
         },
@@ -117,14 +112,46 @@ const MyInfoEditForm = () => {
       });
     }
   };
-  const EnterEdit = (e) => {
-    if (e.key === "Enter") {
-      GoEdit(e);
+  const GoEditNickname = (e) => {
+    e.preventDefault();
+    if (Doublenewnickname === false) {
+      Swal.fire({
+        icon: "warning",
+        text: "닉네임 중복확인을 해주세요🥲",
+        confirmButtonText: "예",
+        confirmButtonColor: "#429f50",
+      });
+    }
+    if (Doublenewnickname && Isnewnickname) {
+      const updatePayload = { Newnickname };
+      console.log(updatePayload);
+      //payload 는 바디같은거//...!
+      changeNickname(updatePayload, {
+        onSuccess: (data) => {
+          Swal.fire({
+            icon: "success",
+            title: "수정 완료🥰",
+            confirmButtonColor: "#429f50",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              location.reload();
+            }
+          });
+        },
+        onError: (error) => {
+          Swal.fire({
+            icon: "warning",
+            title: "수정실패....",
+            confirmButtonColor: "#429f50",
+          });
+        },
+      });
     }
   };
+
   return (
     <>
-      <Container onKeyPress={EnterEdit}>
+      <Container>
         <Title fontSize="20px" margin="3rem 0">
           마이페이지
         </Title>
@@ -144,6 +171,7 @@ const MyInfoEditForm = () => {
           }}
           para={Newnickname?.length > 0 ? null : "닉네임을 작성해주세요."}
           margin={false}
+          onClick={GoEditNickname}
         ></InputGroup>
         <DoubleCheck
           left={true}
@@ -184,6 +212,7 @@ const MyInfoEditForm = () => {
           }}
           para={Isnewpassword ? null : "비밀번호가 다릅니다."}
           margin={false}
+          onClick={GoEditPassword}
         ></InputGroup>
         <ButtonWrap>
           <MyBtn
