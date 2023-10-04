@@ -74,19 +74,20 @@ const LoginForm = ({ marginBottom }) => {
                 text: "홈 화면으로 이동합니다",
                 confirmButtonColor: "#429f50",
               }).then((result) => {
+                console.log(res.headers);
                 if (result.isConfirmed) {
                   // localStorage.setItem(
                   //   "nickname",
                   //   res?.headers.response.name || ""
                   // );
                   // res.setHeader("Access-Control-Allow-Credentials", "true");
-                  setCookie("refreshToken", res.headers.cookie);
-                  localStorage.setItem("token", res.headers.authorization);
+                  setCookie("refreshToken", res.data.headers.setCookie);
+                  localStorage.setItem("token", res.data.headers.Authorization);
                   dispatch(
                     loginState({
-                      nickname: res.data.response.nickName,
-                      email: res.data.response.email,
-                      role: res.data.response.role,
+                      nickname: "n",
+                      email: "d",
+                      role: res.data.body.response.role,
                       isLogin: true,
                     })
                   );

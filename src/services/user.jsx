@@ -4,14 +4,10 @@ const JWT_EXPIRRY_TIME = 24 * 3600 * 1000;
 
 export const login = async (data) => {
   const { email, password } = data;
-  return await instance.post(
-    "members/login",
-    {
-      email,
-      password,
-    },
-    { withCredentials: true }
-  );
+  return await instance.post("members/login", {
+    email,
+    password,
+  });
 };
 
 export const register = (data) => {
