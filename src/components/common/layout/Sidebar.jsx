@@ -7,7 +7,7 @@ import { FaPenSquare } from "react-icons/fa";
 import { HiMiniUserGroup } from "react-icons/hi2";
 import { AiTwotoneSetting } from "react-icons/ai";
 import { useLocation } from "react-router-dom";
-
+import { useSelector } from "react-redux";
 const Container = styled.div`
   width: 15rem;
   height: 100vh;
@@ -27,11 +27,8 @@ const Container = styled.div`
 `;
 
 function Sidebar({ onClick, viewActive, adminActive, myActive, scrapActive }) {
-  const location = useLocation();
-  const [role, setRole] = useState(window.localStorage.getItem("role"));
-  useEffect(() => {
-    setRole(window.localStorage.getItem("role"));
-  }, []);
+  const user = useSelector((state) => state.user);
+  const { role } = user;
   //회원정보 가져오기, 이때 회원정보 중
 
   return (

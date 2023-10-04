@@ -4,7 +4,7 @@ import MainLayout from "@/components/common/layout/MainLayout.jsx";
 const MyInfoEdit = () => {
   return (
     <div>
-      <MainLayout>
+      <MainLayout myActive={true}>
         <MyInfoEditForm />
       </MainLayout>
     </div>

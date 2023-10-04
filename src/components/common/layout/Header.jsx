@@ -9,17 +9,16 @@ import { SlLogout } from "react-icons/Sl";
 import SearchBar from "@/components/search/SearchBar";
 import { getUserInfo } from "@/services/user";
 import { useQuery } from "@tanstack/react-query";
-
-const token = localStorage.getItem("token");
+import { logoutState } from "@/store/userReducer";
+import { useDispatch, useSelector } from "react-redux";
 
 const Header = () => {
   const navigate = useNavigate();
-  const [JWT, setJWT] = useState(token);
-  const { data: nickName } = useQuery(["member_info"], getUserInfo, {
-    staleTime: Infinity,
-    enabled: !!JWT,
-    select: (data) => data?.data?.response.nickName,
-  });
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+
+  const { data } = useQuery(["member_info"], getUserInfo);
+  const nickName = data?.data?.response.nickName;
 
   const popUpLogout = () => {
     return Swal.fire({
@@ -35,13 +34,9 @@ const Header = () => {
 
   const logOutUser = () => {
     localStorage.clear();
-    setJWT(null);
+    dispatch(logoutState());
     location.reload();
   };
-
-  useEffect(() => {
-    setJWT(localStorage.getItem("token"));
-  }, [JWT]);
 
   return (
     <>
@@ -56,7 +51,7 @@ const Header = () => {
             }}
           />
           <SearchBar />
-          {!JWT ? (
+          {!user.isLogin ? (
             <ButtonGroup>
               <Button
                 color="primary"

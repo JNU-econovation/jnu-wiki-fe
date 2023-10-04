@@ -6,7 +6,7 @@ const routes = {
   login: "/login",
   myPage: "/mypage/user",
   scrap: "/mypage/scrap",
-  myInfoEdit: "/myinfo-edit",
+  myInfoEdit: "/mypage/user/myinfo-edit",
   newDocsRequest: "/admin/newDocsReq",
   basicInfoEditRequest: "/admin/basicInfoEditReq",
   documentPage: "/document/:id",
