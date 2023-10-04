@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { scrapCreate, scrapDelete } from "@/services/scrap";
-import { getUserInfo } from "@/services/user";
+import { getUserInfo } from "@/services/mypage";
 
 const Container = styled.div`
   position: absolute;

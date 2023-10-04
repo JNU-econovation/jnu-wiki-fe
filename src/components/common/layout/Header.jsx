@@ -7,7 +7,7 @@ import routes from "@/routes";
 import Swal from "sweetalert2";
 import { SlLogout } from "react-icons/Sl";
 import SearchBar from "@/components/search/SearchBar";
-import { getUserInfo } from "@/services/user";
+import { getUserInfo } from "@/services/mypage";
 import { useQuery } from "@tanstack/react-query";
 import { logoutState } from "@/store/userReducer";
 import { useDispatch, useSelector } from "react-redux";

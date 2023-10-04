@@ -4,14 +4,10 @@ const JWT_EXPIRRY_TIME = 24 * 3600 * 1000;
 
 export const login = async (data) => {
   const { email, password } = data;
-  return await instance.post(
-    "members/login",
-    {
-      email,
-      password,
-    },
-    { withCredentials: true }
-  );
+  return await instance.post("members/login", {
+    email,
+    password,
+  });
 };
 
 export const register = (data) => {
@@ -26,10 +22,7 @@ export const register = (data) => {
 
 export const onSilentRefresh = () => {
   instance
-    .post(
-      "/members/refresh-token"
-      //  { withCredentials: true }
-    )
+    .post("/members/refresh-token", { withCredentials: true })
     .then((response) => {
       alert("성공");
     })
@@ -52,19 +45,6 @@ export const nicknameDoubleCheck = (name) => {
 
 export const emailDBCheck = (email) => {
   return instance.post("members/check/email", { email });
-};
-
-///mypage
-export const getUserInfo = () => {
-  return instance.get("members/info");
-};
-
-export const getChangeInfo = (data) => {
-  const { Newnickname, Newpassword } = data;
-  return instance.post("members/modify/change", {
-    nickname: Newnickname,
-    password: Newpassword,
-  });
 };
 
 //admin List
