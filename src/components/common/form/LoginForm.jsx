@@ -14,7 +14,7 @@ import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { Icons } from "./RegisterForm";
 import { useDispatch } from "react-redux";
 import { loginState } from "@/store/userReducer";
-import { setCookie } from "../../../utils/CookieFunc";
+import { setCookie } from "@/utils/CookieFunc";
 
 const LoginForm = ({ marginBottom }) => {
   const dispatch = useDispatch();
