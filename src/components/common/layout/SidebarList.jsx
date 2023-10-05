@@ -56,7 +56,7 @@ const Ic = styled.div`
   color: ${(props) => props.color};
 `;
 
-const MenuList = ({ name, icons, route, isActive, onClick }) => {
+const MenuList = ({ name, icons, route, isActive, onClick, scrapActive }) => {
   const act = isActive;
   return (
     <>
@@ -70,7 +70,11 @@ const MenuList = ({ name, icons, route, isActive, onClick }) => {
         {name}
       </NavStyle>
       {name === "마이페이지" ? (
-        <>{isActive ? <MypageSidebar></MypageSidebar> : null}</>
+        <>
+          {isActive ? (
+            <MypageSidebar scrapActive={scrapActive}></MypageSidebar>
+          ) : null}
+        </>
       ) : null}
     </>
   );

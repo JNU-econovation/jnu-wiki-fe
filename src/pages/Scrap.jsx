@@ -9,7 +9,7 @@ const Scrap = () => {
 
   return (
     <>
-      <MainLayout myActive={true}>
+      <MainLayout myActive={true} scrapActive={true}>
         {user.isLogin ? (
           <MypageScrap />
         ) : (
