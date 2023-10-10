@@ -22,7 +22,7 @@ const DocumentListPage = () => {
   const { La: leftDownLa, Ma: leftDownMa } =
     useSelector((state) => state.SwNe.swLatlng) || {};
 
-  const { data, isLoading, error, fetchNextPage, hasNextPage } =
+  const { data, isLoading, isError, fetchNextPage, hasNextPage } =
     useInfiniteQuery(
       ["docs_list", rightUpLa, rightUpMa, leftDownLa, leftDownMa],
       ({ pageParam = 0 }) =>
@@ -85,11 +85,9 @@ const DocumentListPage = () => {
           </Suspense>
         </DocumentWrapper>
       )}
-      {isLoading || error || !data ? (
-        <Map />
-      ) : (
-        data && <Map title={title} apiLat={latitude} apiLng={longitude} />
-      )}
+      {isLoading && <Map />}
+      {isError && <Map />}
+      {data && <Map title={title} apiLat={latitude} apiLng={longitude} />}
     </>
   );
 };
