@@ -157,7 +157,7 @@ const CreateDocument = () => {
 
   const handleCancel = () => {
     if (!isLogin) handleDisabled();
-    if (!inputData.docsName || !inputData.docsLocation) handleDisabled();
+    if (!inputData.docsName && !inputData.docsLocation) handleDisabled();
     else {
       cancelAlert();
       handleClear();
