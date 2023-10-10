@@ -96,7 +96,13 @@ const DocsInfo = styled.div`
 
 const Document = ({ data }) => {
   const queryClient = useQueryClient();
-  const memberId = useSelector((state) => state.user.memberId);
+  const isLogin = useSelector((state) => state.user.isLogin);
+
+  const { data: memberId } = useQuery(["member_info"], getUserInfo, {
+    staleTime: Infinity,
+    enabled: isLogin,
+    select: (data) => data?.data?.response.id,
+  });
 
   const {
     id,

@@ -23,7 +23,13 @@ const DocsList = ({ data }) => {
 
   const docsData = data?.pages.flatMap((x) => x.data.response.docsList) || [];
   const [scrapList, setScrapList] = useState([]);
-  const memberId = useSelector((state) => state.user.memberId);
+  const isLogin = useSelector((state) => state.user.isLogin);
+
+  const { data: memberId } = useQuery(["member_info"], getUserInfo, {
+    staleTime: Infinity,
+    select: (data) => data?.data?.response.id,
+    enabled: isLogin,
+  });
 
   const { mutate: createScrap } = useMutation({
     mutationFn: scrapCreate,
