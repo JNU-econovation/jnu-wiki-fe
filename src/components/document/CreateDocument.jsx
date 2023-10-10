@@ -127,12 +127,10 @@ const CreateDocument = () => {
   };
 
   const handleRegisterAlert = () => {
-    if (inputData.docsName !== "" && inputData.docsLocation !== "") {
+    if (inputData.docsName && inputData.docsLocation.lat) {
       askAlert().then((result) => {
         if (result.isConfirmed) {
           sendRequest();
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-          handleCancel();
         }
       });
     }
@@ -159,6 +157,7 @@ const CreateDocument = () => {
 
   const handleCancel = () => {
     if (!token) handleDisabled();
+    if (!inputData.docsName || !inputData.docsLocation) handleDisabled();
     else {
       cancelAlert();
       handleClear();
