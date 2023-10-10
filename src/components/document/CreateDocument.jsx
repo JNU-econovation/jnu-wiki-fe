@@ -43,8 +43,8 @@ const CreateDocument = () => {
   let { latitude, longitude } = useSelector((state) => state.latLng);
   const address = useSelector((state) => state.address.address);
   const category = useSelector((state) => state.category.category);
+  const isLogin = useSelector((state) => state.user.isLogin);
   const dispatch = useDispatch();
-  const token = localStorage.getItem("token");
 
   const { valueInit, handleOnChange, reset } = useInput({
     docsCategory: "",
@@ -116,7 +116,7 @@ const CreateDocument = () => {
         handleClear();
       },
       onError: (error) => {
-        if (localStorage.getItem("token") === null) {
+        if (!isLogin) {
           alert("로그인 후 이용 가능합니다.");
         } else {
           alert("문서 생성에 실패했습니다. 관리자에게 문의하세요.");
@@ -156,7 +156,7 @@ const CreateDocument = () => {
   };
 
   const handleCancel = () => {
-    if (!token) handleDisabled();
+    if (!isLogin) handleDisabled();
     if (!inputData.docsName || !inputData.docsLocation) handleDisabled();
     else {
       cancelAlert();
@@ -165,7 +165,7 @@ const CreateDocument = () => {
   };
 
   const handleSubmit = () => {
-    if (!token) handleNullToken();
+    if (!isLogin) handleNullToken();
     else {
       handleSetNameMsg("docsName", valueInit.docsName);
       handleSetLocationMsg("docsLocation", { lat: latitude, lng: longitude });
