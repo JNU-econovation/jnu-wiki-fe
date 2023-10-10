@@ -3,16 +3,8 @@ import { instance } from "./index";
 /**
  * mypage scrap list
  */
-export const mypagescrap = (
-  pageParam,
-  rightUpLa,
-  rightUpMa,
-  leftDownLa,
-  leftDownMa
-) => {
-  return instance.get(
-    `members/scrap?rightLat=${rightUpMa}&rightLng=${rightUpLa}&leftLat=${leftDownMa}&leftLng=${leftDownLa}&page=${pageParam}`
-  );
+export const mypagescrap = (pageParam) => {
+  return instance.get(`members/scrap?page=${pageParam}`);
 };
 
 ///mypage
@@ -20,16 +12,14 @@ export const getUserInfo = () => {
   return instance.get("members/info");
 };
 
-export const getChangeNickname = (data) => {
-  const { Newnickname } = data;
-  return instance.post("members/modify/change/nickname", {
+export const getChangeNickname = (Newnickname) => {
+  return instance.put("members/nickname", {
     nickname: Newnickname,
   });
 };
 
-export const getChangePassword = (data) => {
-  const { Newpassword } = data;
-  return instance.post("members/modify/change/password", {
+export const getChangePassword = (Newpassword) => {
+  return instance.put("members/password", {
     password: Newpassword,
   });
 };
