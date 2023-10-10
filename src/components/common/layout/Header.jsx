@@ -11,6 +11,7 @@ import { getUserInfo } from "@/services/mypage";
 import { useQuery } from "@tanstack/react-query";
 import { logoutState } from "@/store/userReducer";
 import { useDispatch, useSelector } from "react-redux";
+import { Cookies } from "react-cookie";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -39,6 +40,7 @@ const Header = () => {
   const logOutUser = () => {
     localStorage.clear();
     dispatch(logoutState());
+    Cookies.remove("token", { path: "/" });
     location.reload();
   };
 

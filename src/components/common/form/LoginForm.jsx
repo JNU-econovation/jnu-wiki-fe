@@ -14,7 +14,7 @@ import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { Icons } from "./RegisterForm";
 import { useDispatch } from "react-redux";
 import { loginState } from "@/store/userReducer";
-import { setCookie } from "../../../utils/CookieFunc";
+import { setCookie } from "@/utils/CookieFunc";
 
 const LoginForm = ({ marginBottom }) => {
   const dispatch = useDispatch();
@@ -85,9 +85,9 @@ const LoginForm = ({ marginBottom }) => {
                   localStorage.setItem("token", res.data.headers.Authorization);
                   dispatch(
                     loginState({
-                      nickname: "n",
-                      email: "d",
+                      nickname: "닉네임!",
                       role: res.data.body.response.role,
+                      memberId: res.data.body.response.id,
                       isLogin: true,
                     })
                   );

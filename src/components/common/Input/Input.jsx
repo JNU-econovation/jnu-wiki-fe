@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 const Input = ({ mypage, type, name, value, onChange, placeholder, id }) => {
-  console.log(mypage);
   return (
     <InputField
       id={id}

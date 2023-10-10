@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 // state의 초기값 (유저 정보)
 const initialState = {
   nickname: "",
-  email: "",
+  memberId: "",
   role: "",
   isLogin: false,
 };
@@ -15,15 +15,15 @@ export const userSlice = createSlice({
   reducers: {
     loginState: (state, action) => {
       state.nickname = action.payload.nickname;
-      state.email = action.payload.email;
       state.role = action.payload.role;
       state.isLogin = true;
+      state.memberId = action.payload.memberId;
     },
     logoutState: (state) => {
       state.nickname = "";
-      state.email = "";
       state.role = "";
       state.isLogin = false;
+      state.memberId = "";
     },
   },
 });
