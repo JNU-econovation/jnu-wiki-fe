@@ -64,20 +64,18 @@ const DocsList = ({ data }) => {
   };
 
   return (
-    <>
-      <Container>
-        {docsData.map((el) => (
-          <DocsItem
-            key={el.docsId}
-            name={el.docsName}
-            category={el.docsCategory}
-            onClick={() => navigate(`/document/${el.docsId}`)}
-            isScraped={el.scrap}
-            onScrapClick={(scrap) => handleOnScrap(el, scrap)}
-          />
-        ))}
-      </Container>
-    </>
+    <Container>
+      {docsData.map((el) => (
+        <DocsItem
+          key={el.docsId}
+          name={el.docsName}
+          category={el.docsCategory}
+          onClick={() => navigate(`/document/${el.docsId}`)}
+          isScraped={el.scrap}
+          onScrapClick={(scrap) => handleOnScrap(el, scrap)}
+        />
+      ))}
+    </Container>
   );
 };
 
