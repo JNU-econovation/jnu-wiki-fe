@@ -54,9 +54,8 @@ const Map = ({ title, apiLat, apiLng }) => {
     mapscript();
   }, []);
 
-  let map, bounds, swLatlng, neLatlng;
+  let map;
   let marker = new kakao.maps.Marker();
-  let geocoder = new kakao.maps.services.Geocoder();
 
   const initialMap = () => {
     const container = document.getElementById("map");
@@ -67,21 +66,9 @@ const Map = ({ title, apiLat, apiLng }) => {
     map = new kakao.maps.Map(container, options);
   };
 
-  const setSwNe = () => {
-    bounds = map.getBounds();
-    swLatlng = bounds.getSouthWest();
-    neLatlng = bounds.getNorthEast();
-
-    dispatch({
-      type: "getSwNe",
-      payload: { swLatlng, neLatlng },
-    });
-  };
-
   const mapscript = () => {
     // map 기본 세팅
     initialMap();
-    setSwNe();
 
     function searchAddFromCoords(coords, callback) {
       // 좌표로 행정동 주소 정보를 요청
@@ -93,10 +80,10 @@ const Map = ({ title, apiLat, apiLng }) => {
       geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
     }
 
+    let geocoder = new kakao.maps.services.Geocoder();
+
     let marker = new kakao.maps.Marker(),
       infowindow = new kakao.maps.InfoWindow({ zindex: 1 });
-
-    searchAddFromCoords(map.getCenter());
 
     kakao.maps.event.addListener(map, "click", function (mouseEvent) {
       searchDetailAddrFromCoords(mouseEvent.latLng, function (result, status) {
@@ -139,16 +126,10 @@ const Map = ({ title, apiLat, apiLng }) => {
       });
     });
 
-    // // 중심 좌표나 확대 수준이 변경됐을 때 지도 중심 좌표에 대한 주소 정보를 표시하도록 이벤트를 등록
-    // kakao.maps.event.addListener(map, "idle", function () {
-    //   searchAddFromCoords(map.getCenter());
-    //   searchDetailAddrFromCoords(map.getCenter());
-    //   map.relayout();
-    // });
-
-    // kakao.maps.event.addListener(map, "bounds_changed", function () {
-    //   setSwNe();
-    // });
+    // 중심 좌표나 확대 수준이 변경됐을 때 지도 중심 좌표에 대한 주소 정보를 표시하도록 이벤트를 등록
+    kakao.maps.event.addListener(map, "idle", function () {
+      searchAddFromCoords(map.getCenter());
+    });
 
     // 마커 여러개
     if (apiLat?.length > 0 && apiLng?.length > 0) {
@@ -207,10 +188,6 @@ const Map = ({ title, apiLat, apiLng }) => {
         });
       }
     };
-
-    if (markerRef.current) {
-      markerRef.current.setMap(null);
-    }
 
     markerRef.current = new kakao.maps.Marker({
       position: coord,
