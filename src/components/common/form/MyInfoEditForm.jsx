@@ -7,18 +7,14 @@ import { getUserInfo } from "@/services/mypage";
 import { getChangeNickname, getChangePassword } from "@/services/mypage";
 import Swal from "sweetalert2";
 import routes from "@/routes";
-import { passwordCheck } from "@/utils/regex";
+import { passwordCheck, passwordReCheck } from "@/utils/regex";
 import MyBtn from "@/components/mypage/MyBtn";
 import { styled } from "styled-components";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { nicknameDoubleCheck } from "@/services/user";
 import { useNavigate } from "react-router-dom";
+import { login } from "../../../services/user";
 
-const ButtonWrap = styled.div`
-  display: flex;
-  justify-content: space-around;
-  margin: 2rem 0;
-`;
 const MyInfoEditForm = () => {
   const navigate = useNavigate();
 
@@ -38,36 +34,51 @@ const MyInfoEditForm = () => {
     },
   });
 
-  const [Data, setData] = useState(data?.data?.response);
-  const [NewNickname, setNewNickname] = useState(Data?.nickName);
-  const [IsNewNickname, setIsNewNickname] = useState(true);
-  const [DoubleNewNickname, setDoubleNewNickname] = useState(false);
-  const [NewPassword, setNewPassword] = useState("");
-  const [IsNewPassword, setIsNewPassword] = useState(true);
+  const [newNickname, setNewNickname] = useState(data?.data.response.nickName);
+  const [isNewNickname, setIsNewNickname] = useState(true);
+  const [doubleNewNickname, setDoubleNewNickname] = useState(false);
+  const [newPassword, setNewPassword] = useState("");
+  const [isNewPassword, setIsNewPassword] = useState(true);
+  const [reNewPassword, setReNewPassword] = useState("");
+  const [isReNewPassword, setReIsNewPassword] = useState(true);
 
   const handleNicknameChange = (e) => {
     setNewNickname(e.target.value);
   };
   const handlePasswordChange = (e) => {
     setNewPassword(e.target.value);
-    if (NewPassword) {
-      setIsNewPassword(passwordCheck(NewPassword));
+    if (newPassword) {
+      setIsNewPassword(passwordCheck(newPassword));
     }
   };
+  const handleRePasswordChange = (e) => {
+    setReNewPassword(e.target.value);
+    if (reNewPassword) {
+      setReIsNewPassword(passwordReCheck(reNewPassword, newPassword));
+    }
+  };
+
   useEffect(() => {
-    console.log(NewNickname, NewPassword);
-    setNewNickname(Data?.nickName);
-    //setNewpassword(Data?.password);
-  }, [Data]);
+    setNewNickname(data?.data.response.nickName);
+  }, [data]);
 
   useEffect(
     (e) => {
-      if (NewPassword) {
-        setIsNewPassword(passwordCheck(NewPassword));
-        setNewPassword(NewPassword);
+      if (newPassword) {
+        setIsNewPassword(passwordCheck(newPassword));
+        setNewPassword(newPassword);
       }
     },
-    [NewPassword]
+    [newPassword]
+  );
+  useEffect(
+    (e) => {
+      if (reNewPassword) {
+        setReIsNewPassword(passwordReCheck(reNewPassword, newPassword));
+        setReNewPassword(reNewPassword);
+      }
+    },
+    [reNewPassword, newPassword]
   );
 
   const NameDoubleCheck = (name) => {
@@ -91,35 +102,46 @@ const MyInfoEditForm = () => {
 
   const GoEditPassword = (e) => {
     e.preventDefault();
-    if (IsNewPassword) {
-      const updatePayload = NewPassword;
-      console.log(updatePayload);
-      //payload 는 바디같은거//...!
-      changePassword(updatePayload, {
-        onSuccess: (data) => {
-          Swal.fire({
-            icon: "success",
-            title: "수정 완료🥰",
-            confirmButtonColor: "#429f50",
-          }).then((result) => {
-            if (result.isConfirmed) {
-              location.reload();
-            }
+
+    if (isNewPassword) {
+      const email = prompt("이메일을 입력해주세요.");
+      const password = prompt("비밀번호를 입력해주세요.");
+      login({ email: email, password: password })
+        .then((res) => {
+          const updatePayload = newPassword;
+          changePassword(updatePayload, {
+            onSuccess: (data) => {
+              Swal.fire({
+                icon: "success",
+                title: "수정 완료🥰",
+                confirmButtonColor: "#429f50",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  location.reload();
+                }
+              });
+            },
+            onError: (error) => {
+              Swal.fire({
+                icon: "warning",
+                title: "수정실패....",
+                confirmButtonColor: "#429f50",
+              });
+            },
           });
-        },
-        onError: (error) => {
+        })
+        .catch((err) => {
           Swal.fire({
             icon: "warning",
-            title: "수정실패....",
-            confirmButtonColor: "#429f50",
+            text: `비밀번호, 혹은 이메일이 틀렸어용...`,
+            confirmButtonColor: "#2d790d",
           });
-        },
-      });
+        });
     }
   };
   const GoEditNickname = (e) => {
     e.preventDefault();
-    if (DoubleNewNickname === false) {
+    if (doubleNewNickname === false) {
       Swal.fire({
         icon: "warning",
         text: "닉네임 중복확인을 해주세요🥲",
@@ -127,8 +149,8 @@ const MyInfoEditForm = () => {
         confirmButtonColor: "#429f50",
       });
     }
-    if (DoubleNewNickname && IsNewNickname) {
-      const updatePayload = NewNickname;
+    if (doubleNewNickname && isNewNickname) {
+      const updatePayload = newNickname;
       console.log(updatePayload);
       //payload 는 바디같은거//...!
       changeNickname(updatePayload, {
@@ -168,22 +190,22 @@ const MyInfoEditForm = () => {
           type="text"
           placeholder="수정할 새 닉네임을 입력해주세요."
           label="닉네임"
-          value={NewNickname}
+          value={newNickname}
           mypage={true}
           btn={true}
           onChange={(e) => {
             handleNicknameChange(e);
           }}
-          para={NewNickname?.length > 0 ? null : "닉네임을 작성해주세요."}
+          para={newNickname?.length > 0 ? null : "닉네임을 작성해주세요."}
           margin={false}
           onClick={GoEditNickname}
         ></InputGroup>
         <DoubleCheck
           left={true}
-          active={NewNickname?.length > 0 ? "true" : "false"}
+          active={newNickname?.length > 0 ? "true" : "false"}
           onClick={(e) => {
-            if (IsNewNickname === true && NewNickname?.length > 0) {
-              NameDoubleCheck(NewNickname);
+            if (isNewNickname === true && newNickname?.length > 0) {
+              NameDoubleCheck(newNickname);
             }
           }}
         ></DoubleCheck>
@@ -192,13 +214,13 @@ const MyInfoEditForm = () => {
           type="password"
           placeholder="새 비밀번호를 입력해주세요."
           label="새 비밀번호"
-          value={NewPassword}
+          value={newPassword}
           mypage={true}
           onChange={(e) => {
             handlePasswordChange(e);
           }}
           para={
-            IsNewPassword
+            isNewPassword
               ? null
               : "비밀번호는 영문, 숫자, 특수문자가 포함된 8~20자로 구성되어야 합니다."
           }
@@ -209,13 +231,13 @@ const MyInfoEditForm = () => {
           type="password"
           placeholder="비밀번호를 재입력해주세요."
           label="새 비밀번호 확인"
-          value={NewPassword}
+          value={reNewPassword}
           mypage={true}
           btn={true}
           onChange={(e) => {
-            handlePasswordChange(e);
+            handleRePasswordChange(e);
           }}
-          para={IsNewPassword ? null : "비밀번호가 다릅니다."}
+          para={isReNewPassword ? null : "비밀번호가 다릅니다."}
           margin={false}
           onClick={GoEditPassword}
         ></InputGroup>
@@ -236,5 +258,11 @@ const MyInfoEditForm = () => {
     </>
   );
 };
+
+const ButtonWrap = styled.div`
+  display: flex;
+  justify-content: space-around;
+  margin: 2rem 0;
+`;
 //추후에 useInput 추가해서 수정하기
 export default MyInfoEditForm;
