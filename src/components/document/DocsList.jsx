@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { scrapCreate, scrapDelete } from "@/services/scrap";
 import { getUserInfo } from "@/services/mypage";
+import { useSelector } from "react-redux";
 
 const Container = styled.div`
   position: absolute;
@@ -22,12 +23,12 @@ const DocsList = ({ data }) => {
 
   const docsData = data?.pages.flatMap((x) => x.data.response.docsList) || [];
   const [scrapList, setScrapList] = useState([]);
-  const token = localStorage.getItem("token");
+  const isLogin = useSelector((state) => state.user.isLogin);
 
   const { data: memberId } = useQuery(["member_info"], getUserInfo, {
     staleTime: Infinity,
     select: (data) => data?.data?.response.id,
-    enabled: !!token,
+    enabled: isLogin,
   });
 
   const { mutate: createScrap } = useMutation({
@@ -63,20 +64,18 @@ const DocsList = ({ data }) => {
   };
 
   return (
-    <>
-      <Container>
-        {docsData.map((el) => (
-          <DocsItem
-            key={el.docsId}
-            name={el.docsName}
-            category={el.docsCategory}
-            onClick={() => navigate(`/document/${el.docsId}`)}
-            isScraped={el.scrap}
-            onScrapClick={(scrap) => handleOnScrap(el, scrap)}
-          />
-        ))}
-      </Container>
-    </>
+    <Container>
+      {docsData.map((el) => (
+        <DocsItem
+          key={el.docsId}
+          name={el.docsName}
+          category={el.docsCategory}
+          onClick={() => navigate(`/document/${el.docsId}`)}
+          isScraped={el.scrap}
+          onScrapClick={(scrap) => handleOnScrap(el, scrap)}
+        />
+      ))}
+    </Container>
   );
 };
 

@@ -1,6 +1,6 @@
 import MainLayout from "@/components/common/layout/MainLayout";
 import DocsList from "@/components/document/DocsList";
-import Map from "@/components/common/layout/Map";
+import OtherMap from "@/components/common/layout/OtherMap";
 import DocumentWrapper from "@/components/document/DocumentWrapper";
 import { useState, Suspense, useRef, useEffect } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
@@ -22,7 +22,7 @@ const DocumentListPage = () => {
   const { La: leftDownLa, Ma: leftDownMa } =
     useSelector((state) => state.SwNe.swLatlng) || {};
 
-  const { data, isLoading, error, fetchNextPage, hasNextPage } =
+  const { data, isLoading, isError, fetchNextPage, hasNextPage } =
     useInfiniteQuery(
       ["docs_list", rightUpLa, rightUpMa, leftDownLa, leftDownMa],
       ({ pageParam = 0 }) =>
@@ -85,11 +85,9 @@ const DocumentListPage = () => {
           </Suspense>
         </DocumentWrapper>
       )}
-      {isLoading || error || !data ? (
-        <Map />
-      ) : (
-        data && <Map title={title} apiLat={latitude} apiLng={longitude} />
-      )}
+      {isLoading && <OtherMap />}
+      {isError && <OtherMap />}
+      {data && <OtherMap title={title} apiLat={latitude} apiLng={longitude} />}
     </>
   );
 };
