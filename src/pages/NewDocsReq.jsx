@@ -85,7 +85,7 @@ const NewDocsReq = () => {
       <MainLayout>
         <Container>
           <MenuIconX onClick={() => navigate(-1)}>
-            <AiOutlineClose />
+            <AiOutlineClose className="xIcon" />
           </MenuIconX>
           <TitleP>기본 정보</TitleP>
           {isLoading || isError ? (

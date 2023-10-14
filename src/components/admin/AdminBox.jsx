@@ -18,13 +18,17 @@ const AdminBox = () => {
     isError: isError1,
   } = useInfiniteQuery(
     ["basicInfo"],
+
     ({ pageParam = 0 }) => basicInfoEditRequest(pageParam),
+
     {
       getNextPageParam: (currentPage, allPages) => {
         const nextPage = allPages.length;
         const totalPage = currentPage?.data?.response?.totalPages;
         return nextPage > totalPage || nextPage == totalPage ? null : nextPage;
       },
+
+      retry: 0,
     }
   );
 
@@ -38,13 +42,17 @@ const AdminBox = () => {
     isError: isError2,
   } = useInfiniteQuery(
     ["newInfo"],
+
     ({ pageParam = 0 }) => newInfoCreateRequest(pageParam),
+
     {
       getNextPageParam: (currentPage, allPages) => {
         const nextPage = allPages.length;
         const totalPage = currentPage?.data?.response?.totalPages;
         return nextPage > totalPage || nextPage == totalPage ? null : nextPage;
       },
+
+      retry: 0,
     }
   );
 

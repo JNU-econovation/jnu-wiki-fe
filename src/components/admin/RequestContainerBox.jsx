@@ -28,7 +28,7 @@ const RequestContainerBox = React.forwardRef(
           isLoading={isLoading}
           error={error}
         >
-          {isLoading && <Loader />}
+          {/* {isLoading && <Loader />} */}
           {/* 아래의 div가 관찰대상!!! */}
           {!isLoading && <Bottom ref={ref}>. </Bottom>}
         </RequestContain>

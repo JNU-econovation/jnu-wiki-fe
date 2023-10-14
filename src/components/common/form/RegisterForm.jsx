@@ -120,7 +120,7 @@ const ResisterForm = () => {
         );
       }
     },
-    [valueInit.passwordConfirm]
+    [valueInit.passwordConfirm, valueInit.password]
   );
   const GoJoin = (e) => {
     e.preventDefault();
