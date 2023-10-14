@@ -16,10 +16,12 @@ const DocumentPage = () => {
       <MainLayout viewActive={true}>
         <Document data={data} />
       </MainLayout>
-      <Map
-        apiLat={data?.docsLocation.lat || data?.docsRequestLocation?.lat}
-        apiLng={data?.docsLocation.lng || data?.docsRequestLocation?.lng}
-      />
+      {data && (
+        <Map
+          apiLat={data?.docsLocation.lat || data?.docsRequestLocation?.lat}
+          apiLng={data?.docsLocation.lng || data?.docsRequestLocation?.lng}
+        />
+      )}
     </>
   );
 };

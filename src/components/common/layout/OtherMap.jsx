@@ -1,6 +1,7 @@
-import { useEffect, useCallback, useRef } from "react";
+import { useEffect, useCallback, useRef, useState } from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import Button from "./Button";
 
 const { kakao } = window;
 
@@ -46,16 +47,25 @@ const MapDiv = styled.div`
   }
 `;
 
-const Map = ({ title, apiLat, apiLng }) => {
+const Btn = styled.div`
+  position: fixed;
+  bottom: 5%;
+  right: 5%;
+`;
+
+const OtherMap = ({ title, apiLat, apiLng }) => {
   const dispatch = useDispatch();
   const markerRef = useRef(null);
+  const [showSearchButton, setShowSearchButton] = useState(false);
+  //   const getCenter = useSelector((state) => state.latLng.center);
 
   useEffect(() => {
     mapscript();
   }, []);
 
-  let map;
+  let map, bounds, swLatlng, neLatlng;
   let marker = new kakao.maps.Marker();
+  let geocoder = new kakao.maps.services.Geocoder();
 
   const initialMap = () => {
     const container = document.getElementById("map");
@@ -66,21 +76,49 @@ const Map = ({ title, apiLat, apiLng }) => {
     map = new kakao.maps.Map(container, options);
   };
 
-  const mapscript = () => {
-    // map 기본 세팅
-    initialMap();
+  const setSwNe = () => {
+    bounds = map.getBounds();
+    swLatlng = bounds.getSouthWest();
+    neLatlng = bounds.getNorthEast();
+  };
 
-    function searchAddFromCoords(coords, callback) {
-      // 좌표로 행정동 주소 정보를 요청
-      geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);
-    }
+  const initSwNe = () => {
+    dispatch({
+      type: "getSwNe",
+      payload: { swLatlng, neLatlng },
+    });
+  };
+
+  //   const getInfo = () => {
+  //     const center = map.getCenter();
+  //     dispatch({
+  //       type: "getCenter",
+  //       payload: { center },
+  //     });
+  //   };
+  //   console.log(getCenter);
+
+  const handleOnMap = () => {
+    initSwNe();
+    setShowSearchButton(false);
+  };
+
+  const mapscript = () => {
+    initialMap();
+    setSwNe();
+    initSwNe();
+
+    kakao.maps.event.addListener(map, "bounds_changed", function () {
+      setSwNe();
+      //   getInfo();
+
+      setShowSearchButton(true);
+    });
 
     function searchDetailAddrFromCoords(coords, callback) {
       // 좌표로 법정동 상세 주소 정보를 요청
       geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
     }
-
-    let geocoder = new kakao.maps.services.Geocoder();
 
     let marker = new kakao.maps.Marker(),
       infowindow = new kakao.maps.InfoWindow({ zindex: 1 });
@@ -124,11 +162,6 @@ const Map = ({ title, apiLat, apiLng }) => {
           infowindow.open(map, marker);
         }
       });
-    });
-
-    // 중심 좌표나 확대 수준이 변경됐을 때 지도 중심 좌표에 대한 주소 정보를 표시하도록 이벤트를 등록
-    kakao.maps.event.addListener(map, "idle", function () {
-      searchAddFromCoords(map.getCenter());
     });
 
     // 마커 여러개
@@ -205,6 +238,13 @@ const Map = ({ title, apiLat, apiLng }) => {
 
   return (
     <>
+      {showSearchButton && (
+        <Btn id="search">
+          <Button backgroundcolor="primary" color="white" onClick={handleOnMap}>
+            이 지역 검색
+          </Button>
+        </Btn>
+      )}
       <MapDiv
         id="map"
         style={{
@@ -216,4 +256,4 @@ const Map = ({ title, apiLat, apiLng }) => {
   );
 };
 
-export default Map;
+export default OtherMap;

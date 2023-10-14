@@ -17,11 +17,11 @@ const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+  const isLogin = useSelector((state) => state.user.isLogin);
 
-  const token = localStorage.getItem("token");
   const { data: nickName } = useQuery(["member_info"], getUserInfo, {
     staleTime: Infinity,
-    enabled: !!token,
+    enabled: isLogin,
     select: (data) => data?.data?.response.nickName,
   });
 
