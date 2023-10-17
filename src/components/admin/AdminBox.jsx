@@ -16,6 +16,7 @@ const AdminBox = () => {
     hasNextPage: hasNextPage1,
     error: error1,
     isError: isError1,
+    isFetching: isFetching1,
   } = useInfiniteQuery(
     ["basicInfo"],
 
@@ -40,6 +41,7 @@ const AdminBox = () => {
     hasNextPage: hasNextPage2,
     error: error2,
     isError: isError2,
+    isFetching: isFetching2,
   } = useInfiniteQuery(
     ["newInfo"],
 
@@ -125,6 +127,7 @@ const AdminBox = () => {
         error={error1}
         ref={bottomObserver1}
         isError={isError1}
+        isFetching={isFetching1}
       ></RequestContainerBox>
       <RequestContainerBox
         title="새 장소 신청 요청"
@@ -135,6 +138,7 @@ const AdminBox = () => {
         error={error2}
         ref={bottomObserver2}
         isError={isError2}
+        isFetching={isFetching2}
       ></RequestContainerBox>
     </AdminBoxCss>
   );

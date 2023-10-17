@@ -31,6 +31,11 @@ const MyList = styled(NavLink)`
     font-size: 1rem;
     font-weight: 800;
   }
+  &:hover {
+    color: #202020;
+    font-size: 1rem;
+    font-weight: 800;
+  }
 
   cursor: pointer;
 `;

@@ -49,7 +49,7 @@ const RequestContain = ({
           })}
         </>
       )}
-      {isLoading ? <Loader /> : <></>}
+      {/* {isLoading ? <Loader /> : <></>} */}
 
       {children}
 

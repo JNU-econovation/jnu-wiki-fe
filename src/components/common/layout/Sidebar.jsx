@@ -26,7 +26,7 @@ const Container = styled.div`
   z-index: 3;
 `;
 
-function Sidebar({ onClick, viewActive, adminActive, myActive, scrapActive }) {
+function Sidebar({ viewActive, adminActive, myActive, scrapActive }) {
   const user = useSelector((state) => state.user);
   const { role } = user;
   //회원정보 가져오기, 이때 회원정보 중
@@ -34,7 +34,6 @@ function Sidebar({ onClick, viewActive, adminActive, myActive, scrapActive }) {
   return (
     <Container>
       <MenuList
-        onClick={onClick}
         name="홈"
         icons={<GoHomeFill />}
         route={routes.home}
@@ -42,7 +41,6 @@ function Sidebar({ onClick, viewActive, adminActive, myActive, scrapActive }) {
       ></MenuList>
 
       <MenuList
-        onClick={onClick}
         name="게시글 작성"
         icons={<FaPenSquare />}
         route={routes.addPost}
@@ -53,7 +51,6 @@ function Sidebar({ onClick, viewActive, adminActive, myActive, scrapActive }) {
         icons={<HiMiniUserGroup />}
         route={routes.myPage}
         isActive={myActive}
-        onClick={onClick}
         scrapActive={scrapActive}
       ></MenuList>
 
