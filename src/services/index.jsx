@@ -2,7 +2,7 @@ import axios from "axios";
 import routes from "@/routes";
 // axios.defaults.withCredentials = true;
 export const instance = axios.create({
-  baseURL: "http://localhost:8080/",
+  baseURL: "https://port-0-jnu-wiki-be-jvpb2alnsrolbp.sel5.cloudtype.app/",
   timeout: 1000 * 5,
   headers: {
     "Content-Type": "application/json",

@@ -151,7 +151,7 @@ const MyInfoEditForm = () => {
     }
     if (doubleNewNickname && isNewNickname) {
       const updatePayload = newNickname;
-      console.log(updatePayload);
+
       //payload 는 바디같은거//...!
       changeNickname(updatePayload, {
         onSuccess: (data) => {

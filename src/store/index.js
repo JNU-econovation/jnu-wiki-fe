@@ -7,6 +7,7 @@ import boundReducer from "./boundReducer";
 import userReducer from "./userReducer";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import sidebar from "./sidebar";
 
 const persistConfig = {
   key: "root",
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   category: categoryReducer,
   SwNe: boundReducer,
   user: userReducer,
+  sidebar: sidebar,
 });
 
 // const store = createStore(rootReducer);

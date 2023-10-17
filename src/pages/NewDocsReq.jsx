@@ -16,6 +16,7 @@ import { requestReject } from "@/services/user";
 import { useMutation } from "@tanstack/react-query";
 import { AiOutlineClose } from "react-icons/ai";
 import { MenuIconX } from "./BasicInfoEditReq";
+import Loader from "@/components/common/layout/Loader";
 
 const { kakao } = window;
 
@@ -89,7 +90,10 @@ const NewDocsReq = () => {
           </MenuIconX>
           <TitleP>기본 정보</TitleP>
           {isLoading || isError ? (
-            <EditInfo></EditInfo>
+            <EditInfo>
+              {" "}
+              <Loader />
+            </EditInfo>
           ) : (
             <>
               <EditInfo child={Data?.docsRequestName}>문서 제목 </EditInfo>
