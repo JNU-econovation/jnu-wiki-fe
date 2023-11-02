@@ -25,14 +25,10 @@ const ModifyP = styled.p`
   margin-bottom: 1.7rem;
 `;
 const EditBox = styled.div`
- display: flex;
- width
+  display: flex;
 `;
 
 const EditInfo = ({ children, child, modify, address, textDecoration }) => {
-  //정보들 다 가져와서 만약에 정보가 다르면 modify 활성
-  //if child!= modify => modify,textdecorations 라는 usestate true
-
   return (
     <EditBox>
       {children ? <TextTitleP>{children}</TextTitleP> : null}

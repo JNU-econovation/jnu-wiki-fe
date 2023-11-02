@@ -22,6 +22,10 @@ export const MenuIconX = styled(MenuIcon)`
   color: #8a8a8a;
   display: flex;
   justify-content: flex-end;
+  .xIcon:hover {
+    background-color: #e3e3e3;
+    border-radius: 100%;
+  }
 `;
 const { kakao } = window;
 export const TitleP = styled.p`
@@ -113,7 +117,7 @@ const BasicInfoEditReq = () => {
       <MainLayout>
         <Container id="admin">
           <MenuIconX onClick={() => navigate(-1)}>
-            <AiOutlineClose />
+            <AiOutlineClose className="xIcon" />
           </MenuIconX>
           <TitleP>기본 정보</TitleP>
           {results[0].isLoading || results[1].isLoading ? (

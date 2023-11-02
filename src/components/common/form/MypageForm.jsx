@@ -1,5 +1,6 @@
 import MyInputGroup from "@/components/mypage/MyInfoGroup";
 import Container from "@/components/register/Container";
+
 import Title from "@/components/register/Title";
 import styled from "styled-components";
 import MyBtn from "@/components/mypage/MyBtn";

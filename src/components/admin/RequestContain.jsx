@@ -15,45 +15,41 @@ const RequestContain = ({
 }) => {
   const [errorState, setErrorState] = useState(false);
   useEffect(() => {
-    error?.status == 404 ? setErrorState(true) : setErrorState(false);
+    error?.data.error?.status == 404
+      ? setErrorState(true)
+      : setErrorState(false);
   }, [error]);
 
   return (
     <RequestContainCss border={border}>
-      {isLoading ? (
-        <Loader />
+      {errorState || error ? (
+        <Title margin="10rem 0 0 5rem" fontSize="17px">
+          요청이 들어오지 않았네요 :(
+        </Title>
       ) : (
         <>
-          {errorState || error ? (
-            <Title margin="10rem 0 0 5rem" fontSize="17px">
-              요청이 들어오지 않았네요 :(
-            </Title>
-          ) : (
-            <>
-              {datas?.map((pageData) => {
-                if (pageData) {
-                  const arr =
-                    pageData?.modifiedRequestList ||
-                    pageData?.createdRequestList;
-                  return arr?.map((data) => {
-                    return (
-                      <Request
-                        key={data?.docsRequestId}
-                        data={data}
-                        route={
-                          modi
-                            ? `${route}/${data?.docsId}/${data?.docsRequestId}`
-                            : `${route}/${data?.docsRequestId}`
-                        }
-                      /> //아마 이쯤에 로딩처리하기
-                    );
-                  });
-                }
-              })}
-            </>
-          )}
+          {datas?.map((pageData) => {
+            if (pageData) {
+              const arr =
+                pageData?.modifiedRequestList || pageData?.createdRequestList;
+              return arr?.map((data) => {
+                return (
+                  <Request
+                    key={data?.docsRequestId}
+                    data={data}
+                    route={
+                      modi
+                        ? `${route}/${data?.docsId}/${data?.docsRequestId}`
+                        : `${route}/${data?.docsRequestId}`
+                    }
+                  /> //아마 이쯤에 로딩처리하기
+                );
+              });
+            }
+          })}
         </>
       )}
+      {/* {isLoading ? <Loader /> : <></>} */}
 
       {children}
 

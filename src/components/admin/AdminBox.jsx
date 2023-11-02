@@ -16,15 +16,20 @@ const AdminBox = () => {
     hasNextPage: hasNextPage1,
     error: error1,
     isError: isError1,
+    isFetching: isFetching1,
   } = useInfiniteQuery(
     ["basicInfo"],
+
     ({ pageParam = 0 }) => basicInfoEditRequest(pageParam),
+
     {
       getNextPageParam: (currentPage, allPages) => {
         const nextPage = allPages.length;
         const totalPage = currentPage?.data?.response?.totalPages;
         return nextPage > totalPage || nextPage == totalPage ? null : nextPage;
       },
+
+      retry: 0,
     }
   );
 
@@ -36,15 +41,20 @@ const AdminBox = () => {
     hasNextPage: hasNextPage2,
     error: error2,
     isError: isError2,
+    isFetching: isFetching2,
   } = useInfiniteQuery(
     ["newInfo"],
+
     ({ pageParam = 0 }) => newInfoCreateRequest(pageParam),
+
     {
       getNextPageParam: (currentPage, allPages) => {
         const nextPage = allPages.length;
         const totalPage = currentPage?.data?.response?.totalPages;
         return nextPage > totalPage || nextPage == totalPage ? null : nextPage;
       },
+
+      retry: 0,
     }
   );
 
@@ -117,6 +127,7 @@ const AdminBox = () => {
         error={error1}
         ref={bottomObserver1}
         isError={isError1}
+        isFetching={isFetching1}
       ></RequestContainerBox>
       <RequestContainerBox
         title="새 장소 신청 요청"
@@ -127,6 +138,7 @@ const AdminBox = () => {
         error={error2}
         ref={bottomObserver2}
         isError={isError2}
+        isFetching={isFetching2}
       ></RequestContainerBox>
     </AdminBoxCss>
   );
