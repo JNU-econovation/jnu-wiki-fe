@@ -24,10 +24,10 @@ export const mapDocument = () => {
 
 export const docsList = ({
   pageParam,
-  rightUpLa,
-  rightUpMa,
-  leftDownLa,
-  leftDownMa,
+  rightUpLa = 126.92732024258463,
+  rightUpMa = 35.18296634520686,
+  leftDownLa = 126.89218416518544,
+  leftDownMa = 35.16927559740505,
 }) => {
   return instance.get(
     `/docs?rightLat=${rightUpMa}&rightLng=${rightUpLa}&leftLat=${leftDownMa}&leftLng=${leftDownLa}&page=${pageParam}`
