@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "./Button";
 import routes from "@/routes";
 import Swal from "sweetalert2";
-import { SlLogout } from "react-icons/Sl";
+import { SlLogout } from "react-icons/sl";
 import SearchBar from "@/components/search/SearchBar";
 import { getUserInfo } from "@/services/mypage";
 import { useQuery } from "@tanstack/react-query";
