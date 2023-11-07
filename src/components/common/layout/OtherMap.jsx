@@ -57,13 +57,14 @@ const OtherMap = ({ title, apiLat, apiLng }) => {
   const dispatch = useDispatch();
   const markerRef = useRef(null);
   const [showSearchButton, setShowSearchButton] = useState(false);
-  //   const getCenter = useSelector((state) => state.latLng.center);
+  const [swLatlng, setSwLatlng] = useState(0);
+  const [neLatlng, setNeLatlng] = useState(0);
 
   useEffect(() => {
     mapscript();
   }, []);
 
-  let map, bounds, swLatlng, neLatlng;
+  let map, bounds;
   let marker = new kakao.maps.Marker();
   let geocoder = new kakao.maps.services.Geocoder();
 
@@ -78,39 +79,32 @@ const OtherMap = ({ title, apiLat, apiLng }) => {
 
   const setSwNe = () => {
     bounds = map.getBounds();
-    swLatlng = bounds.getSouthWest();
-    neLatlng = bounds.getNorthEast();
+    setSwLatlng(bounds.getSouthWest());
+    setNeLatlng(bounds.getNorthEast());
   };
 
-  const initSwNe = () => {
+  // const initSwNe = () => {
+  //   dispatch({
+  //     type: "getSwNe",
+  //     payload: { swLatlng, neLatlng },
+  //   });
+  // };
+
+  const handleOnMap = () => {
     dispatch({
       type: "getSwNe",
       payload: { swLatlng, neLatlng },
     });
-  };
-
-  //   const getInfo = () => {
-  //     const center = map.getCenter();
-  //     dispatch({
-  //       type: "getCenter",
-  //       payload: { center },
-  //     });
-  //   };
-  //   console.log(getCenter);
-
-  const handleOnMap = () => {
-    initSwNe();
     setShowSearchButton(false);
   };
 
   const mapscript = () => {
     initialMap();
-    setSwNe();
-    initSwNe();
+    // setSwNe();
+    // initSwNe();
 
     kakao.maps.event.addListener(map, "bounds_changed", function () {
       setSwNe();
-      //   getInfo();
 
       setShowSearchButton(true);
     });

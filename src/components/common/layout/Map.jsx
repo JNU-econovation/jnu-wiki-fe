@@ -46,7 +46,7 @@ const MapDiv = styled.div`
   }
 `;
 
-const Map = ({ title, apiLat, apiLng }) => {
+const Map = ({ apiLat, apiLng }) => {
   const dispatch = useDispatch();
   const markerRef = useRef(null);
 
@@ -130,42 +130,6 @@ const Map = ({ title, apiLat, apiLng }) => {
     kakao.maps.event.addListener(map, "idle", function () {
       searchAddFromCoords(map.getCenter());
     });
-
-    // 마커 여러개
-    if (apiLat?.length > 0 && apiLng?.length > 0) {
-      const markers = [];
-
-      for (let i = 0; i < apiLat.length; i++) {
-        let marker = new kakao.maps.Marker({
-          position: new kakao.maps.LatLng(apiLat[i], apiLng[i]),
-        });
-        markers.push(marker);
-        markers[i].setMap(map);
-
-        var info = new kakao.maps.InfoWindow({
-          content: title[i],
-        });
-
-        kakao.maps.event.addListener(
-          marker,
-          "mouseover",
-          makeOverListener(map, marker, info)
-        );
-        kakao.maps.event.addListener(marker, "mouseout", makeOutListener(info));
-      }
-    }
-
-    function makeOverListener(map, marker, infowindow) {
-      return function () {
-        infowindow.open(map, marker);
-      };
-    }
-
-    function makeOutListener(infowindow) {
-      return function () {
-        infowindow.close();
-      };
-    }
   };
 
   const setAddress = useCallback(() => {
