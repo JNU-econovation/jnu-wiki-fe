@@ -66,7 +66,7 @@ const DocsList = ({ data }) => {
 
   const handleOnClick = (el) => {
     if (isLogin) {
-      navigate(`/document/${el.docsId}`);
+      navigate(`/document/${el}`);
     }
     return toast.warning("로그인 후 열람 가능합니다.");
   };
@@ -90,7 +90,7 @@ const DocsList = ({ data }) => {
             key={el.docsId}
             name={el.docsName}
             category={el.docsCategory}
-            onClick={(el) => handleOnClick(el)}
+            onClick={() => handleOnClick(el.docsId)}
             isScraped={el.scrap}
             onScrapClick={(scrap) => handleOnScrap(el, scrap)}
           />
