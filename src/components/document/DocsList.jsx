@@ -67,8 +67,9 @@ const DocsList = ({ data }) => {
   const handleOnClick = (el) => {
     if (isLogin) {
       navigate(`/document/${el}`);
+    } else {
+      return toast.warning("로그인 후 열람 가능합니다.");
     }
-    return toast.warning("로그인 후 열람 가능합니다.");
   };
 
   return (
