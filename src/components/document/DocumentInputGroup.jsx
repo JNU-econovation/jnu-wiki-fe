@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import HelperMsg from "./HelperMsg";
-import DocumentLabel from "./documentLabel";
-import DocumentInput from "./documentInput";
+import DocumentLabel from "./DocumentLabel";
+import DocumentInput from "./DocumentInput";
 
 const Container = styled.div`
   display: block;

@@ -6,6 +6,7 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { scrapCreate, scrapDelete } from "@/services/scrap";
 import { getUserInfo } from "@/services/mypage";
 import { useSelector } from "react-redux";
+import { toast, ToastContainer } from "react-toastify";
 
 const Container = styled.div`
   position: absolute;
@@ -63,19 +64,39 @@ const DocsList = ({ data }) => {
     }
   };
 
+  const handleOnClick = (el) => {
+    if (isLogin) {
+      navigate(`/document/${el}`);
+    }
+    return toast.warning("로그인 후 열람 가능합니다.");
+  };
+
   return (
-    <Container>
-      {docsData.map((el) => (
-        <DocsItem
-          key={el.docsId}
-          name={el.docsName}
-          category={el.docsCategory}
-          onClick={() => navigate(`/document/${el.docsId}`)}
-          isScraped={el.scrap}
-          onScrapClick={(scrap) => handleOnScrap(el, scrap)}
-        />
-      ))}
-    </Container>
+    <>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+      <Container>
+        {docsData.map((el) => (
+          <DocsItem
+            key={el.docsId}
+            name={el.docsName}
+            category={el.docsCategory}
+            onClick={() => handleOnClick(el.docsId)}
+            isScraped={el.scrap}
+            onScrapClick={(scrap) => handleOnScrap(el, scrap)}
+          />
+        ))}
+      </Container>
+    </>
   );
 };
 

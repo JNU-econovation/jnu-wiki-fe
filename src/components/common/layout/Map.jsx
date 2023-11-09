@@ -49,26 +49,22 @@ const MapDiv = styled.div`
 const Map = ({ apiLat, apiLng }) => {
   const dispatch = useDispatch();
   const markerRef = useRef(null);
+  const container = useRef(null);
+
+  let map;
+  let marker = new kakao.maps.Marker();
+
+  const options = {
+    center: new kakao.maps.LatLng(35.17614029042555, 126.90977266483199),
+    level: 4,
+  };
 
   useEffect(() => {
     mapscript();
   }, []);
 
-  let map;
-  let marker = new kakao.maps.Marker();
-
-  const initialMap = () => {
-    const container = document.getElementById("map");
-    const options = {
-      center: new kakao.maps.LatLng(35.17614029042555, 126.90977266483199),
-      level: 4,
-    };
-    map = new kakao.maps.Map(container, options);
-  };
-
   const mapscript = () => {
-    // map 기본 세팅
-    initialMap();
+    map = new kakao.maps.Map(container.current, options);
 
     function searchAddFromCoords(coords, callback) {
       // 좌표로 행정동 주소 정보를 요청
@@ -168,15 +164,16 @@ const Map = ({ apiLat, apiLng }) => {
   }, [apiLat, apiLng, map, marker, setAddress]);
 
   return (
-    <>
+    <div className="container">
       <MapDiv
         id="map"
+        ref={container}
         style={{
           width: "100vw",
           height: "100vh",
         }}
       />
-    </>
+    </div>
   );
 };
 
