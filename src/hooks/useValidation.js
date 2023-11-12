@@ -1,20 +1,17 @@
 import { useState } from "react";
+import { ERROR_MSG } from "@/constant/helpermsg";
 
 const useValidation = (initialValue) => {
   const [msg, setMsg] = useState(initialValue);
 
   const docsNameCheck = (docsName) => {
-    return docsName === "" ? "문서 제목을 입력해주세요." : "";
+    return docsName === "" && ERROR_MSG.NAME;
   };
   const docsLocation = (docsLocation) => {
-    return docsLocation === "" ||
-      docsLocation.lat === undefined ||
-      docsLocation.lng === undefined
-      ? "위치를 지도에서 클릭해주세요"
-      : "";
+    return !docsLocation.lat && ERROR_MSG.LOCATION;
   };
   const docsCategory = (docsCategory) => {
-    return docsCategory === "" ? "카테고리를 입력해주세요." : "";
+    return docsCategory === "" && ERROR_MSG.CATEGORY;
   };
 
   const handleSetMsg = (id, value) => {
