@@ -8,7 +8,7 @@ const swalWithBootstrapButtons = Swal.mixin({
   buttonsStyling: true,
 });
 
-export const askAlert = ({ name, address, category }) => {
+export const askAlert = (name, address, category) => {
   return swalWithBootstrapButtons.fire({
     title: "문서를 등록하시겠습니까?",
     html: `문서제목: ${name}<br/>

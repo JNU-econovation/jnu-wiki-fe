@@ -52,7 +52,6 @@ const CreateDocument = () => {
     docsName: "",
     docsLocation: "",
   });
-
   const inputData = {
     docsCategory: category || "카페",
     docsName: valueInit.docsName,
@@ -90,7 +89,7 @@ const CreateDocument = () => {
   };
 
   const handleRegisterAlert = () => {
-    if (inputData.docsName !== "" && inputData.docsLocation.lat !== "") {
+    if (inputData.docsName && inputData.docsLocation.lat) {
       askAlert(inputData.docsName, address, inputData.docsCategory).then(
         (result) => {
           if (result.isConfirmed) {
@@ -126,7 +125,7 @@ const CreateDocument = () => {
         <DocumentInputGroup
           htmlFor="docsName"
           id="docsName"
-          placeholder={HELPER_MSG.TITLE}
+          placeholder={HELPER_MSG.NAME}
           value={valueInit.docsName}
           onChange={(e) => {
             handleOnChange(e);
