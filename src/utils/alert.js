@@ -37,3 +37,15 @@ export const requestAlert = () => {
     "success"
   );
 };
+
+export const popUpLogout = () => {
+  return Swal.fire({
+    icon: "question",
+    text: "로그아웃 하시겠습니까?",
+    showCancelButton: true,
+    confirmButtonText: "예",
+    cancelButtonText: "아니오",
+    confirmButtonColor: "#429f50",
+    cancelButtonColor: "#d33",
+  });
+};
