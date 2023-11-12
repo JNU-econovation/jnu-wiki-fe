@@ -5,6 +5,7 @@ import { useState } from "react";
 import { scrapCreate, scrapDelete } from "@/services/scrap";
 import useDocsMutation from "@/hooks/useDocsMutation";
 import { useSelector } from "react-redux";
+import { HELPER_MSG } from "@/constant/helpermsg";
 
 const Container = styled.div`
   position: absolute;
@@ -43,19 +44,22 @@ const ScrapList = ({ datas }) => {
       deleteScrap({ memberId, docsId: el.docsId });
     }
   };
-
   return (
     <Container>
-      {docsData.map((el) => (
-        <DocsItem
-          key={el.docsId}
-          name={el.docsName}
-          category={el.docsCategory}
-          onClick={() => navigate(`/document/${el.docsId}`)}
-          isScraped={true}
-          onScrapClick={(scrap) => handleOnScrap(el, scrap)}
-        />
-      ))}
+      {docsData.length ? (
+        docsData.map((el) => (
+          <DocsItem
+            key={el.docsId}
+            name={el.docsName}
+            category={el.docsCategory}
+            onClick={() => navigate(`/document/${el.docsId}`)}
+            isScraped={true}
+            onScrapClick={(scrap) => handleOnScrap(el, scrap)}
+          />
+        ))
+      ) : (
+        <DocsItem>{HELPER_MSG.NO_SCRAP}</DocsItem>
+      )}
     </Container>
   );
 };

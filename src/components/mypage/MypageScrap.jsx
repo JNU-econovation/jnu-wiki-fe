@@ -13,7 +13,7 @@ const MypageScrap = () => {
   const [show, setShow] = useState(true);
 
   const handleShow = () => {
-    setShow(!show);
+    setShow((prev) => !prev);
   };
 
   const bottomObserver = useRef(null);
@@ -56,17 +56,13 @@ const MypageScrap = () => {
     };
   }, [isLoading, hasNextPage, fetchNextPage]);
 
-  const title = data?.pages
-    .flatMap((x) => x?.data?.response.scrapList)
-    .map((x) => x?.docsName);
-
   return (
     <>
       <MainLayout myPageClicked={true} onClick={handleShow} />
       {show && (
         <DocumentWrapper>
           <Suspense fallback={<Loader />}>
-            {title?.length && <ScrapList datas={data} />}
+            <ScrapList datas={data} />
             <div style={{ height: "50px" }} ref={bottomObserver}></div>
           </Suspense>
         </DocumentWrapper>

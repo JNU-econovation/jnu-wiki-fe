@@ -34,7 +34,14 @@ const StyledHr = styled.hr`
   margin: 1.4rem 0;
 `;
 
-const DocsItem = ({ name, category, isScraped, onClick, onScrapClick }) => {
+const DocsItem = ({
+  name,
+  category,
+  isScraped,
+  onClick,
+  onScrapClick,
+  children,
+}) => {
   const [scrap, setScrap] = useState(isScraped);
 
   const handleOnScrapFill = (e) => {
@@ -45,14 +52,20 @@ const DocsItem = ({ name, category, isScraped, onClick, onScrapClick }) => {
 
   return (
     <>
-      <Container onClick={onClick}>
-        <div className="title">
-          <div>{name}</div>
-          <ScrapBtn onClick={handleOnScrapFill} scrap={scrap} />
-        </div>
-        <span className="category">{category}</span>
-      </Container>
-      <StyledHr />
+      {name ? (
+        <>
+          <Container onClick={onClick}>
+            <div className="title">
+              <div>{name}</div>
+              <ScrapBtn onClick={handleOnScrapFill} scrap={scrap} />
+            </div>
+            <span className="category">{category}</span>
+          </Container>
+          <StyledHr />
+        </>
+      ) : (
+        <Container>{children}</Container>
+      )}
     </>
   );
 };
