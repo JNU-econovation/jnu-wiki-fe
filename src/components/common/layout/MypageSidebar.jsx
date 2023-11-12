@@ -39,11 +39,11 @@ const MyList = styled(NavLink)`
 
   cursor: pointer;
 `;
-const MypageSidebar = ({ scrapActive }) => {
+const MypageSidebar = ({ isActive, onClick }) => {
   return (
-    <ListBox>
+    <ListBox onClick={onClick}>
       <MyList to={routes.myPage}>- 회원정보 수정</MyList>
-      <MyList className={scrapActive ? "active" : ""} to={routes.scrap}>
+      <MyList to={routes.scrap} id={isActive && "active"}>
         - 스크랩
       </MyList>
     </ListBox>

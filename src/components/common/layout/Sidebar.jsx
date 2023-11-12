@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import styled from "styled-components";
 import routes from "@/routes";
 import MenuList from "./SidebarList";
@@ -6,8 +5,8 @@ import { GoHomeFill } from "react-icons/go";
 import { FaPenSquare } from "react-icons/fa";
 import { HiMiniUserGroup } from "react-icons/hi2";
 import { AiTwotoneSetting } from "react-icons/ai";
-import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
+
 const Container = styled.div`
   width: 15rem;
   height: 100vh;
@@ -26,10 +25,9 @@ const Container = styled.div`
   z-index: 3;
 `;
 
-function Sidebar({ viewActive, adminActive, myActive, scrapActive }) {
+function Sidebar({ isActive, myPageClicked, onClick }) {
   const user = useSelector((state) => state.user);
   const { role } = user;
-  //회원정보 가져오기, 이때 회원정보 중
 
   return (
     <Container>
@@ -37,31 +35,31 @@ function Sidebar({ viewActive, adminActive, myActive, scrapActive }) {
         name="홈"
         icons={<GoHomeFill />}
         route={routes.home}
-        isActive={viewActive}
+        onClick={onClick}
+        isActive={isActive}
       ></MenuList>
 
       <MenuList
         name="게시글 작성"
         icons={<FaPenSquare />}
         route={routes.addPost}
+        onClick={onClick}
       ></MenuList>
 
       <MenuList
         name="마이페이지"
         icons={<HiMiniUserGroup />}
         route={routes.myPage}
-        isActive={myActive}
-        scrapActive={scrapActive}
+        myPageClicked={myPageClicked}
       ></MenuList>
 
-      {role === "ADMIN" ? (
+      {role === "ADMIN" && (
         <MenuList
           name="관리자"
           icons={<AiTwotoneSetting />}
           route={routes.admin}
-          isActive={adminActive}
         ></MenuList>
-      ) : null}
+      )}
     </Container>
   );
 }
