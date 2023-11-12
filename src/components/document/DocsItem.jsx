@@ -37,7 +37,8 @@ const StyledHr = styled.hr`
 const DocsItem = ({ name, category, isScraped, onClick, onScrapClick }) => {
   const [scrap, setScrap] = useState(isScraped);
 
-  const handleOnScrapFill = () => {
+  const handleOnScrapFill = (e) => {
+    e.stopPropagation();
     onScrapClick(!scrap);
     setScrap(!scrap);
   };
@@ -47,13 +48,7 @@ const DocsItem = ({ name, category, isScraped, onClick, onScrapClick }) => {
       <Container onClick={onClick}>
         <div className="title">
           <div>{name}</div>
-          <ScrapBtn
-            onClick={(e) => {
-              e.stopPropagation();
-              handleOnScrapFill();
-            }}
-            scrap={scrap}
-          />
+          <ScrapBtn onClick={handleOnScrapFill} scrap={scrap} />
         </div>
         <span className="category">{category}</span>
       </Container>
