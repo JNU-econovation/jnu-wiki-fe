@@ -3,7 +3,7 @@ import MainLayout from "@/components/common/layout/MainLayout.jsx";
 
 const MyInfoEdit = () => {
   return (
-    <MainLayout>
+    <MainLayout myPageClicked={true}>
       <MyInfoEditForm />
     </MainLayout>
   );
