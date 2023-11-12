@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 import debounce from "lodash/debounce";
 import throttle from "lodash/throttle";
 import SearchItem from "./SearchItem";
-import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
+import { HELPER_MSG } from "@/constant/helpermsg";
 
 const StyledSearchBar = styled.input`
   width: 40rem;
@@ -48,12 +48,10 @@ const Container = styled.div`
 const SearchBar = () => {
   const focusRef = useRef(null);
   const searchRef = useRef(null);
+  const navigate = useNavigate();
   const [clickedSearch, setClickedSearch] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-
-  const navigate = useNavigate();
-  const isLogin = useSelector((state) => state.user.isLogin);
 
   useEffect(() => {
     const handleOnClickedSearch = (e) => {
@@ -105,40 +103,41 @@ const SearchBar = () => {
   return (
     <>
       <ToastContainer />
-
-      <StyledSearchBar
-        type="search"
-        placeholder="      검색"
-        ref={focusRef}
-        onFocus={onFocusSearchBar}
-        onBlur={onBlurSearchBar}
-        value={inputValue}
-        onChange={(e) => {
-          setInputValue(e.target.value);
-          debouncedSearchDocs(e.target.value);
-          throttledSearchDocs(e.target.value);
-        }}
-      />
-      {isSuccess
-        ? clickedSearch &&
-          inputValue && (
-            <Container ref={searchRef}>
-              {searchResults &&
-                searchResults
-                  .slice(0, 8)
-                  .map((el) => (
-                    <SearchItem
-                      key={el.docsId}
-                      name={el.docsName}
-                      onClick={() => handleOnClick(el.docsId)}
-                    />
-                  ))}
-            </Container>
-          )
-        : clickedSearch &&
-          inputValue && (
-            <Container ref={searchRef}>검색 결과가 없습니다. 🥲</Container>
-          )}
+      <div>
+        <StyledSearchBar
+          type="search"
+          placeholder="      검색"
+          ref={focusRef}
+          onFocus={onFocusSearchBar}
+          onBlur={onBlurSearchBar}
+          value={inputValue}
+          onChange={(e) => {
+            setInputValue(e.target.value);
+            debouncedSearchDocs(e.target.value);
+            throttledSearchDocs(e.target.value);
+          }}
+        />
+        {isSuccess
+          ? clickedSearch &&
+            inputValue && (
+              <Container ref={searchRef}>
+                {searchResults &&
+                  searchResults
+                    .slice(0, 8)
+                    .map((el) => (
+                      <SearchItem
+                        key={el.docsId}
+                        name={el.docsName}
+                        onClick={() => handleOnClick(el.docsId)}
+                      />
+                    ))}
+              </Container>
+            )
+          : clickedSearch &&
+            inputValue && (
+              <Container ref={searchRef}>{HELPER_MSG.NO_SEARCH}</Container>
+            )}
+      </div>
     </>
   );
 };
