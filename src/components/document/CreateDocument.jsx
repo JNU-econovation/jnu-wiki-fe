@@ -3,7 +3,7 @@ import DocumentInputGroup from "./DocumentInputGroup";
 import DocumentLabel from "./DocumentLabel";
 import SelectMenu from "./SelectMenu";
 import Button from "@/components/common/layout/Button";
-import { helperMsg } from "@/constant/helpermsg";
+import { HELPER_MSG } from "@/constant/helpermsg";
 import useInput from "@/hooks/useInput";
 import useValidation from "@/hooks/useValidation";
 import { create } from "@/services/document";
@@ -126,7 +126,7 @@ const CreateDocument = () => {
         <DocumentInputGroup
           htmlFor="docsName"
           id="docsName"
-          placeholder={helperMsg.title}
+          placeholder={HELPER_MSG.TITLE}
           value={valueInit.docsName}
           onChange={(e) => {
             handleOnChange(e);
@@ -139,7 +139,7 @@ const CreateDocument = () => {
         <DocumentInputGroup
           htmlFor="docsLocation"
           id="docsLocation"
-          placeholder={helperMsg.location}
+          placeholder={HELPER_MSG.LOCATION}
           value={address}
           disabled
           onChange={handleOnChange}
