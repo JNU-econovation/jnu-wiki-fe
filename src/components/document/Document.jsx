@@ -30,19 +30,7 @@ const Group = styled.div`
   background-color: white;
   box-shadow: 10px 0px 5px 0px rgba(0, 0, 0, 0.106);
   box-sizing: border-box;
-  overflow: scroll;
-  overflow-x: hidden;
-
-  &::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-    border-radius: 6px;
-    background: rgba(237, 214, 214, 0.4);
-  }
-  &::-webkit-scrollbar-thumb {
-    background: rgba(86, 77, 77, 0.3);
-    border-radius: 6px;
-  }
+  overflow: auto;
 
   #docsName,
   #docsLocation,

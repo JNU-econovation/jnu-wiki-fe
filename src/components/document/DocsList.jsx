@@ -9,12 +9,14 @@ import useDocsMutation from "@/hooks/useDocsMutation";
 const Container = styled.div`
   position: absolute;
   left: 15rem;
-  overflow-x: hidden;
   top: 6rem;
   padding: 2rem;
 
   background-color: white;
   box-shadow: 10px 0px 5px 0px rgba(0, 0, 0, 0.106);
+
+  overflow-y: auto;
+  max-height: calc(100vh - 6rem - 2 * 2rem);
 `;
 
 const DocsList = ({ data }) => {
@@ -49,20 +51,18 @@ const DocsList = ({ data }) => {
   };
 
   return (
-    <>
-      <Container>
-        {docsData.map((el) => (
-          <DocsItem
-            key={el.docsId}
-            name={el.docsName}
-            category={el.docsCategory}
-            onClick={() => handleOnClick(el.docsId)}
-            isScraped={el.scrap}
-            onScrapClick={(scrap) => handleOnScrap(el, scrap)}
-          />
-        ))}
-      </Container>
-    </>
+    <Container>
+      {docsData.map((el) => (
+        <DocsItem
+          key={el.docsId}
+          name={el.docsName}
+          category={el.docsCategory}
+          onClick={() => handleOnClick(el.docsId)}
+          isScraped={el.scrap}
+          onScrapClick={(scrap) => handleOnScrap(el, scrap)}
+        />
+      ))}
+    </Container>
   );
 };
 
