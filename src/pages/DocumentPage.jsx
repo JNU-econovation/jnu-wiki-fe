@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 const DocumentPage = () => {
   const { id } = useParams();
   const { data } = useQuery(["detail_document", id], () => detailDocument(id), {
+    refetchOnWindowFocus: true,
     select: (data) => data?.data?.response,
   });
 
