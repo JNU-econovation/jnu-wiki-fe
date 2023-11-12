@@ -10,7 +10,7 @@ import { create } from "@/services/document";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { useMutation } from "@tanstack/react-query";
-import { toast, ToastContainer } from "react-toastify";
+import { askAlert, cancelAlert, requestAlert } from "@/utils/alert";
 
 export const Container = styled.div`
   width: 20rem;
@@ -66,44 +66,6 @@ const CreateDocument = () => {
     mutationFn: create,
   });
 
-  const swalWithBootstrapButtons = Swal.mixin({
-    customClass: {
-      confirmButton: "btn btn-success",
-      cancelButton: "btn btn-danger",
-    },
-    buttonsStyling: true,
-  });
-
-  const askAlert = () => {
-    return swalWithBootstrapButtons.fire({
-      title: "문서를 등록하시겠습니까?",
-      html: `문서제목: ${inputData.docsName}<br/>
-      위치: ${address}<br/>
-      카테고리: ${inputData.docsCategory}`,
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "등록 요청",
-      cancelButtonText: "취소",
-      reverseButtons: true,
-    });
-  };
-
-  const cancelAlert = () => {
-    swalWithBootstrapButtons.fire(
-      "취소 완료",
-      "문서 등록 요청을 취소합니다.",
-      "error"
-    );
-  };
-
-  const requestAlert = () => {
-    swalWithBootstrapButtons.fire(
-      "문서 등록 요청 완료!",
-      "관리자의 승인 후 등록이 완료됩니다.",
-      "success"
-    );
-  };
-
   const handleClear = () => {
     reset();
     dispatch({ type: "clearAddress" });
@@ -127,32 +89,15 @@ const CreateDocument = () => {
   };
 
   const handleRegisterAlert = () => {
-    if (inputData.docsName && inputData.docsLocation.lat) {
-      askAlert().then((result) => {
-        if (result.isConfirmed) {
-          sendRequest();
+    if (inputData.docsName !== "" && inputData.docsLocation.lat !== "") {
+      askAlert(inputData.docsName, address, inputData.docsCategory).then(
+        (result) => {
+          if (result.isConfirmed) {
+            sendRequest();
+          }
         }
-      });
+      );
     }
-  };
-
-  const handleNullToken = () => {
-    toast.warning("로그인 후 작성 가능합니다.");
-  };
-
-  const handleDisabled = () => {
-    return (
-      <Button
-        color="primary"
-        border="1px solid"
-        border-color="primary"
-        backgroundcolor="white"
-        disabled
-        onClick={handleCancel}
-      >
-        등록 취소
-      </Button>
-    );
   };
 
   const handleCancel = () => {
