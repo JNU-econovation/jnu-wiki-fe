@@ -3,7 +3,8 @@ import routes from "@/routes";
 import { NavLink } from "react-router-dom";
 
 const ListBox = styled.div`
-  background-color: rgba(222, 233, 224, 0.27);
+  background-color: ${(props) =>
+    props.isActive === true && "rgba(222, 233, 224, 0.27)"};
   position: relative;
   bottom: 0.5rem;
 `;
@@ -39,9 +40,9 @@ const MyList = styled(NavLink)`
 
   cursor: pointer;
 `;
-const MypageSidebar = ({ isActive, onClick }) => {
+const MypageSidebar = ({ isActive }) => {
   return (
-    <ListBox onClick={onClick}>
+    <ListBox isActive={isActive}>
       <MyList to={routes.myPage}>- 회원정보 수정</MyList>
       <MyList to={routes.scrap} id={isActive && "active"}>
         - 스크랩

@@ -12,16 +12,17 @@ export const MenuIcon = styled.div`
 const MenuList = ({ name, icons, route, isActive, myPageClicked, onClick }) => {
   const [clicked, setClicked] = useState(myPageClicked);
   const [act, setAct] = useState(isActive);
+
   const handleOnClick = (e) => {
     e.preventDefault();
-    setClicked(true);
+    setClicked((prev) => !prev);
   };
 
   useEffect(() => {
     if (clicked) {
       setAct(true);
     }
-  }, [clicked]);
+  }, []);
 
   return (
     <>
@@ -35,7 +36,7 @@ const MenuList = ({ name, icons, route, isActive, myPageClicked, onClick }) => {
             <BsFillCaretDownFill className="icon" onClick={handleOnClick} />
           ))}
       </NavStyle>
-      {clicked && <MypageSidebar isActive={isActive} />}
+      {clicked && <MypageSidebar isActive={act} />}
     </>
   );
 };
