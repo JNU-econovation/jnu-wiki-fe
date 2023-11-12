@@ -8,9 +8,10 @@ import useInput from "@/hooks/useInput";
 import useValidation from "@/hooks/useValidation";
 import { create } from "@/services/document";
 import { useDispatch, useSelector } from "react-redux";
-import Swal from "sweetalert2";
 import { useMutation } from "@tanstack/react-query";
 import { askAlert, cancelAlert, requestAlert } from "@/utils/alert";
+import { nullTokenWrite, occurError } from "@/utils/toast";
+import { ToastContainer } from "react-toastify";
 
 export const Container = styled.div`
   width: 20rem;
@@ -79,9 +80,9 @@ const CreateDocument = () => {
       },
       onError: (error) => {
         if (!isLogin) {
-          alert("로그인 후 이용 가능합니다.");
+          nullTokenWrite();
         } else {
-          alert("문서 생성에 실패했습니다. 관리자에게 문의하세요.");
+          occurError();
           console.error(error);
         }
       },
@@ -100,17 +101,17 @@ const CreateDocument = () => {
     }
   };
 
-  const handleCancel = () => {
-    if (!isLogin) handleDisabled();
-    if (!inputData.docsName && !inputData.docsLocation) handleDisabled();
-    else {
+  const handleCancel = (e) => {
+    if (inputData.docsName === "" || inputData.docsLocation === "") {
+      e.preventDefault();
+    } else {
       cancelAlert();
       handleClear();
     }
   };
 
   const handleSubmit = () => {
-    if (!isLogin) handleNullToken();
+    if (!isLogin) nullTokenWrite();
     else {
       handleSetNameMsg("docsName", valueInit.docsName);
       handleSetLocationMsg("docsLocation", { lat: latitude, lng: longitude });
@@ -120,17 +121,7 @@ const CreateDocument = () => {
 
   return (
     <>
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
+      <ToastContainer />
       <Container>
         <DocumentInputGroup
           htmlFor="docsName"

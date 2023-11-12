@@ -16,7 +16,8 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ScrapBtn from "./ScrapBtn";
 import { scrapCreate, scrapDelete } from "@/services/scrap";
-import { getUserInfo } from "@/services/mypage";
+import { nullTokenEdit, successEdit, adminApproval } from "@/utils/toast";
+import { ToastContainer } from "react-toastify";
 
 const Group = styled.div`
   width: 22rem;
@@ -169,8 +170,11 @@ const Document = ({ data }) => {
   });
 
   const handleSetInput = () => {
-    setBasicEdit(true);
-    valueInit.docsName = docsName;
+    if (!isLogin) nullTokenEdit();
+    else {
+      setBasicEdit(true);
+      valueInit.docsName = docsName;
+    }
   };
 
   const handleAddressInfo = () => {
@@ -187,7 +191,7 @@ const Document = ({ data }) => {
       docsRequestLocation: addressInfo,
     });
 
-    toast.info("관리자 승인 후 갱신됩니다.");
+    adminApproval();
   };
 
   const handleBasicSave = () => {
@@ -205,13 +209,16 @@ const Document = ({ data }) => {
   };
 
   const handleInputContent = () => {
-    setEditContent(true);
-    setContentValue(docsContent);
+    if (!isLogin) nullTokenEdit();
+    else {
+      setEditContent(true);
+      setContentValue(docsContent);
+    }
   };
 
   const saveContentInfo = () => {
     mutationContentModify({ docs_id: id, docsContent: contentValue });
-    toast.success("내용이 수정되었습니다!");
+    successEdit();
   };
 
   const handleContentSave = () => {
@@ -242,17 +249,7 @@ const Document = ({ data }) => {
 
   return (
     <>
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
+      <ToastContainer />
       <Container>
         {toggle && (
           <Group>

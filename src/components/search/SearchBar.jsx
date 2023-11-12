@@ -7,7 +7,7 @@ import debounce from "lodash/debounce";
 import throttle from "lodash/throttle";
 import SearchItem from "./SearchItem";
 import { useSelector } from "react-redux";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 
 const StyledSearchBar = styled.input`
   width: 40rem;
@@ -108,52 +108,41 @@ const SearchBar = () => {
 
   return (
     <>
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
+      <ToastContainer />
+
+      <StyledSearchBar
+        type="search"
+        placeholder="      검색"
+        ref={focusRef}
+        onFocus={onFocusSearchBar}
+        onBlur={onBlurSearchBar}
+        value={inputValue}
+        onChange={(e) => {
+          setInputValue(e.target.value);
+          debouncedSearchDocs(e.target.value);
+          throttledSearchDocs(e.target.value);
+        }}
       />
-      <div>
-        <StyledSearchBar
-          type="search"
-          placeholder="      검색"
-          ref={focusRef}
-          onFocus={onFocusSearchBar}
-          onBlur={onBlurSearchBar}
-          value={inputValue}
-          onChange={(e) => {
-            setInputValue(e.target.value);
-            debouncedSearchDocs(e.target.value);
-            throttledSearchDocs(e.target.value);
-          }}
-        />
-        {isSuccess
-          ? clickedSearch &&
-            inputValue && (
-              <Container ref={searchRef}>
-                {searchResults &&
-                  searchResults
-                    .slice(0, 8)
-                    .map((el) => (
-                      <SearchItem
-                        key={el.docsId}
-                        name={el.docsName}
-                        onClick={() => handleOnClick(el.docsId)}
-                      />
-                    ))}
-              </Container>
-            )
-          : clickedSearch &&
-            inputValue && (
-              <Container ref={searchRef}>검색 결과가 없습니다. 🥲</Container>
-            )}
-      </div>
+      {isSuccess
+        ? clickedSearch &&
+          inputValue && (
+            <Container ref={searchRef}>
+              {searchResults &&
+                searchResults
+                  .slice(0, 8)
+                  .map((el) => (
+                    <SearchItem
+                      key={el.docsId}
+                      name={el.docsName}
+                      onClick={() => handleOnClick(el.docsId)}
+                    />
+                  ))}
+            </Container>
+          )
+        : clickedSearch &&
+          inputValue && (
+            <Container ref={searchRef}>검색 결과가 없습니다. 🥲</Container>
+          )}
     </>
   );
 };
