@@ -34,6 +34,7 @@ const DocumentListPage = () => {
             ? nextPage
             : undefined;
         },
+        refetchOnWindowFocus: true,
       }
     );
 
