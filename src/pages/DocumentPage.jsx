@@ -13,7 +13,7 @@ const DocumentPage = () => {
 
   return (
     <>
-      <MainLayout viewActive={true}>
+      <MainLayout isActive={true}>
         <Document data={data} />
       </MainLayout>
       {data && (
