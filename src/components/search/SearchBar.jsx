@@ -3,10 +3,11 @@ import { useState, useRef, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { searchDocs } from "@/services/document";
 import { useNavigate } from "react-router-dom";
-import routes from "@/routes";
 import debounce from "lodash/debounce";
 import throttle from "lodash/throttle";
 import SearchItem from "./SearchItem";
+import { useSelector } from "react-redux";
+import { toast, ToastContainer } from "react-toastify";
 
 const StyledSearchBar = styled.input`
   width: 40rem;
@@ -50,8 +51,9 @@ const SearchBar = () => {
   const [clickedSearch, setClickedSearch] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const [selectedDocs, setSelectedDocs] = useState([]);
+
   const navigate = useNavigate();
+  const isLogin = useSelector((state) => state.user.isLogin);
 
   useEffect(() => {
     const handleOnClickedSearch = (e) => {
@@ -96,56 +98,63 @@ const SearchBar = () => {
   );
 
   const handleOnClick = (el) => {
-    setSelectedDocs((prev) => [
-      ...prev,
-      {
-        id: el.docsId,
-        docsLocation: {
-          lat: el.docsLocation.lat,
-          lng: el.docsLocation.lng,
-        },
-      },
-    ]);
-    selectedDocs.length > 0 &&
-      navigate(routes.documentPage, { state: selectedDocs[0] });
+    if (isLogin) {
+      navigate(`/document/${el}`);
+      setClickedSearch(false);
+    } else {
+      return toast.warning("로그인 후 열람 가능합니다.");
+    }
   };
 
   return (
-    <div>
-      <StyledSearchBar
-        type="search"
-        placeholder="      검색"
-        ref={focusRef}
-        onFocus={onFocusSearchBar}
-        onBlur={onBlurSearchBar}
-        value={inputValue}
-        onChange={(e) => {
-          setInputValue(e.target.value);
-          debouncedSearchDocs(e.target.value);
-          throttledSearchDocs(e.target.value);
-        }}
+    <>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
       />
-      {isSuccess
-        ? clickedSearch &&
-          inputValue && (
-            <Container ref={searchRef}>
-              {searchResults &&
-                searchResults
-                  .slice(0, 8)
-                  .map((el) => (
-                    <SearchItem
-                      key={el.docsId}
-                      name={el.docsName}
-                      onClick={() => handleOnClick(el)}
-                    />
-                  ))}
-            </Container>
-          )
-        : clickedSearch &&
-          inputValue && (
-            <Container ref={searchRef}>검색 결과가 없습니다. 🥲</Container>
-          )}
-    </div>
+      <div>
+        <StyledSearchBar
+          type="search"
+          placeholder="      검색"
+          ref={focusRef}
+          onFocus={onFocusSearchBar}
+          onBlur={onBlurSearchBar}
+          value={inputValue}
+          onChange={(e) => {
+            setInputValue(e.target.value);
+            debouncedSearchDocs(e.target.value);
+            throttledSearchDocs(e.target.value);
+          }}
+        />
+        {isSuccess
+          ? clickedSearch &&
+            inputValue && (
+              <Container ref={searchRef}>
+                {searchResults &&
+                  searchResults
+                    .slice(0, 8)
+                    .map((el) => (
+                      <SearchItem
+                        key={el.docsId}
+                        name={el.docsName}
+                        onClick={() => handleOnClick(el.docsId)}
+                      />
+                    ))}
+              </Container>
+            )
+          : clickedSearch &&
+            inputValue && (
+              <Container ref={searchRef}>검색 결과가 없습니다. 🥲</Container>
+            )}
+      </div>
+    </>
   );
 };
 
