@@ -98,12 +98,8 @@ const SearchBar = () => {
   );
 
   const handleOnClick = (el) => {
-    if (isLogin) {
-      navigate(`/document/${el}`);
-      setClickedSearch(false);
-    } else {
-      return toast.warning("로그인 후 열람 가능합니다.");
-    }
+    navigate(`/document/${el}`);
+    setClickedSearch(false);
   };
 
   return (
