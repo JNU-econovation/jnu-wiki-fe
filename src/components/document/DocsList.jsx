@@ -2,10 +2,9 @@ import { useState } from "react";
 import DocsItem from "./DocsItem";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useQuery, useMutation } from "@tanstack/react-query";
 import { scrapCreate, scrapDelete } from "@/services/scrap";
-import { getUserInfo } from "@/services/mypage";
 import { useSelector } from "react-redux";
+import useDocsMutation from "@/hooks/useDocsMutation";
 
 const Container = styled.div`
   position: absolute;
@@ -20,30 +19,12 @@ const Container = styled.div`
 
 const DocsList = ({ data }) => {
   const navigate = useNavigate();
-
   const docsData = data?.pages.flatMap((x) => x.data.response.docsList) || [];
   const [scrapList, setScrapList] = useState([]);
-  const isLogin = useSelector((state) => state.user.isLogin);
+  const { memberId } = useSelector((state) => state.user);
 
-  const { data: memberId } = useQuery(["member_info"], getUserInfo, {
-    staleTime: Infinity,
-    select: (data) => data?.data?.response.id,
-    enabled: isLogin,
-  });
-
-  const { mutate: createScrap } = useMutation({
-    mutationFn: scrapCreate,
-    onError: (error) => {
-      console.error(error);
-    },
-  });
-
-  const { mutate: deleteScrap } = useMutation({
-    mutationFn: scrapDelete,
-    onError: (error) => {
-      console.error(error);
-    },
-  });
+  const { mutate: createScrap } = useDocsMutation(scrapCreate);
+  const { mutate: deleteScrap } = useDocsMutation(scrapDelete);
 
   const handleOnScrap = (el, scrap) => {
     const isSelected = scrapList.find((option) => option.id === el.docsId);

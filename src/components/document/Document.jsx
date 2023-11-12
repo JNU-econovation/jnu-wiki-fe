@@ -6,18 +6,17 @@ import DocumentInput from "./DocumentInput";
 import ToggleBtn from "./ToggleBtn";
 import styled from "styled-components";
 import SelectMenu from "./SelectMenu";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { contentModify, basicModify } from "@/services/document";
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import MDEditor from "@uiw/react-md-editor";
 import useInput from "@/hooks/useInput";
-import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ScrapBtn from "./ScrapBtn";
 import { scrapCreate, scrapDelete } from "@/services/scrap";
 import { nullTokenEdit, successEdit, adminApproval } from "@/utils/toast";
 import { ToastContainer } from "react-toastify";
+import useDocsMutation from "@/hooks/useDocsMutation";
 
 const Group = styled.div`
   width: 22rem;
@@ -96,14 +95,7 @@ const DocsInfo = styled.div`
 `;
 
 const Document = ({ data }) => {
-  const queryClient = useQueryClient();
-  const isLogin = useSelector((state) => state.user.isLogin);
-
-  const { data: memberId } = useQuery(["member_info"], getUserInfo, {
-    staleTime: Infinity,
-    enabled: isLogin,
-    select: (data) => data?.data?.response.id,
-  });
+  const { isLogin, memberId } = useSelector((state) => state.user);
 
   const {
     id,
@@ -135,39 +127,10 @@ const Document = ({ data }) => {
   const [scraped, setScrap] = useState(isScraped);
   const [toggle, setToggle] = useState(true);
 
-  const { mutate: mutationBasicModify } = useMutation({
-    mutationFn: basicModify,
-    onSuccess: () => {
-      queryClient.invalidateQueries("detail_document");
-    },
-    onError: (error) => {
-      console.error(error);
-    },
-  });
-
-  const { mutate: mutationContentModify } = useMutation({
-    mutationFn: contentModify,
-    onSuccess: () => {
-      queryClient.invalidateQueries("detail_document");
-    },
-    onError: (error) => {
-      console.error(error);
-    },
-  });
-
-  const { mutate: scrapDetailCreate } = useMutation({
-    mutationFn: scrapCreate,
-    onError: (error) => {
-      console.error(error);
-    },
-  });
-
-  const { mutate: scrapDetailDelete } = useMutation({
-    mutationFn: scrapDelete,
-    onError: (error) => {
-      console.error(error);
-    },
-  });
+  const { mutate: mutationBasicModify } = useDocsMutation(basicModify);
+  const { mutate: mutationContentModify } = useDocsMutation(contentModify);
+  const { mutate: scrapDetailCreate } = useDocsMutation(scrapCreate);
+  const { mutate: scrapDetailDelete } = useDocsMutation(scrapDelete);
 
   const handleSetInput = () => {
     if (!isLogin) nullTokenEdit();
