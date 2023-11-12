@@ -12,7 +12,7 @@ const DocumentListPage = () => {
   const [show, setShow] = useState(true);
 
   const handleShow = () => {
-    setShow(!show);
+    setShow((prev) => !prev);
   };
 
   const bottomObserver = useRef(null);
