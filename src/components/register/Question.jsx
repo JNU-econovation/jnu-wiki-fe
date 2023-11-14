@@ -21,6 +21,7 @@ const QuestionBtnStyle = styled.div`
   font-size: 15px;
   margin-left: 1rem;
   margin-bottom: 5rem;
+  cursor: pointer;
 `;
 
 export default Question;
