@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 import debounce from "lodash/debounce";
 import throttle from "lodash/throttle";
 import SearchItem from "./SearchItem";
-import { useSelector } from "react-redux";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import { HELPER_MSG } from "@/constant/helpermsg";
 
 const StyledSearchBar = styled.input`
   width: 40rem;
@@ -48,12 +48,10 @@ const Container = styled.div`
 const SearchBar = () => {
   const focusRef = useRef(null);
   const searchRef = useRef(null);
+  const navigate = useNavigate();
   const [clickedSearch, setClickedSearch] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-
-  const navigate = useNavigate();
-  const isLogin = useSelector((state) => state.user.isLogin);
 
   useEffect(() => {
     const handleOnClickedSearch = (e) => {
@@ -98,27 +96,13 @@ const SearchBar = () => {
   );
 
   const handleOnClick = (el) => {
-    if (isLogin) {
-      navigate(`/document/${el}`);
-      setClickedSearch(false);
-    } else {
-      return toast.warning("로그인 후 열람 가능합니다.");
-    }
+    navigate(`/document/${el}`);
+    setClickedSearch(false);
   };
 
   return (
     <>
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
+      <ToastContainer />
       <div>
         <StyledSearchBar
           type="search"
@@ -151,7 +135,7 @@ const SearchBar = () => {
             )
           : clickedSearch &&
             inputValue && (
-              <Container ref={searchRef}>검색 결과가 없습니다. 🥲</Container>
+              <Container ref={searchRef}>{HELPER_MSG.NO_SEARCH}</Container>
             )}
       </div>
     </>

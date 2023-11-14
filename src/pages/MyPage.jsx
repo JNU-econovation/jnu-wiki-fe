@@ -7,7 +7,7 @@ const MyPage = () => {
   const user = useSelector((state) => state.user);
   return (
     <>
-      <MainLayout myActive={true}>
+      <MainLayout myPageClicked={true}>
         {localStorage.getItem("token") && user.isLogin ? (
           <MypageForm></MypageForm>
         ) : (

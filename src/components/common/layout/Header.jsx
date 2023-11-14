@@ -1,10 +1,8 @@
 import styled from "styled-components";
 import mainLogo from "/main-logo.png";
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "./Button";
 import routes from "@/routes";
-import Swal from "sweetalert2";
 import { SlLogout } from "react-icons/sl";
 import SearchBar from "@/components/search/SearchBar";
 import { getUserInfo } from "@/services/mypage";
@@ -12,6 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 import { logoutState } from "@/store/userReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { Cookies } from "react-cookie";
+import { popUpLogout } from "@/utils/alert";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -25,18 +24,6 @@ const Header = () => {
     select: (data) => data?.data?.response.nickName,
   });
 
-  const popUpLogout = () => {
-    return Swal.fire({
-      icon: "question",
-      text: "로그아웃 하시겠습니까?",
-      showCancelButton: true,
-      confirmButtonText: "예",
-      cancelButtonText: "아니오",
-      confirmButtonColor: "#429f50",
-      cancelButtonColor: "#d33",
-    });
-  };
-
   const logOutUser = () => {
     localStorage.clear();
     dispatch(logoutState());
@@ -44,18 +31,24 @@ const Header = () => {
     location.reload();
   };
 
+  const clickLogout = () => {
+    popUpLogout().then((result) => {
+      if (result.isConfirmed) {
+        logOutUser();
+      }
+    });
+  };
+
+  const reloadHome = () => {
+    navigate(routes.home);
+    location.reload();
+  };
+
   return (
     <>
       <Container>
         <HeaderDiv>
-          <LogoImg
-            src={mainLogo}
-            alt="jnu-logo"
-            onClick={() => {
-              navigate(routes.home);
-              location.reload();
-            }}
-          />
+          <LogoImg src={mainLogo} alt="jnu-logo" onClick={reloadHome} />
           <SearchBar />
           {!user.isLogin ? (
             <ButtonGroup>
@@ -79,16 +72,7 @@ const Header = () => {
             <ButtonGroup>
               <NameInfo>
                 <div>{nickName}</div>
-                <button
-                  className="logout-btn"
-                  onClick={() => {
-                    popUpLogout().then((result) => {
-                      if (result.isConfirmed) {
-                        logOutUser();
-                      }
-                    });
-                  }}
-                >
+                <button className="logout-btn" onClick={clickLogout}>
                   <SlLogout size={"21px"} />
                 </button>
               </NameInfo>

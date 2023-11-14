@@ -2,53 +2,41 @@ import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import MypageSidebar from "./MypageSidebar";
 import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { notClickState, onClickState } from "../../../store/sidebar";
+import { useState, useEffect } from "react";
 
 export const MenuIcon = styled.div`
   font-size: 2rem;
   padding: 0 1rem;
 `;
 
-const MenuList = ({ name, icons, route, isActive, scrapActive }) => {
-  const act = isActive;
-  const dispatch = useDispatch();
-  const click = useSelector((state) => state.sidebar.click);
-  // const [click, setClick] = useState(false);
-  const clickDown = (e) => {
-    console.log(e.target);
-    // setClick(!click);
-    click ? dispatch(notClickState()) : dispatch(onClickState());
+const MenuList = ({ name, icons, route, isActive, myPageClicked, onClick }) => {
+  const [clicked, setClicked] = useState(myPageClicked);
+  const [act, setAct] = useState(isActive);
 
-    console.log(click);
+  const handleOnClick = (e) => {
+    e.preventDefault();
+    setClicked((prev) => !prev);
   };
+
+  useEffect(() => {
+    if (clicked) {
+      setAct(true);
+    }
+  }, []);
+
   return (
     <>
-      <NavStyle to={route} id={act ? "active" : null}>
+      <NavStyle to={route} id={act ? "active" : null} onClick={onClick}>
         <MenuIcon>{icons}</MenuIcon>
         {name}
-        {name === "마이페이지" ? (
-          click ? (
-            <BsFillCaretUpFill className="icon" onClick={(e) => clickDown(e)} />
+        {name === "마이페이지" &&
+          (clicked ? (
+            <BsFillCaretUpFill className="icon" onClick={handleOnClick} />
           ) : (
-            <BsFillCaretDownFill
-              className="icon"
-              onClick={(e) => clickDown(e)}
-            />
-          )
-        ) : (
-          <></>
-        )}
+            <BsFillCaretDownFill className="icon" onClick={handleOnClick} />
+          ))}
       </NavStyle>
-      {name === "마이페이지" && (
-        <>
-          {click && <MypageSidebar scrapActive={scrapActive}></MypageSidebar>}
-          {/* {isActive ? (
-            <MypageSidebar scrapActive={scrapActive}></MypageSidebar>
-          ) : null} */}
-        </>
-      )}
+      {clicked && <MypageSidebar isActive={act} />}
     </>
   );
 };

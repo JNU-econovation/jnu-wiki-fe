@@ -14,11 +14,11 @@ const AddPost = () => {
   return (
     <>
       <MainLayout onClick={handleShow} />
-      {show ? (
+      {show && (
         <DocumentWrapper>
           <CreateDocument />
         </DocumentWrapper>
-      ) : undefined}
+      )}
       <Map />
     </>
   );

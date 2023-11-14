@@ -3,14 +3,15 @@ import DocumentInputGroup from "./DocumentInputGroup";
 import DocumentLabel from "./DocumentLabel";
 import SelectMenu from "./SelectMenu";
 import Button from "@/components/common/layout/Button";
-import { helperMsg } from "@/constant/helpermsg";
+import { HELPER_MSG } from "@/constant/helpermsg";
 import useInput from "@/hooks/useInput";
 import useValidation from "@/hooks/useValidation";
 import { create } from "@/services/document";
 import { useDispatch, useSelector } from "react-redux";
-import Swal from "sweetalert2";
 import { useMutation } from "@tanstack/react-query";
-import { toast, ToastContainer } from "react-toastify";
+import { askAlert, cancelAlert, requestAlert } from "@/utils/alert";
+import { nullTokenWrite, occurError } from "@/utils/toast";
+import { ToastContainer } from "react-toastify";
 
 export const Container = styled.div`
   width: 20rem;
@@ -51,7 +52,6 @@ const CreateDocument = () => {
     docsName: "",
     docsLocation: "",
   });
-
   const inputData = {
     docsCategory: category || "카페",
     docsName: valueInit.docsName,
@@ -66,44 +66,6 @@ const CreateDocument = () => {
     mutationFn: create,
   });
 
-  const swalWithBootstrapButtons = Swal.mixin({
-    customClass: {
-      confirmButton: "btn btn-success",
-      cancelButton: "btn btn-danger",
-    },
-    buttonsStyling: true,
-  });
-
-  const askAlert = () => {
-    return swalWithBootstrapButtons.fire({
-      title: "문서를 등록하시겠습니까?",
-      html: `문서제목: ${inputData.docsName}<br/>
-      위치: ${address}<br/>
-      카테고리: ${inputData.docsCategory}`,
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "등록 요청",
-      cancelButtonText: "취소",
-      reverseButtons: true,
-    });
-  };
-
-  const cancelAlert = () => {
-    swalWithBootstrapButtons.fire(
-      "취소 완료",
-      "문서 등록 요청을 취소합니다.",
-      "error"
-    );
-  };
-
-  const requestAlert = () => {
-    swalWithBootstrapButtons.fire(
-      "문서 등록 요청 완료!",
-      "관리자의 승인 후 등록이 완료됩니다.",
-      "success"
-    );
-  };
-
   const handleClear = () => {
     reset();
     dispatch({ type: "clearAddress" });
@@ -117,9 +79,9 @@ const CreateDocument = () => {
       },
       onError: (error) => {
         if (!isLogin) {
-          alert("로그인 후 이용 가능합니다.");
+          nullTokenWrite();
         } else {
-          alert("문서 생성에 실패했습니다. 관리자에게 문의하세요.");
+          occurError();
           console.error(error);
         }
       },
@@ -128,44 +90,27 @@ const CreateDocument = () => {
 
   const handleRegisterAlert = () => {
     if (inputData.docsName && inputData.docsLocation.lat) {
-      askAlert().then((result) => {
-        if (result.isConfirmed) {
-          sendRequest();
+      askAlert(inputData.docsName, address, inputData.docsCategory).then(
+        (result) => {
+          if (result.isConfirmed) {
+            sendRequest();
+          }
         }
-      });
+      );
     }
   };
 
-  const handleNullToken = () => {
-    toast.warning("로그인 후 작성 가능합니다.");
-  };
-
-  const handleDisabled = () => {
-    return (
-      <Button
-        color="primary"
-        border="1px solid"
-        border-color="primary"
-        backgroundcolor="white"
-        disabled
-        onClick={handleCancel}
-      >
-        등록 취소
-      </Button>
-    );
-  };
-
-  const handleCancel = () => {
-    if (!isLogin) handleDisabled();
-    if (!inputData.docsName && !inputData.docsLocation) handleDisabled();
-    else {
+  const handleCancel = (e) => {
+    if (inputData.docsName === "" || inputData.docsLocation === "") {
+      e.preventDefault();
+    } else {
       cancelAlert();
       handleClear();
     }
   };
 
   const handleSubmit = () => {
-    if (!isLogin) handleNullToken();
+    if (!isLogin) nullTokenWrite();
     else {
       handleSetNameMsg("docsName", valueInit.docsName);
       handleSetLocationMsg("docsLocation", { lat: latitude, lng: longitude });
@@ -175,22 +120,12 @@ const CreateDocument = () => {
 
   return (
     <>
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
+      <ToastContainer />
       <Container>
         <DocumentInputGroup
           htmlFor="docsName"
           id="docsName"
-          placeholder={helperMsg.title}
+          placeholder={HELPER_MSG.NAME}
           value={valueInit.docsName}
           onChange={(e) => {
             handleOnChange(e);
@@ -203,7 +138,7 @@ const CreateDocument = () => {
         <DocumentInputGroup
           htmlFor="docsLocation"
           id="docsLocation"
-          placeholder={helperMsg.location}
+          placeholder={HELPER_MSG.LOCATION}
           value={address}
           disabled
           onChange={handleOnChange}

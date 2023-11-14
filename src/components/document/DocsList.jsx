@@ -2,49 +2,31 @@ import { useState } from "react";
 import DocsItem from "./DocsItem";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useQuery, useMutation } from "@tanstack/react-query";
 import { scrapCreate, scrapDelete } from "@/services/scrap";
-import { getUserInfo } from "@/services/mypage";
 import { useSelector } from "react-redux";
-import { toast, ToastContainer } from "react-toastify";
+import useDocsMutation from "@/hooks/useDocsMutation";
 
 const Container = styled.div`
   position: absolute;
   left: 15rem;
-  overflow-x: hidden;
   top: 6rem;
   padding: 2rem;
 
   background-color: white;
   box-shadow: 10px 0px 5px 0px rgba(0, 0, 0, 0.106);
+
+  overflow-y: auto;
+  max-height: calc(100vh - 6rem - 2 * 2rem);
 `;
 
 const DocsList = ({ data }) => {
   const navigate = useNavigate();
-
   const docsData = data?.pages.flatMap((x) => x.data.response.docsList) || [];
   const [scrapList, setScrapList] = useState([]);
-  const isLogin = useSelector((state) => state.user.isLogin);
+  const { memberId } = useSelector((state) => state.user);
 
-  const { data: memberId } = useQuery(["member_info"], getUserInfo, {
-    staleTime: Infinity,
-    select: (data) => data?.data?.response.id,
-    enabled: isLogin,
-  });
-
-  const { mutate: createScrap } = useMutation({
-    mutationFn: scrapCreate,
-    onError: (error) => {
-      console.error(error);
-    },
-  });
-
-  const { mutate: deleteScrap } = useMutation({
-    mutationFn: scrapDelete,
-    onError: (error) => {
-      console.error(error);
-    },
-  });
+  const { mutate: createScrap } = useDocsMutation(scrapCreate);
+  const { mutate: deleteScrap } = useDocsMutation(scrapDelete);
 
   const handleOnScrap = (el, scrap) => {
     const isSelected = scrapList.find((option) => option.id === el.docsId);
@@ -65,39 +47,22 @@ const DocsList = ({ data }) => {
   };
 
   const handleOnClick = (el) => {
-    if (isLogin) {
-      navigate(`/document/${el}`);
-    } else {
-      return toast.warning("로그인 후 열람 가능합니다.");
-    }
+    navigate(`/document/${el}`);
   };
 
   return (
-    <>
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
-      <Container>
-        {docsData.map((el) => (
-          <DocsItem
-            key={el.docsId}
-            name={el.docsName}
-            category={el.docsCategory}
-            onClick={() => handleOnClick(el.docsId)}
-            isScraped={el.scrap}
-            onScrapClick={(scrap) => handleOnScrap(el, scrap)}
-          />
-        ))}
-      </Container>
-    </>
+    <Container>
+      {docsData.map((el) => (
+        <DocsItem
+          key={el.docsId}
+          name={el.docsName}
+          category={el.docsCategory}
+          onClick={() => handleOnClick(el.docsId)}
+          isScraped={el.scrap}
+          onScrapClick={(scrap) => handleOnScrap(el, scrap)}
+        />
+      ))}
+    </Container>
   );
 };
 
