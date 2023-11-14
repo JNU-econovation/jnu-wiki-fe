@@ -312,6 +312,9 @@ const Document = ({ data }) => {
                 <MDEditor.Markdown
                   source={docsContent}
                   style={{ whiteSpace: "pre-wrap" }}
+                  wrapperElement={{
+                    "data-color-mode": "light",
+                  }}
                 />
               )}
             </Description>
