@@ -288,6 +288,9 @@ const Document = ({ data }) => {
                     value={contentValue}
                     onChange={handleOnContentChange}
                     preview="edit"
+                    wrapperElement={{
+                      "data-color-mode": "light",
+                    }}
                     components={{
                       toolbar: (command, disabled, executeCommand) => {
                         if (command.keyCommand === "code") {
