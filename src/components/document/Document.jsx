@@ -6,17 +6,17 @@ import DocumentInput from "./DocumentInput";
 import ToggleBtn from "./ToggleBtn";
 import styled from "styled-components";
 import SelectMenu from "./SelectMenu";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { contentModify, basicModify } from "@/services/document";
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import MDEditor from "@uiw/react-md-editor";
 import useInput from "@/hooks/useInput";
-import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ScrapBtn from "./ScrapBtn";
 import { scrapCreate, scrapDelete } from "@/services/scrap";
-import { getUserInfo } from "@/services/mypage";
+import { nullTokenEdit, successEdit, adminApproval } from "@/utils/toast";
+import { ToastContainer } from "react-toastify";
+import useDocsMutation from "@/hooks/useDocsMutation";
 
 const Group = styled.div`
   width: 22rem;
@@ -30,19 +30,7 @@ const Group = styled.div`
   background-color: white;
   box-shadow: 10px 0px 5px 0px rgba(0, 0, 0, 0.106);
   box-sizing: border-box;
-  overflow: scroll;
-  overflow-x: hidden;
-
-  &::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-    border-radius: 6px;
-    background: rgba(237, 214, 214, 0.4);
-  }
-  &::-webkit-scrollbar-thumb {
-    background: rgba(86, 77, 77, 0.3);
-    border-radius: 6px;
-  }
+  overflow: auto;
 
   #docsName,
   #docsLocation,
@@ -95,14 +83,7 @@ const DocsInfo = styled.div`
 `;
 
 const Document = ({ data }) => {
-  const queryClient = useQueryClient();
-  const isLogin = useSelector((state) => state.user.isLogin);
-
-  const { data: memberId } = useQuery(["member_info"], getUserInfo, {
-    staleTime: Infinity,
-    enabled: isLogin,
-    select: (data) => data?.data?.response.id,
-  });
+  const { isLogin, memberId } = useSelector((state) => state.user);
 
   const {
     id,
@@ -134,43 +115,17 @@ const Document = ({ data }) => {
   const [scraped, setScrap] = useState(isScraped);
   const [toggle, setToggle] = useState(true);
 
-  const { mutate: mutationBasicModify } = useMutation({
-    mutationFn: basicModify,
-    onSuccess: () => {
-      queryClient.invalidateQueries("detail_document");
-    },
-    onError: (error) => {
-      console.error(error);
-    },
-  });
-
-  const { mutate: mutationContentModify } = useMutation({
-    mutationFn: contentModify,
-    onSuccess: () => {
-      queryClient.invalidateQueries("detail_document");
-    },
-    onError: (error) => {
-      console.error(error);
-    },
-  });
-
-  const { mutate: scrapDetailCreate } = useMutation({
-    mutationFn: scrapCreate,
-    onError: (error) => {
-      console.error(error);
-    },
-  });
-
-  const { mutate: scrapDetailDelete } = useMutation({
-    mutationFn: scrapDelete,
-    onError: (error) => {
-      console.error(error);
-    },
-  });
+  const { mutate: mutationBasicModify } = useDocsMutation(basicModify);
+  const { mutate: mutationContentModify } = useDocsMutation(contentModify);
+  const { mutate: scrapDetailCreate } = useDocsMutation(scrapCreate);
+  const { mutate: scrapDetailDelete } = useDocsMutation(scrapDelete);
 
   const handleSetInput = () => {
-    setBasicEdit(true);
-    valueInit.docsName = docsName;
+    if (!isLogin) nullTokenEdit();
+    else {
+      setBasicEdit(true);
+      valueInit.docsName = docsName;
+    }
   };
 
   const handleAddressInfo = () => {
@@ -187,7 +142,7 @@ const Document = ({ data }) => {
       docsRequestLocation: addressInfo,
     });
 
-    toast.info("관리자 승인 후 갱신됩니다.");
+    adminApproval();
   };
 
   const handleBasicSave = () => {
@@ -205,13 +160,16 @@ const Document = ({ data }) => {
   };
 
   const handleInputContent = () => {
-    setEditContent(true);
-    setContentValue(docsContent);
+    if (!isLogin) nullTokenEdit();
+    else {
+      setEditContent(true);
+      setContentValue(docsContent);
+    }
   };
 
   const saveContentInfo = () => {
     mutationContentModify({ docs_id: id, docsContent: contentValue });
-    toast.success("내용이 수정되었습니다!");
+    successEdit();
   };
 
   const handleContentSave = () => {
@@ -242,17 +200,7 @@ const Document = ({ data }) => {
 
   return (
     <>
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
+      <ToastContainer />
       <Container>
         {toggle && (
           <Group>

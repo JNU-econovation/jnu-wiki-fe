@@ -5,18 +5,15 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { mypagescrap } from "@/services/mypage";
 import Loader from "@/components/common/layout/Loader";
 import { Suspense } from "react";
-import { useSelector } from "react-redux";
 import { useState } from "react";
 import MainLayout from "../common/layout/MainLayout";
 import DocumentWrapper from "../document/DocumentWrapper";
-import DocsList from "../document/DocsList";
 
 const MypageScrap = () => {
-  /** 무한스크롤 */
   const [show, setShow] = useState(true);
 
   const handleShow = () => {
-    setShow(!show);
+    setShow((prev) => !prev);
   };
 
   const bottomObserver = useRef(null);
@@ -59,17 +56,13 @@ const MypageScrap = () => {
     };
   }, [isLoading, hasNextPage, fetchNextPage]);
 
-  const title = data?.pages
-    .flatMap((x) => x?.data?.response.scrapList)
-    .map((x) => x?.docsName);
-
   return (
     <>
-      <MainLayout myActive={true} onClick={handleShow} />
+      <MainLayout myPageClicked={true} onClick={handleShow} />
       {show && (
         <DocumentWrapper>
           <Suspense fallback={<Loader />}>
-            {title?.length && <ScrapList datas={data} />}
+            <ScrapList datas={data} />
             <div style={{ height: "50px" }} ref={bottomObserver}></div>
           </Suspense>
         </DocumentWrapper>

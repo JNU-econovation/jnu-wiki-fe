@@ -3,11 +3,9 @@ import MainLayout from "@/components/common/layout/MainLayout.jsx";
 
 const MyInfoEdit = () => {
   return (
-    <div>
-      <MainLayout myActive={true}>
-        <MyInfoEditForm />
-      </MainLayout>
-    </div>
+    <MainLayout myPageClicked={true}>
+      <MyInfoEditForm />
+    </MainLayout>
   );
 };
 
