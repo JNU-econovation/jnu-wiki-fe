@@ -5,7 +5,6 @@ import useInput from "@/hooks/useInput";
 import styled from "styled-components";
 import routes from "@/routes";
 import { useNavigate } from "react-router-dom";
-// import { register, doubleCheck } from "@/services/api";
 import Question from "@/components/register/Question";
 import { useState, useEffect } from "react";
 import DoubleCheck from "@/components/register/DoubleCheck";
@@ -16,6 +15,7 @@ import { nicknameDoubleCheck } from "@/services/user";
 import { emailDBCheck } from "@/services/user";
 import Title from "@/components/register/Title";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
+import { set } from "lodash";
 
 export const Icons = styled.div`
   position: relative;
@@ -25,9 +25,7 @@ export const Icons = styled.div`
   color: #123e1cb8;
 `;
 
-const ResisterForm = () => {
-  //registerform 으로 바꾸기...ㅎ
-
+const RegisterForm = () => {
   const navigate = useNavigate();
   const { valueInit, handleOnChange } = useInput({
     username: "",
@@ -42,7 +40,8 @@ const ResisterForm = () => {
   const [doubleName, setDoubleName] = useState(false);
   const [doubleEmail, setDoubleEmail] = useState(false);
   const [isPassword, setIsPassword] = useState(true);
-  const [isPasswordConfirm, setIsPasswordConfirm] = useState(true);
+  const [passwordConfirm, setPasswordConfirm] = useState(true);
+  const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
 
   const emailDoubleCheck = (whatEmail) => {
     if (isEmail === true && whatEmail.length > 0) {
@@ -115,7 +114,8 @@ const ResisterForm = () => {
   useEffect(
     (e) => {
       if (valueInit.passwordConfirm.length > 0) {
-        setIsPasswordConfirm(
+        setIsPasswordConfirm(valueInit.passwordConfirm);
+        setPasswordConfirm(
           passwordReCheck(valueInit.password, valueInit.passwordConfirm)
         );
       }
@@ -139,16 +139,21 @@ const ResisterForm = () => {
         confirmButtonColor: "#429f50",
       });
     }
-
-    //회원가입 요청
+    if (!isPassword) {
+      setIsPassword(false);
+    }
+    if (!isPasswordConfirm) {
+      setPasswordConfirm(false);
+    }
     if (
       doubleName &&
       doubleEmail &&
       isName &&
       isEmail &&
-      isPassword &&
+      passwordConfirm &&
       isPasswordConfirm
     ) {
+      //회원가입 요청
       register({
         email: valueInit.email,
         password: valueInit.password,
@@ -168,7 +173,6 @@ const ResisterForm = () => {
         } else if (result.isDismissed) {
           location.href = routes.home;
         }
-        //resister .then 으로 위에 모달창 넣어주기.
       });
     }
   };
@@ -283,7 +287,7 @@ const ResisterForm = () => {
           onChange={(e) => {
             handleOnChange(e);
           }}
-          para={isPasswordConfirm ? null : "비밀번호가 다릅니다."}
+          para={passwordConfirm ? null : "비밀번호가 다릅니다."}
           margin={false}
         />
         <Icons onClick={handlePasswordType2}>{pwVisible2.icons}</Icons>
@@ -307,4 +311,4 @@ const Strong = styled.a`
   font-weight: 700;
 `;
 
-export default ResisterForm;
+export default RegisterForm;
