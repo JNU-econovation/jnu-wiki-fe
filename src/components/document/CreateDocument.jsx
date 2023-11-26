@@ -14,7 +14,7 @@ import { create } from "@/services/document";
 import { askAlert, cancelAlert, requestAlert } from "@/utils/alert";
 import { nullTokenWrite, occurError } from "@/utils/toast";
 
-export const Container = styled.div`
+export const Container = styled.form`
   width: 20rem;
   height: 100vh;
 
@@ -46,30 +46,22 @@ const CreateDocument = () => {
   const address = useSelector((state) => state.address.address);
   const category = useSelector((state) => state.category.category);
   const isLogin = useSelector((state) => state.user.isLogin);
-  const dispatch = useDispatch();
 
-  const { valueInit, handleOnChange, reset } = useInput({
-    docsCategory: "",
-    docsName: "",
-    docsLocation: "",
-  });
-  const inputData = {
-    docsCategory: category || "카페",
-    docsName: valueInit.docsName,
-    docsLocation: { lat: latitude, lng: longitude },
-  };
+  const [inputAddress, setInputAddress] = useState(address);
 
-  const { msg: nameMsg, handleSetMsg: handleSetNameMsg } = useValidation("");
-  const { msg: locationMsg, handleSetMsg: handleSetLocationMsg } =
-    useValidation("");
+  const methods = useForm();
 
   const { mutate } = useMutation({
     mutationFn: create,
   });
 
+  useEffect(() => {
+    setInputAddress(address);
+  }, [address]);
+
   const handleClear = () => {
-    reset();
-    dispatch({ type: "clearAddress" });
+    methods.reset();
+    setInputAddress("");
   };
 
   const sendRequest = () => {
@@ -110,69 +102,78 @@ const CreateDocument = () => {
     }
   };
 
-  const handleSubmit = () => {
-    if (!isLogin) nullTokenWrite();
-    else {
-      handleSetNameMsg("docsName", valueInit.docsName);
-      handleSetLocationMsg("docsLocation", { lat: latitude, lng: longitude });
-      handleRegisterAlert();
+  useEffect(() => {
+    address && methods.clearErrors(DOCS_INFO.LOCATION);
+  }, [address, methods]);
+
+  const onSubmit = (data) => {
+    event.preventDefault();
+
+    if (!isLogin) {
+      return nullTokenWrite();
     }
+
+    if (!address) {
+      return methods.setError(DOCS_INFO.LOCATION, {
+        message: ERROR_MSG.LOCATION,
+      });
+    }
+
+    methods.setValue(
+      DOCS_INFO.LOCATION,
+      { lat: latitude, lng: longitude },
+      { shouldValidate: true }
+    );
+
+    return handleRegisterAlert(data);
   };
 
   return (
     <>
-      <ToastContainer />
-      <Container>
+      <FormProvider {...methods}>
+        <Container onSubmit={methods.handleSubmit(onSubmit)}>
         <DocumentInputGroup
-          htmlFor="docsName"
-          id="docsName"
+            htmlFor={DOCS_INFO.NAME}
+            id={DOCS_INFO.NAME}
+            name={DOCS_INFO.NAME}
           placeholder={HELPER_MSG.NAME}
-          value={valueInit.docsName}
-          onChange={(e) => {
-            handleOnChange(e);
-            handleSetNameMsg(e.target.id, e.target.value);
-          }}
-          helperMsg={nameMsg}
+            requiredMsg={ERROR_MSG.NAME}
+            isLogin={isLogin}
         >
           문서 제목
         </DocumentInputGroup>
+
         <DocumentInputGroup
-          htmlFor="docsLocation"
-          id="docsLocation"
+            htmlFor={DOCS_INFO.LOCATION}
+            id={DOCS_INFO.LOCATION}
+            name={DOCS_INFO.LOCATION}
           placeholder={HELPER_MSG.LOCATION}
-          value={address}
+            value={inputAddress || ""}
           disabled
-          onChange={handleOnChange}
-          helperMsg={locationMsg}
         >
           위치
         </DocumentInputGroup>
-        <DocumentLabel htmlFor="docsCategory">카테고리</DocumentLabel>
-        <SelectMenu
-          id="docsCategory"
-          value={inputData.docsCategory}
-          onChange={handleOnChange}
-        />
+
+          <DocumentLabel htmlFor={DOCS_INFO.CATEGORY}>카테고리</DocumentLabel>
+          <SelectMenu id={DOCS_INFO.CATEGORY} name={DOCS_INFO.CATEGORY} />
+
         <StyledButton>
           <Button
             color="primary"
             border="1px solid"
             border-color="primary"
             backgroundcolor="white"
+              type="reset"
             onClick={handleCancel}
           >
             등록 취소
           </Button>
-          <Button
-            type="submit"
-            color="white"
-            backgroundcolor="primary"
-            onClick={handleSubmit}
-          >
+            <Button type="submit" color="white" backgroundcolor="primary">
             등록 요청
           </Button>
         </StyledButton>
       </Container>
+      </FormProvider>
     </>
   );
 };
