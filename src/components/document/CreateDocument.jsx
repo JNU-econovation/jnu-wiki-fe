@@ -88,9 +88,13 @@ const CreateDocument = () => {
     }
   };
 
-  const handleCancel = (e) => {
-    if (inputData.docsName === "" || inputData.docsLocation === "") {
-      e.preventDefault();
+  const handleCancel = () => {
+    if (!isLogin) {
+      return nullTokenWrite();
+    }
+
+    if (inputAddress === "") {
+      event.preventDefault();
     } else {
       cancelAlert();
       handleClear();
