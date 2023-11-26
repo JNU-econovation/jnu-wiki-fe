@@ -90,20 +90,12 @@ const CreateDocument = () => {
     }
   };
 
-  const handleCancel = () => {
-    if (!isLogin) {
-      return nullTokenWrite();
-    }
-
-    if (getValues(DOCS_INFO.NAME) || getValues(DOCS_INFO.LOCATION)) {
-      cancelAlert();
-      handleClear();
+  const onCancel = () => {
+    const isValidInput = getValues(DOCS_INFO.NAME) || inputAddress;
+    if (isValidInput) {
+      return handleClear();
     }
   };
-
-  useEffect(() => {
-    inputAddress && methods.clearErrors(DOCS_INFO.LOCATION);
-  }, [inputAddress, methods]);
 
   const onSubmit = (data) => {
     event.preventDefault();
@@ -151,7 +143,7 @@ const CreateDocument = () => {
             border-color="primary"
             backgroundcolor="white"
             type="reset"
-            onClick={handleCancel}
+            onClick={onCancel}
           >
             등록 취소
           </Button>
