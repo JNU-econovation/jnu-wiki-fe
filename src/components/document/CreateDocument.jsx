@@ -42,7 +42,7 @@ export const StyledButton = styled.div`
 `;
 
 const CreateDocument = () => {
-  let { latitude, longitude } = useSelector((state) => state.latLng);
+  const { latitude, longitude } = useSelector((state) => state.latLng);
   const address = useSelector((state) => state.address.address);
   const isLogin = useSelector((state) => state.user.isLogin);
 
