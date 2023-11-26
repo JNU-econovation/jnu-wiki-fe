@@ -64,16 +64,13 @@ const CreateDocument = () => {
     setInputAddress("");
   };
 
-  const sendRequest = () => {
-    mutate(inputData, {
+  const sendRequest = (data) => {
+    mutate(data, {
       onSuccess: () => {
         requestAlert();
         handleClear();
       },
       onError: (error) => {
-        if (!isLogin) {
-          nullTokenWrite();
-        } else {
           occurError();
           console.error(error);
         }
@@ -81,15 +78,13 @@ const CreateDocument = () => {
     });
   };
 
-  const handleRegisterAlert = () => {
-    if (inputData.docsName && inputData.docsLocation.lat) {
-      askAlert(inputData.docsName, address, inputData.docsCategory).then(
-        (result) => {
+  const handleRegisterAlert = (data) => {
+    if (data.docsName && data.docsLocation.lat) {
+      askAlert(data.docsName, address, data.docsCategory).then((result) => {
           if (result.isConfirmed) {
-            sendRequest();
+          sendRequest(data);
           }
-        }
-      );
+      });
     }
   };
 
