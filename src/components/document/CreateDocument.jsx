@@ -46,8 +46,6 @@ const CreateDocument = () => {
   const address = useSelector((state) => state.address.address);
   const isLogin = useSelector((state) => state.user.isLogin);
 
-  const [inputAddress, setInputAddress] = useState(address);
-
   const methods = useForm();
   const { reset, getValues, handleSubmit } = methods;
 
@@ -98,13 +96,12 @@ const CreateDocument = () => {
   };
 
   const onSubmit = (data) => {
-    event.preventDefault();
-
     if (!isLogin) {
       return nullTokenWrite();
     }
 
     setAddressError();
+    handleRegisterAlert(data);
   };
 
   return (
