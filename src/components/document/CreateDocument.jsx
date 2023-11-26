@@ -49,6 +49,7 @@ const CreateDocument = () => {
   const [inputAddress, setInputAddress] = useState(address);
 
   const methods = useForm();
+  const { getValues } = methods;
 
   const { mutate } = useMutation({
     mutationFn: create,
@@ -91,17 +92,15 @@ const CreateDocument = () => {
       return nullTokenWrite();
     }
 
-    if (inputAddress === "") {
-      event.preventDefault();
-    } else {
+    if (getValues(DOCS_INFO.NAME) || getValues(DOCS_INFO.LOCATION)) {
       cancelAlert();
       handleClear();
     }
   };
 
   useEffect(() => {
-    address && methods.clearErrors(DOCS_INFO.LOCATION);
-  }, [address, methods]);
+    inputAddress && methods.clearErrors(DOCS_INFO.LOCATION);
+  }, [inputAddress, methods]);
 
   const onSubmit = (data) => {
     event.preventDefault();
@@ -110,7 +109,7 @@ const CreateDocument = () => {
       return nullTokenWrite();
     }
 
-    if (!address) {
+    if (!inputAddress) {
       return methods.setError(DOCS_INFO.LOCATION, {
         message: ERROR_MSG.LOCATION,
       });
@@ -126,53 +125,51 @@ const CreateDocument = () => {
   };
 
   return (
-    <>
-      <FormProvider {...methods}>
-        <Container onSubmit={methods.handleSubmit(onSubmit)}>
-          <DocumentInputGroup
-            htmlFor={DOCS_INFO.NAME}
-            id={DOCS_INFO.NAME}
-            name={DOCS_INFO.NAME}
-            placeholder={HELPER_MSG.NAME}
-            requiredMsg={ERROR_MSG.NAME}
-            isLogin={isLogin}
-            autoFocus
+    <FormProvider {...methods}>
+      <Container onSubmit={methods.handleSubmit(onSubmit)}>
+        <DocumentInputGroup
+          htmlFor={DOCS_INFO.NAME}
+          id={DOCS_INFO.NAME}
+          name={DOCS_INFO.NAME}
+          placeholder={HELPER_MSG.NAME}
+          requiredMsg={ERROR_MSG.NAME}
+          isLogin={isLogin}
+          autoFocus
+        >
+          문서 제목
+        </DocumentInputGroup>
+
+        <DocumentInputGroup
+          htmlFor={DOCS_INFO.LOCATION}
+          id={DOCS_INFO.LOCATION}
+          name={DOCS_INFO.LOCATION}
+          placeholder={HELPER_MSG.LOCATION}
+          value={inputAddress || ""}
+          disabled
+        >
+          위치
+        </DocumentInputGroup>
+
+        <DocumentLabel htmlFor={DOCS_INFO.CATEGORY}>카테고리</DocumentLabel>
+        <SelectMenu id={DOCS_INFO.CATEGORY} name={DOCS_INFO.CATEGORY} />
+
+        <StyledButton>
+          <Button
+            color="primary"
+            border="1px solid"
+            border-color="primary"
+            backgroundcolor="white"
+            type="reset"
+            onClick={handleCancel}
           >
-            문서 제목
-          </DocumentInputGroup>
-
-          <DocumentInputGroup
-            htmlFor={DOCS_INFO.LOCATION}
-            id={DOCS_INFO.LOCATION}
-            name={DOCS_INFO.LOCATION}
-            placeholder={HELPER_MSG.LOCATION}
-            value={inputAddress || ""}
-            disabled
-          >
-            위치
-          </DocumentInputGroup>
-
-          <DocumentLabel htmlFor={DOCS_INFO.CATEGORY}>카테고리</DocumentLabel>
-          <SelectMenu id={DOCS_INFO.CATEGORY} name={DOCS_INFO.CATEGORY} />
-
-          <StyledButton>
-            <Button
-              color="primary"
-              border="1px solid"
-              border-color="primary"
-              backgroundcolor="white"
-              type="reset"
-              onClick={handleCancel}
-            >
-              등록 취소
-            </Button>
-            <Button type="submit" color="white" backgroundcolor="primary">
-              등록 요청
-            </Button>
-          </StyledButton>
-        </Container>
-      </FormProvider>
-    </>
+            등록 취소
+          </Button>
+          <Button type="submit" color="white" backgroundcolor="primary">
+            등록 요청
+          </Button>
+        </StyledButton>
+      </Container>
+    </FormProvider>
   );
 };
 
