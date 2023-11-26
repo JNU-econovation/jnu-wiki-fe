@@ -136,6 +136,7 @@ const CreateDocument = () => {
             placeholder={HELPER_MSG.NAME}
             requiredMsg={ERROR_MSG.NAME}
             isLogin={isLogin}
+            autoFocus
           >
             문서 제목
           </DocumentInputGroup>
