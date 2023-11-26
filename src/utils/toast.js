@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 
 export const nullTokenWrite = () => {
-  return toast.warning("로그인 후 접근 가능합니다.", {
+  return toast.warning("로그인 후 요청 가능합니다.", {
     position: toast.POSITION.TOP_RIGHT,
   });
 };
