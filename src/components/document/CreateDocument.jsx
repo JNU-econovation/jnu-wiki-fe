@@ -2,7 +2,6 @@ import { FormProvider, useForm } from "react-hook-form";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { useMutation } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
 
 import DocumentInputGroup from "./DocumentInputGroup";
 import DocumentLabel from "./DocumentLabel";
@@ -11,8 +10,9 @@ import Button from "@/components/common/layout/Button";
 import { DOCS_INFO, ERROR_MSG } from "@/constant/document/create";
 import { HELPER_MSG } from "@/constant/document/helpermsg";
 import { create } from "@/services/document";
-import { askAlert, cancelAlert, requestAlert } from "@/utils/alert";
+import { askAlert, requestAlert } from "@/utils/alert";
 import { nullTokenWrite, occurError } from "@/utils/toast";
+import useHandleAddress from "@/hooks/usehandleAddress";
 
 export const Container = styled.form`
   width: 20rem;
@@ -49,19 +49,21 @@ const CreateDocument = () => {
   const [inputAddress, setInputAddress] = useState(address);
 
   const methods = useForm();
-  const { getValues } = methods;
+
+  const { inputAddress, clearAddress, setAddressError } = useHandleAddress(
+    methods,
+    address,
+    latitude,
+    longitude
+  );
 
   const { mutate } = useMutation({
     mutationFn: create,
   });
 
-  useEffect(() => {
-    setInputAddress(address);
-  }, [address]);
-
   const handleClear = () => {
     methods.reset();
-    setInputAddress("");
+    clearAddress();
   };
 
   const sendRequest = (data) => {
@@ -109,19 +111,7 @@ const CreateDocument = () => {
       return nullTokenWrite();
     }
 
-    if (!inputAddress) {
-      return methods.setError(DOCS_INFO.LOCATION, {
-        message: ERROR_MSG.LOCATION,
-      });
-    }
-
-    methods.setValue(
-      DOCS_INFO.LOCATION,
-      { lat: latitude, lng: longitude },
-      { shouldValidate: true }
-    );
-
-    return handleRegisterAlert(data);
+    setAddressError();
   };
 
   return (
