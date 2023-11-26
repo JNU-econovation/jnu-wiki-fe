@@ -44,7 +44,6 @@ export const StyledButton = styled.div`
 const CreateDocument = () => {
   let { latitude, longitude } = useSelector((state) => state.latLng);
   const address = useSelector((state) => state.address.address);
-  const category = useSelector((state) => state.category.category);
   const isLogin = useSelector((state) => state.user.isLogin);
 
   const [inputAddress, setInputAddress] = useState(address);
@@ -71,9 +70,8 @@ const CreateDocument = () => {
         handleClear();
       },
       onError: (error) => {
-          occurError();
-          console.error(error);
-        }
+        occurError();
+        console.error(error);
       },
     });
   };
@@ -81,9 +79,9 @@ const CreateDocument = () => {
   const handleRegisterAlert = (data) => {
     if (data.docsName && data.docsLocation.lat) {
       askAlert(data.docsName, address, data.docsCategory).then((result) => {
-          if (result.isConfirmed) {
+        if (result.isConfirmed) {
           sendRequest(data);
-          }
+        }
       });
     }
   };
@@ -131,47 +129,47 @@ const CreateDocument = () => {
     <>
       <FormProvider {...methods}>
         <Container onSubmit={methods.handleSubmit(onSubmit)}>
-        <DocumentInputGroup
+          <DocumentInputGroup
             htmlFor={DOCS_INFO.NAME}
             id={DOCS_INFO.NAME}
             name={DOCS_INFO.NAME}
-          placeholder={HELPER_MSG.NAME}
+            placeholder={HELPER_MSG.NAME}
             requiredMsg={ERROR_MSG.NAME}
             isLogin={isLogin}
-        >
-          문서 제목
-        </DocumentInputGroup>
+          >
+            문서 제목
+          </DocumentInputGroup>
 
-        <DocumentInputGroup
+          <DocumentInputGroup
             htmlFor={DOCS_INFO.LOCATION}
             id={DOCS_INFO.LOCATION}
             name={DOCS_INFO.LOCATION}
-          placeholder={HELPER_MSG.LOCATION}
+            placeholder={HELPER_MSG.LOCATION}
             value={inputAddress || ""}
-          disabled
-        >
-          위치
-        </DocumentInputGroup>
+            disabled
+          >
+            위치
+          </DocumentInputGroup>
 
           <DocumentLabel htmlFor={DOCS_INFO.CATEGORY}>카테고리</DocumentLabel>
           <SelectMenu id={DOCS_INFO.CATEGORY} name={DOCS_INFO.CATEGORY} />
 
-        <StyledButton>
-          <Button
-            color="primary"
-            border="1px solid"
-            border-color="primary"
-            backgroundcolor="white"
+          <StyledButton>
+            <Button
+              color="primary"
+              border="1px solid"
+              border-color="primary"
+              backgroundcolor="white"
               type="reset"
-            onClick={handleCancel}
-          >
-            등록 취소
-          </Button>
+              onClick={handleCancel}
+            >
+              등록 취소
+            </Button>
             <Button type="submit" color="white" backgroundcolor="primary">
-            등록 요청
-          </Button>
-        </StyledButton>
-      </Container>
+              등록 요청
+            </Button>
+          </StyledButton>
+        </Container>
       </FormProvider>
     </>
   );
