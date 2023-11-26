@@ -49,6 +49,7 @@ const CreateDocument = () => {
   const [inputAddress, setInputAddress] = useState(address);
 
   const methods = useForm();
+  const { reset, getValues, handleSubmit } = methods;
 
   const { inputAddress, clearAddress, setAddressError } = useHandleAddress(
     methods,
@@ -62,7 +63,7 @@ const CreateDocument = () => {
   });
 
   const handleClear = () => {
-    methods.reset();
+    reset();
     clearAddress();
   };
 
@@ -116,7 +117,7 @@ const CreateDocument = () => {
 
   return (
     <FormProvider {...methods}>
-      <Container onSubmit={methods.handleSubmit(onSubmit)}>
+      <Container onSubmit={handleSubmit(onSubmit)}>
         <DocumentInputGroup
           htmlFor={DOCS_INFO.NAME}
           id={DOCS_INFO.NAME}
