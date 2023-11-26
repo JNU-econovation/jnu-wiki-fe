@@ -14,8 +14,12 @@ const InputStyled = styled.input`
   }
 `;
 
-const DocumentInput = ({ children, ...inputProps }) => {
-  return <InputStyled {...inputProps}>{children}</InputStyled>;
+const DocumentInput = ({ register, children, ...inputProps }) => {
+  return (
+    <InputStyled {...register} {...inputProps}>
+      {children}
+    </InputStyled>
+  );
 };
 
 export default DocumentInput;
