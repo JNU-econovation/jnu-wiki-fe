@@ -32,7 +32,7 @@ instance.interceptors.response.use(
     if (refreshExpiredTime < new Date() || status == 401) {
       alert("로그인 시간이 만료되었습니다. 다시 로그인해주세요");
       localStorage.clear();
-      removeCookie("refresh-token");
+      // removeCookie("refresh-token");
 
       location.href = routes.login;
       return Promise.resolve(error.response.data.error.message);
@@ -44,7 +44,7 @@ instance.interceptors.response.use(
       try {
         axios
           .post(
-            "https://port-0-jnu-wiki-be-jvpb2alnsrolbp.sel5.cloudtype.app/members/refresh-token"
+            "https://port-0-jnu-wiki-be-jvpb2alnsrolbp.sel5.cloudtype.app/members/access-token"
           )
           .then((response) => {
             localStorage.setItem("token", response.headers.authorization);
@@ -64,7 +64,7 @@ instance.interceptors.response.use(
     }
 
     if (status === 500) {
-      console.log(error?.response?.data?.error?.message);
+      console.log(error?.response?.data.error.message);
     }
 
     return Promise.reject(error.response);
