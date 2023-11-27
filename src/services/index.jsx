@@ -1,7 +1,11 @@
 import axios from "axios";
 import routes from "@/routes";
-// axios.defaults.withCredentials = true;
+import { removeCookie } from "../utils/CookieFunc";
+
+axios.defaults.withCredentials = true;
+
 export const instance = axios.create({
+  // baseURL: "http://localhost:8080",
   baseURL: "https://port-0-jnu-wiki-be-jvpb2alnsrolbp.sel5.cloudtype.app/",
   timeout: 1000 * 5,
   headers: {
@@ -21,26 +25,48 @@ instance.interceptors.response.use(
   (response) => {
     return response;
   },
-  (error) => {
-    const {
-      // config,
-      response: { status },
-    } = error;
-    if (status === 403 || status === 500) {
-      // const originalRequest = config;
-      //refresh token 쿠키에서 꺼내서 헤더에 넣어 보내주기
-      // const { data } = instance.post("/members/refresh-token");
-      // localStorage.setItem("token", data.res.headers.authorization);
-    }
-    if (status == 401) {
+  async (error) => {
+    const status = error?.response?.status;
+    const accessExpiredTime = localStorage.getItem("accessExpiredTime");
+    const refreshExpiredTime = localStorage.getItem("refreshExpiredTime");
+    if (refreshExpiredTime < new Date() || status == 401) {
       alert("로그인 시간이 만료되었습니다. 다시 로그인해주세요");
       localStorage.clear();
+      removeCookie("refresh-token");
+
       location.href = routes.login;
       return Promise.resolve(error.response.data.error.message);
     }
+    if (
+      accessExpiredTime < new Date() - 10000 &&
+      refreshExpiredTime > new Date()
+    ) {
+      try {
+        axios
+          .post(
+            "https://port-0-jnu-wiki-be-jvpb2alnsrolbp.sel5.cloudtype.app/members/refresh-token"
+          )
+          .then((response) => {
+            localStorage.setItem("token", response.headers.authorization);
+            localStorage.setItem(
+              "accessExpiredTime",
+              parseInt(response.data.response.accessTokenExpiration)
+            );
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+
+        return instance(error.config);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    if (status === 500) {
+      console.log(error?.response?.data?.error?.message);
+    }
+
     return Promise.reject(error.response);
   }
 );
-//refresh token
-//401 에러 캐치(jwt 만료)
-// error.response.status == 403 ||

@@ -1,7 +1,5 @@
 import { instance } from "./index";
 
-const JWT_EXPIRRY_TIME = 24 * 3600 * 1000;
-
 export const login = async (data) => {
   const { email, password } = data;
   return await instance.post("members/login", {
@@ -20,16 +18,20 @@ export const register = (data) => {
 };
 //리프레시토큰 재 요청
 
-export const onSilentRefresh = () => {
-  instance
-    .post("/members/refresh-token", { withCredentials: true })
-    .then((response) => {
-      alert("성공");
-    })
-    .catch((error) => {
-      alert(error);
-    });
-};
+// export const reRequestAccess = (refresh) => {
+//   instance
+//     .post(
+//       "/members/refresh-token",
+//       { "refresh-token": refresh },
+//       { withCredentials: true }
+//     )
+//     .then((response) => {
+//       alert("성공");
+//     })
+//     .catch((error) => {
+//       alert(error);
+//     });
+// };
 // //로그인 성공 시
 // export const onLoginSuccess = (response) => {
 //   const accessToken = response.headers.authorization;

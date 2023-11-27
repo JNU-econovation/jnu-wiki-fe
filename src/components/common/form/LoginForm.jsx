@@ -14,7 +14,6 @@ import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { Icons } from "./RegisterForm";
 import { useDispatch } from "react-redux";
 import { loginState } from "@/store/userReducer";
-import { setCookie } from "@/utils/CookieFunc";
 
 const LoginForm = ({ marginBottom }) => {
   const dispatch = useDispatch();
@@ -67,7 +66,6 @@ const LoginForm = ({ marginBottom }) => {
           .then(
             (res) => {
               //로그인 성공시
-
               Swal.fire({
                 icon: "success",
                 title: "로그인 성공!",
@@ -76,9 +74,18 @@ const LoginForm = ({ marginBottom }) => {
               }).then((result) => {
                 if (result.isConfirmed) {
                   localStorage.setItem("token", res.headers.authorization);
+
+                  localStorage.setItem(
+                    "accessExpiredTime",
+                    parseInt(res.data.response.accessTokenExpiration)
+                  );
+                  localStorage.setItem(
+                    "refreshExpiredTime",
+                    parseInt(res.data.response.refreshTokenExpiration)
+                  );
+
                   dispatch(
                     loginState({
-                      nickname: "닉네임!",
                       role: res.data.response.role,
                       memberId: res.data.response.id,
                       isLogin: true,
