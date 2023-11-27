@@ -1,11 +1,12 @@
 import styled from "styled-components";
-import DocsItem from "@/components/document/DocsItem";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+
+import DocsItem from "@/components/document/DocsItem";
 import { scrapCreate, scrapDelete } from "@/services/scrap";
 import useDocsMutation from "@/hooks/useDocsMutation";
-import { useSelector } from "react-redux";
-import { HELPER_MSG } from "@/constant/helpermsg";
+import { HELPER_MSG } from "@/constant/document/helpermsg";
 
 const Container = styled.div`
   position: absolute;

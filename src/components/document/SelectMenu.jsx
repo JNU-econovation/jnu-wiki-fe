@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import category from "@/constant/category";
-import { useDispatch } from "react-redux";
+import { useFormContext } from "react-hook-form";
+
+import { CATEGORY } from "@/constant/document/create";
 
 const StyledSelected = styled.select`
   display: block;
@@ -18,24 +19,23 @@ const StyledSelected = styled.select`
   }
 `;
 
-const SelectMenu = ({ name, id, value, selected }) => {
-  const dispatch = useDispatch();
-
-  const handleCategoryChange = () => {
-    const selectedCategory = event.target.value;
-    dispatch({ type: "getCategory", payload: selectedCategory });
-  };
+const SelectMenu = ({ name, id, selected }) => {
+  const { register } = useFormContext();
 
   return (
     <StyledSelected
       name={name}
       id={id}
-      value={value}
-      onChange={handleCategoryChange}
       required
       defaultValue={selected}
+      {...register(name, {
+        required: true,
+      })}
     >
-      {category.map((item) => (
+      <option value="default" disabled>
+        카테고리를 선택하세요.
+      </option>
+      {CATEGORY.map((item) => (
         <option key={item} value={item}>
           {item}
         </option>
