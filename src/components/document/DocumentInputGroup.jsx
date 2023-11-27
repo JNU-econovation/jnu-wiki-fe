@@ -1,25 +1,42 @@
 import styled from "styled-components";
-import HelperMsg from "./HelperMsg";
+import { useFormContext } from "react-hook-form";
+
+import ErrorMsg from "./ErrorMsg";
 import DocumentLabel from "./DocumentLabel";
 import DocumentInput from "./DocumentInput";
 
 const Container = styled.div`
   display: block;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
 `;
 
 const DocumentInputGroup = ({
   htmlFor,
   children,
-  helperMsg,
+  requiredMsg,
+  name,
+  isLogin,
   ...inputProps
 }) => {
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext();
+
   return (
     <>
       <Container>
         <DocumentLabel htmlFor={htmlFor}>{children}</DocumentLabel>
-        <DocumentInput {...inputProps} />
-        <HelperMsg>{helperMsg}</HelperMsg>
+        <DocumentInput
+          register={
+            isLogin &&
+            register(name, {
+              required: requiredMsg,
+            })
+          }
+          {...inputProps}
+        />
+        <ErrorMsg errors={errors} name={name} />
       </Container>
     </>
   );

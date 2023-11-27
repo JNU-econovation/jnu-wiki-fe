@@ -1,13 +1,14 @@
 import styled from "styled-components";
 import { useState, useRef, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { searchDocs } from "@/services/document";
 import { useNavigate } from "react-router-dom";
 import debounce from "lodash/debounce";
 import throttle from "lodash/throttle";
-import SearchItem from "./SearchItem";
 import { ToastContainer } from "react-toastify";
-import { HELPER_MSG } from "@/constant/helpermsg";
+
+import { searchDocs } from "@/services/document";
+import SearchItem from "./SearchItem";
+import { HELPER_MSG } from "@/constant/document/helpermsg";
 
 const StyledSearchBar = styled.input`
   width: 40rem;
