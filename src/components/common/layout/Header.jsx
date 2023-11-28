@@ -10,7 +10,6 @@ import { useQuery } from "@tanstack/react-query";
 import { logoutState } from "@/store/userReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { popUpLogout } from "@/utils/alert";
-import { removeCookie } from "../../../utils/CookieFunc";
 
 const Header = () => {
   const navigate = useNavigate();

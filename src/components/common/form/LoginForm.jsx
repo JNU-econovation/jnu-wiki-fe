@@ -13,7 +13,7 @@ import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { Icons } from "./RegisterForm";
 import { useDispatch } from "react-redux";
 import { loginState } from "@/store/userReducer";
-import { loginFailAlert, loginSuccessAlert } from "../../../utils/alert";
+import { loginFailAlert, loginSuccessAlert } from "@/utils/alert";
 
 const LoginForm = ({ marginBottom }) => {
   const dispatch = useDispatch();

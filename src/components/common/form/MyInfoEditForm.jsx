@@ -13,7 +13,7 @@ import { styled } from "styled-components";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { nicknameDoubleCheck } from "@/services/user";
 import { useNavigate } from "react-router-dom";
-import { login } from "../../../services/user";
+import { login } from "@/services/user";
 
 const MyInfoEditForm = () => {
   const navigate = useNavigate();
