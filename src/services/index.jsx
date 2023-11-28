@@ -1,6 +1,5 @@
 import axios from "axios";
 import routes from "@/routes";
-import { removeCookie } from "../utils/CookieFunc";
 
 axios.defaults.withCredentials = true;
 
