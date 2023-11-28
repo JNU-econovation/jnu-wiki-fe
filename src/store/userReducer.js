@@ -2,9 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 // state의 초기값 (유저 정보)
 const initialState = {
+  memberId: "",
   role: "",
   isLogin: false,
-  accessToken: "",
 };
 
 // userSlice라는 이름으로 유저 Slice 생성
@@ -15,12 +15,12 @@ export const userSlice = createSlice({
     loginState: (state, action) => {
       state.role = action.payload.role;
       state.isLogin = true;
-      state.accessToken = action.payload.accessToken;
+      state.memberId = action.payload.memberId;
     },
     logoutState: (state) => {
       state.role = "";
       state.isLogin = false;
-      state.accessToken = "";
+      state.memberId = "";
     },
   },
 });

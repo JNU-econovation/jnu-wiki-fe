@@ -1,9 +1,6 @@
 import axios from "axios";
 import routes from "@/routes";
 
-import { loginState } from "@/store/userReducer";
-
-import { store } from "../store/store";
 axios.defaults.withCredentials = true;
 
 export const instance = axios.create({
@@ -15,12 +12,19 @@ export const instance = axios.create({
   },
 });
 
-const { dispatch } = store;
+instance.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    config.headers["Authorization"] = `${token}`;
+  }
+  return config;
+});
+
 instance.interceptors.response.use(
   (response) => {
     return response;
   },
-  async function (error) {
+  async (error) => {
     const status = error?.response?.status;
     const accessExpiredTime = localStorage.getItem("accessExpiredTime");
     const refreshExpiredTime = localStorage.getItem("refreshExpiredTime");
@@ -46,13 +50,7 @@ instance.interceptors.response.use(
             "https://port-0-jnu-wiki-be-jvpb2alnsrolbp.sel5.cloudtype.app/members/access-token"
           )
           .then((response) => {
-            //role 안하면 설정 안되려나 아님 default 로 바뀌려나...
-            dispatch(
-              loginState({
-                isLogin: true,
-                accessToken: response.headers.authorization,
-              })
-            );
+            localStorage.setItem("token", response.headers.authorization);
             localStorage.setItem(
               "accessExpiredTime",
               parseInt(response.data.response.accessTokenExpiration)
