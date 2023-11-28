@@ -9,11 +9,11 @@ import { useState, useEffect } from "react";
 import { emailCheck, passwordCheck } from "@/utils/regex";
 import Title from "@/components/register/Title";
 import { login } from "@/services/user";
-import Swal from "sweetalert2";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { Icons } from "./RegisterForm";
 import { useDispatch } from "react-redux";
 import { loginState } from "@/store/userReducer";
+import { loginFailAlert, loginSuccessAlert } from "../../../utils/alert";
 
 const LoginForm = ({ marginBottom }) => {
   const dispatch = useDispatch();
@@ -50,68 +50,45 @@ const LoginForm = ({ marginBottom }) => {
   );
 
   const GoLogin = (e) => {
-    //e.preventDefault();
     if (isEmail && isPassword) {
       if (whatEmail === null || whatPassword === null) {
-        Swal.fire({
-          icon: "warning",
-          text: "이메일과 비밀번호를 입력해주세요.",
-          confirmButtonColor: "#429f50",
-        });
+        loginFailAlert("이메일, 비밀번호를 입력해주세요.");
       } else {
         login({
           email: valueInit.email,
           password: valueInit.password,
         })
-          .then(
-            (res) => {
-              //로그인 성공시
-              Swal.fire({
-                icon: "success",
-                title: "로그인 성공!",
-                text: "홈 화면으로 이동합니다",
-                confirmButtonColor: "#429f50",
-              }).then((result) => {
-                if (result.isConfirmed) {
-                  localStorage.setItem("token", res.headers.authorization);
+          .then((res) => {
+            localStorage.setItem("token", res.headers.authorization);
+            localStorage.setItem(
+              "accessExpiredTime",
+              parseInt(res.data.response.accessTokenExpiration)
+            );
+            localStorage.setItem(
+              "refreshExpiredTime",
+              parseInt(res.data.response.refreshTokenExpiration)
+            );
 
-                  localStorage.setItem(
-                    "accessExpiredTime",
-                    parseInt(res.data.response.accessTokenExpiration)
-                  );
-                  localStorage.setItem(
-                    "refreshExpiredTime",
-                    parseInt(res.data.response.refreshTokenExpiration)
-                  );
-
-                  dispatch(
-                    loginState({
-                      role: res.data.response.role,
-                      memberId: res.data.response.id,
-                      isLogin: true,
-                    })
-                  );
-                  navigate(routes.home);
-                }
-              });
-            } //else
-          )
+            dispatch(
+              loginState({
+                role: res.data.response.role,
+                memberId: res.data.response.id,
+                isLogin: true,
+              })
+            );
+            loginSuccessAlert().then((result) => {
+              if (result.isConfirmed) {
+                navigate(routes.home);
+              }
+            });
+          })
           .catch((err) => {
             console.log(err);
-            Swal.fire({
-              icon: "warning",
-              title: "회원정보가 없습니다",
-              text: `이메일과 비밀번호를 확인해주세요`,
-              confirmButtonColor: "#2d790d",
-            });
+            loginFailAlert("회원 정보가 없습니다.");
           });
-      } //if
+      }
     } else {
-      Swal.fire({
-        icon: "warning",
-        text: "이메일, 비밀번호를 형식에 맞게 입력해주세요.",
-        confirmButtonColor: "#429f50",
-      });
+      loginFailAlert("이메일, 비밀번호를 형식에 맞게 입력해주세요.");
     }
   };
   const EnterLogin = (e) => {
