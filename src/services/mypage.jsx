@@ -1,25 +1,25 @@
-import { instance } from "./index";
+import { Instance } from "./index";
 
 /**
  * mypage scrap list
  */
 export const mypagescrap = (pageParam) => {
-  return instance.get(`members/scrap?page=${pageParam}`);
+  return Instance.get(`members/scrap?page=${pageParam}`);
 };
 
 ///mypage
 export const getUserInfo = () => {
-  return instance.get("members/info");
+  return Instance.get("members/info");
 };
 
 export const getChangeNickname = (Newnickname) => {
-  return instance.put("members/nickname", {
+  return Instance.put("members/nickname", {
     nickname: Newnickname,
   });
 };
 
 export const getChangePassword = (Newpassword) => {
-  return instance.put("members/password", {
+  return Instance.put("members/password", {
     password: Newpassword,
   });
 };

@@ -1,8 +1,8 @@
-import { instance } from "./index";
+import { Instance } from "./index";
 
 export const create = (data) => {
   const { docsName, docsCategory, docsLocation } = data;
-  return instance.post("/requests/new", {
+  return Instance.post("/requests/new", {
     docsRequestType: "CREATED",
     docsRequestCategory: docsCategory,
     docsRequestName: docsName,
@@ -15,11 +15,11 @@ export const detailDocument = (id = 1) => {
     throw Error("id가 없습니다.");
   }
 
-  return instance.get("/docs/" + id);
+  return Instance.get("/docs/" + id);
 };
 
 export const mapDocument = () => {
-  return instance.get("/docs");
+  return Instance.get("/docs");
 };
 
 export const docsList = ({
@@ -29,7 +29,7 @@ export const docsList = ({
   leftDownLa = 126.89218416518544,
   leftDownMa = 35.16927559740505,
 }) => {
-  return instance.get(
+  return Instance.get(
     `/docs?rightLat=${rightUpMa}&rightLng=${rightUpLa}&leftLat=${leftDownMa}&leftLng=${leftDownLa}&page=${pageParam}`
   );
 };
@@ -42,7 +42,7 @@ export const basicModify = (data) => {
     docsRequestName,
     docsRequestLocation,
   } = data;
-  return instance.post("/requests/update", {
+  return Instance.post("/requests/update", {
     docsId,
     docsRequestType,
     docsRequestCategory,
@@ -53,11 +53,11 @@ export const basicModify = (data) => {
 
 export const contentModify = (data) => {
   const { docs_id, docsContent } = data;
-  return instance.put(`/docs/${docs_id}`, {
+  return Instance.put(`/docs/${docs_id}`, {
     docsContent,
   });
 };
 
 export const searchDocs = (text) => {
-  return instance.get("/docs/search" + "?search=" + text);
+  return Instance.get("/docs/search" + "?search=" + text);
 };

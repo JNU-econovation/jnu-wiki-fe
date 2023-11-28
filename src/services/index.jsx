@@ -1,18 +1,22 @@
 import axios from "axios";
 import routes from "@/routes";
+import { useSelector } from "react-redux";
 
 axios.defaults.withCredentials = true;
 
-export const instance = axios.create({
-  // baseURL: "http://localhost:8080",
-  baseURL: "https://port-0-jnu-wiki-be-jvpb2alnsrolbp.sel5.cloudtype.app/",
-  timeout: 1000 * 5,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
+export const Instance = async () => {
+  const user = useSelector((state) => state.user);
+  axios.create({
+    // baseURL: "http://localhost:8080",
+    baseURL: "https://port-0-jnu-wiki-be-jvpb2alnsrolbp.sel5.cloudtype.app/",
+    timeout: 1000 * 5,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};
 
-instance.interceptors.request.use((config) => {
+Instance.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
   if (token) {
     config.headers["Authorization"] = `${token}`;
@@ -20,7 +24,7 @@ instance.interceptors.request.use((config) => {
   return config;
 });
 
-instance.interceptors.response.use(
+Instance.interceptors.response.use(
   (response) => {
     return response;
   },
@@ -60,7 +64,7 @@ instance.interceptors.response.use(
             console.log(error);
           });
 
-        return instance(error.config);
+        return Instance(error.config);
       } catch (err) {
         console.log(err);
       }

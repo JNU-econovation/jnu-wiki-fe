@@ -59,7 +59,6 @@ const LoginForm = ({ marginBottom }) => {
           password: valueInit.password,
         })
           .then((res) => {
-            localStorage.setItem("token", res.headers.authorization);
             localStorage.setItem(
               "accessExpiredTime",
               parseInt(res.data.response.accessTokenExpiration)
@@ -72,8 +71,8 @@ const LoginForm = ({ marginBottom }) => {
             dispatch(
               loginState({
                 role: res.data.response.role,
-                memberId: res.data.response.id,
                 isLogin: true,
+                accessToken: res.headers.authorization,
               })
             );
             loginSuccessAlert().then((result) => {

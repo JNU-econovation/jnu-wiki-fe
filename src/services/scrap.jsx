@@ -1,8 +1,8 @@
-import { instance } from "./index";
+import { Instance } from "./index";
 
 export const scrapCreate = (data) => {
   const { memberId, docsId } = data;
-  return instance.post(`/scrap/`, {
+  return Instance.post(`/scrap/`, {
     memberId,
     docsId,
   });
@@ -10,7 +10,7 @@ export const scrapCreate = (data) => {
 
 export const scrapDelete = (data) => {
   const { memberId, docsId } = data;
-  return instance.delete(`/scrap/`, {
+  return Instance.delete(`/scrap/`, {
     data: {
       memberId,
       docsId,
