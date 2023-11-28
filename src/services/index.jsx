@@ -1,34 +1,26 @@
 import axios from "axios";
 import routes from "@/routes";
-import { useSelector } from "react-redux";
 
+import { loginState } from "@/store/userReducer";
+
+import { store } from "../store/store";
 axios.defaults.withCredentials = true;
 
-export const Instance = async () => {
-  const user = useSelector((state) => state.user);
-  axios.create({
-    // baseURL: "http://localhost:8080",
-    baseURL: "https://port-0-jnu-wiki-be-jvpb2alnsrolbp.sel5.cloudtype.app/",
-    timeout: 1000 * 5,
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-};
-
-Instance.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
-  if (token) {
-    config.headers["Authorization"] = `${token}`;
-  }
-  return config;
+export const instance = axios.create({
+  // baseURL: "http://localhost:8080",
+  baseURL: "https://port-0-jnu-wiki-be-jvpb2alnsrolbp.sel5.cloudtype.app/",
+  timeout: 1000 * 5,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
-Instance.interceptors.response.use(
+const { dispatch } = store;
+instance.interceptors.response.use(
   (response) => {
     return response;
   },
-  async (error) => {
+  async function (error) {
     const status = error?.response?.status;
     const accessExpiredTime = localStorage.getItem("accessExpiredTime");
     const refreshExpiredTime = localStorage.getItem("refreshExpiredTime");
@@ -54,7 +46,13 @@ Instance.interceptors.response.use(
             "https://port-0-jnu-wiki-be-jvpb2alnsrolbp.sel5.cloudtype.app/members/access-token"
           )
           .then((response) => {
-            localStorage.setItem("token", response.headers.authorization);
+            //role 안하면 설정 안되려나 아님 default 로 바뀌려나...
+            dispatch(
+              loginState({
+                isLogin: true,
+                accessToken: response.headers.authorization,
+              })
+            );
             localStorage.setItem(
               "accessExpiredTime",
               parseInt(response.data.response.accessTokenExpiration)
@@ -64,7 +62,7 @@ Instance.interceptors.response.use(
             console.log(error);
           });
 
-        return Instance(error.config);
+        return instance(error.config);
       } catch (err) {
         console.log(err);
       }

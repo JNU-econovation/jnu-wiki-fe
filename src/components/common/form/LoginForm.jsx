@@ -17,6 +17,7 @@ import { loginFailAlert, loginSuccessAlert } from "@/utils/alert";
 
 const LoginForm = ({ marginBottom }) => {
   const dispatch = useDispatch();
+
   const navigate = useNavigate();
   const { valueInit, handleOnChange } = useInput({
     username: "",
@@ -75,6 +76,7 @@ const LoginForm = ({ marginBottom }) => {
                 accessToken: res.headers.authorization,
               })
             );
+
             loginSuccessAlert().then((result) => {
               if (result.isConfirmed) {
                 navigate(routes.home);
