@@ -29,15 +29,19 @@ instance.interceptors.response.use(
     const status = error?.response?.status;
     const accessExpiredTime = localStorage.getItem("accessExpiredTime");
     const refreshExpiredTime = localStorage.getItem("refreshExpiredTime");
-    if (refreshExpiredTime < new Date() || status == 401) {
+    if (
+      (refreshExpiredTime && refreshExpiredTime < new Date()) ||
+      status === 401
+    ) {
       alert("로그인 시간이 만료되었습니다. 다시 로그인해주세요");
       localStorage.clear();
-      // removeCookie("refresh-token");
 
       location.href = routes.login;
       return Promise.resolve(error.response.data.error.message);
     }
     if (
+      accessExpiredTime &&
+      refreshExpiredTime &&
       accessExpiredTime < new Date() - 10000 &&
       refreshExpiredTime > new Date()
     ) {
