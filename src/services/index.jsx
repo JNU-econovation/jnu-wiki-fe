@@ -58,6 +58,7 @@ instance.interceptors.response.use(
           })
           .catch((error) => {
             console.log(error);
+            return;
           });
 
         return instance(error.config);
