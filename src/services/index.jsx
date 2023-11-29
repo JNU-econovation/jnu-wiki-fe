@@ -44,27 +44,24 @@ instance.interceptors.response.use(
       accessExpiredTime < new Date() - 10000 &&
       refreshExpiredTime > new Date()
     ) {
-      try {
-        axios
-          .post(
-            "https://port-0-jnu-wiki-be-jvpb2alnsrolbp.sel5.cloudtype.app/members/access-token"
-          )
-          .then((response) => {
-            localStorage.setItem("token", response.headers.authorization);
-            localStorage.setItem(
-              "accessExpiredTime",
-              parseInt(response.data.response.accessTokenExpiration)
-            );
-          })
-          .catch((error) => {
-            console.log(error);
-            return;
-          });
+      originalConfig._retry = true;
+      axios
+        .post(
+          "https://port-0-jnu-wiki-be-jvpb2alnsrolbp.sel5.cloudtype.app/members/access-token"
+        )
+        .then((response) => {
+          localStorage.setItem("token", response.headers.authorization);
+          localStorage.setItem(
+            "accessExpiredTime",
+            parseInt(response.data.response.accessTokenExpiration)
+          );
+        })
+        .catch((error) => {
+          console.log(error);
+          return;
+        });
 
-        return instance(error.config);
-      } catch (err) {
-        console.log(err);
-      }
+      return instance(error.config);
     }
 
     if (status === 500) {
