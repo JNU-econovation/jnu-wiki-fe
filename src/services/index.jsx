@@ -1,5 +1,6 @@
 import axios from "axios";
 import routes from "@/routes";
+import { accessToken } from "./token";
 
 axios.defaults.withCredentials = true;
 
@@ -26,6 +27,7 @@ instance.interceptors.response.use(
   },
   async (error) => {
     const status = error?.response?.status;
+    const originalConfig = error?.config;
     const accessExpiredTime = localStorage.getItem("accessExpiredTime");
     const refreshExpiredTime = localStorage.getItem("refreshExpiredTime");
     if (
@@ -45,10 +47,7 @@ instance.interceptors.response.use(
       refreshExpiredTime > new Date()
     ) {
       originalConfig._retry = true;
-      axios
-        .post(
-          "https://port-0-jnu-wiki-be-jvpb2alnsrolbp.sel5.cloudtype.app/members/access-token"
-        )
+      accessToken()
         .then((response) => {
           localStorage.setItem("token", response.headers.authorization);
           localStorage.setItem(
