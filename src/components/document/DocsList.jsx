@@ -1,9 +1,10 @@
 import { useState } from "react";
-import DocsItem from "./DocsItem";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { scrapCreate, scrapDelete } from "@/services/scrap";
 import { useSelector } from "react-redux";
+
+import DocsItem from "./DocsItem";
+import { scrapCreate, scrapDelete } from "@/services/scrap";
 import useDocsMutation from "@/hooks/useDocsMutation";
 
 const Container = styled.div`
@@ -22,7 +23,7 @@ const Container = styled.div`
 
 const DocsList = ({ data }) => {
   const navigate = useNavigate();
-  const docsData = data?.pages.flatMap((x) => x.data.response.docsList) || [];
+  const docsData = data?.pages.flatMap((x) => x.data.response.docsList);
   const [scrapList, setScrapList] = useState([]);
   const { memberId } = useSelector((state) => state.user);
 
@@ -53,16 +54,20 @@ const DocsList = ({ data }) => {
 
   return (
     <Container>
-      {docsData.map((el) => (
-        <DocsItem
-          key={el.docsId}
-          name={el.docsName}
-          category={el.docsCategory}
-          onClick={() => handleOnClick(el.docsId)}
-          isScraped={el.scrap}
-          onScrapClick={(scrap) => handleOnScrap(el, scrap)}
-        />
-      ))}
+      {docsData && docsData.length > 0 ? (
+        docsData.map((el) => (
+          <DocsItem
+            key={el.docsId}
+            name={el.docsName}
+            category={el.docsCategory}
+            onClick={() => handleOnClick(el.docsId)}
+            isScraped={el.scrap}
+            onScrapClick={(scrap) => handleOnScrap(el, scrap)}
+          />
+        ))
+      ) : (
+        <DocsItem>현재 영역과 일치하는 문서가 없습니다.</DocsItem>
+      )}
     </Container>
   );
 };
