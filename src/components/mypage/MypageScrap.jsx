@@ -1,4 +1,4 @@
-import Map from "@/components/common/layout/Map";
+import Map from "@/components/map/Map";
 import ScrapList from "./ScrapList";
 import { useRef, useEffect } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";

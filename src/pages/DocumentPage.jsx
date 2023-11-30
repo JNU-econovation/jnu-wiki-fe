@@ -1,5 +1,5 @@
 import Document from "@/components/document/Document";
-import Map from "@/components/common/layout/Map";
+import Map from "@/components/map/Map";
 import MainLayout from "@/components/common/layout/MainLayout";
 import { useParams } from "react-router-dom";
 import { detailDocument } from "@/services/document";

@@ -1,5 +1,5 @@
 import MainLayout from "@/components/common/layout/MainLayout";
-import Map from "@/components/common/layout/Map";
+import Map from "@/components/map/Map";
 import CreateDocument from "@/components/document/CreateDocument";
 import DocumentWrapper from "@/components/document/DocumentWrapper";
 import { useState } from "react";
