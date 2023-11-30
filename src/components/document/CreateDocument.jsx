@@ -14,33 +14,6 @@ import { askAlert, requestAlert } from "@/utils/alert";
 import { nullTokenWrite, occurError } from "@/utils/toast";
 import useHandleAddress from "@/hooks/usehandleAddress";
 
-export const Container = styled.form`
-  width: 20rem;
-  height: 100vh;
-
-  position: fixed;
-  left: 15rem;
-  top: 6rem;
-  padding: 2rem;
-
-  background-color: white;
-  box-shadow: 10px 0px 5px 0px rgba(0, 0, 0, 0.106);
-
-  #docsName,
-  #docsLocation,
-  #docsCategory {
-    width: 20rem;
-    height: 2.4rem;
-    margin-top: 0.7rem;
-  }
-`;
-
-export const StyledButton = styled.div`
-  position: absolute;
-  right: 2rem;
-  bottom: 12rem;
-`;
-
 const CreateDocument = () => {
   const { latitude, longitude } = useSelector((state) => state.latLng);
   const address = useSelector((state) => state.address.address);
@@ -152,5 +125,32 @@ const CreateDocument = () => {
     </FormProvider>
   );
 };
+
+export const Container = styled.form`
+  width: 20rem;
+  height: 100vh;
+
+  position: fixed;
+  left: 15rem;
+  top: 6rem;
+  padding: 2rem;
+
+  background-color: white;
+  box-shadow: 10px 0px 5px 0px rgba(0, 0, 0, 0.106);
+
+  #docsName,
+  #docsLocation,
+  #docsCategory {
+    width: 20rem;
+    height: 2.4rem;
+    margin-top: 0.7rem;
+  }
+`;
+
+export const StyledButton = styled.div`
+  position: absolute;
+  right: 2rem;
+  bottom: 12rem;
+`;
 
 export default CreateDocument;
