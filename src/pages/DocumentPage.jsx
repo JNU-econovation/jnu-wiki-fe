@@ -4,6 +4,8 @@ import MainLayout from "@/components/common/layout/MainLayout";
 import { useParams } from "react-router-dom";
 import { detailDocument } from "@/services/document";
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+import ToggleBtn from "@/components/document/ToggleBtn";
 
 const DocumentPage = () => {
   const { id } = useParams();
@@ -12,10 +14,17 @@ const DocumentPage = () => {
     select: (data) => data?.data?.response,
   });
 
+  const [toggle, setToggle] = useState(true);
+
+  const clickToggle = () => {
+    setToggle((prev) => !prev);
+  };
+
   return (
     <>
       <MainLayout isActive={true}>
-        <Document data={data} />
+        {toggle && <Document data={data} />}
+        <ToggleBtn toggle={toggle} onClick={clickToggle} />
       </MainLayout>
       {data && (
         <Map
