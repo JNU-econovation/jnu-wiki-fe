@@ -15,7 +15,9 @@ import { nicknameDoubleCheck } from "@/services/user";
 import { emailDBCheck } from "@/services/user";
 import Title from "@/components/register/Title";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
-import { set } from "lodash";
+import { ErrorMessage } from "@hookform/error-message";
+import { useForm } from "react-hook-form";
+import { emailRegEx } from "../../../utils/regex";
 
 export const Icons = styled.div`
   position: relative;
@@ -44,7 +46,7 @@ const RegisterForm = () => {
   const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
 
   const emailDoubleCheck = (whatEmail) => {
-    if (isEmail === true && whatEmail.length > 0) {
+    if (!errors.email) {
       emailDBCheck(whatEmail)
         .then((e) => {
           setDoubleEmail(true);
@@ -123,58 +125,58 @@ const RegisterForm = () => {
     [valueInit.passwordConfirm, valueInit.password]
   );
   const GoJoin = (e) => {
-    e.preventDefault();
-    if (doubleEmail === false) {
-      Swal.fire({
-        icon: "warning",
-        text: "이메일 중복확인을 해주세요🥲",
-        confirmButtonText: "예",
-        confirmButtonColor: "#429f50",
-      });
-    } else if (doubleName === false) {
-      Swal.fire({
-        icon: "warning",
-        text: "닉네임 중복확인을 해주세요🥲",
-        confirmButtonText: "예",
-        confirmButtonColor: "#429f50",
-      });
-    }
-    if (!isPassword) {
-      setIsPassword(false);
-    }
-    if (!isPasswordConfirm) {
-      setPasswordConfirm(false);
-    }
-    if (
-      doubleName &&
-      doubleEmail &&
-      isName &&
-      isEmail &&
-      passwordConfirm &&
-      isPasswordConfirm
-    ) {
-      //회원가입 요청
-      register({
-        email: valueInit.email,
-        password: valueInit.password,
-        nickName: valueInit.username,
-      });
-      Swal.fire({
-        icon: "success",
-        title: "회원가입 성공!",
-        text: "로그인 페이지로 이동하시겠습니까?",
-        confirmButtonText: "예",
-        cancelButtonText: "아니오",
-        confirmButtonColor: "#429f50",
-        cancelButtonColor: "#d33",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          location.href = routes.login;
-        } else if (result.isDismissed) {
-          location.href = routes.home;
-        }
-      });
-    }
+    // e.preventDefault();
+    // if (doubleEmail === false) {
+    //   Swal.fire({
+    //     icon: "warning",
+    //     text: "이메일 중복확인을 해주세요🥲",
+    //     confirmButtonText: "예",
+    //     confirmButtonColor: "#429f50",
+    //   });
+    // } else if (doubleName === false) {
+    //   Swal.fire({
+    //     icon: "warning",
+    //     text: "닉네임 중복확인을 해주세요🥲",
+    //     confirmButtonText: "예",
+    //     confirmButtonColor: "#429f50",
+    //   });
+    // }
+    // if (!isPassword) {
+    //   setIsPassword(false);
+    // }
+    // if (!isPasswordConfirm) {
+    //   setPasswordConfirm(false);
+    // }
+    // if (
+    //   doubleName &&
+    //   doubleEmail &&
+    //   isName &&
+    //   isEmail &&
+    //   passwordConfirm &&
+    //   isPasswordConfirm
+    // ) {
+    //   //회원가입 요청
+    //   register({
+    //     email: valueInit.email,
+    //     password: valueInit.password,
+    //     nickName: valueInit.username,
+    //   });
+    //   Swal.fire({
+    //     icon: "success",
+    //     title: "회원가입 성공!",
+    //     text: "로그인 페이지로 이동하시겠습니까?",
+    //     confirmButtonText: "예",
+    //     cancelButtonText: "아니오",
+    //     confirmButtonColor: "#429f50",
+    //     cancelButtonColor: "#d33",
+    //   }).then((result) => {
+    //     if (result.isConfirmed) {
+    //       location.href = routes.login;
+    //     } else if (result.isDismissed) {
+    //       location.href = routes.home;
+    //     }
+    //   });
+    // }
   };
   const EnterJoin = (e) => {
     if (e.key === "Enter") {
@@ -219,10 +221,21 @@ const RegisterForm = () => {
       }
     });
   };
-  //이것도 훅으로 만들기......
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => console.log(data);
+  console.log(watch("email"));
+  console.log(watch);
+
   return (
     <>
-      <Container onKeyPress={EnterJoin}>
+      <Container onKeyPress={EnterJoin} onSubmit={handleSubmit(onSubmit)}>
         <Title fontSize="30px" margin="4.5rem 0 1rem 0">
           회원가입
         </Title>
@@ -236,61 +249,33 @@ const RegisterForm = () => {
           type="email"
           placeholder="전남대학교 이메일을 입력해주세요."
           label="이메일"
-          value={valueInit.email}
-          onChange={(e) => {
-            handleOnChange(e);
-          }}
-          para={isEmail ? null : "이메일 형식으로 작성해주세요. "}
           margin={true}
+          register={register}
+          doubleCheck={() => emailDoubleCheck(whatEmail)}
+          error={errors}
+          rules={{
+            required: "이메일을 입력해 주세요.",
+            pattern: {
+              value: emailRegEx,
+              message: "이메일 형식에 맞게 입력해주세요.",
+            },
+          }}
         />
-        <DoubleCheck
-          active={isEmail && whatEmail.length > 0 ? "true" : "false"}
-          onClick={() => emailDoubleCheck(whatEmail)}
-        ></DoubleCheck>
-        <InputGroup
-          id="username"
-          type="text"
-          placeholder="닉네임을 입력하세요."
-          label="닉네임"
-          value={valueInit.username}
-          onChange={handleOnChange}
-          para={isName ? null : "필수 입력사항 입니다."}
-          margin={true}
-        ></InputGroup>
-        <DoubleCheck
-          active={isName && whatName.length > 0 ? "true" : "false"}
-          onClick={(e) => NameDoubleCheck(whatName)}
-        ></DoubleCheck>
-        <InputGroup
-          id="password"
-          type={pwVisible.type}
-          placeholder="비밀번호를 입력하세요."
-          label="비밀번호"
-          value={valueInit.password}
-          onChange={(e) => {
-            handleOnChange(e);
-          }}
-          para={
-            isPassword
-              ? null
-              : "비밀번호는 영문, 숫자, 특수문자가 포함된 8~20자로 구성되어야 합니다."
+        <ErrorMessage
+          errors={errors}
+          // name={id}
+          render={({ messages }) =>
+            messages &&
+            Object.entries(messages).map(([type, message]) => (
+              <p key={type}>{message}</p>
+            ))
           }
-          margin={false}
         />
-        <Icons onClick={handlePasswordType}>{pwVisible.icons}</Icons>
-        <InputGroup
-          id="passwordConfirm"
-          type={pwVisible2.type}
-          placeholder="비밀번호 확인."
-          label="비밀번호 확인"
-          value={valueInit.passwordConfirm}
-          onChange={(e) => {
-            handleOnChange(e);
-          }}
-          para={passwordConfirm ? null : "비밀번호가 다릅니다."}
-          margin={false}
-        />
-        <Icons onClick={handlePasswordType2}>{pwVisible2.icons}</Icons>
+
+        {/* <DoubleCheck
+          active={errors.email ? false : true}
+          onClick={() => emailDoubleCheck(whatEmail)}
+        ></DoubleCheck> */}
         <Button margin="1rem 0 3rem 0" onClick={GoJoin}>
           회원가입
         </Button>

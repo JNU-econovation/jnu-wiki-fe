@@ -15,7 +15,7 @@ import { useDispatch } from "react-redux";
 import { loginState } from "@/store/userReducer";
 import { loginFailAlert, loginSuccessAlert } from "@/utils/alert";
 
-const LoginForm = ({ marginBottom }) => {
+const LoginForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { valueInit, handleOnChange } = useInput({

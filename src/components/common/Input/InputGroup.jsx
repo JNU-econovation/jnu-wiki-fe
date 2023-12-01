@@ -4,6 +4,7 @@ import Label from "@/components/register/Label";
 import AlertMessage from "@/components/register/AlertMessage";
 import DoubleCheck from "@/components/register/DoubleCheck";
 import styled from "styled-components";
+import { ErrorMessage } from "@hookform/error-message";
 
 const InputGroup = ({
   id,
@@ -13,12 +14,16 @@ const InputGroup = ({
   onChange,
   label,
   placeholder,
-  para,
   mypage,
   margin,
   btn,
   onClick,
+  register,
+  error,
+  rules,
+  doubleCheck,
 }) => {
+  console.log(error);
   return (
     <Box>
       <Label htmlFor={id} child={label} margin={margin}></Label>
@@ -32,11 +37,33 @@ const InputGroup = ({
           placeholder={placeholder}
           mypage={mypage}
           btn={btn}
+          register={register}
+          rules={rules}
         />
-        {btn ? <button onClick={(e) => onClick(e)}>변경</button> : null}
+        {/* <DoubleCheck active={!error} onClick={doubleCheck}></DoubleCheck> */}
+        {btn ? (
+          <button className="mypageBtn" onClick={(e) => onClick(e)}>
+            변경
+          </button>
+        ) : null}
+        {/* <ErrorMessage
+          errors={error}
+          name={id}
+          render={({ messages }) =>
+            messages &&
+            Object.entries(messages).map(([type, message]) => (
+              <AlertMessage key={type}>{message}</AlertMessage>
+            ))
+          }
+        /> */}
       </InputCss>
 
-      <AlertMessage para={para}></AlertMessage>
+      {/* {error?.type === "required" && (
+        <AlertMessage>{error?.message}</AlertMessage>
+      )}
+      {error?.type === "pattern" && (
+        <AlertMessage>{error?.message}</AlertMessage>
+      )} */}
     </Box>
   );
 };
@@ -46,7 +73,7 @@ const InputCss = styled.div`
   display: flex;
   align-items: center;
 
-  & > button {
+  & .mypageBtn {
     width: 53px;
     height: 33px;
     margin-left: 1rem;

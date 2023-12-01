@@ -1,8 +1,12 @@
 import styled from "styled-components";
 
-const Container = ({ children, marginBottom, onKeyPress }) => {
+const Container = ({ children, marginBottom, onKeyPress, onSubmit }) => {
   return (
-    <ContainerCss onKeyPress={onKeyPress} marginBottom={marginBottom}>
+    <ContainerCss
+      onKeyPress={onKeyPress}
+      marginBottom={marginBottom}
+      onSubmit={onSubmit}
+    >
       {children}
     </ContainerCss>
   );

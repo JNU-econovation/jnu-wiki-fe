@@ -10,8 +10,8 @@ const AlertStyle = styled.p`
   text-align: start;
 `;
 
-const AlertMessage = ({ para }) => {
-  return <AlertStyle>{para}</AlertStyle>;
+const AlertMessage = ({ children }) => {
+  return <AlertStyle>{children}</AlertStyle>;
 };
 
 export default AlertMessage;

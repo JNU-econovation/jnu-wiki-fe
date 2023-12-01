@@ -1,17 +1,45 @@
 import styled from "styled-components";
 
-const Input = ({ mypage, type, name, value, onChange, placeholder, id }) => {
+const Input = ({
+  mypage,
+  type,
+  name,
+  value,
+  onChange,
+  placeholder,
+  id,
+  register,
+  rules,
+}) => {
   return (
-    <InputField
-      id={id}
-      name={name}
-      value={value}
-      type={type}
-      placeholder={placeholder}
-      onChange={onChange}
-      autoComplete="off"
-      mypage={mypage}
-    />
+    <>
+      {/* {register && ( */}
+      <InputField
+        id={id}
+        name={name}
+        value={value}
+        type={type}
+        placeholder={placeholder}
+        onChange={onChange}
+        autoComplete="off"
+        mypage={mypage}
+        {...register(id, { ...rules })}
+      />
+
+      {/* )} */}
+      {/* {!register && (
+        <InputField
+          id={id}
+          name={name}
+          value={value}
+          type={type}
+          placeholder={placeholder}
+          onChange={onChange}
+          autoComplete="off"
+          mypage={mypage}
+        />
+      )} */}
+    </>
   );
 };
 

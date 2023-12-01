@@ -10,6 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 import { logoutState } from "@/store/userReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { popUpLogout } from "@/utils/alert";
+import { removeCookie } from "../../../services/cookie";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ const Header = () => {
 
   const logOutUser = () => {
     localStorage.clear();
+    removeCookie("refresh-token");
     dispatch(logoutState());
     location.reload();
   };
