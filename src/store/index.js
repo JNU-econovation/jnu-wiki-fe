@@ -11,7 +11,6 @@ import sidebar from "./sidebar";
 
 const persistConfig = {
   key: "root",
-  // localStorage에 저장.
   storage,
 
   whitelist: ["user"],

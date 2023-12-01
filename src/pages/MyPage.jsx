@@ -8,7 +8,7 @@ const MyPage = () => {
   return (
     <>
       <MainLayout myPageClicked={true}>
-        {localStorage.getItem("token") && user.isLogin ? (
+        {user.isLogin ? (
           <MypageForm></MypageForm>
         ) : (
           Swal.fire({
