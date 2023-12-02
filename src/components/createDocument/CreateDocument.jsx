@@ -64,7 +64,7 @@ const CreateDocument = () => {
   const onCancel = () => {
     const isValidInput = getValues(DOCS_INFO.NAME) || inputAddress;
     if (isValidInput) {
-      return handleClear();
+      handleClear();
     }
   };
 
