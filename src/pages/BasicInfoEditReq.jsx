@@ -4,7 +4,7 @@ import { Container } from "@/components/document/CreateDocument";
 import styled from "styled-components";
 import MapContainer from "@/components/map/MapContainer";
 import { useState, useEffect } from "react";
-import Button from "@/components/common/layout/Button";
+import Button from "@/components/common/button/Button";
 import { StyledButton } from "@/components/document/CreateDocument";
 import EditInfo from "@/components/admin/EditInfo";
 import { requestReject, editRequestApprove } from "@/services/user";

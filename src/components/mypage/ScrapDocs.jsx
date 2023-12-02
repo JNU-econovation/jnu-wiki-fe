@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import ScrapBtn from "@/components/document/ScrapBtn";
+import ScrapBtn from "@/components/common/button/ScrapBtn";
 import { useState } from "react";
 
 const ScrapStyle = styled.div`

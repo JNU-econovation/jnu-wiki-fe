@@ -3,7 +3,7 @@ import MainLayout from "@/components/common/layout/MainLayout";
 import { Container } from "@/components/document/CreateDocument";
 import MapContainer from "@/components/map/MapContainer";
 import { useEffect, useState } from "react";
-import Button from "@/components/common/layout/Button";
+import Button from "@/components/common/button/Button";
 import { StyledButton } from "@/components/document/CreateDocument";
 import EditInfo from "@/components/admin/EditInfo";
 import { TitleP } from "./BasicInfoEditReq";
