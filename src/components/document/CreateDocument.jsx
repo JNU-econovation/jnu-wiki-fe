@@ -23,7 +23,7 @@ const CreateDocument = () => {
   const methods = useForm();
   const { reset, getValues, handleSubmit } = methods;
 
-  const { inputAddress, clearAddress, setAddressError } = useHandleAddress(
+  const { inputAddress, clearAddress, isAddress } = useHandleAddress(
     methods,
     address,
     latitude,
@@ -74,7 +74,7 @@ const CreateDocument = () => {
       return nullTokenWrite();
     }
 
-    setAddressError();
+    isAddress();
     handleRegisterAlert(data);
   };
 
