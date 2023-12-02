@@ -5,11 +5,6 @@ import ErrorMsg from "@/components/document/ErrorMsg";
 import DocumentLabel from "@/components/document/DocumentLabel";
 import DocumentInput from "./DocumentInput";
 
-const Container = styled.div`
-  display: block;
-  margin-bottom: 3rem;
-`;
-
 const DocumentInputGroup = ({
   htmlFor,
   children,
@@ -41,5 +36,10 @@ const DocumentInputGroup = ({
     </>
   );
 };
+
+const Container = styled.div`
+  display: block;
+  margin-bottom: 3rem;
+`;
 
 export default DocumentInputGroup;

@@ -1,29 +1,5 @@
 import styled from "styled-components";
 
-const Group = styled.span`
-  display: flex;
-  align-items: center;
-  color: #216d32;
-  margin: 0.5rem 0 0.8rem 0;
-  width: 12rem;
-
-  .icon {
-    cursor: pointer;
-    font-size: 0.9rem;
-    margin: 0 0.3rem;
-    color: #736e6e;
-  }
-`;
-
-const StyledHeading = styled.p`
-  font-size: 1.4rem;
-  font-weight: bold;
-
-  margin-right: 1rem;
-  color: #216d32;
-  float: left;
-`;
-
 const DocumentHeading = ({
   children,
   clickEdit,
@@ -53,5 +29,29 @@ const DocumentHeading = ({
     </>
   );
 };
+
+const Group = styled.span`
+  display: flex;
+  align-items: center;
+  color: #216d32;
+  margin: 0.5rem 0 0.8rem 0;
+  width: 12rem;
+
+  .icon {
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin: 0 0.3rem;
+    color: #736e6e;
+  }
+`;
+
+const StyledHeading = styled.p`
+  font-size: 1.4rem;
+  font-weight: bold;
+
+  margin-right: 1rem;
+  color: #216d32;
+  float: left;
+`;
 
 export default DocumentHeading;

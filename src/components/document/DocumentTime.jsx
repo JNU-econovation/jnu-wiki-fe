@@ -1,13 +1,5 @@
 import styled from "styled-components";
 
-const Container = styled.div`
-  font-size: 0.7rem;
-  color: #89b090;
-  float: right;
-  text-align: right;
-  width: 12rem;
-`;
-
 const DocumentTime = ({ children }) => {
   return (
     <>
@@ -21,5 +13,13 @@ const DocumentTime = ({ children }) => {
     </>
   );
 };
+
+const Container = styled.div`
+  font-size: 0.7rem;
+  color: #89b090;
+  float: right;
+  text-align: right;
+  width: 12rem;
+`;
 
 export default DocumentTime;
