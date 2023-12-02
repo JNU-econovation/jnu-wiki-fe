@@ -27,11 +27,9 @@ const DocumentPage = () => {
         {toggle && <Document data={data} />}
         <ToggleBtn toggle={toggle} onClick={clickToggle} />
       </MainLayout>
+
       {data && (
-        <Map
-          apiLat={data?.docsLocation.lat || data?.docsRequestLocation?.lat}
-          apiLng={data?.docsLocation.lng || data?.docsRequestLocation?.lng}
-        />
+        <Map apiLat={data?.docsLocation.lat} apiLng={data?.docsLocation.lng} />
       )}
     </>
   );
