@@ -15,7 +15,7 @@ import { useDispatch } from "react-redux";
 import { loginState } from "@/store/userReducer";
 import { loginFailAlert, loginSuccessAlert } from "@/utils/alert";
 
-const LoginForm = ({ marginBottom }) => {
+const LoginForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { valueInit, handleOnChange } = useInput({
@@ -76,10 +76,8 @@ const LoginForm = ({ marginBottom }) => {
                 isLogin: true,
               })
             );
-            loginSuccessAlert().then((result) => {
-              if (result.isConfirmed) {
-                navigate(routes.home);
-              }
+            loginSuccessAlert().then(() => {
+              navigate(routes.home);
             });
           })
           .catch((err) => {

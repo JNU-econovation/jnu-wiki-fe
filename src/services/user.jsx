@@ -16,29 +16,6 @@ export const register = (data) => {
     nickName,
   });
 };
-//리프레시토큰 재 요청
-
-// export const reRequestAccess = (refresh) => {
-//   instance
-//     .post(
-//       "/members/refresh-token",
-//       { "refresh-token": refresh },
-//       { withCredentials: true }
-//     )
-//     .then((response) => {
-//       alert("성공");
-//     })
-//     .catch((error) => {
-//       alert(error);
-//     });
-// };
-// //로그인 성공 시
-// export const onLoginSuccess = (response) => {
-//   const accessToken = response.headers.authorization;
-//   localStorage.setItem("token", accessToken);
-
-//   // accessToken 만료하기 1분 전에 로그인 연장
-//   setTimeout(onSilentRefresh, JWT_EXPIRRY_TIME - 60000);
 
 // 닉네임 이메일 중복체크
 export const nicknameDoubleCheck = (name) => {
