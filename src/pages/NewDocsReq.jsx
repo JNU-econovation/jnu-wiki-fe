@@ -1,10 +1,12 @@
 import { useParams } from "react-router-dom";
 import MainLayout from "@/components/common/layout/MainLayout";
-import { Container } from "@/components/document/CreateDocument";
+import {
+  Container,
+  StyledButton,
+} from "@/components/createDocument/CreateDocument";
 import MapContainer from "@/components/map/MapContainer";
 import { useEffect, useState } from "react";
 import Button from "@/components/common/button/Button";
-import { StyledButton } from "@/components/document/CreateDocument";
 import EditInfo from "@/components/admin/EditInfo";
 import { TitleP } from "./BasicInfoEditReq";
 import { newDocsRequest, newRequestApprove } from "@/services/user";

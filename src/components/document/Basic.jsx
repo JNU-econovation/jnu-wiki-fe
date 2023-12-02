@@ -4,18 +4,17 @@ import { useState, useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 import DocumentHeading from "./DocumentHeading";
-import DocumentInput from "./DocumentInput";
-import SelectInput from "@/components/common/input/SelectInput";
-import { basicModify } from "@/services/document";
-import "react-toastify/dist/ReactToastify.css";
-import ScrapBtn from "@/components/common/button/ScrapBtn";
-import { scrapCreate, scrapDelete } from "@/services/scrap";
-import { nullTokenEdit, adminApproval } from "@/utils/toast";
-import useDocsMutation from "@/hooks/useDocsMutation";
-import { ERROR_MSG } from "@/constant/document/create";
 import ErrorMsg from "./ErrorMsg";
 import DocumentLabel from "./DocumentLabel";
-import { CATEGORY } from "@/constant/document/create";
+import DocumentInput from "@/components/createDocument/DocumentInput";
+import SelectInput from "@/components/common/input/SelectInput";
+import ScrapBtn from "@/components/common/button/ScrapBtn";
+import { basicModify } from "@/services/document";
+import { scrapCreate, scrapDelete } from "@/services/scrap";
+import "react-toastify/dist/ReactToastify.css";
+import { nullTokenEdit, adminApproval } from "@/utils/toast";
+import useDocsMutation from "@/hooks/useDocsMutation";
+import { ERROR_MSG, CATEGORY } from "@/constant/document/create";
 
 const Basic = ({ data }) => {
   const { isLogin, memberId } = useSelector((state) => state.user);

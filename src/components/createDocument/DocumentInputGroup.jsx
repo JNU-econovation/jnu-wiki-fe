@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { useFormContext } from "react-hook-form";
 
-import ErrorMsg from "./ErrorMsg";
-import DocumentLabel from "./DocumentLabel";
+import ErrorMsg from "@/components/document/ErrorMsg";
+import DocumentLabel from "@/components/document/DocumentLabel";
 import DocumentInput from "./DocumentInput";
 
 const Container = styled.div`

@@ -4,16 +4,15 @@ import { useSelector } from "react-redux";
 import { useMutation } from "@tanstack/react-query";
 
 import DocumentInputGroup from "./DocumentInputGroup";
-import DocumentLabel from "./DocumentLabel";
+import DocumentLabel from "@/components/document/DocumentLabel";
 import SelectInput from "@/components/common/input/SelectInput";
 import Button from "@/components/common/button/Button";
-import { DOCS_INFO, ERROR_MSG } from "@/constant/document/create";
+import { DOCS_INFO, ERROR_MSG, CATEGORY } from "@/constant/document/create";
 import { HELPER_MSG } from "@/constant/document/helpermsg";
 import { create } from "@/services/document";
 import { askAlert, requestAlert } from "@/utils/alert";
 import { nullTokenWrite, occurError } from "@/utils/toast";
 import useHandleAddress from "@/hooks/usehandleAddress";
-import { CATEGORY } from "@/constant/document/create";
 
 const CreateDocument = () => {
   const { latitude, longitude } = useSelector((state) => state.latLng);

@@ -5,13 +5,13 @@ import styled from "styled-components";
 import MainLayout from "@/components/common/layout/MainLayout";
 import MainMap from "@/components/map/MainMap";
 import Loader from "@/components/common/layout/Loader";
-import DocumentWrapper from "@/components/document/DocumentWrapper";
+import DocumentWrapper from "@/components/docsList/DocumentWrapper";
 import { docsList } from "@/services/document";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { delayForDocs } from "@/utils/delayForDocs";
 
 const DocsList = lazy(() =>
-  delayForDocs(import("@/components/document/DocsList"))
+  delayForDocs(import("@/components/docsList/DocsList"))
 );
 
 const DocumentListPage = () => {

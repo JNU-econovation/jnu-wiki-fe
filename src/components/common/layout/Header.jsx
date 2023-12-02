@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import mainLogo from "/main-logo.png";
 import { useNavigate } from "react-router-dom";
-import Button from "./Button";
+import Button from "@/components/common/button/Button";
 import routes from "@/routes";
 import { SlLogout } from "react-icons/sl";
 import SearchBar from "@/components/search/SearchBar";
