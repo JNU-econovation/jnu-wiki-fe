@@ -1,11 +1,12 @@
+import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+
 import Document from "@/components/document/Document";
 import Map from "@/components/map/Map";
 import MainLayout from "@/components/common/layout/MainLayout";
-import { useParams } from "react-router-dom";
 import { detailDocument } from "@/services/document";
-import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
-import ToggleBtn from "@/components/document/ToggleBtn";
+import ToggleBtn from "@/components/common/button/ToggleBtn";
 
 const DocumentPage = () => {
   const { id } = useParams();
