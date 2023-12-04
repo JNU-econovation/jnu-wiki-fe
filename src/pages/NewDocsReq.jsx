@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import MainLayout from "@/components/common/layout/MainLayout";
 import { Container } from "@/components/document/CreateDocument";
-import MapContainer from "@/components/Map/MapContainer";
+import MapContainer from "@/components/map/MapContainer";
 import { useEffect, useState } from "react";
 import Button from "@/components/common/layout/Button";
 import { StyledButton } from "@/components/document/CreateDocument";
