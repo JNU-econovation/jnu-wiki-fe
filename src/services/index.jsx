@@ -4,8 +4,7 @@ import routes from "@/routes";
 axios.defaults.withCredentials = true;
 
 export const instance = axios.create({
-  // baseURL: "http://localhost:8080",
-  baseURL: "https://port-0-jnu-wiki-be-jvpb2alnsrolbp.sel5.cloudtype.app/",
+  baseURL: import.meta.env.VITE_BASE_URL,
   timeout: 1000 * 5,
   headers: {
     "Content-Type": "application/json",
@@ -44,10 +43,7 @@ instance.interceptors.response.use(
     ) {
       originalConfig._retry = true;
       axios
-        .post(
-          "https://port-0-jnu-wiki-be-jvpb2alnsrolbp.sel5.cloudtype.app/members/access-token"
-          // "http://localhost:8080/members/access-token"
-        )
+        .post(import.meta.env.VITE_BASE_URL + "members/access-token")
         .then((response) => {
           localStorage.setItem("token", response.headers.authorization);
           localStorage.setItem(
