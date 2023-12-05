@@ -79,6 +79,7 @@ const LoginForm = () => {
             loginSuccessAlert().then((result) => {
               if (result.isConfirmed) {
                 navigate(routes.home);
+                location.reload();
               }
             });
           })
