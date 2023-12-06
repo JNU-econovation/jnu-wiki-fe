@@ -1,5 +1,13 @@
 import styled from "styled-components";
 
+const DocumentInput = ({ register, children, ...inputProps }) => {
+  return (
+    <InputStyled {...register} {...inputProps}>
+      {children}
+    </InputStyled>
+  );
+};
+
 const InputStyled = styled.input`
   display: block;
   box-sizing: border-box;
@@ -13,13 +21,5 @@ const InputStyled = styled.input`
     outline: 1.5px solid #216d32;
   }
 `;
-
-const DocumentInput = ({ register, children, ...inputProps }) => {
-  return (
-    <InputStyled {...register} {...inputProps}>
-      {children}
-    </InputStyled>
-  );
-};
 
 export default DocumentInput;

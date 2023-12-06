@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
-import DocsItem from "@/components/document/DocsItem";
+import DocsItem from "@/components/docsList/DocsItem";
 import { scrapCreate, scrapDelete } from "@/services/scrap";
 import useDocsMutation from "@/hooks/useDocsMutation";
 import { HELPER_MSG } from "@/constant/document/helpermsg";

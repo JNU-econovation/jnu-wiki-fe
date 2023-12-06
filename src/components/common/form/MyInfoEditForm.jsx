@@ -1,4 +1,4 @@
-import InputGroup from "@/components/common/Input/InputGroup";
+import InputGroup from "@/components/common/input/InputGroup";
 import Container from "@/components/register/Container";
 import Title from "@/components/register/Title";
 import DoubleCheck from "@/components/register/DoubleCheck";

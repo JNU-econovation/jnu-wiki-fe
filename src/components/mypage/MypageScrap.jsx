@@ -7,7 +7,7 @@ import Loader from "@/components/common/layout/Loader";
 import { Suspense } from "react";
 import { useState } from "react";
 import MainLayout from "../common/layout/MainLayout";
-import DocumentWrapper from "../document/DocumentWrapper";
+import DocumentWrapper from "@/components/docsList/DocumentWrapper";
 
 const MypageScrap = () => {
   const [show, setShow] = useState(true);
