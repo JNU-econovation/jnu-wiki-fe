@@ -8,7 +8,7 @@ export const login = async (data) => {
   });
 };
 
-export const register = (data) => {
+export const join = (data) => {
   const { email, password, nickName } = data;
   return instance.post("members/join", {
     email,

@@ -21,7 +21,7 @@ const InputGroup = ({
   doubleCheck,
   value,
 }) => {
-  console.log(error);
+  console.log(value);
   return (
     <Box>
       <Label htmlFor={id} child={label} margin={margin}></Label>
@@ -67,6 +67,7 @@ const InputCss = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
+  margin-bottom: 0.5rem;
 
   & .mypageBtn {
     width: 53px;

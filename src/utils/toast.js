@@ -35,3 +35,15 @@ export const nullTokenOpen = () => {
     position: toast.POSITION.TOP_RIGHT,
   });
 };
+
+export const doubleCheck = (content) => {
+  return toast.info(content, {
+    position: toast.POSITION.TOP_RIGHT,
+  });
+};
+
+export const doubleCheckError = (content) => {
+  return toast.warning(content, {
+    position: toast.POSITION.TOP_RIGHT,
+  });
+};
