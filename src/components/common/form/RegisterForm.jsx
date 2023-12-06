@@ -6,7 +6,6 @@ import routes from "@/routes";
 import { useNavigate } from "react-router-dom";
 import Question from "@/components/register/Question";
 import { useState } from "react";
-import { emailDBCheck } from "@/services/user";
 import Title from "@/components/register/Title";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
@@ -17,13 +16,12 @@ import {
   repasswordRule,
 } from "@/utils/registerRules";
 import { join } from "@/services/user";
-import { nicknameDoubleCheck } from "@/services/user";
-import { doubleCheck, doubleCheckError } from "@/utils/toast";
+import { doubleCheckError } from "@/utils/toast";
 import { joinSuccessAlert } from "@/utils/alert";
 import { JOIN_DOUBLE_CHECK } from "@/constant/document/auth";
 import { joinFailAlert } from "@/utils/alert";
 import { NameDoubleCheck, emailDoubleCheck } from "../user/DoubleCheck";
-const { FAILED, SUCCESS, DOUBLED } = JOIN_DOUBLE_CHECK;
+const { DOUBLED } = JOIN_DOUBLE_CHECK;
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -36,13 +34,13 @@ const RegisterForm = () => {
     onSuccess: () => {
       joinSuccessAlert();
     },
-    onError: (e) => {
-      console.log(e);
+    onError: (err) => {
+      console.log(err);
       joinFailAlert();
     },
   });
 
-  const GoJoin = (email, password, username) => {
+  const goJoin = (email, password, username) => {
     if (doubleEmail === false) {
       doubleCheckError(DOUBLED.EMAIL);
     } else if (doubleName === false) {
@@ -67,7 +65,7 @@ const RegisterForm = () => {
   } = useForm({ mode: "onChange" });
 
   const onSubmit = () => {
-    GoJoin(getValues("email"), getValues("password"), getValues("nickname"));
+    goJoin(getValues("email"), getValues("password"), getValues("nickname"));
   };
   const EnterJoin = (e) => {
     if (e.key === "Enter") {

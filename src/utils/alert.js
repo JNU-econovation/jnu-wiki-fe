@@ -51,15 +51,6 @@ export const popUpLogout = () => {
   });
 };
 
-export const loginSuccessAlert = () => {
-  return Swal.fire({
-    icon: "success",
-    title: "로그인 성공!",
-    text: "홈 화면으로 이동합니다",
-    confirmButtonColor: "#429f50",
-  });
-};
-
 export const loginFailAlert = (text) => {
   return Swal.fire({
     icon: "warning",
