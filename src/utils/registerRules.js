@@ -1,4 +1,4 @@
-import { passwordCheck, passwordRegEx } from "./regex";
+import { passwordRegEx } from "./regex";
 
 export const emailRule = {
   required: "이메일은 필수 입력 사항 입니다.",
@@ -24,4 +24,21 @@ export const passwordRule = {
     message:
       "비밀번호는 영문, 숫자, 특수문자가 포함된 8~20자로 구성되어야 합니다.",
   },
+};
+// export const repasswordRule = {
+//   required: "비밀번호 재 확인을 해주세요.",
+//   validate: {
+//     value: passwordReCheck(password, repassword),
+//     message: "비밀번호가 일치하지 않습니다.",
+//   },
+// };
+
+export const repasswordRule = (password) => {
+  return {
+    required: "비밀번호 재 확인을 해주세요.",
+    validate: {
+      passwordReCheck: (value) =>
+        value === password || "비밀번호가 일치하지 않습니다.",
+    },
+  };
 };

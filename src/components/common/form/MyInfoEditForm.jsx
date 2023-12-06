@@ -7,7 +7,7 @@ import { getUserInfo } from "@/services/mypage";
 import { getChangeNickname, getChangePassword } from "@/services/mypage";
 import Swal from "sweetalert2";
 import routes from "@/routes";
-import { passwordCheck, passwordReCheck } from "@/utils/regex";
+// import { passwordCheck, passwordReCheck } from "@/utils/regex";
 import MyBtn from "@/components/mypage/MyBtn";
 import { styled } from "styled-components";
 import { useQuery, useMutation } from "@tanstack/react-query";

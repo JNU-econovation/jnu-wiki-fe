@@ -56,6 +56,9 @@ const InputGroup = ({
       {error?.type === "maxLength" && (
         <AlertMessage>{error?.message}</AlertMessage>
       )}
+      {error?.type === "passwordReCheck" && (
+        <AlertMessage>{error?.message}</AlertMessage>
+      )}
     </Box>
   );
 };

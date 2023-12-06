@@ -6,7 +6,7 @@ import routes from "@/routes";
 import { useNavigate } from "react-router-dom";
 import Question from "@/components/register/Question";
 import { useState, useEffect } from "react";
-import { emailCheck, passwordCheck } from "@/utils/regex";
+// import { emailCheck, passwordCheck } from "@/utils/regex";
 import Title from "@/components/register/Title";
 import { login } from "@/services/user";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";

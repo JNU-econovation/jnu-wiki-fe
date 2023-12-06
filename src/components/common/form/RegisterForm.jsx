@@ -9,7 +9,7 @@ import Question from "@/components/register/Question";
 import { useState, useEffect } from "react";
 import DoubleCheck from "@/components/register/DoubleCheck";
 import { register } from "@/services/user";
-import { emailCheck, passwordCheck, passwordReCheck } from "@/utils/regex";
+
 import Swal from "sweetalert2";
 import { nicknameDoubleCheck } from "@/services/user";
 import { emailDBCheck } from "@/services/user";
@@ -17,11 +17,12 @@ import Title from "@/components/register/Title";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { ErrorMessage } from "@hookform/error-message";
 import { useForm } from "react-hook-form";
-import { emailRegEx } from "../../../utils/regex";
+
 import {
   emailRule,
   nicknameRule,
   passwordRule,
+  repasswordRule,
 } from "../../../utils/registerRules";
 
 export const Icons = styled.div`
@@ -158,9 +159,8 @@ const RegisterForm = () => {
       if (valueInit.passwordConfirm.length > 0) {
         setIsPasswordConfirm(valueInit.passwordConfirm);
 
-        setPasswordConfirm(
-          passwordReCheck(valueInit.password, valueInit.passwordConfirm)
-        );
+        setPasswordConfirm();
+        // passwordReCheck(valueInit.password, valueInit.passwordConfirm)
       }
     },
 
@@ -337,6 +337,16 @@ const RegisterForm = () => {
           error={errors.password}
           rules={passwordRule}
           value={getValues("password")}
+        />
+        <InputGroup
+          id="repassword"
+          placeholder="비밀번호를 입력해주세요."
+          label="비밀번호 확인"
+          margin={true}
+          register={register}
+          error={errors.repassword}
+          rules={repasswordRule(getValues("password"), getValues("repassword"))}
+          value={getValues("repassword")}
         />
 
         <Button margin="1rem 0 3rem 0" onClick={GoJoin}>
