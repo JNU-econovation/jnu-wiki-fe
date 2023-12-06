@@ -32,7 +32,7 @@ const LoginForm = () => {
   useEffect(
     (e) => {
       if (valueInit.email.length > 0) {
-        setIsEmail(emailCheck(valueInit.email));
+        // setIsEmail(emailCheck(valueInit.email));
         setWhatEmail(valueInit.email);
       }
     },
@@ -42,7 +42,7 @@ const LoginForm = () => {
   useEffect(
     (e) => {
       if (valueInit.password.length > 0) {
-        setIsPassword(passwordCheck(valueInit.password));
+        // setIsPassword(passwordCheck(valueInit.password));
         setWhatPassword(valueInit.password);
       }
     },

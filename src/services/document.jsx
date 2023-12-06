@@ -1,4 +1,5 @@
 import { instance } from "./index";
+import { INIT_BOUND } from "@/constant/map";
 
 export const create = (data) => {
   const { docsName, docsCategory, docsLocation } = data;
@@ -24,10 +25,10 @@ export const mapDocument = () => {
 
 export const docsList = ({
   pageParam,
-  rightUpLa = 126.92732024258463,
-  rightUpMa = 35.18296634520686,
-  leftDownLa = 126.89218416518544,
-  leftDownMa = 35.16927559740505,
+  rightUpLa = INIT_BOUND.RIGHT_LA,
+  rightUpMa = INIT_BOUND.RIGHT_MA,
+  leftDownLa = INIT_BOUND.LEFT_LA,
+  leftDownMa = INIT_BOUND.LEFT_MA,
 }) => {
   return instance.get(
     `/docs?rightLat=${rightUpMa}&rightLng=${rightUpLa}&leftLat=${leftDownMa}&leftLng=${leftDownLa}&page=${pageParam}`

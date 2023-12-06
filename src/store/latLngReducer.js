@@ -1,7 +1,6 @@
 const latLngState = {
   latitude: undefined,
   longitude: undefined,
-  center: undefined,
 };
 
 const latLngReducer = (state = latLngState, action) => {
@@ -10,10 +9,6 @@ const latLngReducer = (state = latLngState, action) => {
       return {
         latitude: action.payload.latitude,
         longitude: action.payload.longitude,
-      };
-    case "getCenter":
-      return {
-        center: action.payload.center,
       };
     default:
       return state;
