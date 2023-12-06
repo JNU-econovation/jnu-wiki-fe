@@ -23,7 +23,7 @@ const DoubleCheck = ({ onClick, active, left }) => {
     <DoubleCheckStyle
       left={left}
       type="button"
-      onClick={onClick}
+      onClick={active ? onClick : null}
       active={active}
     >
       중복 확인

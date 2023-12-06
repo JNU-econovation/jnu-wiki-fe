@@ -8,20 +8,18 @@ import { ErrorMessage } from "@hookform/error-message";
 
 const InputGroup = ({
   id,
-  name,
   type,
-  value,
-  onChange,
   label,
   placeholder,
   mypage,
   margin,
   btn,
-  onClick,
   register,
   error,
   rules,
+  // onChange,
   doubleCheck,
+  value,
 }) => {
   console.log(error);
   return (
@@ -31,39 +29,30 @@ const InputGroup = ({
         <Input
           id={id}
           type={type}
-          name={name}
-          value={value}
-          onChange={onChange}
           placeholder={placeholder}
           mypage={mypage}
           btn={btn}
           register={register}
           rules={rules}
         />
-        {/* <DoubleCheck active={!error} onClick={doubleCheck}></DoubleCheck> */}
-        {btn ? (
-          <button className="mypageBtn" onClick={(e) => onClick(e)}>
-            변경
-          </button>
-        ) : null}
-        {/* <ErrorMessage
-          errors={error}
-          name={id}
-          render={({ messages }) =>
-            messages &&
-            Object.entries(messages).map(([type, message]) => (
-              <AlertMessage key={type}>{message}</AlertMessage>
-            ))
-          }
-        /> */}
+        {doubleCheck && (
+          <DoubleCheck
+            active={value && !error}
+            onClick={doubleCheck}
+          ></DoubleCheck>
+        )}
+        {btn ? <button className="mypageBtn">변경</button> : null}
       </InputCss>
 
-      {/* {error?.type === "required" && (
+      {error?.type === "required" && (
         <AlertMessage>{error?.message}</AlertMessage>
       )}
       {error?.type === "pattern" && (
         <AlertMessage>{error?.message}</AlertMessage>
-      )} */}
+      )}
+      {error?.type === "jnuEmail" && (
+        <AlertMessage>{error?.message}</AlertMessage>
+      )}
     </Box>
   );
 };
