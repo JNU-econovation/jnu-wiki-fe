@@ -53,6 +53,9 @@ const InputGroup = ({
       {error?.type === "jnuEmail" && (
         <AlertMessage>{error?.message}</AlertMessage>
       )}
+      {error?.type === "maxLength" && (
+        <AlertMessage>{error?.message}</AlertMessage>
+      )}
     </Box>
   );
 };

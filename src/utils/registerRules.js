@@ -1,3 +1,5 @@
+import { passwordCheck, passwordRegEx } from "./regex";
+
 export const emailRule = {
   required: "이메일은 필수 입력 사항 입니다.",
   validate: {
@@ -13,4 +15,13 @@ export const emailRule = {
 export const nicknameRule = {
   required: "닉네임은 필수 입력 사항 입니다.",
   maxLength: { value: 15, message: "닉네임은 15자 이내로 입력해주세요." },
+};
+
+export const passwordRule = {
+  required: "비밀번호는 필수 입력 사항 입니다.",
+  pattern: {
+    value: passwordRegEx,
+    message:
+      "비밀번호는 영문, 숫자, 특수문자가 포함된 8~20자로 구성되어야 합니다.",
+  },
 };

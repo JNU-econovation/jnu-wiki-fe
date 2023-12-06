@@ -18,7 +18,11 @@ import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { ErrorMessage } from "@hookform/error-message";
 import { useForm } from "react-hook-form";
 import { emailRegEx } from "../../../utils/regex";
-import { emailRule, nicknameRule } from "../../../utils/registerRules";
+import {
+  emailRule,
+  nicknameRule,
+  passwordRule,
+} from "../../../utils/registerRules";
 
 export const Icons = styled.div`
   position: relative;
@@ -323,6 +327,16 @@ const RegisterForm = () => {
           error={errors.nickname}
           rules={nicknameRule}
           value={getValues("nickname")}
+        />
+        <InputGroup
+          id="password"
+          placeholder="비밀번호를 입력해주세요."
+          label="비밀번호"
+          margin={true}
+          register={register}
+          error={errors.password}
+          rules={passwordRule}
+          value={getValues("password")}
         />
 
         <Button margin="1rem 0 3rem 0" onClick={GoJoin}>
