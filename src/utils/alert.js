@@ -85,3 +85,9 @@ export const joinSuccessAlert = () => {
     }
   });
 };
+export const joinFailAlert = () => {
+  return Swal.fire({
+    icon: "error",
+    title: "회원가입 실패",
+  });
+};

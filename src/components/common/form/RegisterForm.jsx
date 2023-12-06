@@ -9,6 +9,7 @@ import { useState } from "react";
 import { emailDBCheck } from "@/services/user";
 import Title from "@/components/register/Title";
 import { useForm } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
 import {
   emailRule,
   nicknameRule,
@@ -19,7 +20,9 @@ import { join } from "@/services/user";
 import { nicknameDoubleCheck } from "@/services/user";
 import { doubleCheck, doubleCheckError } from "@/utils/toast";
 import { joinSuccessAlert } from "@/utils/alert";
-import { JOIN_DOUBLE_CHECK } from "../../../constant/document/auth";
+import { JOIN_DOUBLE_CHECK } from "@/constant/document/auth";
+import { joinFailAlert } from "@/utils/alert";
+import { NameDoubleCheck, emailDoubleCheck } from "../user/DoubleCheck";
 const { FAILED, SUCCESS, DOUBLED } = JOIN_DOUBLE_CHECK;
 
 const RegisterForm = () => {
@@ -28,30 +31,16 @@ const RegisterForm = () => {
   const [doubleName, setDoubleName] = useState(false);
   const [doubleEmail, setDoubleEmail] = useState(false);
 
-  const emailDoubleCheck = (email) => {
-    emailDBCheck(email)
-      .then(() => {
-        setDoubleEmail(true);
-        doubleCheck(SUCCESS.EMAIL);
-      })
-      .catch((e) => {
-        setDoubleEmail(false);
-        doubleCheckError(FAILED.EMAIL);
-        console.log(e);
-      });
-  };
-
-  const NameDoubleCheck = (name) => {
-    nicknameDoubleCheck(name)
-      .then(() => {
-        setDoubleName(true);
-        doubleCheck(SUCCESS.NICKNAME);
-      })
-      .catch((e) => {
-        setDoubleName(false);
-        doubleCheckError(FAILED.NICKNAME);
-      });
-  };
+  const joinMutation = useMutation({
+    mutationFn: (data) => join(data),
+    onSuccess: () => {
+      joinSuccessAlert();
+    },
+    onError: (e) => {
+      console.log(e);
+      joinFailAlert();
+    },
+  });
 
   const GoJoin = (email, password, username) => {
     if (doubleEmail === false) {
@@ -60,12 +49,12 @@ const RegisterForm = () => {
       doubleCheckError(DOUBLED.NICKNAME);
     }
     if (doubleName && doubleEmail && !errors.length) {
-      join({
+      const uploadPayload = {
         email: email,
-        password: password,
         nickName: username,
-      });
-      joinSuccessAlert();
+        password: password,
+      };
+      joinMutation.mutate(uploadPayload);
     }
   };
 
@@ -105,7 +94,7 @@ const RegisterForm = () => {
           margin={true}
           register={register}
           doubleCheck={() => {
-            emailDoubleCheck(getValues("email"));
+            emailDoubleCheck(getValues("email"), setDoubleEmail);
           }}
           error={errors.email}
           rules={emailRule}
@@ -118,7 +107,9 @@ const RegisterForm = () => {
           label="닉네임"
           margin={true}
           register={register}
-          doubleCheck={() => NameDoubleCheck(getValues("nickname"))}
+          doubleCheck={() =>
+            NameDoubleCheck(getValues("nickname"), setDoubleName)
+          }
           error={errors.nickname}
           rules={nicknameRule}
           value={watch("nickname")}

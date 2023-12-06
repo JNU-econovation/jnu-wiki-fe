@@ -9,12 +9,7 @@ export const login = async (data) => {
 };
 
 export const join = (data) => {
-  const { email, password, nickName } = data;
-  return instance.post("members/join", {
-    email,
-    password,
-    nickName,
-  });
+  return instance.post("members/join", data);
 };
 
 // 닉네임 이메일 중복체크
