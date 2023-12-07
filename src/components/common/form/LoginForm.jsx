@@ -49,7 +49,7 @@ const LoginForm = () => {
   };
 
   const goLogin = (email, password) => {
-    if (email && password) {
+    if (email && password && !errors.password && !errors.email) {
       const uploadPayload = {
         email: email,
         password: password,
@@ -57,12 +57,6 @@ const LoginForm = () => {
       logInMutation.mutate(uploadPayload);
     } else {
       loginFailAlert("이메일, 비밀번호를 형식에 맞게 입력해주세요.");
-    }
-  };
-
-  const EnterLogin = (e) => {
-    if (e.key === "Enter") {
-      handleSubmit(onSubmit);
     }
   };
 
@@ -80,7 +74,7 @@ const LoginForm = () => {
 
   return (
     <>
-      <Container onKeyPress={EnterLogin}>
+      <Container onSubmit={handleSubmit(onSubmit)}>
         <Title fontSize="30px" margin="4.5rem 0 1rem 0">
           로그인
         </Title>

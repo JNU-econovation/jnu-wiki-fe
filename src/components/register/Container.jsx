@@ -1,9 +1,14 @@
 import styled from "styled-components";
 
-const Container = ({ children, marginBottom, onKeyPress, onSubmit }) => {
+const Container = ({ children, marginBottom, onSubmit }) => {
+  const goEnter = (e) => {
+    if (e.key === "Enter") {
+      onSubmit();
+    }
+  };
   return (
     <ContainerCss
-      onKeyPress={onKeyPress}
+      onKeyPress={goEnter}
       marginBottom={marginBottom}
       onSubmit={onSubmit}
     >

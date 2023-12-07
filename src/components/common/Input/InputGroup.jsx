@@ -4,8 +4,7 @@ import Label from "@/components/register/Label";
 import AlertMessage from "@/components/register/AlertMessage";
 import DoubleCheck from "@/components/register/DoubleCheck";
 import styled from "styled-components";
-import { ErrorMessage } from "@hookform/error-message";
-
+import { DoubleCheckStyle } from "../../register/DoubleCheck";
 const InputGroup = ({
   id,
   type,
@@ -20,8 +19,8 @@ const InputGroup = ({
   // onChange,
   doubleCheck,
   value,
+  inputValue,
 }) => {
-  console.log(value);
   return (
     <Box>
       <Label htmlFor={id} child={label} margin={margin}></Label>
@@ -31,9 +30,9 @@ const InputGroup = ({
           type={type}
           placeholder={placeholder}
           mypage={mypage}
-          btn={btn}
           register={register}
           rules={rules}
+          inputValue={inputValue}
         />
         {doubleCheck && (
           <DoubleCheck
@@ -41,7 +40,9 @@ const InputGroup = ({
             onClick={doubleCheck}
           ></DoubleCheck>
         )}
-        {btn ? <button className="mypageBtn">변경</button> : null}
+        {btn && !doubleCheck && (
+          <ChangeButton className="mypageBtn">변경</ChangeButton>
+        )}
       </InputCss>
 
       {error?.type === "required" && (
@@ -67,24 +68,14 @@ const InputCss = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+`;
 
-  & .mypageBtn {
-    width: 53px;
-    height: 33px;
-    margin-left: 1rem;
-
-    background: #ffffff;
-    border: 1px solid #216d32;
-    border-radius: 8px;
-
-    font-weight: 400;
-    font-size: 15px;
-    line-height: 18px;
-    text-align: center;
-
-    color: #216d32;
-  }
+const ChangeButton = styled(DoubleCheckStyle)`
+  background-color: #ebebeb;
+  color: #216d32;
+  border: 1px solid #216d32;
 `;
 
 export default InputGroup;

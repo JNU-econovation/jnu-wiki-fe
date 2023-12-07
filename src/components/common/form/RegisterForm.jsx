@@ -67,15 +67,10 @@ const RegisterForm = () => {
   const onSubmit = () => {
     goJoin(getValues("email"), getValues("password"), getValues("nickname"));
   };
-  const EnterJoin = (e) => {
-    if (e.key === "Enter") {
-      handleSubmit(onSubmit);
-    }
-  };
 
   return (
     <>
-      <Container onKeyPress={EnterJoin}>
+      <Container onSubmit={handleSubmit(onSubmit)}>
         <Title fontSize="30px" margin="4.5rem 0 1rem 0">
           회원가입
         </Title>
