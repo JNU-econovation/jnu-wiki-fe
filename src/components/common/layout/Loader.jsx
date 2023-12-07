@@ -34,7 +34,7 @@ const Container = styled.div`
   }
 
   @keyframes loadingC {
-    0 {
+    0% {
       transform: translate(0, 0);
     }
     50% {
@@ -46,9 +46,9 @@ const Container = styled.div`
   }
 `;
 
-const Loader = () => {
+const Loader = ({ className }) => {
   return (
-    <Container>
+    <Container className={className}>
       <div className="load-wrapp">
         <div className="load-3">
           <div className="line"></div>

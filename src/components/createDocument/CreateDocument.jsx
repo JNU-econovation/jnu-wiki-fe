@@ -4,42 +4,15 @@ import { useSelector } from "react-redux";
 import { useMutation } from "@tanstack/react-query";
 
 import DocumentInputGroup from "./DocumentInputGroup";
-import DocumentLabel from "./DocumentLabel";
-import SelectMenu from "./SelectMenu";
-import Button from "@/components/common/layout/Button";
-import { DOCS_INFO, ERROR_MSG } from "@/constant/document/create";
+import DocumentLabel from "@/components/document/DocumentLabel";
+import SelectInput from "@/components/common/input/SelectInput";
+import Button from "@/components/common/button/Button";
+import { DOCS_INFO, ERROR_MSG, CATEGORY } from "@/constant/document/create";
 import { HELPER_MSG } from "@/constant/document/helpermsg";
 import { create } from "@/services/document";
 import { askAlert, requestAlert } from "@/utils/alert";
 import { nullTokenWrite, occurError } from "@/utils/toast";
 import useHandleAddress from "@/hooks/usehandleAddress";
-
-export const Container = styled.form`
-  width: 20rem;
-  height: 100vh;
-
-  position: fixed;
-  left: 15rem;
-  top: 6rem;
-  padding: 2rem;
-
-  background-color: white;
-  box-shadow: 10px 0px 5px 0px rgba(0, 0, 0, 0.106);
-
-  #docsName,
-  #docsLocation,
-  #docsCategory {
-    width: 20rem;
-    height: 2.4rem;
-    margin-top: 0.7rem;
-  }
-`;
-
-export const StyledButton = styled.div`
-  position: absolute;
-  right: 2rem;
-  bottom: 12rem;
-`;
 
 const CreateDocument = () => {
   const { latitude, longitude } = useSelector((state) => state.latLng);
@@ -49,7 +22,7 @@ const CreateDocument = () => {
   const methods = useForm();
   const { reset, getValues, handleSubmit } = methods;
 
-  const { inputAddress, clearAddress, setAddressError } = useHandleAddress(
+  const { inputAddress, clearAddress, isAddress } = useHandleAddress(
     methods,
     address,
     latitude,
@@ -91,7 +64,7 @@ const CreateDocument = () => {
   const onCancel = () => {
     const isValidInput = getValues(DOCS_INFO.NAME) || inputAddress;
     if (isValidInput) {
-      return handleClear();
+      handleClear();
     }
   };
 
@@ -100,7 +73,7 @@ const CreateDocument = () => {
       return nullTokenWrite();
     }
 
-    setAddressError();
+    isAddress();
     handleRegisterAlert(data);
   };
 
@@ -131,7 +104,11 @@ const CreateDocument = () => {
         </DocumentInputGroup>
 
         <DocumentLabel htmlFor={DOCS_INFO.CATEGORY}>카테고리</DocumentLabel>
-        <SelectMenu id={DOCS_INFO.CATEGORY} name={DOCS_INFO.CATEGORY} />
+        <SelectInput
+          id={DOCS_INFO.CATEGORY}
+          name={DOCS_INFO.CATEGORY}
+          list={CATEGORY}
+        />
 
         <StyledButton>
           <Button
@@ -152,5 +129,32 @@ const CreateDocument = () => {
     </FormProvider>
   );
 };
+
+export const Container = styled.form`
+  width: 20rem;
+  height: 100vh;
+
+  position: fixed;
+  left: 15rem;
+  top: 6rem;
+  padding: 2rem;
+
+  background-color: white;
+  box-shadow: 10px 0px 5px 0px rgba(0, 0, 0, 0.106);
+
+  #docsName,
+  #docsLocation,
+  #docsCategory {
+    width: 20rem;
+    height: 2.4rem;
+    margin-top: 0.7rem;
+  }
+`;
+
+export const StyledButton = styled.div`
+  position: absolute;
+  right: 2rem;
+  bottom: 12rem;
+`;
 
 export default CreateDocument;

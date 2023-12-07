@@ -16,7 +16,7 @@ const useHandleAddress = (methods, address, lat, lng) => {
     inputAddress && methods.clearErrors(DOCS_INFO.LOCATION);
   }, [inputAddress, methods]);
 
-  const setAddressError = () => {
+  const isAddress = () => {
     if (!inputAddress) {
       return methods.setError(DOCS_INFO.LOCATION, {
         message: ERROR_MSG.LOCATION,
@@ -30,7 +30,7 @@ const useHandleAddress = (methods, address, lat, lng) => {
       lng,
     });
 
-  return { inputAddress, clearAddress, setAddressError };
+  return { inputAddress, clearAddress, isAddress };
 };
 
 export default useHandleAddress;

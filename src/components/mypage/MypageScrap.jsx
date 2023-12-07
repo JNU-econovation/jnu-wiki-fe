@@ -1,4 +1,4 @@
-import Map from "@/components/common/layout/Map";
+import Map from "@/components/map/Map";
 import ScrapList from "./ScrapList";
 import { useRef, useEffect } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
@@ -7,7 +7,7 @@ import Loader from "@/components/common/layout/Loader";
 import { Suspense } from "react";
 import { useState } from "react";
 import MainLayout from "../common/layout/MainLayout";
-import DocumentWrapper from "../document/DocumentWrapper";
+import DocumentWrapper from "@/components/docsList/DocumentWrapper";
 
 const MypageScrap = () => {
   const [show, setShow] = useState(true);

@@ -10,42 +10,6 @@ import { searchDocs } from "@/services/document";
 import SearchItem from "./SearchItem";
 import { HELPER_MSG } from "@/constant/document/helpermsg";
 
-const StyledSearchBar = styled.input`
-  width: 40rem;
-  height: 3rem;
-  padding: 1.3rem;
-  z-index: 100000;
-  position: relative;
-  top: 0;
-  left: 0;
-
-  border: 0.5px solid #71717118;
-  border-radius: 10px;
-  box-shadow: 0px 0px 1px 0px rgba(9, 30, 66, 0.31),
-    0px 4px 4px 0px rgba(0, 0, 0, 0.2);
-
-  &::-webkit-input-placeholder {
-    background-image: url(https://cdn1.iconfinder.com/data/icons/hawcons/32/698627-icon-111-search-256.png);
-    background-size: contain;
-    background-repeat: no-repeat;
-    text-indent: 0;
-  }
-`;
-
-const Container = styled.div`
-  position: absolute;
-  top: 3rem;
-
-  width: 37.3rem;
-  height: 20rem;
-
-  padding: 3rem 1.3rem;
-
-  background-color: white;
-  border: 0.5px solid #71717118;
-  border-radius: 10px;
-`;
-
 const SearchBar = () => {
   const focusRef = useRef(null);
   const searchRef = useRef(null);
@@ -142,5 +106,41 @@ const SearchBar = () => {
     </>
   );
 };
+
+const StyledSearchBar = styled.input`
+  width: 40rem;
+  height: 3rem;
+  padding: 1.3rem;
+  z-index: 100000;
+  position: relative;
+  top: 0;
+  left: 0;
+
+  border: 0.5px solid #71717118;
+  border-radius: 10px;
+  box-shadow: 0px 0px 1px 0px rgba(9, 30, 66, 0.31),
+    0px 4px 4px 0px rgba(0, 0, 0, 0.2);
+
+  &::-webkit-input-placeholder {
+    background-image: url(https://cdn1.iconfinder.com/data/icons/hawcons/32/698627-icon-111-search-256.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    text-indent: 0;
+  }
+`;
+
+const Container = styled.div`
+  position: absolute;
+  top: 3rem;
+
+  width: 37.3rem;
+  height: 20rem;
+
+  padding: 3rem 1.3rem;
+
+  background-color: white;
+  border: 0.5px solid #71717118;
+  border-radius: 10px;
+`;
 
 export default SearchBar;

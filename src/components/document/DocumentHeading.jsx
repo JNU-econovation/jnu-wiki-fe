@@ -1,16 +1,46 @@
 import styled from "styled-components";
 
+const DocumentHeading = ({
+  children,
+  clickEdit,
+  clickSave,
+  clickCancel,
+  isEdit = false,
+}) => {
+  return (
+    <>
+      <Group>
+        <StyledHeading>{children}</StyledHeading>
+        {isEdit ? (
+          <>
+            <button className="icon save" onClick={clickSave}>
+              저장
+            </button>
+            <button type="button" className="icon cancel" onClick={clickCancel}>
+              취소
+            </button>
+          </>
+        ) : (
+          <button type="button" className="icon" onClick={clickEdit}>
+            편집
+          </button>
+        )}
+      </Group>
+    </>
+  );
+};
+
 const Group = styled.span`
   display: flex;
   align-items: center;
   color: #216d32;
-  margin-bottom: 0.5rem;
+  margin: 0.5rem 0 0.8rem 0;
   width: 12rem;
 
   .icon {
     cursor: pointer;
-    font-size: 0.8rem;
-    margin: 0 0.5rem;
+    font-size: 0.9rem;
+    margin: 0 0.3rem;
     color: #736e6e;
   }
 `;
@@ -19,64 +49,9 @@ const StyledHeading = styled.p`
   font-size: 1.4rem;
   font-weight: bold;
 
-  margin-right: 0.5rem;
+  margin-right: 1rem;
   color: #216d32;
   float: left;
 `;
-
-const DocumentHeading = ({
-  children,
-  clickEdit,
-  className,
-  contentSave,
-  contentCancel,
-  basicSave,
-  basicCancel,
-  type = false,
-  contentType = false,
-}) => {
-  return (
-    <>
-      <Group>
-        <StyledHeading>{children}</StyledHeading>
-        {className === "basic" ? (
-          <>
-            {type === false ? (
-              <span className="icon" onClick={clickEdit}>
-                편집
-              </span>
-            ) : (
-              <>
-                <span className="icon save" onClick={basicSave}>
-                  저장
-                </span>
-                <span className="icon cancel" onClick={basicCancel}>
-                  취소
-                </span>
-              </>
-            )}
-          </>
-        ) : (
-          <>
-            {contentType === false ? (
-              <span className="icon" onClick={clickEdit}>
-                편집
-              </span>
-            ) : (
-              <>
-                <span className="icon save" onClick={contentSave}>
-                  저장
-                </span>
-                <span className="icon cancel" onClick={contentCancel}>
-                  취소
-                </span>
-              </>
-            )}
-          </>
-        )}
-      </Group>
-    </>
-  );
-};
 
 export default DocumentHeading;

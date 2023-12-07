@@ -1,30 +1,25 @@
 import styled from "styled-components";
 
-const Input = ({ mypage, type, name, value, onChange, placeholder, id }) => {
+const Input = ({ placeholder, id, register, rules }) => {
   return (
-    <InputField
-      id={id}
-      name={name}
-      value={value}
-      type={type}
-      placeholder={placeholder}
-      onChange={onChange}
-      autoComplete="off"
-      mypage={mypage}
-    />
+    <>
+      <InputField
+        id={id}
+        placeholder={placeholder}
+        // autoComplete="off"
+        {...register(id, { ...rules })}
+      />
+    </>
   );
 };
 
 const InputField = styled.input`
-  height: 3rem;
-  border-radius: ${(mypage) => {
-    mypage ? 0 : "0.3rem";
-  }};
-  /* border: 0.6px solid #282828; */
+  height: 2.8rem;
+  border-radius: 0.3rem;
   outline: none;
   border: none;
-  border-bottom: 1.5px solid #216d32;
-  width: ${({ mypage }) => (mypage ? "340px" : "95%")};
+  border: 1.3px solid #216d32;
+  width: 100%;
   padding-left: 1rem;
 
   &::placeholder {

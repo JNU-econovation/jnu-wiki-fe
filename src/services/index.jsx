@@ -1,12 +1,10 @@
 import axios from "axios";
 import routes from "@/routes";
-import { accessToken } from "./token";
 
 axios.defaults.withCredentials = true;
 
 export const instance = axios.create({
-  // baseURL: "http://localhost:8080",
-  baseURL: "https://port-0-jnu-wiki-be-jvpb2alnsrolbp.sel5.cloudtype.app/",
+  baseURL: import.meta.env.VITE_BASE_URL,
   timeout: 1000 * 5,
   headers: {
     "Content-Type": "application/json",
@@ -16,7 +14,7 @@ export const instance = axios.create({
 instance.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
   if (token) {
-    config.headers["Authorization"] = `${token}`;
+    config.headers.authorization = `${token}`;
   }
   return config;
 });
@@ -30,10 +28,7 @@ instance.interceptors.response.use(
     const originalConfig = error?.config;
     const accessExpiredTime = localStorage.getItem("accessExpiredTime");
     const refreshExpiredTime = localStorage.getItem("refreshExpiredTime");
-    if (
-      (refreshExpiredTime && refreshExpiredTime < new Date()) ||
-      status === 401
-    ) {
+    if (refreshExpiredTime && refreshExpiredTime < new Date()) {
       alert("로그인 시간이 만료되었습니다. 다시 로그인해주세요");
       localStorage.clear();
 
@@ -47,7 +42,8 @@ instance.interceptors.response.use(
       refreshExpiredTime > new Date()
     ) {
       originalConfig._retry = true;
-      accessToken()
+      axios
+        .post(import.meta.env.VITE_BASE_URL + "members/access-token")
         .then((response) => {
           localStorage.setItem("token", response.headers.authorization);
           localStorage.setItem(

@@ -1,12 +1,18 @@
-import MainLayout from "@/components/common/layout/MainLayout";
-import DocsList from "@/components/document/DocsList";
-import OtherMap from "@/components/common/layout/OtherMap";
-import DocumentWrapper from "@/components/document/DocumentWrapper";
-import { useState, Suspense, useRef, useEffect } from "react";
-import { useInfiniteQuery } from "@tanstack/react-query";
-import { docsList } from "@/services/document";
-import Loader from "@/components/common/layout/Loader";
+import { useState, Suspense, lazy } from "react";
 import { useSelector } from "react-redux";
+import styled from "styled-components";
+
+import MainLayout from "@/components/common/layout/MainLayout";
+import MainMap from "@/components/map/MainMap";
+import Loader from "@/components/common/layout/Loader";
+import DocumentWrapper from "@/components/docsList/DocumentWrapper";
+import { docsList } from "@/services/document";
+import useInfiniteScroll from "@/hooks/useInfiniteScroll";
+import { delayForDocs } from "@/utils/delayForDocs";
+
+const DocsList = lazy(() =>
+  delayForDocs(import("@/components/docsList/DocsList"))
+);
 
 const DocumentListPage = () => {
   const [show, setShow] = useState(true);
@@ -15,82 +21,50 @@ const DocumentListPage = () => {
     setShow((prev) => !prev);
   };
 
-  const bottomObserver = useRef(null);
+  const { neLatlng, swLatlng, center, level } =
+    useSelector((state) => state.SwNe) || {};
+  const { La: rightUpLa, Ma: rightUpMa } = neLatlng || {};
+  const { La: leftDownLa, Ma: leftDownMa } = swLatlng || {};
+  const { lat, lng } = center || {};
 
-  const { La: rightUpLa, Ma: rightUpMa } =
-    useSelector((state) => state.SwNe.neLatlng) || {};
-  const { La: leftDownLa, Ma: leftDownMa } =
-    useSelector((state) => state.SwNe.swLatlng) || {};
+  const { data, isLoading, isError, bottomObserver } = useInfiniteScroll(
+    "docs_list",
+    docsList,
+    { rightUpLa, rightUpMa, leftDownLa, leftDownMa }
+  );
 
-  const { data, isLoading, isError, fetchNextPage, hasNextPage } =
-    useInfiniteQuery(
-      ["docs_list", rightUpLa, rightUpMa, leftDownLa, leftDownMa],
-      ({ pageParam = 0 }) =>
-        docsList({ pageParam, rightUpLa, rightUpMa, leftDownLa, leftDownMa }),
-      {
-        getNextPageParam: (lastPage, allPages) => {
-          const nextPage = allPages.length + 1;
-          return lastPage.currentPage < lastPage.totalPages
-            ? nextPage
-            : undefined;
-        },
-        refetchOnWindowFocus: true,
-      }
-    );
-
-  useEffect(() => {
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !isLoading && hasNextPage) {
-            fetchNextPage();
-          }
-        });
-      },
-      {
-        threshold: 0.5,
-      }
-    );
-
-    if (bottomObserver.current) {
-      io.observe(bottomObserver.current);
-    }
-
-    return () => {
-      if (bottomObserver.current) {
-        io.unobserve(bottomObserver.current);
-      }
-    };
-  }, [isLoading, hasNextPage, fetchNextPage]);
-
-  const title = data?.pages
-    .flatMap((x) => x.data.response.docsList)
-    .map((x) => x.docsName);
-
-  const latitude = data?.pages
-    .flatMap((x) => x.data.response.docsList)
-    .map((x) => x.docsLocation.lat);
-
-  const longitude = data?.pages
-    .flatMap((x) => x.data.response.docsList)
-    .map((x) => x.docsLocation.lng);
+  const mapInfo = data?.pages.flatMap((x) => x.data.response.docsList);
 
   return (
     <>
       <MainLayout onClick={handleShow} />
       {show && (
-        <DocumentWrapper>
-          <Suspense fallback={<Loader />}>
-            {title?.length && <DocsList data={data} />}
-            <div style={{ height: "50px" }} ref={bottomObserver}></div>
-          </Suspense>
-        </DocumentWrapper>
+        <Suspense fallback={<Loading />}>
+          <DocumentWrapper>
+            <DocsList data={data} />
+            <div ref={bottomObserver}></div>
+          </DocumentWrapper>
+        </Suspense>
       )}
-      {isLoading && <OtherMap />}
-      {isError && <OtherMap />}
-      {data && <OtherMap title={title} apiLat={latitude} apiLng={longitude} />}
+
+      {(isLoading || isError) && <MainMap />}
+      {data && (
+        <MainMap mapInfo={mapInfo} centerMap={{ lat, lng }} mapLevel={level} />
+      )}
     </>
   );
 };
+
+const Loading = styled(Loader)`
+  position: absolute;
+  left: 15rem;
+  top: 6rem;
+  padding: 1rem 3rem;
+  height: 3rem;
+
+  background-color: white;
+  box-shadow: 10px 0px 5px 0px rgba(0, 0, 0, 0.106);
+  border-radius: 0 0 10px 0;
+`;
 
 export default DocumentListPage;

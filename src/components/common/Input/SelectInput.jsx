@@ -1,8 +1,6 @@
 import styled from "styled-components";
 import { useFormContext } from "react-hook-form";
 
-import { CATEGORY } from "@/constant/document/create";
-
 const StyledSelected = styled.select`
   display: block;
   box-sizing: border-box;
@@ -19,7 +17,7 @@ const StyledSelected = styled.select`
   }
 `;
 
-const SelectMenu = ({ name, id, selected }) => {
+const SelectInput = ({ name, id, selected, list }) => {
   const { register } = useFormContext();
 
   return (
@@ -35,7 +33,7 @@ const SelectMenu = ({ name, id, selected }) => {
       <option value="default" disabled>
         카테고리를 선택하세요.
       </option>
-      {CATEGORY.map((item) => (
+      {list.map((item) => (
         <option key={item} value={item}>
           {item}
         </option>
@@ -44,4 +42,4 @@ const SelectMenu = ({ name, id, selected }) => {
   );
 };
 
-export default SelectMenu;
+export default SelectInput;
