@@ -21,7 +21,7 @@ import {
   changeFailAlert,
   changeSuccessAlert,
   failLoginAlert,
-} from "../../../utils/alert";
+} from "@/utils/alert";
 
 const MyInfoEditForm = () => {
   const navigate = useNavigate();
