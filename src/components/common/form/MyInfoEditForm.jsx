@@ -28,13 +28,22 @@ const MyInfoEditForm = () => {
 
   const { mutate: changeNickname } = useMutation({
     mutationFn: getChangeNickname,
+
+    onSuccess: () => {
+      changeSuccessAlert();
+    },
     onError: (error) => {
+      changeFailAlert();
       console.error(error);
     },
   });
   const { mutate: changePassword } = useMutation({
     mutationFn: getChangePassword,
+    onSuccess: () => {
+      changeSuccessAlert();
+    },
     onError: (error) => {
+      changeFailAlert();
       console.error(error);
     },
   });
@@ -50,15 +59,7 @@ const MyInfoEditForm = () => {
       login({ email: email, password: password })
         .then(() => {
           const updatePayload = getValues("newPassword");
-          changePassword(updatePayload, {
-            onSuccess: () => {
-              changeSuccessAlert();
-            },
-            onError: (error) => {
-              changeFailAlert();
-              console.error(error);
-            },
-          });
+          changePassword(updatePayload);
         })
         .catch((error) => {
           failLoginAlert();
@@ -72,15 +73,7 @@ const MyInfoEditForm = () => {
     if (doubleNewNickname && watch("newNickname")) {
       const updatePayload = getValues("newNickname");
 
-      changeNickname(updatePayload, {
-        onSuccess: () => {
-          changeSuccessAlert();
-        },
-        onError: (error) => {
-          changeFailAlert();
-          console.error(error);
-        },
-      });
+      changeNickname(updatePayload);
     }
   };
 
