@@ -18,7 +18,6 @@ export const DoubleCheckStyle = styled.button`
   height: 2.7rem;
   border-radius: 0.3rem;
   margin-left: 0.5rem;
-
   position: relative;
 
   line-height: 0;

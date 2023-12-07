@@ -5,6 +5,7 @@ import AlertMessage from "@/components/register/AlertMessage";
 import DoubleCheck from "@/components/register/DoubleCheck";
 import styled from "styled-components";
 import { DoubleCheckStyle } from "../../register/DoubleCheck";
+
 const InputGroup = ({
   id,
   type,
@@ -16,10 +17,10 @@ const InputGroup = ({
   register,
   error,
   rules,
-  // onChange,
   doubleCheck,
   value,
-  inputValue,
+  doubleNewNickname,
+  onClick,
 }) => {
   return (
     <Box>
@@ -32,16 +33,18 @@ const InputGroup = ({
           mypage={mypage}
           register={register}
           rules={rules}
-          inputValue={inputValue}
         />
-        {doubleCheck && (
+        {doubleCheck && !doubleNewNickname && (
           <DoubleCheck
             active={value && !error}
             onClick={doubleCheck}
           ></DoubleCheck>
         )}
-        {btn && !doubleCheck && (
-          <ChangeButton className="mypageBtn">변경</ChangeButton>
+
+        {btn && doubleNewNickname && (
+          <ChangeButton className="mypageBtn" onClick={onClick}>
+            변경
+          </ChangeButton>
         )}
       </InputCss>
 
@@ -73,7 +76,7 @@ const InputCss = styled.div`
 `;
 
 const ChangeButton = styled(DoubleCheckStyle)`
-  background-color: #ebebeb;
+  background-color: #f6faf7;
   color: #216d32;
   border: 1px solid #216d32;
 `;

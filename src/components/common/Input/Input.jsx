@@ -1,13 +1,12 @@
 import styled from "styled-components";
 
-const Input = ({ inputValue, placeholder, id, register, rules }) => {
+const Input = ({ placeholder, id, register, rules }) => {
   return (
     <>
       <InputField
         id={id}
         placeholder={placeholder}
         // autoComplete="off"
-        value={inputValue}
         {...register(id, { ...rules })}
       />
     </>

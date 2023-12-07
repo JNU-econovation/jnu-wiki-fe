@@ -82,3 +82,31 @@ export const joinFailAlert = () => {
     title: "회원가입 실패",
   });
 };
+
+export const changeSuccessAlert = () => {
+  return Swal.fire({
+    icon: "success",
+    text: "수정 완료🥰",
+    confirmButtonColor: "#429f50",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      location.reload();
+    }
+  });
+};
+
+export const changeFailAlert = () => {
+  return Swal.fire({
+    icon: "warning",
+    text: "수정실패....",
+    confirmButtonColor: "#429f50",
+  });
+};
+
+export const failLoginAlert = () => {
+  return Swal.fire({
+    icon: "warning",
+    text: "이메일 또는 비밀번호를 확인해주세요.",
+    confirmButtonColor: "#429f50",
+  });
+};
