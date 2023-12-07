@@ -1,5 +1,5 @@
 import Container from "@/components/register/Container";
-import InputGroup from "@/components/common/Input/InputGroup";
+import InputGroup from "@/components/common/input/InputGroup";
 import Button from "@/components/register/Button";
 import styled from "styled-components";
 import routes from "@/routes";

@@ -26,6 +26,7 @@ const Button = ({
   border,
   backgroundcolor,
   onClick,
+  className,
   type = "click",
 }) => {
   return (
@@ -35,6 +36,7 @@ const Button = ({
       border={border}
       backgroundcolor={backgroundcolor}
       onClick={onClick}
+      className={className}
     >
       {children}
     </Btn>

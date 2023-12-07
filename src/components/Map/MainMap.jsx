@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { CustomOverlayMap, Map, MapMarker } from "react-kakao-maps-sdk";
 
-import Button from "@/components/common/layout/Button";
+import Button from "@/components/common/button/Button";
 
 const MainMap = memo(function MainMap({ mapInfo, centerMap, mapLevel }) {
   const dispatch = useDispatch();

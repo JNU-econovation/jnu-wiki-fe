@@ -4,10 +4,10 @@ import { useSelector } from "react-redux";
 import { useMutation } from "@tanstack/react-query";
 
 import DocumentInputGroup from "./DocumentInputGroup";
-import DocumentLabel from "./DocumentLabel";
-import SelectMenu from "./SelectMenu";
-import Button from "@/components/common/layout/Button";
-import { DOCS_INFO, ERROR_MSG } from "@/constant/document/create";
+import DocumentLabel from "@/components/document/DocumentLabel";
+import SelectInput from "@/components/common/input/SelectInput";
+import Button from "@/components/common/button/Button";
+import { DOCS_INFO, ERROR_MSG, CATEGORY } from "@/constant/document/create";
 import { HELPER_MSG } from "@/constant/document/helpermsg";
 import { create } from "@/services/document";
 import { askAlert, requestAlert } from "@/utils/alert";
@@ -22,7 +22,7 @@ const CreateDocument = () => {
   const methods = useForm();
   const { reset, getValues, handleSubmit } = methods;
 
-  const { inputAddress, clearAddress, setAddressError } = useHandleAddress(
+  const { inputAddress, clearAddress, isAddress } = useHandleAddress(
     methods,
     address,
     latitude,
@@ -64,7 +64,7 @@ const CreateDocument = () => {
   const onCancel = () => {
     const isValidInput = getValues(DOCS_INFO.NAME) || inputAddress;
     if (isValidInput) {
-      return handleClear();
+      handleClear();
     }
   };
 
@@ -73,7 +73,7 @@ const CreateDocument = () => {
       return nullTokenWrite();
     }
 
-    setAddressError();
+    isAddress();
     handleRegisterAlert(data);
   };
 
@@ -104,7 +104,11 @@ const CreateDocument = () => {
         </DocumentInputGroup>
 
         <DocumentLabel htmlFor={DOCS_INFO.CATEGORY}>카테고리</DocumentLabel>
-        <SelectMenu id={DOCS_INFO.CATEGORY} name={DOCS_INFO.CATEGORY} />
+        <SelectInput
+          id={DOCS_INFO.CATEGORY}
+          name={DOCS_INFO.CATEGORY}
+          list={CATEGORY}
+        />
 
         <StyledButton>
           <Button
