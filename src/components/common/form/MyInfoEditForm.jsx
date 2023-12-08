@@ -131,7 +131,6 @@ const MyInfoEditForm = () => {
           rules={repasswordRule(watch("newPassword"))}
           value={watch("newPassword")}
           btn={true}
-          doubleNewNickname={true}
         />
 
         <ButtonWrap>
