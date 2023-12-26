@@ -1,38 +1,34 @@
-import { useEffect, useState } from "react";
 import styled from "styled-components";
-
-const DoubleCheckStyle = styled.button`
-  width: 6rem;
-  height: 2rem;
-  border-radius: 0.5rem;
-
-  position: relative;
-  left: ${({ left }) => (left ? "15.5rem" : "18.5rem")};
-
-  bottom: 4.3rem;
-
-  line-height: 0;
-
-  color: white;
-  background-color: ${({ active }) => {
-    if (active === "true") {
-      return "#216d32";
-    }
-    return "#216d317a";
-  }};
-`;
 
 const DoubleCheck = ({ onClick, active, left }) => {
   return (
     <DoubleCheckStyle
       left={left}
       type="button"
-      onClick={onClick}
+      onClick={active ? onClick : null}
       active={active}
     >
       중복 확인
     </DoubleCheckStyle>
   );
 };
+
+export const DoubleCheckStyle = styled.button`
+  width: 6rem;
+  height: 2.7rem;
+  border-radius: 0.3rem;
+  margin-left: 0.5rem;
+  position: relative;
+
+  line-height: 0;
+
+  color: white;
+  background-color: ${({ active }) => {
+    if (active) {
+      return "#216d32";
+    }
+    return "#216d317a";
+  }};
+`;
 
 export default DoubleCheck;

@@ -8,13 +8,8 @@ export const login = async (data) => {
   });
 };
 
-export const register = (data) => {
-  const { email, password, nickName } = data;
-  return instance.post("members/join", {
-    email,
-    password,
-    nickName,
-  });
+export const join = (data) => {
+  return instance.post("members/join", data);
 };
 
 // 닉네임 이메일 중복체크

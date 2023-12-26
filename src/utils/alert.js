@@ -1,4 +1,5 @@
 import Swal from "sweetalert2";
+import routes from "@/routes";
 
 const swalWithBootstrapButtons = Swal.mixin({
   customClass: {
@@ -50,19 +51,62 @@ export const popUpLogout = () => {
   });
 };
 
-export const loginSuccessAlert = () => {
-  return Swal.fire({
-    icon: "success",
-    title: "로그인 성공!",
-    text: "홈 화면으로 이동합니다",
-    confirmButtonColor: "#429f50",
-  });
-};
-
 export const loginFailAlert = (text) => {
   return Swal.fire({
     icon: "warning",
     text: `${text}`,
     confirmButtonColor: "#2d790d",
+  });
+};
+
+export const joinSuccessAlert = () => {
+  return Swal.fire({
+    icon: "success",
+    title: "회원가입 성공!",
+    text: "로그인 페이지로 이동하시겠습니까?",
+    confirmButtonText: "예",
+    cancelButtonText: "아니오",
+    confirmButtonColor: "#429f50",
+    cancelButtonColor: "#d33",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      location.href = routes.login;
+    } else if (result.isDismissed) {
+      location.href = routes.home;
+    }
+  });
+};
+export const joinFailAlert = () => {
+  return Swal.fire({
+    icon: "error",
+    title: "회원가입 실패",
+  });
+};
+
+export const changeSuccessAlert = () => {
+  return Swal.fire({
+    icon: "success",
+    text: "수정 완료🥰",
+    confirmButtonColor: "#429f50",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      location.reload();
+    }
+  });
+};
+
+export const changeFailAlert = () => {
+  return Swal.fire({
+    icon: "warning",
+    text: "수정실패....",
+    confirmButtonColor: "#429f50",
+  });
+};
+
+export const failLoginAlert = () => {
+  return Swal.fire({
+    icon: "warning",
+    text: "이메일 또는 비밀번호를 확인해주세요.",
+    confirmButtonColor: "#429f50",
   });
 };

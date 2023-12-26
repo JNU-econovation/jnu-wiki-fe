@@ -3,15 +3,16 @@ import styled from "styled-components";
 const AlertStyle = styled.p`
   color: #ff1b1b;
   font-size: 12px;
-  margin-top: 0.7rem;
+  margin-bottom: 1rem;
+
   height: 1rem;
 
   display: flex;
   text-align: start;
 `;
 
-const AlertMessage = ({ para }) => {
-  return <AlertStyle>{para}</AlertStyle>;
+const AlertMessage = ({ children }) => {
+  return <AlertStyle>{children}</AlertStyle>;
 };
 
 export default AlertMessage;

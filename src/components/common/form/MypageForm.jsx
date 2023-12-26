@@ -1,6 +1,5 @@
 import MyInputGroup from "@/components/mypage/MyInfoGroup";
 import Container from "@/components/register/Container";
-
 import Title from "@/components/register/Title";
 import styled from "styled-components";
 import MyBtn from "@/components/mypage/MyBtn";
@@ -10,7 +9,6 @@ import { useQuery } from "@tanstack/react-query";
 import Loader from "@/components/common/layout/Loader";
 import { useNavigate } from "react-router-dom";
 
-//데이터 받아아오기
 const MypageForm = () => {
   const navigate = useNavigate();
   const { data, isLoading } = useQuery(["mypage"], () => {
