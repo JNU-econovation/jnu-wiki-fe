@@ -104,7 +104,7 @@ const ContentHeading = styled.div`
 
 const EditorContainer = styled.div`
   width: fit-content;
-  max-width: 22rem;
+  max-width: 23rem;
 `;
 
 export default Content;

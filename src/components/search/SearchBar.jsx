@@ -116,6 +116,7 @@ const StyledSearchBar = styled.input`
   top: 0;
   left: 0;
 
+  font-size: 1.1rem;
   border: 0.5px solid #71717118;
   border-radius: 10px;
   box-shadow: 0px 0px 1px 0px rgba(9, 30, 66, 0.31),
