@@ -6,11 +6,14 @@ import DocumentLabel from "@/components/document/DocumentLabel";
 import DocumentInput from "./DocumentInput";
 
 const DocumentInputGroup = ({
-  htmlFor,
+  type,
   children,
   requiredMsg,
-  name,
-  isLogin,
+  className,
+  defaultInfo,
+  registerName = type,
+  isLogin = true,
+  isEdit = true,
   ...inputProps
 }) => {
   const {
@@ -19,27 +22,34 @@ const DocumentInputGroup = ({
   } = useFormContext();
 
   return (
-    <>
-      <Container>
-        <DocumentLabel htmlFor={htmlFor}>{children}</DocumentLabel>
-        <DocumentInput
-          register={
-            isLogin &&
-            register(name, {
-              required: requiredMsg,
-            })
-          }
-          {...inputProps}
-        />
-        <ErrorMsg errors={errors} name={name} />
-      </Container>
-    </>
+    <div className={className}>
+      <DocumentLabel htmlFor={type}>{children}</DocumentLabel>
+      <div>
+        {isEdit ? (
+          <DocumentInput
+            id={type}
+            name={registerName}
+            defaultValue={defaultInfo}
+            register={
+              isLogin &&
+              register(registerName, {
+                required: requiredMsg,
+              })
+            }
+            {...inputProps}
+          />
+        ) : (
+          <DocsContent>{defaultInfo}</DocsContent>
+        )}
+        <ErrorMsg errors={errors} name={registerName} />
+      </div>
+    </div>
   );
 };
 
-const Container = styled.div`
-  display: block;
-  margin-bottom: 3rem;
+const DocsContent = styled.div`
+  width: 15.5rem;
+  font-size: 1.1rem;
 `;
 
 export default DocumentInputGroup;

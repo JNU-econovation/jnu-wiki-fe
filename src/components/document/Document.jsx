@@ -15,7 +15,7 @@ const Document = ({ data }) => {
 };
 
 const Group = styled.div`
-  width: 22rem;
+  width: 27rem;
   height: calc(100vh - 6rem);
 
   position: fixed;
