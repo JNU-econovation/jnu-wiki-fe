@@ -19,27 +19,26 @@ const DocumentInputGroup = ({
   } = useFormContext();
 
   return (
-    <>
-      <Container>
-        <DocumentLabel htmlFor={htmlFor}>{children}</DocumentLabel>
-        <DocumentInput
-          register={
-            isLogin &&
-            register(name, {
-              required: requiredMsg,
-            })
-          }
-          {...inputProps}
-        />
-        <ErrorMsg errors={errors} name={name} />
-      </Container>
-    </>
+    <Container>
+      <DocumentLabel htmlFor={htmlFor}>{children}</DocumentLabel>
+      <DocumentInput
+        register={
+          isLogin &&
+          register(name, {
+            required: requiredMsg,
+          })
+        }
+        {...inputProps}
+      />
+      <ErrorMsg errors={errors} name={name} />
+    </Container>
   );
 };
 
 const Container = styled.div`
   display: block;
-  margin-bottom: 3rem;
+  height: 6rem;
+  margin-bottom: 2rem;
 `;
 
 export default DocumentInputGroup;

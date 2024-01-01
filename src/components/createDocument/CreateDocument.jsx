@@ -147,13 +147,13 @@ export const Container = styled.form`
   #docsCategory {
     width: 100%;
     height: 2.5rem;
-    margin-top: 0.7rem;
+    margin-top: 0.8rem;
   }
 `;
 
 export const StyledButton = styled.div`
   position: absolute;
-  right: 2rem;
+  right: 1.5rem;
   bottom: 12rem;
 `;
 
