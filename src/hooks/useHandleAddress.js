@@ -14,7 +14,7 @@ const useHandleAddress = (methods, address, lat, lng) => {
 
   useEffect(() => {
     inputAddress && methods.clearErrors(DOCS_INFO.LOCATION);
-  }, [inputAddress, methods]);
+  }, [inputAddress]);
 
   const isAddress = () => {
     if (!inputAddress) {
@@ -24,11 +24,14 @@ const useHandleAddress = (methods, address, lat, lng) => {
     }
   };
 
-  !!inputAddress &&
-    methods.setValue(DOCS_INFO.LOCATION, {
-      lat,
-      lng,
-    });
+  useEffect(() => {
+    if (inputAddress) {
+      methods.setValue(DOCS_INFO.LOCATION, {
+        lat,
+        lng,
+      });
+    }
+  }, [inputAddress, lat, lng]);
 
   return { inputAddress, clearAddress, isAddress };
 };
