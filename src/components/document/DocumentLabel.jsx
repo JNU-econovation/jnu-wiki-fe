@@ -1,21 +1,13 @@
 import styled from "styled-components";
 
-const DocumentLabel = ({ htmlFor, children, className }) => {
-  return (
-    <SpanWidth className={className}>
-      <LabelStyled htmlFor={htmlFor}>{children}</LabelStyled>
-    </SpanWidth>
-  );
+const DocumentLabel = ({ htmlFor, children }) => {
+  return <LabelStyled htmlFor={htmlFor}>{children}</LabelStyled>;
 };
-
-const SpanWidth = styled.div`
-  display: inline-block;
-  width: 4.5rem;
-`;
 
 const LabelStyled = styled.label`
   color: #216d32;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
+  width: 7rem;
 `;
 
 export default DocumentLabel;

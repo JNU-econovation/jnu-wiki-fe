@@ -8,31 +8,29 @@ const DocumentHeading = ({
   isEdit = false,
 }) => {
   return (
-    <>
-      <Group>
-        <StyledHeading>{children}</StyledHeading>
-        {isEdit ? (
-          <>
-            <button className="icon save" onClick={clickSave}>
-              저장
-            </button>
-            <button type="button" className="icon cancel" onClick={clickCancel}>
-              취소
-            </button>
-          </>
-        ) : (
-          <button type="button" className="icon" onClick={clickEdit}>
-            편집
+    <Group>
+      <StyledHeading>{children}</StyledHeading>
+      {isEdit ? (
+        <>
+          <button className="icon save" onClick={clickSave}>
+            저장
           </button>
-        )}
-      </Group>
-    </>
+          <button type="button" className="icon cancel" onClick={clickCancel}>
+            취소
+          </button>
+        </>
+      ) : (
+        <button type="button" className="icon" onClick={clickEdit}>
+          편집
+        </button>
+      )}
+    </Group>
   );
 };
 
 const Group = styled.span`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   color: #216d32;
   margin: 0.5rem 0 0.8rem 0;
   width: 12rem;

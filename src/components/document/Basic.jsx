@@ -118,7 +118,7 @@ const Basic = ({ data }) => {
 
         <Box>
           <DocsInfo>
-            <DocsLabel htmlFor="docsName">문서 제목</DocsLabel>
+            <DocumentLabel htmlFor="docsName">문서 제목</DocumentLabel>
             {isEditBasic ? (
               <EditName>
                 <DocumentInput
@@ -138,7 +138,7 @@ const Basic = ({ data }) => {
           </DocsInfo>
 
           <DocsInfo>
-            <DocsLabel htmlFor="docsLocation">위치</DocsLabel>
+            <DocumentLabel htmlFor="docsLocation">위치</DocumentLabel>
             {isEditBasic ? (
               <DocumentInput
                 htmlFor="docsLocation"
@@ -154,7 +154,7 @@ const Basic = ({ data }) => {
           </DocsInfo>
 
           <DocsInfo>
-            <DocsLabel htmlFor="docsCategory">카테고리</DocsLabel>
+            <DocumentLabel htmlFor="docsCategory">카테고리</DocumentLabel>
             {isEditBasic ? (
               <StyledSpan>
                 <SelectInput
@@ -174,10 +174,6 @@ const Basic = ({ data }) => {
   );
 };
 
-const DocsLabel = styled(DocumentLabel)`
-  width: 6rem;
-`;
-
 const BasicInfo = styled.div`
   display: flex;
   justify-content: space-between;
@@ -195,7 +191,8 @@ const Box = styled.div`
 
 const DocsContent = styled.div`
   display: inline-block;
-  width: 12rem;
+  width: 15.5rem;
+  font-size: 1.1rem;
 `;
 
 const EditName = styled.div`
