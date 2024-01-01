@@ -131,7 +131,7 @@ const CreateDocument = () => {
 };
 
 export const Container = styled.form`
-  width: 20rem;
+  width: 23rem;
   height: 100vh;
 
   position: fixed;
@@ -145,8 +145,8 @@ export const Container = styled.form`
   #docsName,
   #docsLocation,
   #docsCategory {
-    width: 20rem;
-    height: 2.4rem;
+    width: 100%;
+    height: 2.5rem;
     margin-top: 0.7rem;
   }
 `;
