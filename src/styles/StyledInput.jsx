@@ -5,6 +5,7 @@ export const StyledElement = styled.div`
   padding: 0.5rem 0.8rem;
   font-size: 0.9rem;
 
+  width: 16rem;
   border-radius: 8px;
   border: 1.5px solid #6b6b6b;
 

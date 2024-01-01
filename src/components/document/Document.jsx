@@ -27,13 +27,6 @@ const Group = styled.div`
   box-shadow: 10px 0px 5px 0px rgba(0, 0, 0, 0.106);
   box-sizing: border-box;
   overflow: auto;
-
-  #docsName,
-  #docsLocation,
-  #docsCategory {
-    width: fit-content;
-    height: fit-content;
-  }
 `;
 
 const Container = styled.div`
