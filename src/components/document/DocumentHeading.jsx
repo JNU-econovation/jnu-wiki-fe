@@ -12,7 +12,7 @@ const DocumentHeading = ({
       <StyledHeading>{children}</StyledHeading>
       {isEdit ? (
         <>
-          <button className="icon save" onClick={clickSave}>
+          <button type="submit" className="icon save" onClick={clickSave}>
             저장
           </button>
           <button type="button" className="icon cancel" onClick={clickCancel}>
