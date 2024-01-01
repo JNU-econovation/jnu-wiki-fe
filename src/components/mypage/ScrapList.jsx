@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -7,19 +6,8 @@ import DocsItem from "@/components/docsList/DocsItem";
 import { scrapCreate, scrapDelete } from "@/services/scrap";
 import useDocsMutation from "@/hooks/useDocsMutation";
 import { HELPER_MSG } from "@/constant/document/helpermsg";
+import { Container } from "@/styles/DocsList";
 
-const Container = styled.div`
-  position: absolute;
-  left: 15rem;
-  top: 6rem;
-  padding: 2rem;
-
-  background-color: white;
-  box-shadow: 10px 0px 5px 0px rgba(0, 0, 0, 0.106);
-
-  overflow-y: auto;
-  max-height: calc(100vh - 6rem - 2 * 2rem);
-`;
 const ScrapList = ({ datas }) => {
   const navigate = useNavigate();
 
