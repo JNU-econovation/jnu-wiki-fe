@@ -11,7 +11,8 @@ import ToggleBtn from "@/components/common/button/ToggleBtn";
 const DocumentPage = () => {
   const { id } = useParams();
   const { data } = useQuery(["detail_document", id], () => detailDocument(id), {
-    refetchOnWindowFocus: true,
+    staleTime: 10000,
+    cacheTime: 5 * 60000,
     select: (data) => data?.data?.response,
   });
 

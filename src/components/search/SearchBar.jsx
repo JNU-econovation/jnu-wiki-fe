@@ -55,8 +55,8 @@ const SearchBar = () => {
     () => searchDocs(inputValue),
     {
       enabled: !!inputValue,
-      staleTime: 6 * 10 * 1000,
-      cacheTime: 6 * 10 * 1000,
+      staleTime: 10000,
+      cacheTime: 6 * 10000,
     }
   );
 
