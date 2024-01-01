@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const StyledElement = styled.div`
-  display: block;
   box-sizing: border-box;
   padding: 0.5rem 0.8rem;
   font-size: 0.9rem;
