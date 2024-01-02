@@ -6,11 +6,11 @@ const ErrorMsg = ({ errors, name }) => {
 };
 
 const StyledErrorMsg = styled.p`
-  margin: 0.5rem 0 -1.3rem 0;
+  margin-top: 0.5rem;
 
   color: #ff3838;
 
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-weight: 400;
 `;
 

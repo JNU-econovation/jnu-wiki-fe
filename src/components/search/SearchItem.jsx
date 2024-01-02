@@ -6,6 +6,7 @@ const SearchItem = ({ name, onClick }) => {
 
 const Title = styled.div`
   color: #216d32;
+  font-size: 1.1rem;
   margin-bottom: 2rem;
   cursor: pointer;
 `;

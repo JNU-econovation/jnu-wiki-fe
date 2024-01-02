@@ -15,7 +15,7 @@ const DocumentTime = ({ children }) => {
 };
 
 const Container = styled.div`
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   color: #89b090;
   float: right;
   text-align: right;

@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import { useSelector } from "react-redux";
 
 import DocsItem from "./DocsItem";
 import { scrapCreate, scrapDelete } from "@/services/scrap";
 import useDocsMutation from "@/hooks/useDocsMutation";
+import { Container } from "@/styles/DocsList";
 
 const DocsList = ({ data }) => {
   const navigate = useNavigate();
@@ -57,19 +57,5 @@ const DocsList = ({ data }) => {
     </Container>
   );
 };
-
-const Container = styled.div`
-  position: absolute;
-  left: 15rem;
-  top: 6rem;
-  padding: 2rem;
-
-  background-color: white;
-  box-shadow: 10px 0px 5px 0px rgba(0, 0, 0, 0.106);
-  border-radius: 0 0 10px 0;
-
-  overflow-y: auto;
-  max-height: calc(100vh - 6rem - 2 * 2rem);
-`;
 
 export default DocsList;
