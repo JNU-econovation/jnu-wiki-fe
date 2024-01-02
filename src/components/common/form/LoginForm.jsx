@@ -91,6 +91,7 @@ const LoginForm = () => {
           error={errors.email}
           rules={emailRule}
           value={watch("email")}
+          type="email"
         />
         <InputGroup
           id="password"
@@ -101,6 +102,7 @@ const LoginForm = () => {
           error={errors.password}
           rules={passwordRule}
           value={watch("password")}
+          type="password"
         />
 
         <Button margin="1rem 0 3rem 0" onClick={handleSubmit(onSubmit)}>

@@ -40,12 +40,6 @@ const InputGroup = ({
           ></DoubleCheck>
         )}
       </InputCss>
-      {btn && (
-        <ChangeButton className="mypageBtn" onClick={onClick}>
-          변경
-        </ChangeButton>
-      )}
-
       {error?.type === "required" && (
         <AlertMessage>{error?.message}</AlertMessage>
       )}
@@ -60,6 +54,11 @@ const InputGroup = ({
       )}
       {error?.type === "passwordReCheck" && (
         <AlertMessage>{error?.message}</AlertMessage>
+      )}
+      {btn && (
+        <ChangeButton className="mypageBtn" onClick={onClick}>
+          변경
+        </ChangeButton>
       )}
     </Box>
   );

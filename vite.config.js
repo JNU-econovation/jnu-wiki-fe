@@ -6,10 +6,9 @@ import path from "path";
 export default defineConfig({
   plugins: [react()],
   resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
-    },
+    alias: [{ find: "@", replacement: path.resolve(__dirname, "src") }],
   },
+  extensions: [".js", ".jsx", ".css"],
   define: {
     __APP_ENV__: process.env.VITE_VERCEL_ENV,
   },

@@ -4,9 +4,7 @@ import { useState, useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 import DocumentHeading from "./DocumentHeading";
-import ErrorMsg from "./ErrorMsg";
 import DocumentLabel from "./DocumentLabel";
-import DocumentInput from "@/components/createDocument/DocumentInput";
 import SelectInput from "@/components/common/input/SelectInput";
 import ScrapBtn from "@/components/common/button/ScrapBtn";
 import { basicModify } from "@/services/document";
@@ -14,7 +12,8 @@ import { scrapCreate, scrapDelete } from "@/services/scrap";
 import "react-toastify/dist/ReactToastify.css";
 import { nullTokenEdit, adminApproval } from "@/utils/toast";
 import useDocsMutation from "@/hooks/useDocsMutation";
-import { ERROR_MSG, CATEGORY } from "@/constant/document/create";
+import { ERROR_MSG, CATEGORY, DOCS_INFO } from "@/constant/document/create";
+import DocumentInputGroup from "@/components/createDocument/DocumentInputGroup";
 
 const Basic = ({ data }) => {
   const { isLogin, memberId } = useSelector((state) => state.user);
@@ -42,14 +41,7 @@ const Basic = ({ data }) => {
   const { mutate: scrapDetailDelete } = useDocsMutation(scrapDelete);
 
   const methods = useForm();
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    getValues,
-    reset,
-    formState: { errors },
-  } = methods;
+  const { handleSubmit, setValue, getValues, reset } = methods;
 
   const handleSetInput = () => {
     if (!isLogin) return nullTokenEdit();
@@ -79,6 +71,16 @@ const Basic = ({ data }) => {
   };
 
   const [editAddress, setEditAddress] = useState(initialAddress);
+
+  useEffect(() => {
+    if (editAddress) {
+      methods.setValue("docsRequestLocation", {
+        getLat,
+        getLng,
+      });
+    }
+  }, [methods, editAddress, getLat, getLng]);
+
   useEffect(() => {
     setEditAddress(address);
   }, [address]);
@@ -113,57 +115,41 @@ const Basic = ({ data }) => {
           >
             기본 정보
           </DocumentHeading>
-          <Scrap onClick={handleOnScrapFill} scrap={scraped} />
+          <ScrapBtn onClick={handleOnScrapFill} scrap={scraped} />
         </BasicInfo>
 
         <Box>
-          <DocsInfo>
-            <DocsLabel htmlFor="docsName">문서 제목</DocsLabel>
-            {isEditBasic ? (
-              <EditName>
-                <DocumentInput
-                  htmlFor="docsName"
-                  id="docsName"
-                  placeholder={docsName}
-                  register={register("docsRequestName", {
-                    required: ERROR_MSG.NAME,
-                  })}
-                  defaultValue={docsName}
-                />
-                <ErrorMsg errors={errors} name="docsRequestName" />
-              </EditName>
-            ) : (
-              <DocsContent>{docsName}</DocsContent>
-            )}
-          </DocsInfo>
+          <EditName
+            type={DOCS_INFO.NAME}
+            registerName="docsRequestName"
+            isEdit={isEditBasic}
+            requiredMsg={ERROR_MSG.NAME}
+            placeholder={docsName}
+            defaultInfo={docsName}
+          >
+            문서 제목
+          </EditName>
+
+          <EditName
+            type={DOCS_INFO.LOCATION}
+            registerName="docsRequestLocation"
+            isEdit={isEditBasic}
+            defaultInfo={initialAddress}
+            value={editAddress}
+            disabled
+          >
+            위치
+          </EditName>
 
           <DocsInfo>
-            <DocsLabel htmlFor="docsLocation">위치</DocsLabel>
+            <DocumentLabel htmlFor="docsCategory">카테고리</DocumentLabel>
             {isEditBasic ? (
-              <DocumentInput
-                htmlFor="docsLocation"
-                id="docsLocation"
-                name="docsRequestLocation"
-                defaultValue={initialAddress}
-                value={editAddress}
-                disabled
+              <SelectInput
+                id="docsCategory"
+                selected={docsCategory}
+                name="docsRequestCategory"
+                list={CATEGORY}
               />
-            ) : (
-              <DocsContent>{initialAddress}</DocsContent>
-            )}
-          </DocsInfo>
-
-          <DocsInfo>
-            <DocsLabel htmlFor="docsCategory">카테고리</DocsLabel>
-            {isEditBasic ? (
-              <StyledSpan>
-                <SelectInput
-                  id="docsCategory"
-                  selected={docsCategory}
-                  name="docsRequestCategory"
-                  list={CATEGORY}
-                />
-              </StyledSpan>
             ) : (
               <DocsContent>{docsCategory}</DocsContent>
             )}
@@ -174,18 +160,15 @@ const Basic = ({ data }) => {
   );
 };
 
-const DocsLabel = styled(DocumentLabel)`
-  width: 6rem;
-`;
-
 const BasicInfo = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
 const DocsInfo = styled.div`
   display: flex;
-  align-items: center;
+  align-items: baseline;
   margin-bottom: 2.2rem;
 `;
 
@@ -194,22 +177,16 @@ const Box = styled.div`
 `;
 
 const DocsContent = styled.div`
-  display: inline-block;
-  width: 12rem;
+  width: 15.5rem;
+  font-size: 1.1rem;
 `;
 
-const EditName = styled.div`
+const EditName = styled(DocumentInputGroup)`
   display: flex;
-  flex-direction: column;
-`;
-
-const StyledSpan = styled.span`
-  display: inline-block;
-  height: 1rem;
-`;
-
-const Scrap = styled(ScrapBtn)`
-  margin-top: 0.5rem;
+  justify-content: flex-start;
+  align-items: baseline;
+  height: 3rem;
+  margin-bottom: 1rem;
 `;
 
 export default Basic;

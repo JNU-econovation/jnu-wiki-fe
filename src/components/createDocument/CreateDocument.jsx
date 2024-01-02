@@ -12,7 +12,7 @@ import { HELPER_MSG } from "@/constant/document/helpermsg";
 import { create } from "@/services/document";
 import { askAlert, requestAlert } from "@/utils/alert";
 import { nullTokenWrite, occurError } from "@/utils/toast";
-import useHandleAddress from "@/hooks/usehandleAddress";
+import useHandleAddress from "@/hooks/useHandleAddress";
 
 const CreateDocument = () => {
   const { latitude, longitude } = useSelector((state) => state.latLng);
@@ -80,28 +80,24 @@ const CreateDocument = () => {
   return (
     <FormProvider {...methods}>
       <Container onSubmit={handleSubmit(onSubmit)}>
-        <DocumentInputGroup
-          htmlFor={DOCS_INFO.NAME}
-          id={DOCS_INFO.NAME}
-          name={DOCS_INFO.NAME}
+        <DocsInput
+          type={DOCS_INFO.NAME}
           placeholder={HELPER_MSG.NAME}
           requiredMsg={ERROR_MSG.NAME}
           isLogin={isLogin}
           autoFocus
         >
           문서 제목
-        </DocumentInputGroup>
+        </DocsInput>
 
-        <DocumentInputGroup
-          htmlFor={DOCS_INFO.LOCATION}
-          id={DOCS_INFO.LOCATION}
-          name={DOCS_INFO.LOCATION}
+        <DocsInput
+          type={DOCS_INFO.LOCATION}
           placeholder={HELPER_MSG.LOCATION}
           value={inputAddress || ""}
           disabled
         >
           위치
-        </DocumentInputGroup>
+        </DocsInput>
 
         <DocumentLabel htmlFor={DOCS_INFO.CATEGORY}>카테고리</DocumentLabel>
         <SelectInput
@@ -131,7 +127,7 @@ const CreateDocument = () => {
 };
 
 export const Container = styled.form`
-  width: 20rem;
+  width: 21rem;
   height: 100vh;
 
   position: fixed;
@@ -145,16 +141,21 @@ export const Container = styled.form`
   #docsName,
   #docsLocation,
   #docsCategory {
-    width: 20rem;
-    height: 2.4rem;
-    margin-top: 0.7rem;
+    width: 100%;
+    height: 2.5rem;
+    margin-top: 0.8rem;
   }
 `;
 
 export const StyledButton = styled.div`
   position: absolute;
-  right: 2rem;
+  right: 1.5rem;
   bottom: 12rem;
+`;
+
+const DocsInput = styled(DocumentInputGroup)`
+  height: 6rem;
+  margin-bottom: 2rem;
 `;
 
 export default CreateDocument;

@@ -86,7 +86,7 @@ const Content = ({ data }) => {
         <div data-color-mode="light">
           <MDEditor.Markdown
             source={docsContent}
-            style={{ whiteSpace: "pre-wrap" }}
+            style={{ whiteSpace: "pre-wrap", fontSize: "1.1rem" }}
           />
         </div>
       )}
@@ -104,7 +104,7 @@ const ContentHeading = styled.div`
 
 const EditorContainer = styled.div`
   width: fit-content;
-  max-width: 22rem;
+  max-width: 23rem;
 `;
 
 export default Content;

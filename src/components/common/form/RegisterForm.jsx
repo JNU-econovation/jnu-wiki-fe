@@ -81,6 +81,7 @@ const RegisterForm = () => {
         </Title>
 
         <InputGroup
+          type="email"
           id="email"
           placeholder="전남대학교 이메일을 입력해주세요."
           label="이메일"
@@ -95,6 +96,7 @@ const RegisterForm = () => {
         />
 
         <InputGroup
+          type="text"
           id="nickname"
           placeholder="닉네임을 입력해주세요."
           label="닉네임"
@@ -108,6 +110,7 @@ const RegisterForm = () => {
           value={watch("nickname")}
         />
         <InputGroup
+          type="password"
           id="password"
           placeholder="비밀번호를 입력해주세요."
           label="비밀번호"
@@ -119,6 +122,7 @@ const RegisterForm = () => {
         />
 
         <InputGroup
+          type="password"
           id="repassword"
           placeholder="비밀번호를 입력해주세요."
           label="비밀번호 확인"
