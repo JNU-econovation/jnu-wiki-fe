@@ -99,6 +99,17 @@ const Container = styled.div`
     bottom: 5%;
     right: 5%;
   }
+
+  @media screen and (max-width: 1023px) {
+    #map {
+      left: 0;
+      width: 100vw;
+    }
+
+    #search {
+      bottom: 8%;
+    }
+  }
 `;
 
 const Label = styled.div`
