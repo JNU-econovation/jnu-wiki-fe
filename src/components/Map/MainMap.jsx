@@ -107,6 +107,7 @@ const Label = styled.div`
   padding: 5px 10px;
   border-radius: 5px;
   border-bottom: 2px solid #ccc;
+  font-size: 1.1rem;
 `;
 
 export default MainMap;
