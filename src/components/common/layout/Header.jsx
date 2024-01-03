@@ -45,43 +45,42 @@ const Header = () => {
   };
 
   return (
-    <>
-      <Container>
-        <HeaderDiv>
-          <LogoImg src={mainLogo} alt="jnu-logo" onClick={reloadHome} />
-          <SearchBar />
-          {!user.isLogin ? (
-            <ButtonGroup>
-              <Button
-                color="primary"
-                border="1px solid"
-                border-color="primary"
-                onClick={() => navigate(routes.join)}
-              >
-                회원가입
-              </Button>
-              <Button
-                color="white"
-                backgroundcolor="primary"
-                onClick={() => navigate(routes.login)}
-              >
-                로그인
-              </Button>
-            </ButtonGroup>
-          ) : (
-            <ButtonGroup>
-              <NameInfo>
-                <div>{nickName}</div>
-                <button className="logout-btn" onClick={clickLogout}>
-                  <SlLogout size={"21px"} />
-                </button>
-              </NameInfo>
-            </ButtonGroup>
-          )}
-        </HeaderDiv>
-        <Line />
-      </Container>
-    </>
+    <Container>
+      <HeaderDiv>
+        <LogoImg src={mainLogo} alt="jnu-logo" onClick={reloadHome} />
+        <SearchBar />
+        {!user.isLogin ? (
+          <ButtonGroup>
+            <Button
+              color="primary"
+              border="1px solid"
+              border-color="primary"
+              className="join"
+              onClick={() => navigate(routes.join)}
+            >
+              회원가입
+            </Button>
+            <Button
+              color="white"
+              backgroundcolor="primary"
+              onClick={() => navigate(routes.login)}
+            >
+              로그인
+            </Button>
+          </ButtonGroup>
+        ) : (
+          <ButtonGroup>
+            <NameInfo>
+              <div>{nickName}</div>
+              <button className="logout-btn" onClick={clickLogout}>
+                <SlLogout size={"21px"} />
+              </button>
+            </NameInfo>
+          </ButtonGroup>
+        )}
+      </HeaderDiv>
+      <Line />
+    </Container>
   );
 };
 
@@ -98,23 +97,44 @@ const HeaderDiv = styled.header`
   align-items: center;
 
   margin: 0.25rem 3rem;
+
+  @media screen and (max-width: 1023px) {
+    margin: 0.25rem 1rem;
+  }
 `;
 
 const LogoImg = styled.img`
   width: 8rem;
-  margin: 1rem 8rem 1rem 1rem;
+  margin: 1rem 5rem 1rem 1rem;
   cursor: pointer;
+
+  @media screen and (max-width: 1023px) {
+    margin: 1rem 3rem 1rem 0;
+  }
+
+  @media screen and (max-width: 767px) {
+    margin: 1rem 0;
+  }
 `;
 
 const Line = styled.hr`
+  border: 0;
+  margin: 0;
   background-color: #216d32;
   height: 0.7px;
-  margin: 0;
 `;
 
 const ButtonGroup = styled.div`
   position: fixed;
   right: 4rem;
+
+  @media screen and (max-width: 1023px) {
+    .join {
+      display: none;
+    }
+
+    right: 1rem;
+  }
 `;
 
 const NameInfo = styled.div`
@@ -124,6 +144,12 @@ const NameInfo = styled.div`
 
   .logout-btn {
     margin-left: 2rem;
+  }
+
+  @media screen and (max-width: 1023px) {
+    .logout-btn {
+      display: none;
+    }
   }
 `;
 
