@@ -107,7 +107,8 @@ const Container = styled.div`
     }
 
     #search {
-      bottom: 8%;
+      right: 4%;
+      bottom: 4rem;
     }
   }
 `;
