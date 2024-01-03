@@ -24,6 +24,11 @@ export const Container = styled.div`
   .category {
     font-size: 0.9rem;
   }
+
+  @media screen and (max-width: 767px) {
+    width: 100%;
+    box-sizing: border-box;
+  }
 `;
 
 export const StyledHr = styled.hr`
