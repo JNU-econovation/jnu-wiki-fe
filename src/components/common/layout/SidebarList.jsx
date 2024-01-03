@@ -92,6 +92,15 @@ const NavStyle = styled(NavLink)`
     background-color: #6767673d;
     border-radius: 5px;
   }
+
+  @media screen and (max-width: 1023px) {
+    flex-direction: column;
+    margin: 0;
+    height: 3.4rem;
+    &:first-child {
+      margin: 0;
+    }
+  }
 `;
 
 export default MenuList;
