@@ -97,8 +97,13 @@ const NavStyle = styled(NavLink)`
     flex-direction: column;
     margin: 0;
     height: 3.4rem;
+
     &:first-child {
       margin: 0;
+    }
+
+    .icon {
+      display: none;
     }
   }
 `;
