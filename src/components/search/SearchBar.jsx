@@ -121,7 +121,7 @@ const Container = styled.div`
 
   @media screen and (max-width: 767px) {
     position: absolute;
-    top: 7rem;
+    top: 5rem;
     left: 50%;
     transform: translateX(-50%);
     width: 80%;
@@ -134,7 +134,7 @@ const StyledSearchBar = styled.input`
   padding: 1.3rem;
   z-index: 999;
 
-  font-size: 1.1rem;
+  font-size: 1rem;
   box-shadow: 0px 0px 1px 0px rgba(9, 30, 66, 0.31),
     0px 4px 4px 0px rgba(0, 0, 0, 0.2);
 
