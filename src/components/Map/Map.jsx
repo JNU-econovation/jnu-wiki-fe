@@ -50,7 +50,7 @@ const MapDiv = styled.div`
 
   @media screen and (max-width: 1023px) {
     left: 0;
-    top: 5.25rem;
+    top: 5.5rem;
   }
 
   @media screen and (max-width: 767px) {

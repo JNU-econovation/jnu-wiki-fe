@@ -87,7 +87,7 @@ const MainMap = memo(function MainMap({ mapInfo, centerMap, mapLevel }) {
 const Container = styled.div`
   #map {
     width: calc(100vw - 15rem);
-    height: calc(100vh - 6rem);
+    height: calc(100vh - 5.5rem);
     position: fixed;
     left: 15rem;
     top: 6rem;
@@ -105,6 +105,7 @@ const Container = styled.div`
       left: 0;
       width: 100vw;
       height: calc(100vh - 5.5rem - 3.4rem);
+      top: 5rem;
     }
 
     #search {
