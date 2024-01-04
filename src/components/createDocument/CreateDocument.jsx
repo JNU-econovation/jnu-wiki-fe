@@ -145,12 +145,44 @@ export const Container = styled.form`
     height: 2.5rem;
     margin-top: 0.8rem;
   }
+
+  @media screen and (max-width: 1023px) {
+    height: calc(100vh - 3.4rem);
+    left: auto;
+  }
+
+  @media screen and (max-width: 767px) {
+    top: auto;
+    bottom: 3.4rem;
+
+    box-sizing: border-box;
+    width: 100%;
+    height: 30%;
+
+    overflow-y: auto;
+  }
 `;
 
 export const StyledButton = styled.div`
   position: absolute;
   right: 1.5rem;
   bottom: 12rem;
+
+  @media screen and (max-width: 767px) {
+    bottom: auto;
+    right: auto;
+
+    margin-top: 3rem;
+    position: static;
+
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+
+    > * {
+      width: 10rem;
+    }
+  }
 `;
 
 const DocsInput = styled(DocumentInputGroup)`
