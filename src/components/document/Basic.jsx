@@ -166,6 +166,9 @@ const Box = styled.div`
 const DocsContent = styled.div`
   width: 15.5rem;
   font-size: 1.1rem;
+  @media screen and (max-width: 1023px) {
+    font-size: 1rem;
+  }
 `;
 
 const EditName = styled(DocumentInputGroup)`

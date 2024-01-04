@@ -30,6 +30,7 @@ const Group = styled.div`
 
   @media screen and (max-width: 1023px) {
     left: auto;
+    top: 5.5rem;
     bottom: 3.4rem;
   }
 
@@ -38,6 +39,7 @@ const Group = styled.div`
 
     width: 100%;
     height: 30%;
+    padding: 1.5rem 1.5rem 8rem 1.5rem;
 
     box-sizing: border-box;
     border-radius: 10px 10px 0 0;

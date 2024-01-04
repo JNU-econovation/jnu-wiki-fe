@@ -50,6 +50,10 @@ const StyledHeading = styled.p`
   margin-right: 1rem;
   color: #216d32;
   float: left;
+
+  @media screen and (max-width: 1023px) {
+    font-size: 1.3rem;
+  }
 `;
 
 export default DocumentHeading;

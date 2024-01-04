@@ -83,16 +83,28 @@ const Content = ({ data }) => {
           />
         </EditorContainer>
       ) : (
-        <div data-color-mode="light">
+        <Container data-color-mode="light">
           <MDEditor.Markdown
             source={docsContent}
-            style={{ whiteSpace: "pre-wrap", fontSize: "1.1rem" }}
+            style={{ whiteSpace: "pre-wrap" }}
           />
-        </div>
+        </Container>
       )}
     </>
   );
 };
+
+const Container = styled.div`
+  > * {
+    font-size: 1.1rem;
+  }
+
+  @media screen and (max-width: 1023px) {
+    > * {
+      font-size: 1rem;
+    }
+  }
+`;
 
 const ContentHeading = styled.div`
   display: flex;
