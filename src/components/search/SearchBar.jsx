@@ -155,6 +155,11 @@ const StyledSearchResult = styled.div`
 
   background-color: white;
   box-sizing: border-box;
+
+  @media screen and (max-width: 767px) {
+    height: 15rem;
+    overflow-y: scroll;
+  }
 `;
 
 export default SearchBar;
