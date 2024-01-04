@@ -4,11 +4,6 @@ import MypageSidebar from "./MypageSidebar";
 import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
 import { useState, useEffect } from "react";
 
-export const MenuIcon = styled.div`
-  font-size: 2rem;
-  padding: 0 1rem;
-`;
-
 const MenuList = ({ name, icons, route, isActive, myPageClicked, onClick }) => {
   const [clicked, setClicked] = useState(myPageClicked);
   const [act, setAct] = useState(isActive);
@@ -40,6 +35,15 @@ const MenuList = ({ name, icons, route, isActive, myPageClicked, onClick }) => {
     </>
   );
 };
+
+export const MenuIcon = styled.div`
+  font-size: 2rem;
+  padding: 0 1rem;
+
+  @media screen and (max-width: 1023px) {
+    font-size: 1.3rem;
+  }
+`;
 
 const NavStyle = styled(NavLink)`
   display: flex;
@@ -94,6 +98,7 @@ const NavStyle = styled(NavLink)`
   }
 
   @media screen and (max-width: 1023px) {
+    justify-content: center;
     flex-direction: column;
     margin: 0;
     height: 3.4rem;

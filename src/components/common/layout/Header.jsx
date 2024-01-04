@@ -63,6 +63,7 @@ const Header = () => {
             <Button
               color="white"
               backgroundcolor="primary"
+              className="login"
               onClick={() => navigate(routes.login)}
             >
               로그인
@@ -101,6 +102,10 @@ const HeaderDiv = styled.header`
   @media screen and (max-width: 1023px) {
     margin: 0.25rem 1rem;
   }
+
+  @media screen and (max-width: 767px) {
+    margin: 0.25rem;
+  }
 `;
 
 const LogoImg = styled.img`
@@ -109,11 +114,13 @@ const LogoImg = styled.img`
   cursor: pointer;
 
   @media screen and (max-width: 1023px) {
-    margin: 1rem 3rem 1rem 0;
+    width: 7rem;
+    margin-right: 3rem;
   }
 
   @media screen and (max-width: 767px) {
-    margin: 1rem 0;
+    width: 6.5rem;
+    margin: 0.5rem;
   }
 `;
 
@@ -132,8 +139,16 @@ const ButtonGroup = styled.div`
     .join {
       display: none;
     }
-
+    margin-right: 1rem;
     right: 1rem;
+  }
+
+  @media screen and (max-width: 767px) {
+    .login {
+      width: 5.5rem;
+      height: 2rem;
+    }
+    margin-right: 0;
   }
 `;
 
@@ -146,7 +161,7 @@ const NameInfo = styled.div`
     margin-left: 2rem;
   }
 
-  @media screen and (max-width: 1023px) {
+  @media screen and (max-width: 767px) {
     .logout-btn {
       display: none;
     }
