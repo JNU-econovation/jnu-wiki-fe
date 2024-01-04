@@ -149,6 +149,7 @@ export const Container = styled.form`
   @media screen and (max-width: 1023px) {
     height: calc(100vh - 3.4rem);
     left: auto;
+    top: 5rem;
   }
 
   @media screen and (max-width: 767px) {
