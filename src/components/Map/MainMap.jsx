@@ -104,6 +104,7 @@ const Container = styled.div`
     #map {
       left: 0;
       width: 100vw;
+      height: calc(100vh - 6rem - 3.4rem);
     }
 
     #search {

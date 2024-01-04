@@ -10,6 +10,9 @@ const MapDiv = styled.div`
   top: 6rem;
   z-index: -1;
 
+  width: 100vw;
+  height: 100vh;
+
   .map_wrap {
     position: relative;
     width: 100%;
@@ -43,6 +46,10 @@ const MapDiv = styled.div`
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+  }
+
+  @media screen and (max-width: 1023px) {
+    left: 0;
   }
 `;
 
@@ -163,18 +170,7 @@ const Map = ({ apiLat, apiLng }) => {
     setAddress();
   }, [apiLat, apiLng, map, marker, setAddress]);
 
-  return (
-    <div className="container">
-      <MapDiv
-        id="map"
-        ref={container}
-        style={{
-          width: "100vw",
-          height: "100vh",
-        }}
-      />
-    </div>
-  );
+  return <MapDiv id="map" ref={container} />;
 };
 
 export default Map;
