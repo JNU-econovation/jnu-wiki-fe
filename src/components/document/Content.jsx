@@ -105,6 +105,10 @@ const ContentHeading = styled.div`
 const EditorContainer = styled.div`
   width: fit-content;
   max-width: 23rem;
+
+  @media screen and (max-width: 767px) {
+    max-width: 100%;
+  }
 `;
 
 export default Content;
