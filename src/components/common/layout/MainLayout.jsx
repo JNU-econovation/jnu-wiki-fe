@@ -1,7 +1,13 @@
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 
-const MainLayout = ({ children, onClick, isActive, myPageClicked }) => {
+const MainLayout = ({
+  children,
+  onClick,
+  isActive,
+  myPageClicked,
+  isDisplay,
+}) => {
   return (
     <>
       <Sidebar
@@ -9,7 +15,7 @@ const MainLayout = ({ children, onClick, isActive, myPageClicked }) => {
         isActive={isActive}
         myPageClicked={myPageClicked}
       />
-      <Header />
+      <Header isDisplay={isDisplay} />
       {children}
     </>
   );

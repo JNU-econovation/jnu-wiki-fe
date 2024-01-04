@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { popUpLogout } from "@/utils/alert";
 import { removeCookie } from "../../../services/cookie";
 
-const Header = () => {
+const Header = ({ isDisplay }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
@@ -48,7 +48,7 @@ const Header = () => {
     <Container>
       <HeaderDiv>
         <LogoImg src={mainLogo} alt="jnu-logo" onClick={reloadHome} />
-        <SearchBar />
+        <SearchBar isDisplay={isDisplay} />
         {!user.isLogin ? (
           <ButtonGroup>
             <Button

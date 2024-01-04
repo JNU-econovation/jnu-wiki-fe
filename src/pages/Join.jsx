@@ -6,7 +6,7 @@ const Join = () => {
   return (
     <>
       <Sidebar></Sidebar>
-      <Header></Header>
+      <Header isDisplay={false}></Header>
       <RegisterForm></RegisterForm>
     </>
   );

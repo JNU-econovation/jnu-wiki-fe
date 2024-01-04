@@ -10,7 +10,7 @@ import { searchDocs } from "@/services/document";
 import SearchItem from "./SearchItem";
 import { HELPER_MSG } from "@/constant/document/helpermsg";
 
-const SearchBar = () => {
+const SearchBar = ({ isDisplay }) => {
   const focusRef = useRef(null);
   const searchRef = useRef(null);
   const navigate = useNavigate();
@@ -68,7 +68,7 @@ const SearchBar = () => {
   return (
     <>
       <ToastContainer />
-      <Container>
+      <Container isDisplay={isDisplay}>
         {clickedSearch && inputValue && (
           <StyledSearchResult ref={searchRef}>
             {isSuccess &&
@@ -108,6 +108,7 @@ const Container = styled.div`
   top: 0;
   left: 0;
   width: 40rem;
+  display: ${(props) => props.isDisplay === false && "none"};
 
   > * {
     border: 0.5px solid #71717118;
