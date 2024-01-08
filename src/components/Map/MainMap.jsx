@@ -104,7 +104,7 @@ const Container = styled.div`
     #map {
       left: 0;
       width: 100vw;
-      height: calc(100vh - 5.5rem - 3.4rem);
+      height: calc(100vh - 4rem - 3.4rem);
       top: 5rem;
     }
 
