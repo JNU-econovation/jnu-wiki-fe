@@ -18,6 +18,11 @@ const Container = ({ children, marginBottom, onSubmit }) => {
 };
 
 const ContainerCss = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
   background-color: #ffffff;
   border: 0.5px solid #878787;
   border-radius: 0.5rem;
@@ -35,12 +40,7 @@ const ContainerCss = styled.form`
   box-sizing: content-box;
 
   @media screen and (max-width: 1023px) {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    top: 8rem;
+    top: 15rem;
     left: auto;
 
     margin: 0 auto;
@@ -52,7 +52,8 @@ const ContainerCss = styled.form`
   }
 
   @media screen and (max-width: 767px) {
-    width: 100%;
+    top: 9rem;
+    width: 21rem;
   }
 `;
 

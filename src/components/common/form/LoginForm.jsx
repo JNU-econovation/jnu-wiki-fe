@@ -74,62 +74,60 @@ const LoginForm = () => {
   };
 
   return (
-    <Group>
-      <Container onSubmit={handleSubmit(onSubmit)}>
-        <Title fontSize="30px" margin="4.5rem 0 1rem 0">
-          로그인
-        </Title>
-        <Title fontSize="15px" margin="0 0 3rem 0">
-          {" "}
-          환영해요! 오늘도 전남대 정보들, 잘 부탁해요 :)
-        </Title>
-        <InputGroup
-          id="email"
-          placeholder="전남대학교 이메일을 입력해주세요."
-          label="이메일"
-          margin={true}
-          register={register}
-          error={errors.email}
-          rules={emailRule}
-          value={watch("email")}
-          type="email"
-        />
-        <InputGroup
-          id="password"
-          placeholder="비밀번호를 입력해주세요."
-          label="비밀번호"
-          margin={true}
-          register={register}
-          error={errors.password}
-          rules={passwordRule}
-          value={watch("password")}
-          type="password"
-        />
+    // <Group>
+    <Container onSubmit={handleSubmit(onSubmit)}>
+      <Title fontSize="30px">로그인</Title>
+      <Title fontSize="15px">
+        {" "}
+        환영해요! 오늘도 전남대 정보들, 잘 부탁해요 :)
+      </Title>
+      <InputGroup
+        id="email"
+        placeholder="전남대학교 이메일을 입력해주세요."
+        label="이메일"
+        margin={true}
+        register={register}
+        error={errors.email}
+        rules={emailRule}
+        value={watch("email")}
+        type="email"
+      />
+      <InputGroup
+        id="password"
+        placeholder="비밀번호를 입력해주세요."
+        label="비밀번호"
+        margin={true}
+        register={register}
+        error={errors.password}
+        rules={passwordRule}
+        value={watch("password")}
+        type="password"
+      />
 
-        <Button margin="1rem 0 3rem 0" onClick={handleSubmit(onSubmit)}>
-          로그인
-        </Button>
-        <Question
-          para="계정이 없으신가요?"
-          onClick={() => {
-            navigate(routes.join);
-          }}
-        >
-          회원가입
-        </Question>
-      </Container>
-    </Group>
+      <Button margin="1rem 0 3rem 0" onClick={handleSubmit(onSubmit)}>
+        로그인
+      </Button>
+      <Question
+        para="계정이 없으신가요?"
+        onClick={() => {
+          navigate(routes.join);
+        }}
+      >
+        회원가입
+      </Question>
+    </Container>
+    // </Group>
   );
 };
 
-const Group = styled.div`
-  @media screen and (max-width: 1023px) {
-    position: relative;
+// const Group = styled.div`
+//   @media screen and (max-width: 1023px) {
+//     position: relative;
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-`;
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//   }
+// `;
 
 export default LoginForm;

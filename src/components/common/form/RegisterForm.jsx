@@ -21,6 +21,7 @@ import { joinSuccessAlert } from "@/utils/alert";
 import { JOIN_DOUBLE_CHECK } from "@/constant/document/auth";
 import { joinFailAlert } from "@/utils/alert";
 import { NameDoubleCheck, emailDoubleCheck } from "../user/DoubleCheck";
+import { InputContainer } from "@/styles/InputForm";
 const { DOUBLED } = JOIN_DOUBLE_CHECK;
 
 const RegisterForm = () => {
@@ -147,23 +148,6 @@ export const Icons = styled.div`
   bottom: 4.2rem;
   font-size: 1.5rem;
   color: #123e1cb8;
-`;
-
-const Group = styled.div`
-  position: relative;
-  box-sizing: border-box;
-
-  @media screen and (max-width: 1023px) {
-    top: 7.5rem;
-    height: 70%;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  @media screen and (max-width: 767px) {
-    position: absolute;
-  }
 `;
 
 export default RegisterForm;
