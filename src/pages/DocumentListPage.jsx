@@ -65,6 +65,10 @@ const Loading = styled(Loader)`
   background-color: white;
   box-shadow: 10px 0px 5px 0px rgba(0, 0, 0, 0.106);
   border-radius: 0 0 10px 0;
+
+  @media screen and (max-width: 1023px) {
+    display: none;
+  }
 `;
 
 export default DocumentListPage;

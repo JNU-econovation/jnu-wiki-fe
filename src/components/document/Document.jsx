@@ -27,6 +27,24 @@ const Group = styled.div`
   box-shadow: 10px 0px 5px 0px rgba(0, 0, 0, 0.106);
   box-sizing: border-box;
   overflow: auto;
+
+  @media screen and (max-width: 1023px) {
+    left: auto;
+    top: 5.5rem;
+    bottom: 3.4rem;
+  }
+
+  @media screen and (max-width: 767px) {
+    top: auto;
+
+    width: 100%;
+    height: 30%;
+    padding: 1.5rem 1.5rem 8rem 1.5rem;
+
+    box-sizing: border-box;
+    border-radius: 10px 10px 0 0;
+    box-shadow: 0px -10px 10px 0px rgba(0, 0, 0, 0.106);
+  }
 `;
 
 const Container = styled.div`

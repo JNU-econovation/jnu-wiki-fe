@@ -12,6 +12,7 @@ import { loginFailAlert } from "@/utils/alert";
 import { useForm } from "react-hook-form";
 import { emailRule, passwordRule } from "@/utils/registerRules";
 import { useMutation } from "@tanstack/react-query";
+import styled from "styled-components";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -73,7 +74,7 @@ const LoginForm = () => {
   };
 
   return (
-    <>
+    <Group>
       <Container onSubmit={handleSubmit(onSubmit)}>
         <Title fontSize="30px" margin="4.5rem 0 1rem 0">
           로그인
@@ -117,8 +118,18 @@ const LoginForm = () => {
           회원가입
         </Question>
       </Container>
-    </>
+    </Group>
   );
 };
+
+const Group = styled.div`
+  @media screen and (max-width: 1023px) {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+`;
 
 export default LoginForm;

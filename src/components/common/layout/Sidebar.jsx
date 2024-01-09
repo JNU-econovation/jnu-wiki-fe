@@ -23,6 +23,20 @@ const Container = styled.div`
   align-items: center;
 
   z-index: 3;
+
+  @media screen and (max-width: 1023px) {
+    background-color: white;
+    box-shadow: none;
+
+    flex-direction: row;
+    justify-content: center;
+
+    width: 100vw;
+    height: 3.4rem;
+
+    top: auto;
+    bottom: 0;
+  }
 `;
 
 function Sidebar({ isActive, myPageClicked, onClick }) {

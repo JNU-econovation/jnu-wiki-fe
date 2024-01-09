@@ -13,6 +13,10 @@ const DocumentWrapper = styled.div`
       transform: translateZ(0);
     }
   }
+
+  @media screen and (max-width: 1023px) {
+    -webkit-animation: none;
+  }
 `;
 
 export default DocumentWrapper;

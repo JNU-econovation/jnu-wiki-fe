@@ -65,11 +65,14 @@ const InputGroup = ({
 };
 const InputCss = styled.div`
   position: relative;
-  width: 100%;
   display: flex;
   align-items: center;
   margin-bottom: 1rem;
   margin-top: 1rem;
+
+  @media screen and (max-width: 1023px) {
+    width: 100%;
+  }
 `;
 
 const ChangeButton = styled(DoubleCheckStyle)`
