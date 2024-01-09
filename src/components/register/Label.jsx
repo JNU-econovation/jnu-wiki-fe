@@ -8,7 +8,7 @@ const LabelCss = styled.label`
   text-align: start;
   color: #216d32;
 
-  margin: 0.8rem 0;
+  margin-top: 2rem;
 `;
 
 export default Label;

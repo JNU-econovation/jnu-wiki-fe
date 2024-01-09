@@ -12,4 +12,12 @@ export const StyledElement = styled.div`
   &:focus {
     outline: 1.5px solid #216d32;
   }
+
+  @media screen and (max-width: 1023px) {
+    font-size: 0.8rem;
+  }
+
+  @media screen and (max-width: 767px) {
+    width: 100%;
+  }
 `;
