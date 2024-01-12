@@ -21,7 +21,6 @@ import { joinSuccessAlert } from "@/utils/alert";
 import { JOIN_DOUBLE_CHECK } from "@/constant/document/auth";
 import { joinFailAlert } from "@/utils/alert";
 import { NameDoubleCheck, emailDoubleCheck } from "../user/DoubleCheck";
-import { InputContainer } from "@/styles/InputForm";
 const { DOUBLED } = JOIN_DOUBLE_CHECK;
 
 const RegisterForm = () => {
