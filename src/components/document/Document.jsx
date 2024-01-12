@@ -38,7 +38,7 @@ const Group = styled.div`
     top: auto;
 
     width: 100%;
-    height: 30%;
+    height: 40%;
     padding: 1.5rem 1.5rem 8rem 1.5rem;
 
     box-sizing: border-box;
