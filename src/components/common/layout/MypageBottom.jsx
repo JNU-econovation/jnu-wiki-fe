@@ -5,6 +5,7 @@ import Icon from "../Icon";
 import routes from "@/routes";
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
+import { SlLogout } from "react-icons/sl";
 
 const MypageBottom = () => {
   const [display, setDisplay] = useState(false);
@@ -23,6 +24,9 @@ const MypageBottom = () => {
       <ul className="mypageSidebar">
         <MyList to={routes.myPage}>- 회원정보 수정</MyList>
         <MyList to={routes.scrap}>- 스크랩 한 문서</MyList>
+        {/* <button className="logout-btn" onClick={clickLogout}>
+          <SlLogout size={"21px"} />
+        </button> */}
       </ul>
     </BottomStyle>
   );
