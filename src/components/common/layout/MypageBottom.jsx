@@ -24,7 +24,7 @@ const MypageBottom = () => {
       <ul className="mypageSidebar">
         <MyList to={routes.myPage}>- 회원정보 수정</MyList>
         <MyList to={routes.scrap}>- 스크랩 한 문서</MyList>
-        <Logout className="logout" />
+        <Logout />
       </ul>
     </BottomStyle>
   );
@@ -50,10 +50,6 @@ const BottomStyle = styled(Container)`
     display: flex;
     flex-direction: column;
     gap: 1rem;
-  }
-  .logout {
-    position: relative;
-    right: -136px;
   }
 `;
 
