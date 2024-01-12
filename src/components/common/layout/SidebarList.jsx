@@ -3,10 +3,13 @@ import { NavLink } from "react-router-dom";
 import MypageSidebar from "./MypageSidebar";
 import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
 import { useState, useEffect } from "react";
-
+import MypageBottom from "./MypageBottom";
 const MenuList = ({ name, icons, route, isActive, myPageClicked, onClick }) => {
   const [clicked, setClicked] = useState(myPageClicked);
   const [act, setAct] = useState(isActive);
+
+  //resize 할때마다 렌더링 되게 수정
+  const ipad = matchMedia("screen and (max-width: 1023px)");
 
   const handleOnClick = (e) => {
     e.preventDefault();
@@ -31,7 +34,8 @@ const MenuList = ({ name, icons, route, isActive, myPageClicked, onClick }) => {
             <BsFillCaretDownFill className="icon" onClick={handleOnClick} />
           ))}
       </NavStyle>
-      {clicked && <MypageSidebar isActive={act} />}
+      {clicked && !ipad.matches && <MypageSidebar isActive={act} />}
+      {clicked && ipad.matches && <MypageBottom></MypageBottom>}
     </>
   );
 };

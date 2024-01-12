@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const Container = ({ children, marginBottom, onSubmit }) => {
+const Container = ({ children, marginBottom, onSubmit, top }) => {
   const goEnter = (e) => {
     if (e.key === "Enter") {
       onSubmit();
@@ -11,6 +11,7 @@ const Container = ({ children, marginBottom, onSubmit }) => {
       onKeyPress={goEnter}
       marginBottom={marginBottom}
       onSubmit={onSubmit}
+      top={top}
     >
       <div>{children}</div>
     </ContainerCss>
@@ -40,7 +41,7 @@ const ContainerCss = styled.form`
   box-sizing: content-box;
 
   @media screen and (max-width: 1023px) {
-    top: 15rem;
+    top: ${(props) => (props.top ? "15rem" : "10rem")};
     left: auto;
 
     margin: 0 auto;
@@ -48,11 +49,11 @@ const ContainerCss = styled.form`
 
     box-shadow: initial;
     border: initial;
-    margin-bottom: 0;
+    margin-bottom: 15rem;
   }
 
   @media screen and (max-width: 767px) {
-    top: 9rem;
+    top: ${(props) => (props.top ? "10rem" : "7rem")};
     width: 21rem;
   }
 `;

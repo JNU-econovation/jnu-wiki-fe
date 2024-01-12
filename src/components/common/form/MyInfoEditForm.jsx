@@ -87,10 +87,10 @@ const MyInfoEditForm = () => {
   return (
     <>
       <Container>
-        <Title fontSize="20px" margin="3rem 0">
+        <Title fontSize="20px" margin="3rem 0 1rem 0">
           마이페이지
         </Title>
-        <Title fontSize="30px" margin="0 0 4rem 0">
+        <Title fontSize="30px" margin="0 0 2rem 0">
           회원정보 수정
         </Title>
         <InputGroup

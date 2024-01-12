@@ -17,11 +17,11 @@ const MypageForm = () => {
 
   return (
     <>
-      <Container>
-        <Title fontSize="20px" margin="3rem 0">
+      <Container top={true}>
+        <Title fontSize="20px" margin="3rem 0 1.5rem 0">
           마이페이지
         </Title>
-        <Title fontSize="30px" margin="0 0 4rem 0">
+        <Title fontSize="30px" margin="0 0 3rem 0">
           회원정보
         </Title>
         <InfoStyle>

@@ -12,7 +12,6 @@ import { loginFailAlert } from "@/utils/alert";
 import { useForm } from "react-hook-form";
 import { emailRule, passwordRule } from "@/utils/registerRules";
 import { useMutation } from "@tanstack/react-query";
-import styled from "styled-components";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -74,10 +73,11 @@ const LoginForm = () => {
   };
 
   return (
-    // <Group>
-    <Container onSubmit={handleSubmit(onSubmit)}>
-      <Title fontSize="30px">로그인</Title>
-      <Title fontSize="15px">
+    <Container onSubmit={handleSubmit(onSubmit)} top={true}>
+      <Title fontSize="30px" margin="0 0 1rem 0">
+        로그인
+      </Title>
+      <Title fontSize="15px" margin="0 0 2rem 0">
         {" "}
         환영해요! 오늘도 전남대 정보들, 잘 부탁해요 :)
       </Title>
@@ -116,18 +116,7 @@ const LoginForm = () => {
         회원가입
       </Question>
     </Container>
-    // </Group>
   );
 };
-
-// const Group = styled.div`
-//   @media screen and (max-width: 1023px) {
-//     position: relative;
-
-//     display: flex;
-//     flex-direction: column;
-//     align-items: center;
-//   }
-// `;
 
 export default LoginForm;

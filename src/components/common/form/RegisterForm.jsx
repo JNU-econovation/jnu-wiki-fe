@@ -71,9 +71,11 @@ const RegisterForm = () => {
 
   return (
     <Container onSubmit={handleSubmit(onSubmit)}>
-      <Title fontSize="30px">회원가입</Title>
+      <Title fontSize="30px" margin="0 0 1rem 0">
+        회원가입
+      </Title>
 
-      <Title fontSize="15px">
+      <Title fontSize="15px" margin="0 0 2rem 0">
         반가워요! 전남대학교에 대한 정보를 공유해봐요 :)
       </Title>
 
