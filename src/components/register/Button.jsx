@@ -10,6 +10,9 @@ const Btn = styled.button`
   margin: ${(props) => props.margin};
 
   border-radius: 0.3rem;
+  @media screen and (max-width: 767px) {
+    width: 100%;
+  }
 `;
 
 const Button = ({ onClick, children, margin }) => {

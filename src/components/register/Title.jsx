@@ -12,7 +12,7 @@ const TitleStyle = styled.p`
   color: #216d32;
   font-size: ${(props) => props.fontSize};
   margin: ${(props) => props.margin};
-  margin-bottom: 1rem;
+  /* margin-bottom: 4rem; */
 `;
 
 export default Title;

@@ -23,7 +23,7 @@ export const Container = styled.div`
     left: auto;
     top: auto;
 
-    height: 30%;
+    height: 40%;
     width: 100%;
 
     box-sizing: border-box;

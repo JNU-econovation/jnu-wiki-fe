@@ -3,18 +3,15 @@ import mainLogo from "/main-logo.png";
 import { useNavigate } from "react-router-dom";
 import Button from "@/components/common/button/Button";
 import routes from "@/routes";
-import { SlLogout } from "react-icons/sl";
 import SearchBar from "@/components/search/SearchBar";
 import { getUserInfo } from "@/services/mypage";
 import { useQuery } from "@tanstack/react-query";
-import { logoutState } from "@/store/userReducer";
-import { useDispatch, useSelector } from "react-redux";
-import { popUpLogout } from "@/utils/alert";
-import { removeCookie } from "../../../services/cookie";
+import { useSelector } from "react-redux";
+import Logout from "../Logout";
 
 const Header = ({ isDisplay }) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+
   const user = useSelector((state) => state.user);
   const isLogin = useSelector((state) => state.user.isLogin);
 
@@ -23,21 +20,6 @@ const Header = ({ isDisplay }) => {
     enabled: isLogin,
     select: (data) => data?.data?.response.nickName,
   });
-
-  const logOutUser = () => {
-    localStorage.clear();
-    removeCookie("refresh-token");
-    dispatch(logoutState());
-    location.reload();
-  };
-
-  const clickLogout = () => {
-    popUpLogout().then((result) => {
-      if (result.isConfirmed) {
-        logOutUser();
-      }
-    });
-  };
 
   const reloadHome = () => {
     navigate(routes.home);
@@ -73,9 +55,7 @@ const Header = ({ isDisplay }) => {
           <ButtonGroup>
             <NameInfo>
               <div>{nickName}</div>
-              <button className="logout-btn" onClick={clickLogout}>
-                <SlLogout size={"21px"} />
-              </button>
+              <Logout />
             </NameInfo>
           </ButtonGroup>
         )}

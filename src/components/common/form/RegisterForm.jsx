@@ -70,9 +70,11 @@ const RegisterForm = () => {
 
   return (
     <Container onSubmit={handleSubmit(onSubmit)}>
-      <Title fontSize="30px">회원가입</Title>
+      <Title fontSize="30px" margin="0 0 1rem 0">
+        회원가입
+      </Title>
 
-      <Title fontSize="15px">
+      <Title fontSize="15px" margin="0 0 2rem 0">
         반가워요! 전남대학교에 대한 정보를 공유해봐요 :)
       </Title>
 
@@ -147,23 +149,6 @@ export const Icons = styled.div`
   bottom: 4.2rem;
   font-size: 1.5rem;
   color: #123e1cb8;
-`;
-
-const Group = styled.div`
-  position: relative;
-  box-sizing: border-box;
-
-  @media screen and (max-width: 1023px) {
-    top: 7.5rem;
-    height: 70%;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  @media screen and (max-width: 767px) {
-    position: absolute;
-  }
 `;
 
 export default RegisterForm;
