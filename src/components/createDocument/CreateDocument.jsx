@@ -158,7 +158,7 @@ export const Container = styled.form`
 
     box-sizing: border-box;
     width: 100%;
-    height: 40%;
+    height: 35%;
 
     overflow-y: auto;
   }
