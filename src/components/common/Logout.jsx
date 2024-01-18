@@ -4,7 +4,7 @@ import { removeCookie } from "@/services/cookie";
 import { useDispatch } from "react-redux";
 import { SlLogout } from "react-icons/sl";
 
-const Logout = () => {
+const Logout = ({ className }) => {
   const dispatch = useDispatch();
 
   const logOutUser = () => {
@@ -22,7 +22,7 @@ const Logout = () => {
     });
   };
   return (
-    <button className="logout-btn" onClick={clickLogout}>
+    <button className={`${className} logout-btn`} onClick={clickLogout}>
       <SlLogout size={"21px"} />
     </button>
   );
