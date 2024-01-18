@@ -36,7 +36,7 @@ const ScrapList = ({ datas }) => {
     }
   };
   return (
-    <Container>
+    <Container display={true}>
       {docsData.length ? (
         docsData.map((el) => (
           <DocsItem

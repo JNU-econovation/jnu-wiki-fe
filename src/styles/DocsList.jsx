@@ -13,6 +13,15 @@ export const Container = styled.div`
   overflow-y: auto;
   max-height: calc(100vh - 5.9rem - 2 * 2rem);
 
+  .icon {
+    position: relative;
+    bottom: 2.5rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   @media screen and (max-width: 1023px) {
     left: 0;
     top: 5.8rem;
@@ -23,7 +32,8 @@ export const Container = styled.div`
     left: auto;
     top: auto;
 
-    height: 40%;
+    height: ${(props) => (props.display ? "240px" : "20px")};
+    transition: height 0.2s ease-in-out;
     width: 100%;
 
     box-sizing: border-box;
