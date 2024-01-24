@@ -45,7 +45,7 @@ const Group = styled.span`
 
 const StyledHeading = styled.p`
   font-size: 1.4rem;
-  font-weight: bold;
+  font-weight: 600;
 
   margin-right: 1rem;
   color: #216d32;
