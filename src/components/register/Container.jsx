@@ -41,7 +41,7 @@ const ContainerCss = styled.form`
   box-sizing: content-box;
 
   @media screen and (max-width: 1023px) {
-    top: ${(props) => (props.top ? "15rem" : "10rem")};
+    top: ${(props) => (props.top ? "13rem" : "10rem")};
     left: auto;
 
     margin: 0 auto;

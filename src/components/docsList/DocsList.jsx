@@ -50,7 +50,10 @@ const DocsList = ({ data }) => {
         margin="0"
         hoverColor="#949494"
       >
-        <IoRemoveOutline onClick={() => setDisplay((prop) => !prop)} />
+        <IoRemoveOutline
+          className="line"
+          onClick={() => setDisplay((prop) => !prop)}
+        />
       </Icon>
 
       {docsData && docsData.length > 0 ? (
