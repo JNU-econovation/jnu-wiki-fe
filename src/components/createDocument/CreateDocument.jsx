@@ -2,26 +2,25 @@ import { FormProvider, useForm } from "react-hook-form";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { useMutation } from "@tanstack/react-query";
-import { IoRemoveOutline } from "react-icons/io5";
-import { useState } from "react";
 
 import DocumentInputGroup from "./DocumentInputGroup";
 import DocumentLabel from "@/components/document/DocumentLabel";
 import SelectInput from "@/components/common/input/SelectInput";
 import Button from "@/components/common/button/Button";
+import BottomSheet from "@/components/common/layout/BottomSheet";
 import { DOCS_INFO, ERROR_MSG, CATEGORY } from "@/constant/document/create";
 import { HELPER_MSG } from "@/constant/document/helpermsg";
 import { create } from "@/services/document";
 import { askAlert, requestAlert } from "@/utils/alert";
 import { nullTokenWrite, occurError } from "@/utils/toast";
 import useHandleAddress from "@/hooks/useHandleAddress";
-import Icon from "../common/Icon";
+import { useBottomDisplay } from "@/hooks/useBottomDisplay";
 
 const CreateDocument = () => {
   const { latitude, longitude } = useSelector((state) => state.latLng);
   const address = useSelector((state) => state.address.address);
   const isLogin = useSelector((state) => state.user.isLogin);
-  const [display, setDisplay] = useState(true);
+  const [display, handleOnDisplay] = useBottomDisplay(true);
 
   const methods = useForm();
   const { reset, getValues, handleSubmit } = methods;
@@ -84,18 +83,7 @@ const CreateDocument = () => {
   return (
     <FormProvider {...methods}>
       <Container onSubmit={handleSubmit(onSubmit)} display={display}>
-        <Icon
-          color="rgba(170, 170, 170, 0.69)"
-          size="3rem"
-          className="icon"
-          margin="0"
-          hoverColor="#949494"
-        >
-          <IoRemoveOutline
-            className="line"
-            onClick={() => setDisplay((prop) => !prop)}
-          />
-        </Icon>
+        <BottomSheet onClick={handleOnDisplay} />
         <DocsInput
           type={DOCS_INFO.NAME}
           placeholder={HELPER_MSG.NAME}
@@ -163,11 +151,6 @@ export const Container = styled.form`
     margin-top: 0.8rem;
   }
 
-  .icon,
-  .line {
-    display: none;
-  }
-
   @media screen and (max-width: 1023px) {
     height: calc(100vh - 5.7rem);
     left: auto;
@@ -187,20 +170,6 @@ export const Container = styled.form`
     max-height: auto;
     height: ${(props) => (props.display ? "300px" : "20px")};
     transition: height 0.2s ease-in-out;
-
-    .icon {
-      display: block;
-      position: relative;
-      bottom: 2.5rem;
-
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .line {
-      display: block;
-    }
   }
 `;
 

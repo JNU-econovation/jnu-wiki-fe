@@ -1,28 +1,16 @@
 import styled from "styled-components";
 import Basic from "./Basic";
 import Content from "./Content";
-import Icon from "../common/Icon";
-import { IoRemoveOutline } from "react-icons/io5";
-import { useState } from "react";
+import BottomSheet from "../common/layout/BottomSheet";
+import { useBottomDisplay } from "@/hooks/useBottomDisplay";
 
 const Document = ({ data }) => {
-  const [display, setDisplay] = useState(true);
+  const [display, handleOnDisplay] = useBottomDisplay(true);
 
   return (
     <Container>
       <Group display={display}>
-        <Icon
-          color="rgba(170, 170, 170, 0.69)"
-          size="3rem"
-          className="outline-icon"
-          margin="0"
-          hoverColor="#949494"
-        >
-          <IoRemoveOutline
-            className="line"
-            onClick={() => setDisplay((prop) => !prop)}
-          />
-        </Icon>
+        <BottomSheet onClick={handleOnDisplay} />
         <Basic data={data} />
         <Content data={data} />
       </Group>
