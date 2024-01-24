@@ -6,12 +6,15 @@ import DocsItem from "./DocsItem";
 import { scrapCreate, scrapDelete } from "@/services/scrap";
 import useDocsMutation from "@/hooks/useDocsMutation";
 import { Container } from "@/styles/DocsList";
+import { useBottomDisplay } from "@/hooks/useBottomDisplay";
+import BottomSheet from "@/components/common/layout/BottomSheet";
 
 const DocsList = ({ data }) => {
   const navigate = useNavigate();
   const docsData = data?.pages.flatMap((x) => x.data.response.docsList);
-  const [scrapList, setScrapList] = useState([]);
   const { memberId } = useSelector((state) => state.user);
+  const [scrapList, setScrapList] = useState([]);
+  const [display, handleOnDisplay] = useBottomDisplay(true);
 
   const { mutate: createScrap } = useDocsMutation(scrapCreate);
   const { mutate: deleteScrap } = useDocsMutation(scrapDelete);
@@ -39,7 +42,9 @@ const DocsList = ({ data }) => {
   };
 
   return (
-    <Container>
+    <Container display={display}>
+      <BottomSheet onClick={handleOnDisplay} />
+
       {docsData && docsData.length > 0 ? (
         docsData.map((el) => (
           <DocsItem

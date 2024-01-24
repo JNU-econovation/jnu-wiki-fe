@@ -1,25 +1,12 @@
 import styled from "styled-components";
-import mainLogo from "/main-logo.png";
 import { useNavigate } from "react-router-dom";
-import Button from "@/components/common/button/Button";
+
+import mainLogo from "/main-logo.png";
 import routes from "@/routes";
 import SearchBar from "@/components/search/SearchBar";
-import { getUserInfo } from "@/services/mypage";
-import { useQuery } from "@tanstack/react-query";
-import { useSelector } from "react-redux";
-import Logout from "../Logout";
 
 const Header = ({ isDisplay }) => {
   const navigate = useNavigate();
-
-  const user = useSelector((state) => state.user);
-  const isLogin = useSelector((state) => state.user.isLogin);
-
-  const { data: nickName } = useQuery(["member_info"], getUserInfo, {
-    staleTime: Infinity,
-    enabled: isLogin,
-    select: (data) => data?.data?.response.nickName,
-  });
 
   const reloadHome = () => {
     navigate(routes.home);
@@ -31,34 +18,6 @@ const Header = ({ isDisplay }) => {
       <HeaderDiv>
         <LogoImg src={mainLogo} alt="jnu-logo" onClick={reloadHome} />
         <SearchBar isDisplay={isDisplay} />
-        {!user.isLogin ? (
-          <ButtonGroup>
-            <Button
-              color="primary"
-              border="1px solid"
-              border-color="primary"
-              className="join"
-              onClick={() => navigate(routes.join)}
-            >
-              회원가입
-            </Button>
-            <Button
-              color="white"
-              backgroundcolor="primary"
-              className="login"
-              onClick={() => navigate(routes.login)}
-            >
-              로그인
-            </Button>
-          </ButtonGroup>
-        ) : (
-          <ButtonGroup>
-            <NameInfo>
-              <div>{nickName}</div>
-              <Logout />
-            </NameInfo>
-          </ButtonGroup>
-        )}
       </HeaderDiv>
       <Line />
     </Container>
@@ -69,7 +28,7 @@ const Container = styled.div`
   position: fixed;
   width: 100vw;
   background-color: white;
-  z-index: 3;
+  z-index: 2;
   box-sizing: border-box;
 `;
 
@@ -110,42 +69,4 @@ const Line = styled.hr`
   background-color: #216d32;
   height: 0.7px;
 `;
-
-const ButtonGroup = styled.div`
-  position: fixed;
-  right: 4rem;
-
-  @media screen and (max-width: 1023px) {
-    .join {
-      display: none;
-    }
-    margin-right: 1rem;
-    right: 1rem;
-  }
-
-  @media screen and (max-width: 767px) {
-    .login {
-      width: 5.5rem;
-      height: 2rem;
-    }
-    margin-right: 0;
-  }
-`;
-
-const NameInfo = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
-  .logout-btn {
-    margin-left: 2rem;
-  }
-
-  @media screen and (max-width: 767px) {
-    .logout-btn {
-      display: none;
-    }
-  }
-`;
-
 export default Header;

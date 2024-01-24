@@ -1,12 +1,16 @@
 import styled from "styled-components";
-
 import Basic from "./Basic";
 import Content from "./Content";
+import BottomSheet from "../common/layout/BottomSheet";
+import { useBottomDisplay } from "@/hooks/useBottomDisplay";
 
 const Document = ({ data }) => {
+  const [display, handleOnDisplay] = useBottomDisplay(true);
+
   return (
     <Container>
-      <Group>
+      <Group display={display}>
+        <BottomSheet onClick={handleOnDisplay} />
         <Basic data={data} />
         <Content data={data} />
       </Group>
@@ -16,7 +20,7 @@ const Document = ({ data }) => {
 
 const Group = styled.div`
   width: 27rem;
-  height: calc(100vh - 6rem);
+  height: calc(100vh - 5.5rem);
 
   position: fixed;
   left: 15rem;
@@ -28,22 +32,44 @@ const Group = styled.div`
   box-sizing: border-box;
   overflow: auto;
 
+  .outline-icon,
+  .line {
+    display: none;
+  }
+
   @media screen and (max-width: 1023px) {
     left: auto;
     top: 5.5rem;
-    bottom: 3.4rem;
+    width: 25rem;
   }
 
   @media screen and (max-width: 767px) {
     top: auto;
+    bottom: 0;
 
     width: 100%;
-    height: 40%;
     padding: 1.5rem 1.5rem 8rem 1.5rem;
 
     box-sizing: border-box;
     border-radius: 10px 10px 0 0;
     box-shadow: 0px -10px 10px 0px rgba(0, 0, 0, 0.106);
+
+    height: ${(props) => (props.display ? "300px" : "20px")};
+    transition: height 0.2s ease-in-out;
+
+    .outline-icon {
+      display: block;
+      position: relative;
+      bottom: 2.5rem;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .line {
+      display: block;
+    }
   }
 `;
 

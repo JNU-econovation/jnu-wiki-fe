@@ -104,8 +104,8 @@ const Container = styled.div`
     #map {
       left: 0;
       width: 100vw;
-      height: calc(100vh - 4rem - 3.4rem);
-      top: 5rem;
+      height: calc(100vh - 5.7rem);
+      top: 5.7rem;
     }
 
     #search {
@@ -116,7 +116,8 @@ const Container = styled.div`
 
   @media screen and (max-width: 767px) {
     #map {
-      top: 4rem;
+      height: calc(100vh - 4.5rem);
+      top: 4.5rem;
     }
   }
 `;

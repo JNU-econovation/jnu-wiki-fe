@@ -22,16 +22,17 @@ const MypageBottom = () => {
       </Icon>
 
       <ul className="mypageSidebar">
-        <MyList to={routes.myPage}>- 회원정보 수정</MyList>
-        <MyList to={routes.scrap}>- 스크랩 한 문서</MyList>
-        <Logout />
+        <MyList to={routes.myPage}>회원정보 수정</MyList>
+        <MyList to={routes.scrap}>스크랩 한 문서</MyList>
       </ul>
+      <LogoutBtn />
     </BottomStyle>
   );
 };
 
 const BottomStyle = styled(Container)`
-  height: ${(props) => (props.display ? "260px" : "20px")};
+  position: absolute;
+  height: ${(props) => (props.display ? "240px" : "20px")};
   transition: height 0.2s ease-in-out;
   overflow: hidden;
 
@@ -68,6 +69,12 @@ const MyList = styled(NavLink)`
     color: #202020;
     font-weight: 800;
   }
+`;
+
+const LogoutBtn = styled(Logout)`
+  position: relative;
+  bottom: 1rem;
+  left: 15rem;
 `;
 
 export default MypageBottom;

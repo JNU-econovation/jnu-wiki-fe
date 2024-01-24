@@ -41,7 +41,7 @@ const StyledToggle = styled(IoIosArrowBack)`
   left: calc(15rem + 27rem);
 
   @media screen and (max-width: 1023px) {
-    left: 27rem;
+    left: 25rem;
   }
 `;
 
