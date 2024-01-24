@@ -128,16 +128,18 @@ const Basic = ({ data }) => {
 
           <DocsInfo>
             <DocumentLabel htmlFor="docsCategory">카테고리</DocumentLabel>
-            {isEditBasic ? (
-              <SelectInput
-                id="docsCategory"
-                selected={docsCategory}
-                name="docsRequestCategory"
-                list={CATEGORY}
-              />
-            ) : (
-              <DocsContent>{docsCategory}</DocsContent>
-            )}
+            <Container>
+              {isEditBasic ? (
+                <SelectInput
+                  id="docsCategory"
+                  selected={docsCategory}
+                  name="docsRequestCategory"
+                  list={CATEGORY}
+                />
+              ) : (
+                <DocsContent>{docsCategory}</DocsContent>
+              )}
+            </Container>
           </DocsInfo>
         </Box>
       </form>
@@ -164,6 +166,9 @@ const Box = styled.div`
 const DocsContent = styled.div`
   width: 15.5rem;
   font-size: 1.1rem;
+  @media screen and (max-width: 1023px) {
+    font-size: 1rem;
+  }
 `;
 
 const EditName = styled(DocumentInputGroup)`
@@ -172,6 +177,12 @@ const EditName = styled(DocumentInputGroup)`
   align-items: baseline;
   height: 3rem;
   margin-bottom: 1rem;
+`;
+
+const Container = styled.div`
+  @media screen and (max-width: 767px) {
+    width: 100%;
+  }
 `;
 
 export default Basic;

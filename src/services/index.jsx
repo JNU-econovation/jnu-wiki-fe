@@ -50,6 +50,7 @@ instance.interceptors.response.use(
             "accessExpiredTime",
             parseInt(response.data.response.accessTokenExpiration)
           );
+          originalConfig._retry = true;
         })
         .catch((error) => {
           console.log(error);

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import debounce from "lodash/debounce";
@@ -9,29 +9,20 @@ import { ToastContainer } from "react-toastify";
 import { searchDocs } from "@/services/document";
 import SearchItem from "./SearchItem";
 import { HELPER_MSG } from "@/constant/document/helpermsg";
+import { useHandleClickOutside } from "@/hooks/useHandleClickOutside";
 
-const SearchBar = () => {
+const SearchBar = ({ isDisplay }) => {
   const focusRef = useRef(null);
-  const searchRef = useRef(null);
   const navigate = useNavigate();
-  const [clickedSearch, setClickedSearch] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
-  useEffect(() => {
-    const handleOnClickedSearch = (e) => {
-      if (searchRef.current && !searchRef.current.contains(e.target)) {
-        setClickedSearch(false);
-      } else {
-        setClickedSearch(true);
-      }
-    };
-
-    document.addEventListener("mousedown", handleOnClickedSearch);
-    return () => {
-      document.removeEventListener("mousedown", handleOnClickedSearch);
-    };
-  }, [searchRef]);
+  const {
+    node: searchRef,
+    clicked: clickedSearch,
+    setClicked: setClickedSearch,
+    handleOnClick: handleClickedSearch,
+  } = useHandleClickOutside();
 
   const onFocusSearchBar = () => {
     focusRef.current.placeholder = "";
@@ -68,7 +59,23 @@ const SearchBar = () => {
   return (
     <>
       <ToastContainer />
-      <div>
+      <Container isDisplay={isDisplay} onClick={handleClickedSearch}>
+        {clickedSearch && inputValue && (
+          <StyledSearchResult ref={searchRef}>
+            {isSuccess &&
+              searchResults &&
+              searchResults
+                .slice(0, 8)
+                .map((el) => (
+                  <SearchItem
+                    key={el.docsId}
+                    name={el.docsName}
+                    onClick={() => handleOnClick(el.docsId)}
+                  />
+                ))}
+            {!isSuccess && HELPER_MSG.NO_SEARCH}
+          </StyledSearchResult>
+        )}
         <StyledSearchBar
           type="search"
           placeholder="      검색"
@@ -82,43 +89,44 @@ const SearchBar = () => {
             throttledSearchDocs(e.target.value);
           }}
         />
-        {isSuccess
-          ? clickedSearch &&
-            inputValue && (
-              <Container ref={searchRef}>
-                {searchResults &&
-                  searchResults
-                    .slice(0, 8)
-                    .map((el) => (
-                      <SearchItem
-                        key={el.docsId}
-                        name={el.docsName}
-                        onClick={() => handleOnClick(el.docsId)}
-                      />
-                    ))}
-              </Container>
-            )
-          : clickedSearch &&
-            inputValue && (
-              <Container ref={searchRef}>{HELPER_MSG.NO_SEARCH}</Container>
-            )}
-      </div>
+      </Container>
     </>
   );
 };
 
-const StyledSearchBar = styled.input`
-  width: 40rem;
-  height: 3rem;
-  padding: 1.3rem;
-  z-index: 100000;
+const Container = styled.div`
   position: relative;
   top: 0;
   left: 0;
+  width: 40rem;
+  display: ${(props) => props.isDisplay === false && "none"};
 
-  font-size: 1.1rem;
-  border: 0.5px solid #71717118;
-  border-radius: 10px;
+  > * {
+    border: 0.5px solid #71717118;
+    border-radius: 10px;
+    width: 100%;
+  }
+
+  @media screen and (max-width: 1272px) {
+    width: 45%;
+  }
+
+  @media screen and (max-width: 767px) {
+    position: absolute;
+    top: 5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+  }
+`;
+
+const StyledSearchBar = styled.input`
+  position: relative;
+  height: 3rem;
+  padding: 1.3rem;
+  z-index: 999;
+
+  font-size: 1rem;
   box-shadow: 0px 0px 1px 0px rgba(9, 30, 66, 0.31),
     0px 4px 4px 0px rgba(0, 0, 0, 0.2);
 
@@ -130,18 +138,20 @@ const StyledSearchBar = styled.input`
   }
 `;
 
-const Container = styled.div`
+const StyledSearchResult = styled.div`
   position: absolute;
-  top: 3rem;
-
-  width: 37.3rem;
+  top: 2rem;
   height: 20rem;
 
   padding: 3rem 1.3rem;
 
   background-color: white;
-  border: 0.5px solid #71717118;
-  border-radius: 10px;
+  box-sizing: border-box;
+
+  @media screen and (max-width: 767px) {
+    height: 15rem;
+    overflow-y: scroll;
+  }
 `;
 
 export default SearchBar;

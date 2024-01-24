@@ -30,7 +30,7 @@ const DocumentHeading = ({
 
 const Group = styled.span`
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   color: #216d32;
   margin: 0.5rem 0 0.8rem 0;
   width: 12rem;
@@ -50,6 +50,10 @@ const StyledHeading = styled.p`
   margin-right: 1rem;
   color: #216d32;
   float: left;
+
+  @media screen and (max-width: 1023px) {
+    font-size: 1.3rem;
+  }
 `;
 
 export default DocumentHeading;

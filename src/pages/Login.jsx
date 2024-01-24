@@ -6,7 +6,7 @@ const Login = () => {
   return (
     <>
       <Sidebar></Sidebar>
-      <Header></Header>
+      <Header isDisplay={false}></Header>
       <LoginForm></LoginForm>
     </>
   );

@@ -69,80 +69,77 @@ const RegisterForm = () => {
   };
 
   return (
-    <>
-      <Container onSubmit={handleSubmit(onSubmit)}>
-        <Title fontSize="30px" margin="4.5rem 0 1rem 0">
-          회원가입
-        </Title>
+    <Container onSubmit={handleSubmit(onSubmit)}>
+      <Title fontSize="30px" margin="0 0 1rem 0">
+        회원가입
+      </Title>
 
-        <Title fontSize="15px" margin="0 0 3rem 0">
-          {" "}
-          반가워요! 전남대학교에 대한 정보를 공유해봐요 :)
-        </Title>
+      <Title fontSize="15px" margin="0 0 2rem 0">
+        반가워요! 전남대학교에 대한 정보를 공유해봐요 :)
+      </Title>
 
-        <InputGroup
-          id="email"
-          placeholder="전남대학교 이메일을 입력해주세요."
-          label="이메일"
-          margin={true}
-          register={register}
-          doubleCheck={() => {
-            emailDoubleCheck(getValues("email"), setDoubleEmail);
-          }}
-          error={errors.email}
-          rules={emailRule}
-          value={watch("email")}
-        />
+      <InputGroup
+        id="email"
+        placeholder="전남대학교 이메일을 입력해주세요."
+        label="이메일"
+        margin={true}
+        register={register}
+        doubleCheck={() => {
+          emailDoubleCheck(getValues("email"), setDoubleEmail);
+        }}
+        error={errors.email}
+        rules={emailRule}
+        value={watch("email")}
+      />
 
-        <InputGroup
-          id="nickname"
-          placeholder="닉네임을 입력해주세요."
-          label="닉네임"
-          margin={true}
-          register={register}
-          doubleCheck={() =>
-            NameDoubleCheck(getValues("nickname"), setDoubleName)
-          }
-          error={errors.nickname}
-          rules={nicknameRule}
-          value={watch("nickname")}
-        />
-        <InputGroup
-          id="password"
-          placeholder="비밀번호를 입력해주세요."
-          label="비밀번호"
-          margin={true}
-          register={register}
-          error={errors.password}
-          rules={passwordRule}
-          value={watch("password")}
-        />
+      <InputGroup
+        id="nickname"
+        placeholder="닉네임을 입력해주세요."
+        label="닉네임"
+        margin={true}
+        register={register}
+        doubleCheck={() =>
+          NameDoubleCheck(getValues("nickname"), setDoubleName)
+        }
+        error={errors.nickname}
+        rules={nicknameRule}
+        value={watch("nickname")}
+      />
+      <InputGroup
+        id="password"
+        placeholder="비밀번호를 입력해주세요."
+        label="비밀번호"
+        margin={true}
+        register={register}
+        error={errors.password}
+        rules={passwordRule}
+        value={watch("password")}
+      />
 
-        <InputGroup
-          id="repassword"
-          placeholder="비밀번호를 입력해주세요."
-          label="비밀번호 확인"
-          margin={true}
-          register={register}
-          error={errors.repassword}
-          rules={repasswordRule(getValues("password"))}
-          value={watch("repassword")}
-        />
+      <InputGroup
+        id="repassword"
+        placeholder="비밀번호를 입력해주세요."
+        label="비밀번호 확인"
+        margin={true}
+        register={register}
+        error={errors.repassword}
+        rules={repasswordRule(getValues("password"))}
+        value={watch("repassword")}
+      />
 
-        <Button margin="1rem 0 3rem 0" onClick={handleSubmit(onSubmit)}>
-          회원가입
-        </Button>
+      <Button margin="1rem 0 3rem 0" onClick={handleSubmit(onSubmit)}>
+        회원가입
+      </Button>
 
-        <Question
-          para="이미 계정이 있으신가요?"
-          onClick={() => {
-            navigate(routes.login);
-          }}
-        >
-          로그인
-        </Question>
-      </Container>
-    </>
+      <Question
+        para="이미 계정이 있으신가요?"
+        onClick={() => {
+          navigate(routes.login);
+        }}
+      >
+        로그인
+      </Question>
+    </Container>
   );
 };
 

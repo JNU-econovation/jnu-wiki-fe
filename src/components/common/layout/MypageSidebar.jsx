@@ -7,6 +7,9 @@ const ListBox = styled.div`
     props.isActive === true && "rgba(222, 233, 224, 0.27)"};
   position: relative;
   bottom: 0.5rem;
+  @media screen and (max-width: 1023px) {
+    background-color: transparent;
+  }
 `;
 const MyList = styled(NavLink)`
   display: flex;

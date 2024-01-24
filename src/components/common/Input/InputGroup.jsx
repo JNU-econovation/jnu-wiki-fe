@@ -19,7 +19,6 @@ const InputGroup = ({
   rules,
   doubleCheck,
   value,
-  doubleNewNickname,
   onClick,
 }) => {
   return (
@@ -34,20 +33,13 @@ const InputGroup = ({
           register={register}
           rules={rules}
         />
-        {doubleCheck && !doubleNewNickname && (
+        {doubleCheck && (
           <DoubleCheck
             active={value && !error}
             onClick={doubleCheck}
           ></DoubleCheck>
         )}
-
-        {btn && doubleNewNickname && (
-          <ChangeButton className="mypageBtn" onClick={onClick}>
-            변경
-          </ChangeButton>
-        )}
       </InputCss>
-
       {error?.type === "required" && (
         <AlertMessage>{error?.message}</AlertMessage>
       )}
@@ -63,22 +55,32 @@ const InputGroup = ({
       {error?.type === "passwordReCheck" && (
         <AlertMessage>{error?.message}</AlertMessage>
       )}
+      {btn && (
+        <ChangeButton className="mypageBtn" onClick={onClick}>
+          변경
+        </ChangeButton>
+      )}
     </Box>
   );
 };
 const InputCss = styled.div`
   position: relative;
-  width: 100%;
   display: flex;
   align-items: center;
   margin-bottom: 1rem;
   margin-top: 1rem;
+
+  @media screen and (max-width: 1023px) {
+    width: 100%;
+  }
 `;
 
 const ChangeButton = styled(DoubleCheckStyle)`
-  background-color: #f6faf7;
+  background-color: #fefefe;
   color: #216d32;
   border: 1px solid #216d32;
+  width: 4rem;
+  height: 2rem;
 `;
 
 export default InputGroup;

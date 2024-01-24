@@ -22,22 +22,37 @@ const baseStyles = css`
   font-size: 1.8rem;
   border-radius: 0 5px 5px 0;
   box-shadow: 5px 0px 5px 0px rgba(0, 0, 0, 0.106);
+
+  position: absolute;
+  top: calc((100vh - 6rem) / 2);
+
+  @media screen and (max-width: 1023px) {
+    top: calc((100vh - 3.4rem) / 2);
+  }
+
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
 `;
 
 const StyledToggle = styled(IoIosArrowBack)`
   ${baseStyles}
 
-  position: absolute;
   left: calc(15rem + 27rem);
-  top: calc((100vh - 6rem) / 2);
+
+  @media screen and (max-width: 1023px) {
+    left: 25rem;
+  }
 `;
 
 const StyledClosedToggle = styled(IoIosArrowForward)`
   ${baseStyles}
 
-  position: absolute;
   left: 15rem;
-  top: calc((100vh - 6rem) / 2);
+
+  @media screen and (max-width: 1023px) {
+    left: 0;
+  }
 `;
 
 export default ToggleBtn;

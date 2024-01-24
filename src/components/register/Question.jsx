@@ -11,16 +11,18 @@ const Question = ({ para, children, onClick }) => {
 
 const QuestionStyle = styled.div`
   display: flex;
-  justify-content: center;
 
   color: #7d7d7d;
   font-size: 15px;
+  margin-bottom: 2rem;
+  @media screen and (max-width: 1023px) {
+    margin-bottom: 5rem;
+  }
 `;
 const QuestionBtnStyle = styled.div`
   color: #216d32;
   font-size: 15px;
   margin-left: 1rem;
-  margin-bottom: 5rem;
   cursor: pointer;
 `;
 

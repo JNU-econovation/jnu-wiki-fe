@@ -24,7 +24,7 @@ const DocumentInputGroup = ({
   return (
     <div className={className}>
       <DocumentLabel htmlFor={type}>{children}</DocumentLabel>
-      <div>
+      <Container>
         {isEdit ? (
           <DocumentInput
             id={type}
@@ -42,14 +42,23 @@ const DocumentInputGroup = ({
           <DocsContent>{defaultInfo}</DocsContent>
         )}
         <ErrorMsg errors={errors} name={registerName} />
-      </div>
+      </Container>
     </div>
   );
 };
 
+const Container = styled.div`
+  @media screen and (max-width: 767px) {
+    width: 100%;
+  }
+`;
+
 const DocsContent = styled.div`
   width: 15.5rem;
   font-size: 1.1rem;
+  @media screen and (max-width: 1023px) {
+    font-size: 1rem;
+  }
 `;
 
 export default DocumentInputGroup;

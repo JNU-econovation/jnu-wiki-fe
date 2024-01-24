@@ -4,11 +4,6 @@ import MypageSidebar from "./MypageSidebar";
 import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
 import { useState, useEffect } from "react";
 
-export const MenuIcon = styled.div`
-  font-size: 2rem;
-  padding: 0 1rem;
-`;
-
 const MenuList = ({ name, icons, route, isActive, myPageClicked, onClick }) => {
   const [clicked, setClicked] = useState(myPageClicked);
   const [act, setAct] = useState(isActive);
@@ -41,6 +36,15 @@ const MenuList = ({ name, icons, route, isActive, myPageClicked, onClick }) => {
   );
 };
 
+export const MenuIcon = styled.div`
+  font-size: 2rem;
+  padding: 0 1rem;
+
+  @media screen and (max-width: 1023px) {
+    display: none;
+  }
+`;
+
 const NavStyle = styled(NavLink)`
   display: flex;
   align-items: center;
@@ -66,19 +70,9 @@ const NavStyle = styled(NavLink)`
     transition: 0.1s;
     text-decoration: none;
   }
-  &.active {
-    background-color: rgba(222, 233, 224, 1);
-    color: rgba(33, 109, 50, 1);
-    font-size: 1rem;
-    font-weight: 600;
-  }
-  &:hover {
-    background-color: rgba(222, 233, 224, 1);
-    color: rgba(33, 109, 50, 1);
-    font-size: 1rem;
-    font-weight: 600;
-  }
-  &#active {
+  &.active,
+  &:hover,
+  #active {
     background-color: rgba(222, 233, 224, 1);
     color: rgba(33, 109, 50, 1);
     font-size: 1rem;
@@ -91,6 +85,17 @@ const NavStyle = styled(NavLink)`
   .icon:hover {
     background-color: #6767673d;
     border-radius: 5px;
+  }
+
+  @media screen and (max-width: 1023px) {
+    width: 10rem;
+    height: 2rem;
+
+    &.active,
+    &:hover,
+    &#active {
+      background-color: transparent;
+    }
   }
 `;
 
