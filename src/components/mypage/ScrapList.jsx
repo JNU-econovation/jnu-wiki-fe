@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { IoRemoveOutline } from "react-icons/io5";
 import { styled } from "styled-components";
 
 import DocsItem from "@/components/docsList/DocsItem";
@@ -9,8 +8,9 @@ import { scrapCreate, scrapDelete } from "@/services/scrap";
 import useDocsMutation from "@/hooks/useDocsMutation";
 import { HELPER_MSG } from "@/constant/document/helpermsg";
 import { Container } from "@/styles/DocsList";
-import Icon from "@/components/common/Icon";
 import { useUserInfo } from "@/hooks/useUserInfo";
+import { useBottomDisplay } from "@/hooks/useBottomDisplay";
+import BottomSheet from "@/components/common/layout/BottomSheet";
 
 const ScrapList = ({ datas }) => {
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ const ScrapList = ({ datas }) => {
   const { memberId, isLogin } = useSelector((state) => state.user);
   const nickName = useUserInfo(isLogin);
 
-  const [display, setDisplay] = useState(true);
+  const [display, handleOnDisplay] = useBottomDisplay(true);
 
   const { mutate: createScrap } = useDocsMutation(scrapCreate);
   const { mutate: deleteScrap } = useDocsMutation(scrapDelete);
@@ -44,18 +44,7 @@ const ScrapList = ({ datas }) => {
   };
   return (
     <Container display={display}>
-      <Icon
-        color="rgba(170, 170, 170, 0.69)"
-        size="3rem"
-        className="icon"
-        margin="0"
-        hoverColor="#949494"
-      >
-        <IoRemoveOutline
-          className="line"
-          onClick={() => setDisplay((prop) => !prop)}
-        />
-      </Icon>
+      <BottomSheet onClick={handleOnDisplay} />
       {docsData.length ? (
         <>
           <NickNameScrap>{`${nickName}님이 스크랩한 문서입니다.`}</NickNameScrap>
