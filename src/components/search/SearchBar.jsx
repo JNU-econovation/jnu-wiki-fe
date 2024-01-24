@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import debounce from "lodash/debounce";
@@ -9,29 +9,20 @@ import { ToastContainer } from "react-toastify";
 import { searchDocs } from "@/services/document";
 import SearchItem from "./SearchItem";
 import { HELPER_MSG } from "@/constant/document/helpermsg";
+import { useHandleClickOutside } from "@/hooks/useHandleClickOutside";
 
 const SearchBar = ({ isDisplay }) => {
   const focusRef = useRef(null);
-  const searchRef = useRef(null);
   const navigate = useNavigate();
-  const [clickedSearch, setClickedSearch] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
-  useEffect(() => {
-    const handleOnClickedSearch = (e) => {
-      if (searchRef.current && !searchRef.current.contains(e.target)) {
-        setClickedSearch(false);
-      } else {
-        setClickedSearch(true);
-      }
-    };
-
-    document.addEventListener("mousedown", handleOnClickedSearch);
-    return () => {
-      document.removeEventListener("mousedown", handleOnClickedSearch);
-    };
-  }, [searchRef]);
+  const {
+    node: searchRef,
+    clicked: clickedSearch,
+    setClicked: setClickedSearch,
+    handleOnClick: handleClickedSearch,
+  } = useHandleClickOutside();
 
   const onFocusSearchBar = () => {
     focusRef.current.placeholder = "";
@@ -68,7 +59,7 @@ const SearchBar = ({ isDisplay }) => {
   return (
     <>
       <ToastContainer />
-      <Container isDisplay={isDisplay}>
+      <Container isDisplay={isDisplay} onClick={handleClickedSearch}>
         {clickedSearch && inputValue && (
           <StyledSearchResult ref={searchRef}>
             {isSuccess &&
