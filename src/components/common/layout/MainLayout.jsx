@@ -1,5 +1,7 @@
 import Sidebar from "./Sidebar";
 import Header from "./Header";
+import { useHandleClickOutside } from "@/hooks/useHandleClickOutside";
+import HeaderButtons from "../button/HeaderButtons";
 
 const MainLayout = ({
   children,
@@ -8,16 +10,22 @@ const MainLayout = ({
   myPageClicked,
   isDisplay,
 }) => {
+  const { node, clicked, handleOnClick } = useHandleClickOutside();
+
   return (
-    <>
-      <Sidebar
-        onClick={onClick}
-        isActive={isActive}
-        myPageClicked={myPageClicked}
-      />
-      <Header isDisplay={isDisplay} />
+    <div ref={node}>
+      <HeaderButtons isMenu={clicked} onClick={handleOnClick} />
+      <Header isDisplay={isDisplay} isMenu={clicked} />
+      <div>
+        <Sidebar
+          onClick={onClick}
+          isActive={isActive}
+          myPageClicked={myPageClicked}
+          isMenu={clicked}
+        />
+      </div>
       {children}
-    </>
+    </div>
   );
 };
 export default MainLayout;

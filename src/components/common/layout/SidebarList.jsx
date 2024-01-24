@@ -3,13 +3,10 @@ import { NavLink } from "react-router-dom";
 import MypageSidebar from "./MypageSidebar";
 import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
 import { useState, useEffect } from "react";
-import MypageBottom from "./MypageBottom";
+
 const MenuList = ({ name, icons, route, isActive, myPageClicked, onClick }) => {
   const [clicked, setClicked] = useState(myPageClicked);
   const [act, setAct] = useState(isActive);
-
-  //resize 할때마다 렌더링 되게 수정
-  const ipad = matchMedia("screen and (max-width: 1023px)");
 
   const handleOnClick = (e) => {
     e.preventDefault();
@@ -34,8 +31,7 @@ const MenuList = ({ name, icons, route, isActive, myPageClicked, onClick }) => {
             <BsFillCaretDownFill className="icon" onClick={handleOnClick} />
           ))}
       </NavStyle>
-      {clicked && !ipad.matches && <MypageSidebar isActive={act} />}
-      {clicked && ipad.matches && <MypageBottom></MypageBottom>}
+      {clicked && <MypageSidebar isActive={act} />}
     </>
   );
 };
@@ -45,7 +41,7 @@ export const MenuIcon = styled.div`
   padding: 0 1rem;
 
   @media screen and (max-width: 1023px) {
-    font-size: 1.3rem;
+    display: none;
   }
 `;
 
@@ -74,19 +70,9 @@ const NavStyle = styled(NavLink)`
     transition: 0.1s;
     text-decoration: none;
   }
-  &.active {
-    background-color: rgba(222, 233, 224, 1);
-    color: rgba(33, 109, 50, 1);
-    font-size: 1rem;
-    font-weight: 600;
-  }
-  &:hover {
-    background-color: rgba(222, 233, 224, 1);
-    color: rgba(33, 109, 50, 1);
-    font-size: 1rem;
-    font-weight: 600;
-  }
-  &#active {
+  &.active,
+  &:hover,
+  #active {
     background-color: rgba(222, 233, 224, 1);
     color: rgba(33, 109, 50, 1);
     font-size: 1rem;
@@ -102,17 +88,13 @@ const NavStyle = styled(NavLink)`
   }
 
   @media screen and (max-width: 1023px) {
-    justify-content: center;
-    flex-direction: column;
-    margin: 0;
-    height: 3.4rem;
+    width: 10rem;
+    height: 2rem;
 
-    &:first-child {
-      margin: 0;
-    }
-
-    .icon {
-      display: none;
+    &.active,
+    &:hover,
+    &#active {
+      background-color: transparent;
     }
   }
 `;
