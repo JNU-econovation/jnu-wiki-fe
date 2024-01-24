@@ -74,7 +74,7 @@ const MyList = styled(NavLink)`
 const LogoutBtn = styled(Logout)`
   position: relative;
   bottom: 1rem;
-  left: 18rem;
+  left: 15rem;
 `;
 
 export default MypageBottom;
