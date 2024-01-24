@@ -1,4 +1,4 @@
-import Map from "@/components/map/Map";
+import MainMap from "@/components/map/MainMap";
 import ScrapList from "./ScrapList";
 import { useRef, useEffect } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
@@ -8,6 +8,7 @@ import { Suspense } from "react";
 import { useState } from "react";
 import MainLayout from "../common/layout/MainLayout";
 import DocumentWrapper from "@/components/docsList/DocumentWrapper";
+import { useSelector } from "react-redux";
 
 const MypageScrap = () => {
   const [show, setShow] = useState(true);
@@ -18,7 +19,7 @@ const MypageScrap = () => {
 
   const bottomObserver = useRef(null);
 
-  const { data, isLoading, error, fetchNextPage, hasNextPage } =
+  const { data, isLoading, isError, fetchNextPage, hasNextPage } =
     useInfiniteQuery(
       ["mypage_list"],
       ({ pageParam = 0 }) => mypagescrap(pageParam),
@@ -56,6 +57,11 @@ const MypageScrap = () => {
     };
   }, [isLoading, hasNextPage, fetchNextPage]);
 
+  const { center, level } = useSelector((state) => state.SwNe) || {};
+  const { lat, lng } = center || {};
+
+  const mapInfo = data?.pages.flatMap((x) => x.data.response.scrapList);
+
   return (
     <>
       <MainLayout myPageClicked={true} onClick={handleShow} />
@@ -67,7 +73,10 @@ const MypageScrap = () => {
           </Suspense>
         </DocumentWrapper>
       )}
-      <Map />
+      {(isLoading || isError) && <MainMap />}
+      {data && (
+        <MainMap mapInfo={mapInfo} centerMap={{ lat, lng }} mapLevel={level} />
+      )}
     </>
   );
 };
