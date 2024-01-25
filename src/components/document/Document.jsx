@@ -5,7 +5,7 @@ import BottomSheet from "../common/layout/BottomSheet";
 import { useBottomDisplay } from "@/hooks/useBottomDisplay";
 
 const Document = ({ data }) => {
-  const [display, handleOnDisplay] = useBottomDisplay(true);
+  const { display, handleOnDisplay } = useBottomDisplay(true);
 
   return (
     <Container>

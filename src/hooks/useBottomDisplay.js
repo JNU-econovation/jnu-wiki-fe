@@ -7,5 +7,5 @@ export const useBottomDisplay = () => {
     setDisplay((prop) => !prop);
   };
 
-  return [display, handleOnDisplay];
+  return { display, handleOnDisplay };
 };
