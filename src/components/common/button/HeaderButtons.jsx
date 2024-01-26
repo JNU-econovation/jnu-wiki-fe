@@ -69,6 +69,7 @@ const ButtonGroup = styled.div`
     .menu {
       display: block;
       font-size: 1.4rem;
+      cursor: pointer;
     }
   }
   @media screen and (max-width: 767px) {
