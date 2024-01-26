@@ -14,7 +14,7 @@ export const emailRule = {
 
 export const nicknameRule = {
   required: "닉네임은 필수 입력 사항 입니다.",
-  maxLength: { value: 15, message: "닉네임은 15자 이내로 입력해주세요." },
+  maxLength: { value: 8, message: "닉네임은 8자 이내로 입력해주세요." },
 };
 
 export const passwordRule = {

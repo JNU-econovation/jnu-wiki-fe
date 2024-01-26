@@ -107,6 +107,7 @@ const RegisterForm = () => {
       />
       <InputGroup
         id="password"
+        type="password"
         placeholder="비밀번호를 입력해주세요."
         label="비밀번호"
         margin={true}
@@ -118,6 +119,7 @@ const RegisterForm = () => {
 
       <InputGroup
         id="repassword"
+        type="password"
         placeholder="비밀번호를 입력해주세요."
         label="비밀번호 확인"
         margin={true}
