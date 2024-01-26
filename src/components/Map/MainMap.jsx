@@ -110,7 +110,7 @@ const Container = styled.div`
 
     #search {
       right: 4%;
-      bottom: 4rem;
+      bottom: 5rem;
     }
   }
 

@@ -14,7 +14,7 @@ const DocsList = ({ data }) => {
   const docsData = data?.pages.flatMap((x) => x.data.response.docsList);
   const { memberId } = useSelector((state) => state.user);
   const [scrapList, setScrapList] = useState([]);
-  const [display, handleOnDisplay] = useBottomDisplay(true);
+  const { display, handleOnDisplay } = useBottomDisplay(true);
 
   const { mutate: createScrap } = useDocsMutation(scrapCreate);
   const { mutate: deleteScrap } = useDocsMutation(scrapDelete);

@@ -13,6 +13,10 @@ const useHandleAddress = (methods, address, lat, lng) => {
   };
 
   useEffect(() => {
+    setInputAddress("");
+  }, []);
+
+  useEffect(() => {
     inputAddress && methods.clearErrors(DOCS_INFO.LOCATION);
   }, [inputAddress]);
 

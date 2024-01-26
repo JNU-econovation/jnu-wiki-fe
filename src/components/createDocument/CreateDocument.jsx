@@ -20,7 +20,7 @@ const CreateDocument = () => {
   const { latitude, longitude } = useSelector((state) => state.latLng);
   const address = useSelector((state) => state.address.address);
   const isLogin = useSelector((state) => state.user.isLogin);
-  const [display, handleOnDisplay] = useBottomDisplay(true);
+  const { display, handleOnDisplay } = useBottomDisplay(true);
 
   const methods = useForm();
   const { reset, getValues, handleSubmit } = methods;

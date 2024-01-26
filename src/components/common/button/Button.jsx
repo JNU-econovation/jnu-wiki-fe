@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import "/public/fonts/pretendard.css";
 
 const Btn = styled.button`
   width: 6rem;

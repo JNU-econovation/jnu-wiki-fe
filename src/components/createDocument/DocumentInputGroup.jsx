@@ -14,6 +14,7 @@ const DocumentInputGroup = ({
   registerName = type,
   isLogin = true,
   isEdit = true,
+  location,
   ...inputProps
 }) => {
   const {
@@ -41,6 +42,9 @@ const DocumentInputGroup = ({
         ) : (
           <DocsContent>{defaultInfo}</DocsContent>
         )}
+        {location && isEdit && (
+          <Help>지도에서 바꾸고자 하는 위치를 클릭하세요.</Help>
+        )}
         <ErrorMsg errors={errors} name={registerName} />
       </Container>
     </div>
@@ -59,6 +63,11 @@ const DocsContent = styled.div`
   @media screen and (max-width: 1023px) {
     font-size: 1rem;
   }
+`;
+
+const Help = styled.p`
+  margin-top: 0.4rem;
+  font-size: 0.8rem;
 `;
 
 export default DocumentInputGroup;

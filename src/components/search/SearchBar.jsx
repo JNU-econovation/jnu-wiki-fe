@@ -1,21 +1,17 @@
 import styled from "styled-components";
-import { useState, useRef } from "react";
-import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import debounce from "lodash/debounce";
-import throttle from "lodash/throttle";
+
 import { ToastContainer } from "react-toastify";
 
-import { searchDocs } from "@/services/document";
 import SearchItem from "./SearchItem";
 import { HELPER_MSG } from "@/constant/document/helpermsg";
 import { useHandleClickOutside } from "@/hooks/useHandleClickOutside";
+import { useHandleSearchBar } from "@/hooks/useHandleSearchBar";
+import { useSearch } from "@/hooks/useSearch";
+import { useSearchQuery } from "@/hooks/useSearchQuery";
 
 const SearchBar = ({ isDisplay }) => {
-  const focusRef = useRef(null);
   const navigate = useNavigate();
-  const [inputValue, setInputValue] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
 
   const {
     node: searchRef,
@@ -24,32 +20,12 @@ const SearchBar = ({ isDisplay }) => {
     handleOnClick: handleClickedSearch,
   } = useHandleClickOutside();
 
-  const onFocusSearchBar = () => {
-    focusRef.current.placeholder = "";
-  };
+  const { focusRef, onFocusSearchBar, onBlurSearchBar } = useHandleSearchBar();
 
-  const onBlurSearchBar = () => {
-    focusRef.current.placeholder = "      검색";
-  };
+  const { searchResults, debouncedSearchDocs, throttledSearchDocs } =
+    useSearch();
 
-  const debouncedSearchDocs = debounce(async (value) => {
-    const datas = await searchDocs(value);
-    setSearchResults(datas.data.response);
-  }, 300);
-
-  const throttledSearchDocs = throttle((value) => {
-    searchDocs(value);
-  }, 300);
-
-  const { isSuccess } = useQuery(
-    ["search_docs", inputValue],
-    () => searchDocs(inputValue),
-    {
-      enabled: !!inputValue,
-      staleTime: 10000,
-      cacheTime: 6 * 10000,
-    }
-  );
+  const { inputValue, setInputValue, isSuccess } = useSearchQuery();
 
   const handleOnClick = (el) => {
     navigate(`/document/${el}`);

@@ -72,10 +72,10 @@ const Basic = ({ data }) => {
 
   useEffect(() => {
     if (editAddress) {
-      methods.setValue("docsRequestLocation", {
-        getLat,
-        getLng,
-      });
+      methods.setValue(
+        "docsRequestLocation",
+        typeof editAddress === "string" ? editAddress : { getLat, getLng }
+      );
     }
   }, [methods, editAddress, getLat, getLng]);
 
@@ -121,6 +121,7 @@ const Basic = ({ data }) => {
             isEdit={isEditBasic}
             defaultInfo={initialAddress}
             value={editAddress}
+            location
             disabled
           >
             위치
@@ -176,7 +177,7 @@ const EditName = styled(DocumentInputGroup)`
   justify-content: flex-start;
   align-items: baseline;
   height: 3rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.3rem;
 `;
 
 const Container = styled.div`

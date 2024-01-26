@@ -76,8 +76,6 @@ const Content = ({ data }) => {
                 "a",
                 "span",
                 "br",
-                "ol",
-                "ul",
               ],
             }}
           />

@@ -72,7 +72,7 @@ const NavStyle = styled(NavLink)`
   }
   &.active,
   &:hover,
-  #active {
+  &#active {
     background-color: rgba(222, 233, 224, 1);
     color: rgba(33, 109, 50, 1);
     font-size: 1rem;

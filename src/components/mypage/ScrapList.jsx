@@ -20,7 +20,7 @@ const ScrapList = ({ datas }) => {
   const { memberId, isLogin } = useSelector((state) => state.user);
   const nickName = useUserInfo(isLogin);
 
-  const [display, handleOnDisplay] = useBottomDisplay(true);
+  const { display, handleOnDisplay } = useBottomDisplay(true);
 
   const { mutate: createScrap } = useDocsMutation(scrapCreate);
   const { mutate: deleteScrap } = useDocsMutation(scrapDelete);

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ScrapBtn from "@/components/common/button/ScrapBtn";
 import { Container, StyledHr } from "@/styles/DocsItem";
+import styled from "styled-components";
 
 const DocsItem = ({
   name,
@@ -24,7 +25,7 @@ const DocsItem = ({
         <>
           <Container onClick={onClick}>
             <div className="title">
-              <div>{name}</div>
+              <Title>{name}</Title>
               <ScrapBtn onClick={handleOnScrapFill} scrap={scrap} />
             </div>
             <span className="category">{category}</span>
@@ -37,5 +38,9 @@ const DocsItem = ({
     </>
   );
 };
+
+const Title = styled.div`
+  font-weight: 500;
+`;
 
 export default DocsItem;
