@@ -88,11 +88,12 @@ export const changeSuccessAlert = () => {
     icon: "success",
     text: "수정 완료🥰",
     confirmButtonColor: "#429f50",
-  }).then((result) => {
-    if (result.isConfirmed) {
-      location.reload();
-    }
   });
+  // }).then((result) => {
+  //   if (result.isConfirmed) {
+
+  //   }
+  // });
 };
 
 export const changeFailAlert = () => {
