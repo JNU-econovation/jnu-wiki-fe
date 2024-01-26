@@ -81,6 +81,8 @@ const ChangeButton = styled(DoubleCheckStyle)`
   border: 1px solid #216d32;
   width: 4rem;
   height: 2rem;
+  position: relative;
+  right: 0.5rem;
 `;
 
 export default InputGroup;
