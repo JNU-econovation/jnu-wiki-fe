@@ -6,11 +6,11 @@
 
 ## 프로젝트 기간
 
-Version 1 : 2023.03.06 ~ 진행 중
+Version 1 : 2023.03.06 ~ 2024.01.26
 
 ## 배포 주소
 
-https://jnu-wiki.vercel.app/
+https://jnu-wiki.com/
 
 ## 프로젝트 소개
 
