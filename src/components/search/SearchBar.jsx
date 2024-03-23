@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
-
+import { Link } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 import SearchItem from "./SearchItem";
@@ -11,12 +10,9 @@ import { useSearch } from "@/hooks/useSearch";
 import { useSearchQuery } from "@/hooks/useSearchQuery";
 
 const SearchBar = ({ isDisplay }) => {
-  const navigate = useNavigate();
-
   const {
     node: searchRef,
     clicked: clickedSearch,
-    setClicked: setClickedSearch,
     handleOnClick: handleClickedSearch,
   } = useHandleClickOutside();
 
@@ -27,29 +23,21 @@ const SearchBar = ({ isDisplay }) => {
 
   const { inputValue, setInputValue, isSuccess } = useSearchQuery();
 
-  const handleOnClick = (el) => {
-    navigate(`/document/${el}`);
-    setClickedSearch(false);
-  };
-
   return (
     <>
       <ToastContainer />
       <Container isDisplay={isDisplay} onClick={handleClickedSearch}>
         {clickedSearch && inputValue && (
           <StyledSearchResult ref={searchRef}>
-            {isSuccess &&
-              searchResults &&
-              searchResults
-                .slice(0, 8)
-                .map((el) => (
-                  <SearchItem
-                    key={el.docsId}
-                    name={el.docsName}
-                    onClick={() => handleOnClick(el.docsId)}
-                  />
-                ))}
-            {!isSuccess && HELPER_MSG.NO_SEARCH}
+            {isSuccess ? (
+              searchResults.slice(0, 8).map((el) => (
+                <SearchItem key={el.docsId}>
+                  <Link to={`/document/${el.docsId}`}>{el.docsName}</Link>
+                </SearchItem>
+              ))
+            ) : (
+              <p>{HELPER_MSG.NO_SEARCH}</p>
+            )}
           </StyledSearchResult>
         )}
         <StyledSearchBar
