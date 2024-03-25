@@ -23,5 +23,5 @@ export const useHandleClickOutside = () => {
     };
   }, [clicked]);
 
-  return { node, clicked, setClicked, handleOnClick };
+  return { node, clicked, handleOnClick };
 };
