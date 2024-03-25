@@ -34,6 +34,7 @@ const Basic = ({ data }) => {
   let addressInfo = { lat: getLat, lng: getLng };
 
   const [isEditBasic, setIsEditBasic] = useState(false);
+  const [editAddress, setEditAddress] = useState(initialAddress);
 
   const { mutate: mutationBasicModify } = useDocsMutation(basicModify);
   const { scraped, handleOnScrapFill } = useScrap(isScraped, id);
@@ -58,17 +59,16 @@ const Basic = ({ data }) => {
     setValue("docsRequestType", "MODIFIED");
     setValue("docsRequestLocation", getAddressInfo());
 
-    mutationBasicModify(getValues());
-
-    adminApproval();
+    mutationBasicModify(getValues(), {
+      onSuccess: () => adminApproval(),
+      onError: () => setEditAddress(initialAddress),
+    });
   };
 
   const handleBasicSave = () => {
     setIsEditBasic(false);
     saveBasicInfo();
   };
-
-  const [editAddress, setEditAddress] = useState(initialAddress);
 
   useEffect(() => {
     if (editAddress) {
@@ -87,7 +87,12 @@ const Basic = ({ data }) => {
     setIsEditBasic(false);
     reset();
     setEditAddress(initialAddress);
+    // TODO: 마커 초기화
   };
+
+  useEffect(() => {
+    setIsEditBasic(false);
+  }, [data, setIsEditBasic]);
 
   return (
     <FormProvider {...methods}>

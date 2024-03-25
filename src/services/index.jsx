@@ -26,6 +26,7 @@ instance.interceptors.response.use(
   async (error) => {
     const status = error?.response?.status;
     const originalConfig = error?.config;
+    const errorMessage = error?.message;
     const accessExpiredTime = localStorage.getItem("accessExpiredTime");
     const refreshExpiredTime = localStorage.getItem("refreshExpiredTime");
     if (refreshExpiredTime && refreshExpiredTime < new Date()) {
@@ -33,7 +34,7 @@ instance.interceptors.response.use(
       localStorage.clear();
 
       location.href = routes.login;
-      return Promise.resolve(error.response.data.error.message);
+      return Promise.resolve(errorMessage);
     }
     if (
       accessExpiredTime &&
@@ -61,7 +62,14 @@ instance.interceptors.response.use(
     }
 
     if (status === 500) {
+      alert(
+        `예기치 못한 에러가 발생했습니다. 관리자에게 문의하세요.\n에러 내용:${error?.response?.data.error.message}`
+      );
       console.log(error?.response?.data.error.message);
+    }
+
+    if (status === 403) {
+      alert("로그인이 필요합니다.");
     }
 
     return Promise.reject(error.response);
