@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import MDEditor from "@uiw/react-md-editor";
 
 import DocumentHeading from "./DocumentHeading";
@@ -12,16 +12,12 @@ import useDocsMutation from "@/hooks/useDocsMutation";
 const Content = ({ data }) => {
   const { isLogin } = useSelector((state) => state.user);
 
-  const { id, docsContent, docsCreatedAt } = data || {};
+  const { id, docsContent, docsModifiedAt } = data || {};
 
   const [contentValue, setContentValue] = useState(docsContent);
   const [isEditContent, setIsEditContent] = useState(false);
 
   const { mutate: mutationContentModify } = useDocsMutation(contentModify);
-
-  const handleOnContentChange = (updateValue) => {
-    setContentValue(updateValue);
-  };
 
   const handleInputContent = () => {
     if (!isLogin) return nullTokenEdit();
@@ -29,19 +25,19 @@ const Content = ({ data }) => {
     setContentValue(docsContent);
   };
 
-  const saveContentInfo = () => {
-    mutationContentModify({ docs_id: id, docsContent: contentValue });
-    successEdit();
-  };
-
   const handleContentSave = () => {
     setIsEditContent(false);
-    saveContentInfo();
+    mutationContentModify(
+      { docs_id: id, docsContent: contentValue },
+      {
+        onSuccess: () => successEdit(),
+      }
+    );
   };
 
-  const handleContentCancel = () => {
+  useEffect(() => {
     setIsEditContent(false);
-  };
+  }, [data, setIsEditContent]);
 
   return (
     <>
@@ -50,11 +46,12 @@ const Content = ({ data }) => {
           isEdit={isEditContent}
           clickEdit={handleInputContent}
           clickSave={handleContentSave}
-          clickCancel={handleContentCancel}
+          clickCancel={() => setIsEditContent(false)}
         >
           내용
         </DocumentHeading>
-        <DocumentTime className="time">{docsCreatedAt}</DocumentTime>
+        <DocumentTime className="time">{docsModifiedAt}</DocumentTime>
+
       </ContentHeading>
 
       {isEditContent ? (
@@ -62,22 +59,8 @@ const Content = ({ data }) => {
           <MDEditor
             height={250}
             value={contentValue}
-            onChange={handleOnContentChange}
+            onChange={setContentValue}
             preview="edit"
-            previewOptions={{
-              allowedElements: [
-                "h1",
-                "h2",
-                "h3",
-                "h4",
-                "h5",
-                "h6",
-                "p",
-                "a",
-                "span",
-                "br",
-              ],
-            }}
           />
         </EditorContainer>
       ) : (
