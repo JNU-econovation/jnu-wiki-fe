@@ -12,7 +12,7 @@ import useDocsMutation from "@/hooks/useDocsMutation";
 const Content = ({ data }) => {
   const { isLogin } = useSelector((state) => state.user);
 
-  const { id, docsContent, docsCreatedAt } = data || {};
+  const { id, docsContent, docsModifiedAt } = data || {};
 
   const [contentValue, setContentValue] = useState(docsContent);
   const [isEditContent, setIsEditContent] = useState(false);
@@ -50,7 +50,8 @@ const Content = ({ data }) => {
         >
           내용
         </DocumentHeading>
-        <DocumentTime>{docsCreatedAt}</DocumentTime>
+        <DocumentTime className="time">{docsModifiedAt}</DocumentTime>
+
       </ContentHeading>
 
       {isEditContent ? (
