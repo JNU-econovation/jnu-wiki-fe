@@ -5,10 +5,6 @@ export const emailRule = {
   validate: {
     jnuEmail: (value) =>
       value.includes("@jnu.ac.kr") || "전남대학교 이메일을 입력해주세요.",
-    // pattern: {
-    //   value: emailRegEx,
-    //   message: "이메일 형식에 맞게 입력해주세요.",
-    // },
   },
 };
 

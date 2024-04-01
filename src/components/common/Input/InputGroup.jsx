@@ -40,21 +40,9 @@ const InputGroup = ({
           ></DoubleCheck>
         )}
       </InputCss>
-      {error?.type === "required" && (
-        <AlertMessage>{error?.message}</AlertMessage>
-      )}
-      {error?.type === "pattern" && (
-        <AlertMessage>{error?.message}</AlertMessage>
-      )}
-      {error?.type === "jnuEmail" && (
-        <AlertMessage>{error?.message}</AlertMessage>
-      )}
-      {error?.type === "maxLength" && (
-        <AlertMessage>{error?.message}</AlertMessage>
-      )}
-      {error?.type === "passwordReCheck" && (
-        <AlertMessage>{error?.message}</AlertMessage>
-      )}
+
+      {error && <AlertMessage>{error?.message}</AlertMessage>}
+
       {btn && (
         <ChangeButton className="mypageBtn" onClick={onClick}>
           변경
