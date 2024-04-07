@@ -53,7 +53,7 @@ const LoginBtn = styled(Button)`
   }
 `;
 
-const ButtonGroup = styled.div`
+const ButtonGroup = styled.section`
   position: fixed;
   z-index: 10;
   top: 2rem;

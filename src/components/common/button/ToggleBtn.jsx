@@ -3,9 +3,9 @@ import styled, { css } from "styled-components";
 
 const ToggleBtn = ({ toggle, onClick }) => {
   return (
-    <div onClick={onClick}>
+    <aside onClick={onClick}>
       {toggle ? <StyledToggle /> : <StyledClosedToggle />}
-    </div>
+    </aside>
   );
 };
 
