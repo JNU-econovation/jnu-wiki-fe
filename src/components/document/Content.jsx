@@ -51,7 +51,6 @@ const Content = ({ data }) => {
           내용
         </DocumentHeading>
         <DocumentTime className="time">{docsModifiedAt}</DocumentTime>
-
       </ContentHeading>
 
       {isEditContent ? (
@@ -75,7 +74,7 @@ const Content = ({ data }) => {
   );
 };
 
-const Container = styled.div`
+const Container = styled.article`
   > * {
     font-size: 1.1rem;
   }
@@ -87,7 +86,7 @@ const Container = styled.div`
   }
 `;
 
-const ContentHeading = styled.div`
+const ContentHeading = styled.section`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -95,7 +94,7 @@ const ContentHeading = styled.div`
   margin-bottom: 1rem;
 `;
 
-const EditorContainer = styled.div`
+const EditorContainer = styled.article`
   width: fit-content;
   max-width: 23rem;
 

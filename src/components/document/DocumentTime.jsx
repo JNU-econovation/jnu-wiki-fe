@@ -12,7 +12,7 @@ const DocumentTime = ({ children }) => {
   );
 };
 
-const Container = styled.div`
+const Container = styled.p`
   font-size: 0.8rem;
   color: #89b090;
   float: right;

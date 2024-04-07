@@ -153,23 +153,23 @@ const Basic = ({ data }) => {
   );
 };
 
-const BasicInfo = styled.div`
+const BasicInfo = styled.section`
   display: flex;
   justify-content: space-between;
   align-items: center;
 `;
 
-const DocsInfo = styled.div`
+const DocsInfo = styled.section`
   display: flex;
   align-items: baseline;
   margin-bottom: 2.2rem;
 `;
 
-const Box = styled.div`
+const Box = styled.section`
   margin: 1rem 0 3rem 0;
 `;
 
-const DocsContent = styled.div`
+const DocsContent = styled.article`
   width: 15.5rem;
   font-size: 1.1rem;
   @media screen and (max-width: 1023px) {
@@ -185,7 +185,7 @@ const EditName = styled(DocumentInputGroup)`
   margin-bottom: 1.3rem;
 `;
 
-const Container = styled.div`
+const Container = styled.section`
   @media screen and (max-width: 767px) {
     width: 100%;
   }
