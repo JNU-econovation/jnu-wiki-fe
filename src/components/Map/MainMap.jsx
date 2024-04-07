@@ -36,11 +36,11 @@ const MainMap = memo(function MainMap({ mapInfo, centerMap, mapLevel }) {
   return (
     <Container className="container">
       {showSearchButton && (
-        <div id="search">
+        <section id="search">
           <Button backgroundcolor="primary" color="white" onClick={handleOnMap}>
             이 지역 검색
           </Button>
-        </div>
+        </section>
       )}
       <Map
         id="map"
@@ -84,7 +84,7 @@ const MainMap = memo(function MainMap({ mapInfo, centerMap, mapLevel }) {
   );
 });
 
-const Container = styled.div`
+const Container = styled.section`
   #map {
     width: calc(100vw - 15rem);
     height: calc(100vh - 5.5rem);
@@ -122,7 +122,7 @@ const Container = styled.div`
   }
 `;
 
-const Label = styled.div`
+const Label = styled.p`
   margin-bottom: 120px;
   background-color: rgba(222, 233, 224, 1);
   padding: 5px 10px;
