@@ -8,7 +8,7 @@ const AddPost = () => {
   const [show, setShow] = useState(true);
 
   const handleShow = () => {
-    setShow(!show);
+    setShow((prev) => !prev);
   };
 
   return (
