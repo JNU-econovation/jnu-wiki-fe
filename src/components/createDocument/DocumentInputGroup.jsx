@@ -23,7 +23,7 @@ const DocumentInputGroup = ({
   } = useFormContext();
 
   return (
-    <div className={className}>
+    <section className={className}>
       <DocumentLabel htmlFor={type}>{children}</DocumentLabel>
       <Container>
         {isEdit ? (
@@ -47,17 +47,17 @@ const DocumentInputGroup = ({
         )}
         <ErrorMsg errors={errors} name={registerName} />
       </Container>
-    </div>
+    </section>
   );
 };
 
-const Container = styled.div`
+const Container = styled.section`
   @media screen and (max-width: 767px) {
     width: 100%;
   }
 `;
 
-const DocsContent = styled.div`
+const DocsContent = styled.p`
   width: 15.5rem;
   font-size: 1.1rem;
   @media screen and (max-width: 1023px) {

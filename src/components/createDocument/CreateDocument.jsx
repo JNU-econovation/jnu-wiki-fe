@@ -173,7 +173,7 @@ export const Container = styled.form`
   }
 `;
 
-export const StyledButton = styled.div`
+export const StyledButton = styled.section`
   position: absolute;
   right: 1.5rem;
   bottom: 7rem;
