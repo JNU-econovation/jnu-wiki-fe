@@ -2,7 +2,7 @@ import styled from "styled-components";
 import routes from "@/routes";
 import { NavLink } from "react-router-dom";
 
-const ListBox = styled.div`
+const ListBox = styled.section`
   background-color: ${(props) =>
     props.isActive === true && "rgba(222, 233, 224, 0.27)"};
   position: relative;

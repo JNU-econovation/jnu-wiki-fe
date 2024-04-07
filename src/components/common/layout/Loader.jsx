@@ -1,14 +1,14 @@
 import styled from "styled-components";
 
-const Container = styled.div`
-  .load-wrapp {
+const Container = styled.section`
+  .load-wrap {
     float: left;
     height: 100px;
     border-radius: 5px;
     text-align: center;
   }
 
-  .load-wrapp:last-child {
+  .load-wrap:last-child {
     margin-right: 0;
   }
 
@@ -49,13 +49,13 @@ const Container = styled.div`
 const Loader = ({ className }) => {
   return (
     <Container className={className}>
-      <div className="load-wrapp">
-        <div className="load-3">
-          <div className="line"></div>
-          <div className="line"></div>
-          <div className="line"></div>
-        </div>
-      </div>
+      <section className="load-wrap">
+        <section className="load-3">
+          <section className="line"></section>
+          <section className="line"></section>
+          <section className="line"></section>
+        </section>
+      </section>
     </Container>
   );
 };

@@ -24,7 +24,7 @@ const Header = ({ isDisplay }) => {
   );
 };
 
-const Container = styled.div`
+const Container = styled.section`
   position: fixed;
   width: 100vw;
   background-color: white;
@@ -69,4 +69,5 @@ const Line = styled.hr`
   background-color: #216d32;
   height: 0.7px;
 `;
+
 export default Header;

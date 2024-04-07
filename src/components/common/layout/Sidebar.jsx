@@ -46,7 +46,7 @@ function Sidebar({ isActive, myPageClicked, onClick, isMenu }) {
   );
 }
 
-const Container = styled.div`
+const Container = styled.nav`
   width: 15rem;
   height: 100vh;
 
@@ -74,13 +74,9 @@ const Container = styled.div`
     right: 0;
     padding-left: 1rem;
 
-    &:first-child {
-      padding-top: 4rem;
-    }
-  }
-  @media screen and (max-width: 767px) {
-    &:first-child {
-      padding-top: 3.5rem;
+    & > * {
+      position: relative;
+      top: 4rem;
     }
   }
 `;
