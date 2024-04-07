@@ -22,16 +22,14 @@ const DocsItem = ({
   return (
     <>
       {name ? (
-        <>
-          <Container onClick={onClick}>
-            <div className="title">
-              <Title>{name}</Title>
-              <ScrapBtn onClick={handleOnScrapFill} scrap={scrap} />
-            </div>
-            <span className="category">{category}</span>
-          </Container>
+        <Container onClick={onClick}>
+          <div className="title">
+            <Title>{name}</Title>
+            <ScrapBtn onClick={handleOnScrapFill} scrap={scrap} />
+          </div>
+          <span className="category">{category}</span>
           <StyledHr />
-        </>
+        </Container>
       ) : (
         <Container>{children}</Container>
       )}
@@ -39,7 +37,7 @@ const DocsItem = ({
   );
 };
 
-const Title = styled.div`
+const Title = styled.p`
   font-weight: 500;
 `;
 

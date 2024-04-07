@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const DocumentWrapper = styled.div`
+const DocumentWrapper = styled.section`
   -webkit-animation: fade-in 1s;
 
   @-webkit-keyframes fade-in {
