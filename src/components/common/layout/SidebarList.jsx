@@ -36,7 +36,7 @@ const MenuList = ({ name, icons, route, isActive, myPageClicked, onClick }) => {
   );
 };
 
-export const MenuIcon = styled.div`
+export const MenuIcon = styled.section`
   font-size: 2rem;
   padding: 0 1rem;
 

@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 
 const { kakao } = window;
 
-const MapDiv = styled.div`
+const MapDiv = styled.section`
   position: fixed;
   left: 15rem;
   top: 6rem;

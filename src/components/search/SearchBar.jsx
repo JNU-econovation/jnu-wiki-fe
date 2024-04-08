@@ -58,7 +58,7 @@ const SearchBar = ({ isDisplay }) => {
   );
 };
 
-const Container = styled.div`
+const Container = styled.section`
   position: relative;
   top: 0;
   left: 0;
@@ -102,7 +102,7 @@ const StyledSearchBar = styled.input`
   }
 `;
 
-const StyledSearchResult = styled.div`
+const StyledSearchResult = styled.article`
   position: absolute;
   top: 2rem;
   height: 20rem;

@@ -13,19 +13,17 @@ const MainLayout = ({
   const { node, clicked, handleOnClick } = useHandleClickOutside();
 
   return (
-    <div ref={node}>
+    <section ref={node}>
       <HeaderButtons isMenu={clicked} onClick={handleOnClick} />
       <Header isDisplay={isDisplay} isMenu={clicked} />
-      <div>
-        <Sidebar
-          onClick={onClick}
-          isActive={isActive}
-          myPageClicked={myPageClicked}
-          isMenu={clicked}
-        />
-      </div>
+      <Sidebar
+        onClick={onClick}
+        isActive={isActive}
+        myPageClicked={myPageClicked}
+        isMenu={clicked}
+      />
       {children}
-    </div>
+    </section>
   );
 };
 export default MainLayout;

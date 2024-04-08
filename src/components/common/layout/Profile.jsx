@@ -9,13 +9,13 @@ const Profile = ({ isMenu }) => {
   const nickName = useUserInfo(isLogin);
   return (
     <NameInfo isMenu={isMenu}>
-      <div>{nickName}</div>
+      <p>{nickName}</p>
       <Logout />
     </NameInfo>
   );
 };
 
-const NameInfo = styled.div`
+const NameInfo = styled.section`
   position: absolute;
   top: 0.4rem;
   right: -3.8rem;
@@ -28,6 +28,7 @@ const NameInfo = styled.div`
   font-size: 1.2rem;
 
   @media screen and (max-width: 1023px) {
+    position: absolute;
     display: ${(props) => (props.isMenu ? "flex" : "none")};
     flex-direction: column;
     top: 0rem;

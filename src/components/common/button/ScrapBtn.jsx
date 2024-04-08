@@ -6,9 +6,9 @@ const ScrapBtn = ({ onClick, scrap, className }) => {
   const isLogin = useSelector((state) => state.user.isLogin);
 
   return (
-    <div onClick={onClick} className={className}>
+    <section onClick={onClick} className={className}>
       {isLogin && scrap ? <StyledFill /> : isLogin && <StyledOut />}
-    </div>
+    </section>
   );
 };
 

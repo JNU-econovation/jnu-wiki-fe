@@ -18,7 +18,7 @@ const Document = ({ data }) => {
   );
 };
 
-const Group = styled.div`
+const Group = styled.section`
   width: 27rem;
   height: calc(100vh - 5.5rem);
 
@@ -73,7 +73,7 @@ const Group = styled.div`
   }
 `;
 
-const Container = styled.div`
+const Container = styled.section`
   position: relative;
   top: 0;
   left: 0;
