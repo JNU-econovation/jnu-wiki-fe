@@ -1,6 +1,6 @@
 import InputGroup from "@/components/common/Input/InputGroup";
 import Container from "@/components/register/Container";
-import Title from "@/components/register/Title";
+import Title from "@/components/common/Title";
 import { useState } from "react";
 import { getChangeNickname, getChangePassword } from "@/services/mypage";
 import routes from "@/routes";
