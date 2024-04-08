@@ -1,18 +1,9 @@
 import styled from "styled-components";
 import Request from "./Request";
-import Title from "@/components/register/Title";
-import Loader from "@/components/common/layout/Loader";
+import Title from "@/components/common/Title";
 import { useEffect, useState } from "react";
 
-const RequestContain = ({
-  error,
-  isLoading,
-  border,
-  datas,
-  route,
-  modi,
-  children,
-}) => {
+const RequestContain = ({ error, border, datas, route, modi, children }) => {
   const [errorState, setErrorState] = useState(false);
   useEffect(() => {
     error?.data.error?.status == 404
@@ -49,11 +40,8 @@ const RequestContain = ({
           })}
         </>
       )}
-      {/* {isLoading ? <Loader /> : <></>} */}
 
       {children}
-
-      {/* Title 추후 위치 수정 */}
     </RequestContainCss>
   );
 };

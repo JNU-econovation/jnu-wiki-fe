@@ -9,7 +9,7 @@ const Question = ({ para, children, onClick }) => {
   );
 };
 
-const QuestionStyle = styled.div`
+const QuestionStyle = styled.p`
   display: flex;
 
   color: #7d7d7d;
@@ -19,7 +19,7 @@ const QuestionStyle = styled.div`
     margin-bottom: 5rem;
   }
 `;
-const QuestionBtnStyle = styled.div`
+const QuestionBtnStyle = styled.p`
   color: #216d32;
   font-size: 15px;
   margin-left: 1rem;

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
+export const Container = styled.section`
   position: absolute;
   left: 15rem;
   overflow-x: hidden;
@@ -14,7 +14,7 @@ export const Container = styled.div`
   height: 80%;
 `;
 
-export const Title = styled.div`
+export const Title = styled.h1`
   padding-left: 1rem;
   padding-right: 1rem;
   display: flex;
