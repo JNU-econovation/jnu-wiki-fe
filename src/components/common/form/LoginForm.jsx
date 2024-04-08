@@ -4,7 +4,7 @@ import Button from "@/components/register/Button";
 import routes from "@/routes";
 import { useNavigate } from "react-router-dom";
 import Question from "@/components/register/Question";
-import Title from "@/components/register/Title";
+import Title from "../Title";
 import { login } from "@/services/user";
 import { useDispatch } from "react-redux";
 import { loginState } from "@/store/userReducer";
@@ -12,6 +12,7 @@ import { loginFailAlert } from "@/utils/alert";
 import { useForm } from "react-hook-form";
 import { emailRule, passwordRule } from "@/utils/registerRules";
 import { useMutation } from "@tanstack/react-query";
+import Subtitle from "../Subtitle";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -45,7 +46,6 @@ const LoginForm = () => {
       })
     );
     navigate(routes.home);
-    location.reload();
   };
 
   const goLogin = (email, password) => {
@@ -77,10 +77,9 @@ const LoginForm = () => {
       <Title fontSize="30px" margin="0 0 1rem 0">
         로그인
       </Title>
-      <Title fontSize="15px" margin="0 0 2rem 0">
-        {" "}
+      <Subtitle fontSize="15px" margin="0 0 2rem 0">
         환영해요! 오늘도 전남대 정보들, 잘 부탁해요 :)
-      </Title>
+      </Subtitle>
       <InputGroup
         id="email"
         placeholder="전남대학교 이메일을 입력해주세요."

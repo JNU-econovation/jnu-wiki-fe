@@ -1,4 +1,4 @@
-import Title from "@/components/register/Title";
+import Title from "@/components/common/Title";
 import Contain from "@/components/admin/Contain";
 import AdminBox from "@/components/admin/AdminBox";
 

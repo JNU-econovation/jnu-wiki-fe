@@ -6,7 +6,7 @@ import routes from "@/routes";
 import { useNavigate } from "react-router-dom";
 import Question from "@/components/register/Question";
 import { useState } from "react";
-import Title from "@/components/register/Title";
+import Title from "../Title";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import {
@@ -21,6 +21,7 @@ import { joinSuccessAlert } from "@/utils/alert";
 import { JOIN_DOUBLE_CHECK } from "@/constant/document/auth";
 import { joinFailAlert } from "@/utils/alert";
 import { NameDoubleCheck, emailDoubleCheck } from "../user/DoubleCheck";
+import Subtitle from "../Subtitle";
 const { DOUBLED } = JOIN_DOUBLE_CHECK;
 
 const RegisterForm = () => {
@@ -69,14 +70,19 @@ const RegisterForm = () => {
   };
 
   return (
-    <Container onSubmit={handleSubmit(onSubmit)}>
+    <Container
+      onSubmit={() => {
+        console.log("폼 제출");
+        handleSubmit(onSubmit);
+      }}
+    >
       <Title fontSize="30px" margin="0 0 1rem 0">
         회원가입
       </Title>
 
-      <Title fontSize="15px" margin="0 0 2rem 0">
+      <Subtitle fontSize="15px" margin="0 0 2rem 0">
         반가워요! 전남대학교에 대한 정보를 공유해봐요 :)
-      </Title>
+      </Subtitle>
 
       <InputGroup
         id="email"
