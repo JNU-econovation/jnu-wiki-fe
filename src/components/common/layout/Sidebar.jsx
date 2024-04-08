@@ -46,7 +46,7 @@ function Sidebar({ isActive, myPageClicked, onClick, isMenu }) {
   );
 }
 
-const Container = styled.div`
+const Container = styled.aside`
   width: 15rem;
   height: 100vh;
 

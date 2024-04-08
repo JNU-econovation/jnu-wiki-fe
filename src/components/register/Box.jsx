@@ -1,12 +1,14 @@
 import styled from "styled-components";
 
+const Box = ({ children, bottom }) => {
+  return <BoxCss bottom={bottom}>{children}</BoxCss>;
+};
+
 const BoxCss = styled.div`
   background-color: #ffffff;
 
   width: 423px;
-
-  display: flex;
-  flex-direction: column;
+  margin-top: 1.2rem;
 
   position: relative;
   bottom: ${(props) => (props ? "0" : "2rem")};
@@ -15,9 +17,5 @@ const BoxCss = styled.div`
     width: 21rem;
   }
 `;
-
-const Box = ({ children, bottom }) => {
-  return <BoxCss bottom={bottom}>{children}</BoxCss>;
-};
 
 export default Box;
