@@ -17,6 +17,7 @@ const useInfiniteScroll = (queryKey, queryFn, ...parameters) => {
             : undefined;
         },
         refetchOnWindowFocus: true,
+        //TODO: staleTime, cacheTime 설정
       }
     );
 
