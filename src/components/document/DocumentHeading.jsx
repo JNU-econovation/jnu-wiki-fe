@@ -1,5 +1,6 @@
+import { nullTokenEdit } from "@/utils/toast";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
-
 const DocumentHeading = ({
   children,
   clickEdit,
@@ -7,9 +8,16 @@ const DocumentHeading = ({
   clickCancel,
   isEdit = false,
 }) => {
+  const { isLogin } = useSelector((state) => state.user);
+
+  const toggleEditAuth = () => {
+    if (!isLogin) return nullTokenEdit();
+    clickEdit();
+  };
+
   return (
     <Group>
-      <StyledHeading>{children}</StyledHeading>
+      <SectionTitle>{children}</SectionTitle>
       {isEdit ? (
         <>
           <button type="submit" className="icon save" onClick={clickSave}>
@@ -20,7 +28,7 @@ const DocumentHeading = ({
           </button>
         </>
       ) : (
-        <button type="button" className="icon" onClick={clickEdit}>
+        <button type="button" className="icon" onClick={toggleEditAuth}>
           편집
         </button>
       )}
@@ -43,7 +51,7 @@ const Group = styled.span`
   }
 `;
 
-const StyledHeading = styled.p`
+const SectionTitle = styled.p`
   font-size: 1.4rem;
   font-weight: 600;
 
