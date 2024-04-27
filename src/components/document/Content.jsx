@@ -1,17 +1,14 @@
 import styled from "styled-components";
-import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import MDEditor from "@uiw/react-md-editor";
 
 import DocumentHeading from "./DocumentHeading";
 import DocumentTime from "./DocumentTime";
 import { contentModify } from "@/services/document";
-import { nullTokenEdit, successEdit } from "@/utils/toast";
+import { successEdit } from "@/utils/toast";
 import useDocsMutation from "@/hooks/useDocsMutation";
 
 const Content = ({ data }) => {
-  const { isLogin } = useSelector((state) => state.user);
-
   const { id, docsContent, docsModifiedAt } = data || {};
 
   const [contentValue, setContentValue] = useState(docsContent);
@@ -20,7 +17,6 @@ const Content = ({ data }) => {
   const { mutate: mutationContentModify } = useDocsMutation(contentModify);
 
   const handleInputContent = () => {
-    if (!isLogin) return nullTokenEdit();
     setIsEditContent(true);
     setContentValue(docsContent);
   };
