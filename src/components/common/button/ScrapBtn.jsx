@@ -7,7 +7,7 @@ const ScrapBtn = ({ onClick, scrap, className }) => {
 
   return (
     <section onClick={onClick} className={className}>
-      {isLogin && scrap ? <StyledFill /> : isLogin && <StyledOut />}
+      {isLogin && (scrap ? <StyledFill /> : <StyledOut />)}
     </section>
   );
 };
