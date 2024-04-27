@@ -16,12 +16,12 @@ const Content = ({ data }) => {
 
   const { mutate: mutationContentModify } = useDocsMutation(contentModify);
 
-  const handleInputContent = () => {
+  const clickEdit = () => {
     setIsEditContent(true);
     setContentValue(docsContent);
   };
 
-  const handleContentSave = () => {
+  const clickSave = () => {
     setIsEditContent(false);
     mutationContentModify(
       { docs_id: id, docsContent: contentValue },
@@ -40,8 +40,8 @@ const Content = ({ data }) => {
       <ContentHeading>
         <DocumentHeading
           isEdit={isEditContent}
-          clickEdit={handleInputContent}
-          clickSave={handleContentSave}
+          clickEdit={clickEdit}
+          clickSave={clickSave}
           clickCancel={() => setIsEditContent(false)}
         >
           내용
