@@ -19,10 +19,6 @@ const MainMap = memo(function MainMap({ mapInfo, centerMap, mapLevel }) {
   const title = mapInfo?.map((x) => x.docsName);
   const positions = mapInfo?.map((x) => x.docsLocation);
 
-  const handleOnOpen = (index) => {
-    setOpenIndex(index);
-  };
-
   const handleOnMap = () => {
     const neLatlng = swNe.ne;
     const swLatlng = swNe.sw;
@@ -63,7 +59,7 @@ const MainMap = memo(function MainMap({ mapInfo, centerMap, mapLevel }) {
           <MapMarker
             key={`${title[index]} - ${position.lat}`}
             position={position}
-            onMouseOver={() => handleOnOpen(index)}
+            onMouseOver={() => setOpenIndex(index)}
           ></MapMarker>
         ))}
 
@@ -74,7 +70,7 @@ const MainMap = memo(function MainMap({ mapInfo, centerMap, mapLevel }) {
               lng: positions[openIndex].lng,
             }}
           >
-            <Label className="label" onMouseOut={handleOnOpen}>
+            <Label className="label" onMouseOut={() => setOpenIndex(openIndex)}>
               <span className="center">{title[openIndex]}</span>
             </Label>
           </CustomOverlayMap>

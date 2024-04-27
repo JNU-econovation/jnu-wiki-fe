@@ -3,10 +3,10 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
 import Document from "@/components/document/Document";
-import Map from "@/components/map/Map";
 import MainLayout from "@/components/common/layout/MainLayout";
 import { detailDocument } from "@/services/document";
 import ToggleBtn from "@/components/common/button/ToggleBtn";
+import MapWithClickEvent from "@/components/Map/MapWithClickEvent";
 
 const DocumentPage = () => {
   const { id } = useParams();
@@ -29,9 +29,7 @@ const DocumentPage = () => {
         <ToggleBtn toggle={toggle} onClick={clickToggle} />
       </MainLayout>
 
-      {data && (
-        <Map apiLat={data?.docsLocation.lat} apiLng={data?.docsLocation.lng} />
-      )}
+      {data && <MapWithClickEvent location={data?.docsLocation} />}
     </>
   );
 };
