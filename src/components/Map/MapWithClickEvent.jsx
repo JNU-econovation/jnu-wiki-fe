@@ -1,6 +1,6 @@
 import { useEffect, useCallback, useState } from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CENTER } from "@/constant/map";
 import { MapMarker, Map } from "react-kakao-maps-sdk";
 
@@ -9,6 +9,7 @@ const MapWithClickEvent = ({ location }) => {
   const dispatch = useDispatch();
   const [roadAddress, setRoadAddress] = useState("");
   const [streetAddress, setStreetAddress] = useState("");
+  const { isEdit } = useSelector((state) => state.edit);
 
   let geocoder = new kakao.maps.services.Geocoder();
 
@@ -86,12 +87,14 @@ const MapWithClickEvent = ({ location }) => {
         center={{ lat: CENTER.LATITUDE, lng: CENTER.LONGITUDE }}
         level={4}
         onClick={(_, mouseEvent) => {
-          const latlng = mouseEvent.latLng;
-          setPosition({
-            lat: latlng.getLat(),
-            lng: latlng.getLng(),
-          });
-          getPosition(mouseEvent);
+          if (isEdit) {
+            const latlng = mouseEvent.latLng;
+            setPosition({
+              lat: latlng.getLat(),
+              lng: latlng.getLng(),
+            });
+            getPosition(mouseEvent);
+          }
         }}
       >
         <MapMarker position={position}>
