@@ -7,6 +7,7 @@ import DocumentTime from "./DocumentTime";
 import { contentModify } from "@/services/document";
 import { successEdit } from "@/utils/toast";
 import useDocsMutation from "@/hooks/useDocsMutation";
+import { useWebSocket } from "@/hooks/useWebSocket";
 
 const Content = ({ data }) => {
   const { id, docsContent, docsModifiedAt } = data || {};
@@ -35,6 +36,8 @@ const Content = ({ data }) => {
     setIsEditContent(false);
   }, [data, setIsEditContent]);
 
+  // useWebSocket(data?.id, isEditContent);
+
   return (
     <>
       <ContentHeading>
@@ -53,6 +56,20 @@ const Content = ({ data }) => {
         <EditorContainer data-color-mode="light" className="container">
           <MDEditor
             height={250}
+            previewOptions={{
+              allowedElements: [
+                "h1",
+                "h2",
+                "h3",
+                "h4",
+                "h5",
+                "h6",
+                "p",
+                "a",
+                "span",
+                "br",
+              ],
+            }}
             value={contentValue}
             onChange={setContentValue}
             preview="edit"
