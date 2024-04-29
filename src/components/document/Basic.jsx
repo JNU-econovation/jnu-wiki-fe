@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 import DocumentHeading from "./DocumentHeading";
@@ -14,6 +14,7 @@ import useDocsMutation from "@/hooks/useDocsMutation";
 import { ERROR_MSG, CATEGORY } from "@/constant/document/create";
 import DocumentInputGroup from "@/components/createDocument/DocumentInputGroup";
 import useScrap from "@/hooks/useScrap";
+import { useWebSocket } from "@/hooks/useWebSocket";
 
 const Basic = ({ data }) => {
   const dispatch = useDispatch();
@@ -22,19 +23,13 @@ const Basic = ({ data }) => {
     (state) => state.latLng
   );
   let { address, initialAddress } = useSelector((state) => state.address);
-
   const { isEdit } = useSelector((state) => state.edit);
-  const [editAddress, setEditAddress] = useState(initialAddress);
 
   const { mutate: mutationBasicModify } = useDocsMutation(basicModify);
   const { handleOnScrapFill } = useScrap(isScraped, docsId);
 
   const methods = useForm();
   const { handleSubmit, setValue, getValues, reset } = methods;
-
-  useEffect(() => {
-    setEditAddress(address);
-  }, [address]);
 
   const clickSave = () => {
     dispatch({ type: "disableEdit" });
@@ -45,23 +40,23 @@ const Basic = ({ data }) => {
 
     mutationBasicModify(getValues(), {
       onSuccess: () => {
-        setEditAddress(address);
         adminApproval();
       },
-      onError: () => setEditAddress(initialAddress),
     });
   };
 
   const clickCancel = () => {
     dispatch({ type: "disableEdit" });
     reset();
-    setEditAddress(initialAddress);
+    dispatch({ type: "getAddress", payload: { address: initialAddress } });
   };
 
   useEffect(() => {
     // TODO: search 로직에분리
     dispatch({ type: "disableEdit" });
   }, [data, dispatch]);
+
+  // useWebSocket(data?.id, isEdit);
 
   return (
     <FormProvider {...methods}>
@@ -91,8 +86,8 @@ const Basic = ({ data }) => {
           <EditName
             name="docsRequestLocation"
             isEdit={isEdit}
-            defaultInfo={editAddress ?? initialAddress}
-            value={editAddress}
+            defaultInfo={initialAddress}
+            value={address}
             disabled
           >
             위치
