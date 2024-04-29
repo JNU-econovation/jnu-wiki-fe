@@ -35,7 +35,6 @@ const MapWithClickEvent = ({ location }) => {
     const roadAddress = result[0].road_address
       ? "도로명주소: " + result[0].road_address.address_name
       : "";
-
     const streetAddress = "지번주소: " + result[0].address.address_name;
 
     const payloadAddress = result[0].road_address
@@ -69,11 +68,11 @@ const MapWithClickEvent = ({ location }) => {
     };
 
     searchDetailAddrFromCoords(coord, callback);
-  }, []);
+  }, [location, dispatch, isEdit]);
 
   useEffect(() => {
     setAddress();
-  }, [setAddress]);
+  }, [setAddress, location, isEdit]);
 
   const [position, setPosition] = useState({
     lat: location?.lat,
