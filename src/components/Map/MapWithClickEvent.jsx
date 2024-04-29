@@ -1,15 +1,14 @@
 import { useEffect, useCallback, useState } from "react";
 import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { CENTER } from "@/constant/map";
 import { MapMarker, Map } from "react-kakao-maps-sdk";
 
-const MapWithClickEvent = ({ location }) => {
+const MapWithClickEvent = ({ location, isEdit }) => {
   const { kakao } = window;
   const dispatch = useDispatch();
   const [roadAddress, setRoadAddress] = useState("");
   const [streetAddress, setStreetAddress] = useState("");
-  const { isEdit } = useSelector((state) => state.edit);
 
   let geocoder = new kakao.maps.services.Geocoder();
 
