@@ -33,7 +33,7 @@ const MainMap = memo(function MainMap({ mapInfo, centerMap, mapLevel }) {
     <Container className="container">
       {showSearchButton && (
         <section id="search">
-          <Button backgroundcolor="primary" color="white" onClick={handleOnMap}>
+          <Button backgroundColor="primary" color="white" onClick={handleOnMap}>
             이 지역 검색
           </Button>
         </section>

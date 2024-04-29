@@ -109,7 +109,7 @@ const NewDocsReq = () => {
               type="click"
               color="primary"
               border="1px solid #216D32"
-              backgroundcolor="white"
+              backgroundColor="white"
               onClick={() => {
                 const payload = Data?.docsRequestId;
                 rejectmutation.mutate(payload, {
@@ -138,7 +138,7 @@ const NewDocsReq = () => {
               type="submit"
               color="white"
               border="none"
-              backgroundcolor="primary"
+              backgroundColor="primary"
               onClick={() => {
                 const updatePayload = Data?.docsRequestId;
                 mutation.mutate(updatePayload, {
