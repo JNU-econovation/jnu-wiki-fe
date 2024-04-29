@@ -1,6 +1,6 @@
 import { FormProvider, useForm } from "react-hook-form";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useMutation } from "@tanstack/react-query";
 
 import DocumentInputGroup from "./DocumentInputGroup";
@@ -17,67 +17,53 @@ import useHandleAddress from "@/hooks/useHandleAddress";
 import { useBottomDisplay } from "@/hooks/useBottomDisplay";
 
 const CreateDocument = () => {
-  const { latitude, longitude } = useSelector((state) => state.latLng);
-  const address = useSelector((state) => state.address.address);
-  const isLogin = useSelector((state) => state.user.isLogin);
+  const dispatch = useDispatch();
+  const { address } = useSelector((state) => state.address);
+  const { isLogin } = useSelector((state) => state.user);
+
   const { display, handleOnDisplay } = useBottomDisplay(true);
 
   const methods = useForm();
   const { reset, getValues, handleSubmit } = methods;
-
-  const { inputAddress, clearAddress, isAddress } = useHandleAddress(
+  const { isExistAddress, requestLocation } = useHandleAddress(
     methods,
-    address,
-    latitude,
-    longitude
+    address
   );
 
-  const { mutate } = useMutation({
+  const { mutate: createDocument } = useMutation({
     mutationFn: create,
   });
 
   const handleClear = () => {
     reset();
-    clearAddress();
+    dispatch({ type: "clearAddress" });
   };
 
-  const sendRequest = (data) => {
-    mutate(data, {
+  const sendRequest = () => {
+    createDocument(getValues(), {
       onSuccess: () => {
         requestAlert();
         handleClear();
       },
-      onError: (error) => {
-        occurError();
-        console.error(error);
-      },
+      onError: () => occurError(),
     });
   };
 
-  const handleRegisterAlert = (data) => {
-    if (data.docsName && data.docsLocation.lat) {
-      askAlert(data.docsName, address, data.docsCategory).then((result) => {
+  const handleRegisterAlert = () => {
+    askAlert(getValues("docsName"), address, getValues("docsCategory")).then(
+      (result) => {
         if (result.isConfirmed) {
-          sendRequest(data);
+          sendRequest();
         }
-      });
-    }
+      }
+    );
   };
 
-  const onCancel = () => {
-    const isValidInput = getValues(DOCS_INFO.NAME) || inputAddress;
-    if (isValidInput) {
-      handleClear();
-    }
-  };
-
-  const onSubmit = (data) => {
-    if (!isLogin) {
-      return nullTokenWrite();
-    }
-
-    isAddress();
-    handleRegisterAlert(data);
+  const onSubmit = () => {
+    if (!isLogin) return nullTokenWrite();
+    isExistAddress();
+    requestLocation();
+    return handleRegisterAlert();
   };
 
   return (
@@ -97,7 +83,7 @@ const CreateDocument = () => {
         <DocsInput
           name={DOCS_INFO.LOCATION}
           placeholder={HELPER_MSG.LOCATION}
-          value={inputAddress || ""}
+          value={address}
           disabled
         >
           위치
@@ -115,13 +101,13 @@ const CreateDocument = () => {
             color="primary"
             border="1px solid"
             border-color="primary"
-            backgroundcolor="white"
+            backgroundColor="white"
             type="reset"
-            onClick={onCancel}
+            onClick={handleClear}
           >
             등록 취소
           </Button>
-          <Button type="submit" color="white" backgroundcolor="primary">
+          <Button type="submit" color="white" backgroundColor="primary">
             등록 요청
           </Button>
         </StyledButton>
