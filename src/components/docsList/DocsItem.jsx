@@ -27,7 +27,7 @@ const DocsItem = ({
             <Title>{name}</Title>
             <ScrapBtn onClick={handleOnScrapFill} scrap={scrap} />
           </div>
-          <span className="category">{category}</span>
+          <Category className="category">{category}</Category>
           <StyledHr />
         </Container>
       ) : (
@@ -38,7 +38,11 @@ const DocsItem = ({
 };
 
 const Title = styled.p`
-  font-weight: 500;
+  font-weight: 800;
+`;
+
+const Category = styled.span`
+  color: gray;
 `;
 
 export default DocsItem;
