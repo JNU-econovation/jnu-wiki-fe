@@ -3,16 +3,16 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 const DocumentHeading = ({
   children,
-  clickEdit,
-  clickSave,
-  clickCancel,
+  onEditClick,
+  onSaveClick,
+  onCancelClick,
   isEdit = false,
 }) => {
   const { isLogin } = useSelector((state) => state.user);
 
   const toggleEditAuth = () => {
     if (!isLogin) return nullTokenEdit();
-    clickEdit();
+    onEditClick();
   };
 
   return (
@@ -20,10 +20,10 @@ const DocumentHeading = ({
       <SectionTitle>{children}</SectionTitle>
       {isEdit ? (
         <>
-          <button type="submit" className="icon save" onClick={clickSave}>
+          <button type="submit" className="icon save" onClick={onSaveClick}>
             저장
           </button>
-          <button type="button" className="icon cancel" onClick={clickCancel}>
+          <button type="button" className="icon cancel" onClick={onCancelClick}>
             취소
           </button>
         </>

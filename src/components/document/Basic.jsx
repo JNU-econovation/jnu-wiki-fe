@@ -31,7 +31,7 @@ const Basic = ({ data }) => {
   const methods = useForm();
   const { handleSubmit, setValue, getValues, reset } = methods;
 
-  const clickSave = () => {
+  const handleSaveClick = () => {
     dispatch({ type: "disableEdit" });
 
     setValue("docsId", docsId);
@@ -45,7 +45,7 @@ const Basic = ({ data }) => {
     });
   };
 
-  const clickCancel = () => {
+  const handleCancelClick = () => {
     dispatch({ type: "disableEdit" });
     reset();
     dispatch({ type: "getAddress", payload: { address: initialAddress } });
@@ -60,12 +60,12 @@ const Basic = ({ data }) => {
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(clickSave)}>
+      <form onSubmit={handleSubmit(handleSaveClick)}>
         <BasicInfo>
           <DocumentHeading
             isEdit={isEdit}
-            clickEdit={() => dispatch({ type: "enableEdit" })}
-            clickCancel={clickCancel}
+            onEditClick={() => dispatch({ type: "enableEdit" })}
+            onCancelClick={handleCancelClick}
           >
             기본 정보
           </DocumentHeading>

@@ -19,7 +19,7 @@ const AddPost = () => {
           <CreateDocument />
         </DocumentWrapper>
       )}
-      <MapWithClickEvent />
+      <MapWithClickEvent isEdit={true} />
     </>
   );
 };

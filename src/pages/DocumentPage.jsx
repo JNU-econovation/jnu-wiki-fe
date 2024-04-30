@@ -7,6 +7,7 @@ import MainLayout from "@/components/common/layout/MainLayout";
 import { detailDocument } from "@/services/document";
 import ToggleBtn from "@/components/common/button/ToggleBtn";
 import MapWithClickEvent from "@/components/Map/MapWithClickEvent";
+import { useSelector } from "react-redux";
 
 const DocumentPage = () => {
   const { id } = useParams();
@@ -17,6 +18,7 @@ const DocumentPage = () => {
   });
 
   const [toggle, setToggle] = useState(true);
+  const { isEdit } = useSelector((state) => state.edit);
 
   const clickToggle = () => {
     setToggle((prev) => !prev);
@@ -29,7 +31,9 @@ const DocumentPage = () => {
         <ToggleBtn toggle={toggle} onClick={clickToggle} />
       </MainLayout>
 
-      {data && <MapWithClickEvent location={data?.docsLocation} />}
+      {data && (
+        <MapWithClickEvent location={data?.docsLocation} isEdit={isEdit} />
+      )}
     </>
   );
 };

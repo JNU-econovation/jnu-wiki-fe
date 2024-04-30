@@ -177,7 +177,7 @@ const BasicInfoEditReq = () => {
               type="click"
               color="primary"
               border="1px solid #216D32"
-              backgroundcolor="white"
+              backgroundColor="white"
               onClick={() => {
                 const payload = results[1]?.data?.data?.response?.docsRequestId;
                 rejectmutation.mutate(payload, {
@@ -207,7 +207,7 @@ const BasicInfoEditReq = () => {
               type="submit"
               color="white"
               border="none"
-              backgroundcolor="primary"
+              backgroundColor="primary"
               onClick={() => {
                 console.log(results[1]?.data?.data?.response?.docsRequestId);
                 const updatePayload =
