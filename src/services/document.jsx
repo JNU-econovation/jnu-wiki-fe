@@ -36,16 +36,11 @@ export const docsList = ({
 };
 
 export const basicModify = (data) => {
-  const {
-    docsId,
-    docsRequestType,
-    docsRequestCategory,
-    docsRequestName,
-    docsRequestLocation,
-  } = data;
+  const { docsId, docsRequestCategory, docsRequestName, docsRequestLocation } =
+    data;
   return instance.post("/requests/update", {
     docsId,
-    docsRequestType,
+    docsRequestType: "MODIFIED",
     docsRequestCategory,
     docsRequestName,
     docsRequestLocation,

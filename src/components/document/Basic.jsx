@@ -33,7 +33,6 @@ const Basic = ({ data }) => {
 
   const handleSaveClick = () => {
     setValue("docsId", docsId);
-    setValue("docsRequestType", "MODIFIED");
     setValue("docsRequestLocation", { lat: getLat, lng: getLng });
 
     mutationBasicModify(getValues(), {
