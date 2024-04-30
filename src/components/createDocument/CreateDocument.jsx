@@ -85,7 +85,7 @@ const CreateDocument = () => {
       <Container onSubmit={handleSubmit(onSubmit)} display={display}>
         <BottomSheet onClick={handleOnDisplay} />
         <DocsInput
-          type={DOCS_INFO.NAME}
+          name={DOCS_INFO.NAME}
           placeholder={HELPER_MSG.NAME}
           requiredMsg={ERROR_MSG.NAME}
           isLogin={isLogin}
@@ -95,7 +95,7 @@ const CreateDocument = () => {
         </DocsInput>
 
         <DocsInput
-          type={DOCS_INFO.LOCATION}
+          name={DOCS_INFO.LOCATION}
           placeholder={HELPER_MSG.LOCATION}
           value={inputAddress || ""}
           disabled

@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
 const DocumentLabel = ({ htmlFor, children }) => {
-  return <LabelStyled htmlFor={htmlFor}>{children}</LabelStyled>;
+  return <StyledLabel htmlFor={htmlFor}>{children}</StyledLabel>;
 };
 
-const LabelStyled = styled.label`
+const StyledLabel = styled.label`
   color: #216d32;
   font-size: 1.2rem;
   width: 7rem;

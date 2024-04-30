@@ -1,17 +1,15 @@
 import styled from "styled-components";
-import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import MDEditor from "@uiw/react-md-editor";
 
 import DocumentHeading from "./DocumentHeading";
 import DocumentTime from "./DocumentTime";
 import { contentModify } from "@/services/document";
-import { nullTokenEdit, successEdit } from "@/utils/toast";
+import { successEdit } from "@/utils/toast";
 import useDocsMutation from "@/hooks/useDocsMutation";
+import { useWebSocket } from "@/hooks/useWebSocket";
 
 const Content = ({ data }) => {
-  const { isLogin } = useSelector((state) => state.user);
-
   const { id, docsContent, docsModifiedAt } = data || {};
 
   const [contentValue, setContentValue] = useState(docsContent);
@@ -19,13 +17,12 @@ const Content = ({ data }) => {
 
   const { mutate: mutationContentModify } = useDocsMutation(contentModify);
 
-  const handleInputContent = () => {
-    if (!isLogin) return nullTokenEdit();
+  const clickEdit = () => {
     setIsEditContent(true);
     setContentValue(docsContent);
   };
 
-  const handleContentSave = () => {
+  const clickSave = () => {
     setIsEditContent(false);
     mutationContentModify(
       { docs_id: id, docsContent: contentValue },
@@ -39,13 +36,15 @@ const Content = ({ data }) => {
     setIsEditContent(false);
   }, [data, setIsEditContent]);
 
+  // useWebSocket(data?.id, isEditContent);
+
   return (
     <>
       <ContentHeading>
         <DocumentHeading
           isEdit={isEditContent}
-          clickEdit={handleInputContent}
-          clickSave={handleContentSave}
+          clickEdit={clickEdit}
+          clickSave={clickSave}
           clickCancel={() => setIsEditContent(false)}
         >
           내용
@@ -57,6 +56,20 @@ const Content = ({ data }) => {
         <EditorContainer data-color-mode="light" className="container">
           <MDEditor
             height={250}
+            previewOptions={{
+              allowedElements: [
+                "h1",
+                "h2",
+                "h3",
+                "h4",
+                "h5",
+                "h6",
+                "p",
+                "a",
+                "span",
+                "br",
+              ],
+            }}
             value={contentValue}
             onChange={setContentValue}
             preview="edit"

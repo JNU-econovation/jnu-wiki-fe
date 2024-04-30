@@ -6,6 +6,7 @@ import boundReducer from "./boundReducer";
 import userReducer from "./userReducer";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import editReducer from "./editReducer";
 
 const persistConfig = {
   key: "root",
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   address: addressReducer,
   SwNe: boundReducer,
   user: userReducer,
+  edit: editReducer,
 });
 
 // const store = createStore(rootReducer);

@@ -73,7 +73,7 @@ instance.interceptors.response.use(
     }
 
     if (status === 401) {
-      alert("로그인이 만료됐습니다. 다시 로그인 해주세요.");
+      alert("로그인이 필요합니다. 다시 로그인 해주세요.");
     }
 
     return Promise.reject(error.response);

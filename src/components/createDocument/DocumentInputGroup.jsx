@@ -6,15 +6,13 @@ import DocumentLabel from "@/components/document/DocumentLabel";
 import DocumentInput from "./DocumentInput";
 
 const DocumentInputGroup = ({
-  type,
+  name,
   children,
   requiredMsg,
   className,
   defaultInfo,
-  registerName = type,
   isLogin = true,
   isEdit = true,
-  location,
   ...inputProps
 }) => {
   const {
@@ -24,28 +22,30 @@ const DocumentInputGroup = ({
 
   return (
     <section className={className}>
-      <DocumentLabel htmlFor={type}>{children}</DocumentLabel>
+      <DocumentLabel htmlFor={name}>{children}</DocumentLabel>
       <Container>
         {isEdit ? (
-          <DocumentInput
-            id={type}
-            name={registerName}
-            defaultValue={defaultInfo}
-            register={
-              isLogin &&
-              register(registerName, {
-                required: requiredMsg,
-              })
-            }
-            {...inputProps}
-          />
+          <>
+            <DocumentInput
+              id={name}
+              name={name}
+              defaultValue={defaultInfo}
+              register={
+                isLogin &&
+                register(name, {
+                  required: requiredMsg,
+                })
+              }
+              {...inputProps}
+            />
+            {name === "docsRequestLocation" && (
+              <Help>지도에서 바꾸고자 하는 위치를 클릭하세요.</Help>
+            )}
+          </>
         ) : (
           <DocsContent>{defaultInfo}</DocsContent>
         )}
-        {location && isEdit && (
-          <Help>지도에서 바꾸고자 하는 위치를 클릭하세요.</Help>
-        )}
-        <ErrorMsg errors={errors} name={registerName} />
+        <ErrorMsg errors={errors} name={name} />
       </Container>
     </section>
   );
@@ -68,6 +68,7 @@ const DocsContent = styled.p`
 const Help = styled.p`
   margin-top: 0.4rem;
   font-size: 0.8rem;
+  display: block;
 `;
 
 export default DocumentInputGroup;

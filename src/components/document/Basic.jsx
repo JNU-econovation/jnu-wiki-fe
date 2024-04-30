@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { useSelector } from "react-redux";
-import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 import DocumentHeading from "./DocumentHeading";
@@ -9,110 +9,73 @@ import SelectInput from "@/components/common/input/SelectInput";
 import ScrapBtn from "@/components/common/button/ScrapBtn";
 import { basicModify } from "@/services/document";
 import "react-toastify/dist/ReactToastify.css";
-import { nullTokenEdit, adminApproval } from "@/utils/toast";
+import { adminApproval } from "@/utils/toast";
 import useDocsMutation from "@/hooks/useDocsMutation";
-import { ERROR_MSG, CATEGORY, DOCS_INFO } from "@/constant/document/create";
+import { ERROR_MSG, CATEGORY } from "@/constant/document/create";
 import DocumentInputGroup from "@/components/createDocument/DocumentInputGroup";
 import useScrap from "@/hooks/useScrap";
+import { useWebSocket } from "@/hooks/useWebSocket";
 
 const Basic = ({ data }) => {
-  const { isLogin } = useSelector((state) => state.user);
-
-  const {
-    id,
-    docsName,
-    docsLocation,
-    docsCategory,
-    scrap: isScraped,
-  } = data || {};
-
+  const dispatch = useDispatch();
+  const { id: docsId, docsName, docsCategory, scrap: isScraped } = data || {};
   const { latitude: getLat, longitude: getLng } = useSelector(
     (state) => state.latLng
   );
-
   let { address, initialAddress } = useSelector((state) => state.address);
-  let addressInfo = { lat: getLat, lng: getLng };
-
-  const [isEditBasic, setIsEditBasic] = useState(false);
-  const [editAddress, setEditAddress] = useState(initialAddress);
+  const { isEdit } = useSelector((state) => state.edit);
 
   const { mutate: mutationBasicModify } = useDocsMutation(basicModify);
-  const { scraped, handleOnScrapFill } = useScrap(isScraped, id);
+  const { handleOnScrapFill } = useScrap(isScraped, docsId);
 
   const methods = useForm();
   const { handleSubmit, setValue, getValues, reset } = methods;
 
-  const handleSetInput = () => {
-    if (!isLogin) return nullTokenEdit();
-    setIsEditBasic(true);
-  };
+  const clickSave = () => {
+    dispatch({ type: "disableEdit" });
 
-  const getAddressInfo = () => {
-    if (!getLat) {
-      addressInfo = docsLocation;
-    }
-    return addressInfo;
-  };
-
-  const saveBasicInfo = () => {
-    setValue("docsId", id);
+    setValue("docsId", docsId);
     setValue("docsRequestType", "MODIFIED");
-    setValue("docsRequestLocation", getAddressInfo());
+    setValue("docsRequestLocation", { lat: getLat, lng: getLng });
 
     mutationBasicModify(getValues(), {
-      onSuccess: () => adminApproval(),
-      onError: () => setEditAddress(initialAddress),
+      onSuccess: () => {
+        adminApproval();
+      },
     });
   };
 
-  const handleBasicSave = () => {
-    setIsEditBasic(false);
-    saveBasicInfo();
-  };
-
-  useEffect(() => {
-    if (editAddress) {
-      methods.setValue(
-        "docsRequestLocation",
-        typeof editAddress === "string" ? editAddress : { getLat, getLng }
-      );
-    }
-  }, [methods, editAddress, getLat, getLng]);
-
-  useEffect(() => {
-    setEditAddress(address);
-  }, [address]);
-
-  const handleBasicCancel = () => {
-    setIsEditBasic(false);
+  const clickCancel = () => {
+    dispatch({ type: "disableEdit" });
     reset();
-    setEditAddress(initialAddress);
-    // TODO: 마커 초기화
+    dispatch({ type: "getAddress", payload: { address: initialAddress } });
   };
 
   useEffect(() => {
-    setIsEditBasic(false);
-  }, [data, setIsEditBasic]);
+    // TODO: search 로직에분리
+    dispatch({ type: "disableEdit" });
+  }, [data, dispatch]);
+
+  // useWebSocket(data?.id, isEdit);
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(handleBasicSave)}>
+      <form onSubmit={handleSubmit(clickSave)}>
         <BasicInfo>
           <DocumentHeading
-            isEdit={isEditBasic}
-            clickEdit={handleSetInput}
-            clickCancel={handleBasicCancel}
+            isEdit={isEdit}
+            clickEdit={() => dispatch({ type: "enableEdit" })}
+            clickCancel={clickCancel}
           >
             기본 정보
           </DocumentHeading>
-          <ScrapBtn onClick={handleOnScrapFill} scrap={scraped} />
+          <ScrapBtn onClick={handleOnScrapFill} scrap={isScraped} />
         </BasicInfo>
 
         <Box>
           <EditName
-            type={DOCS_INFO.NAME}
-            registerName="docsRequestName"
-            isEdit={isEditBasic}
+            name="docsRequestName"
+            isEdit={isEdit}
             requiredMsg={ERROR_MSG.NAME}
             placeholder={docsName}
             defaultInfo={docsName}
@@ -121,25 +84,24 @@ const Basic = ({ data }) => {
           </EditName>
 
           <EditName
-            type={DOCS_INFO.LOCATION}
-            registerName="docsRequestLocation"
-            isEdit={isEditBasic}
+            name="docsRequestLocation"
+            isEdit={isEdit}
             defaultInfo={initialAddress}
-            value={editAddress}
-            location
+            value={address}
             disabled
           >
             위치
           </EditName>
 
           <DocsInfo>
-            <DocumentLabel htmlFor="docsCategory">카테고리</DocumentLabel>
+            <DocumentLabel htmlFor="docsRequestCategory">
+              카테고리
+            </DocumentLabel>
             <Container>
-              {isEditBasic ? (
+              {isEdit ? (
                 <SelectInput
-                  id="docsCategory"
-                  selected={docsCategory}
                   name="docsRequestCategory"
+                  selected={docsCategory}
                   list={CATEGORY}
                 />
               ) : (
@@ -166,7 +128,7 @@ const DocsInfo = styled.section`
 `;
 
 const Box = styled.section`
-  margin: 1rem 0 3rem 0;
+  margin: 1rem 0 3.5rem 0;
 `;
 
 const DocsContent = styled.article`
