@@ -16,7 +16,7 @@ const Header = ({ isDisplay }) => {
   return (
     <Container>
       <HeaderDiv>
-        <LogoImg src={mainLogo} alt="jnu-logo" onClick={reloadHome} />
+        <LogoImg src={mainLogo} alt="jnu-wiki logo" onClick={reloadHome} />
         <SearchBar isDisplay={isDisplay} />
       </HeaderDiv>
       <Line />

@@ -32,27 +32,23 @@ const Basic = ({ data }) => {
   const { handleSubmit, setValue, getValues, reset } = methods;
 
   const handleSaveClick = () => {
-    dispatch({ type: "disableEdit" });
-
     setValue("docsId", docsId);
-    setValue("docsRequestType", "MODIFIED");
     setValue("docsRequestLocation", { lat: getLat, lng: getLng });
 
     mutationBasicModify(getValues(), {
       onSuccess: () => {
         adminApproval();
+        handleReset();
       },
     });
   };
 
-  const handleCancelClick = () => {
+  const handleReset = () => {
     dispatch({ type: "disableEdit" });
     reset();
-    dispatch({ type: "getAddress", payload: { address: initialAddress } });
   };
 
   useEffect(() => {
-    // TODO: search 로직에분리
     dispatch({ type: "disableEdit" });
   }, [data, dispatch]);
 
@@ -65,7 +61,7 @@ const Basic = ({ data }) => {
           <DocumentHeading
             isEdit={isEdit}
             onEditClick={() => dispatch({ type: "enableEdit" })}
-            onCancelClick={handleCancelClick}
+            onCancelClick={handleReset}
           >
             기본 정보
           </DocumentHeading>

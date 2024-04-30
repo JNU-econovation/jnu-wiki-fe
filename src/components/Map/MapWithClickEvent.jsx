@@ -63,6 +63,11 @@ const MapWithClickEvent = ({ location, isEdit }) => {
           type: "initialAddress",
           payload: { initialAddress: payloadAddress },
         });
+
+        dispatch({
+          type: "getAddress",
+          payload: { address: payloadAddress },
+        });
       }
     };
 
