@@ -6,8 +6,8 @@ import SearchItem from "./SearchItem";
 import { HELPER_MSG } from "@/constant/document/helpermsg";
 import { useHandleClickOutside } from "@/hooks/useHandleClickOutside";
 import { useHandleSearchBar } from "@/hooks/useHandleSearchBar";
-import { useSearch } from "@/hooks/useSearch";
 import { useSearchQuery } from "@/hooks/useSearchQuery";
+import Loader from "../common/layout/Loader";
 
 const SearchBar = ({ isDisplay }) => {
   const {
@@ -15,29 +15,24 @@ const SearchBar = ({ isDisplay }) => {
     clicked: clickedSearch,
     handleOnClick: handleClickedSearch,
   } = useHandleClickOutside();
-
   const { focusRef, onFocusSearchBar, onBlurSearchBar } = useHandleSearchBar();
-
-  const { searchResults, debouncedSearchDocs, throttledSearchDocs } =
-    useSearch();
-
-  const { inputValue, setInputValue, isSuccess } = useSearchQuery();
+  const { debouncedSearch, data, isLoading, isError } = useSearchQuery();
+  const keyword = focusRef?.current?.value;
 
   return (
     <>
       <ToastContainer />
       <Container isDisplay={isDisplay} onClick={handleClickedSearch}>
-        {clickedSearch && inputValue && (
+        {clickedSearch && (
           <StyledSearchResult ref={searchRef}>
-            {isSuccess ? (
-              searchResults.slice(0, 8).map((el) => (
+            {data?.length > 0 &&
+              data.slice(0, 8).map((el) => (
                 <SearchItem key={el.docsId}>
                   <Link to={`/document/${el.docsId}`}>{el.docsName}</Link>
                 </SearchItem>
-              ))
-            ) : (
-              <p>{HELPER_MSG.NO_SEARCH}</p>
-            )}
+              ))}
+            {isError && <p>{HELPER_MSG.NO_SEARCH}</p>}
+            {keyword !== "" && isLoading && <StyledLoader />}
           </StyledSearchResult>
         )}
         <StyledSearchBar
@@ -46,12 +41,7 @@ const SearchBar = ({ isDisplay }) => {
           ref={focusRef}
           onFocus={onFocusSearchBar}
           onBlur={onBlurSearchBar}
-          value={inputValue}
-          onChange={(e) => {
-            setInputValue(e.target.value);
-            debouncedSearchDocs(e.target.value);
-            throttledSearchDocs(e.target.value);
-          }}
+          onChange={(e) => debouncedSearch(e.target.value)}
         />
       </Container>
     </>
@@ -104,18 +94,23 @@ const StyledSearchBar = styled.input`
 
 const StyledSearchResult = styled.article`
   position: absolute;
-  top: 2rem;
+  top: 2.5rem;
   height: 20rem;
 
   padding: 3rem 1.3rem;
 
   background-color: white;
   box-sizing: border-box;
+  overflow-y: scroll;
 
   @media screen and (max-width: 767px) {
     height: 15rem;
-    overflow-y: scroll;
   }
+`;
+
+const StyledLoader = styled(Loader)`
+  transform: scale(0.8);
+  margin-left: -3rem;
 `;
 
 export default SearchBar;

@@ -1,19 +1,26 @@
 import { useQuery } from "@tanstack/react-query";
-import { searchDocs } from "@/services/document";
+import debounce from "lodash/debounce";
 import { useState } from "react";
+import { searchDocs } from "@/services/document";
 
 export const useSearchQuery = () => {
-  const [inputValue, setInputValue] = useState("");
+  const [keyword, setKeyword] = useState("");
 
-  const { isSuccess } = useQuery(
-    ["search_docs", inputValue],
-    () => searchDocs(inputValue),
+  const debouncedSearch = debounce((value) => {
+    setKeyword(value);
+  }, 200);
+
+  const { data, isLoading, isError } = useQuery(
+    ["search_docs", keyword],
+    () => searchDocs(keyword),
     {
-      enabled: !!inputValue,
-      staleTime: 10000,
-      cacheTime: 6 * 10000,
+      enabled: !!keyword,
+      select: (data) => data?.data?.response,
+      staleTime: 6 * 10 * 1000,
+      cacheTime: 6 * 10 * 1000,
+      retry: 0,
     }
   );
 
-  return { inputValue, setInputValue, isSuccess };
+  return { debouncedSearch, data, isLoading, isError };
 };
