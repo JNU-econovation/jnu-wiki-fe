@@ -1,38 +1,52 @@
 import styled from "styled-components";
 import { useSelector } from "react-redux";
+import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
 
-import Logout from "../Logout";
 import { useUserInfo } from "@/hooks/useUserInfo";
+import MyPageSidebar from "./MyPageSidebar";
+import { useHandleClickOutside } from "@/hooks/useHandleClickOutside";
 
-const Profile = ({ isMenu }) => {
+const Profile = () => {
   const isLogin = useSelector((state) => state.user.isLogin);
   const nickName = useUserInfo(isLogin);
+  const { node, clicked, handleOnClick } = useHandleClickOutside();
+
   return (
-    <NameInfo isMenu={isMenu}>
+    <NameInfo ref={node} onClick={handleOnClick}>
       <p>{nickName}</p>
-      <Logout />
+      {clicked ? <IoMdArrowDropup /> : <IoMdArrowDropdown />}
+      <MyPage className={`${clicked ? "show" : ""}`} />
     </NameInfo>
   );
 };
 
+const MyPage = styled(MyPageSidebar)`
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease-in-out, visibility 0.2s;
+
+  &.show {
+    opacity: 1;
+    visibility: visible;
+  }
+`;
+
 const NameInfo = styled.section`
-  position: absolute;
-  top: 0.4rem;
-  right: -3.8rem;
-
   display: flex;
-  flex-direction: row;
-  align-items: left;
-  width: 10rem;
+  justify-content: flex-end;
 
+  position: relative;
+  width: 10rem;
   font-size: 1.2rem;
 
+  cursor: pointer;
+
+  > * {
+    margin: 0.5rem;
+  }
+
   @media screen and (max-width: 1023px) {
-    position: absolute;
-    display: ${(props) => (props.isMenu ? "flex" : "none")};
-    flex-direction: column;
-    top: 0rem;
-    right: -1rem;
+    font-size: 1rem;
   }
 `;
 

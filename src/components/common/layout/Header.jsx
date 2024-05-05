@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import mainLogo from "/main-logo.png";
 import routes from "@/routes";
 import SearchBar from "@/components/search/SearchBar";
+import HeaderButtons from "../button/HeaderButtons";
 
 const Header = ({ isDisplay }) => {
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ const Header = ({ isDisplay }) => {
       <HeaderDiv>
         <LogoImg src={mainLogo} alt="jnu-wiki logo" onClick={reloadHome} />
         <SearchBar isDisplay={isDisplay} />
+        <HeaderButtons />
       </HeaderDiv>
       <Line />
     </Container>
@@ -33,6 +35,7 @@ const Container = styled.section`
 `;
 
 const HeaderDiv = styled.header`
+  position: relative;
   display: flex;
   align-items: center;
 
