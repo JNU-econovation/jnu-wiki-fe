@@ -116,7 +116,6 @@ const MapWithClickEvent = ({ location, isEdit }) => {
 const Container = styled.section`
   #map {
     position: fixed;
-    left: 15rem;
     top: 6rem;
     z-index: -1;
     width: 100vw;

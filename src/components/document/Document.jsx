@@ -23,7 +23,6 @@ const Group = styled.section`
   height: calc(100vh - 5.5rem);
 
   position: fixed;
-  left: 15rem;
   top: 6rem;
   padding: 2rem 2rem 8rem 2rem;
 
