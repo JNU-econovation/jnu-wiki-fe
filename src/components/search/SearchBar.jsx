@@ -49,9 +49,6 @@ const SearchBar = ({ isDisplay }) => {
 };
 
 const Container = styled.section`
-  position: relative;
-  top: 0;
-  left: 0;
   width: 40rem;
   display: ${(props) => props.isDisplay === false && "none"};
 
