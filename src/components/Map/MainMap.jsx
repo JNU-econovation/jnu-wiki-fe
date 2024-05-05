@@ -31,13 +31,15 @@ const MainMap = memo(function MainMap({ mapInfo, centerMap, mapLevel }) {
 
   return (
     <Container className="container">
-      {showSearchButton && (
-        <section id="search">
-          <Button backgroundColor="primary" color="white" onClick={handleOnMap}>
-            이 지역 검색
-          </Button>
-        </section>
-      )}
+      <section id="search">
+        <SearchBtn
+          className={`${showSearchButton ? "show" : ""}`}
+          backgroundColor="white"
+          onClick={handleOnMap}
+        >
+          이 지역 검색
+        </SearchBtn>
+      </section>
       <Map
         id="map"
         center={{ lat: centerMap?.lat, lng: centerMap?.lng }}
@@ -82,18 +84,17 @@ const MainMap = memo(function MainMap({ mapInfo, centerMap, mapLevel }) {
 
 const Container = styled.section`
   #map {
-    width: calc(100vw - 15rem);
+    width: 100vw;
     height: calc(100vh - 5.5rem);
     position: fixed;
-    left: 15rem;
     top: 6rem;
     z-index: -1;
   }
 
   #search {
     position: fixed;
-    bottom: 5%;
-    right: 5%;
+    top: 13%;
+    left: 50%;
   }
 
   @media screen and (max-width: 1023px) {
@@ -125,6 +126,20 @@ const Label = styled.p`
   border-radius: 5px;
   border-bottom: 2px solid #ccc;
   font-size: 1.1rem;
+`;
+
+const SearchBtn = styled(Button)`
+  width: 10rem;
+  font-weight: 600;
+  box-shadow: 0px 2px 13px 0px rgba(0, 0, 0, 0.306);
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+
+  &.show {
+    opacity: 0.9;
+    transform: translateY(0);
+  }
 `;
 
 export default MainMap;
