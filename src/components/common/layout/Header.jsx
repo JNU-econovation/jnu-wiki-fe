@@ -61,7 +61,7 @@ const LogoImg = styled.section`
   cursor: pointer;
 
   img {
-    width: 3rem;
+    width: 2.9rem;
     height: 3rem;
 
     &:first-child {
