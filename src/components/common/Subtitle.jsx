@@ -8,7 +8,7 @@ const Subtitle = ({ children, fontSize, margin }) => {
   );
 };
 
-const SubtitleStyle = styled.span`
+const SubtitleStyle = styled.p`
   color: #216d32;
   font-size: ${(props) => props.fontSize};
   margin: ${(props) => props.margin};
