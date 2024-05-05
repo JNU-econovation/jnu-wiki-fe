@@ -2,7 +2,6 @@ import { logoutState } from "@/store/userReducer";
 import { popUpLogout } from "@/utils/alert";
 import { removeCookie } from "@/services/cookie";
 import { useDispatch } from "react-redux";
-import { SlLogout } from "react-icons/sl";
 import styled from "styled-components";
 
 const Logout = () => {
@@ -22,35 +21,18 @@ const Logout = () => {
       }
     });
   };
-  return (
-    <LogoutBtn onClick={clickLogout}>
-      <SlLogout size={"21px"} className="logout-icon" />
-      <p>로그아웃</p>
-    </LogoutBtn>
-  );
+
+  return <LogoutBtn onClick={clickLogout}>로그아웃</LogoutBtn>;
 };
 
 const LogoutBtn = styled.button`
-  margin-left: 2rem;
+  padding-left: 1rem;
+  margin: 1.2rem 0.5rem;
+  color: rgba(83, 90, 97, 1);
 
-  p {
-    display: none;
-  }
-
-  @media screen and (max-width: 1023px) {
-    right: 5.5rem;
-    margin-left: 0;
-
-    .logout-icon {
-      display: none;
-    }
-
-    p {
-      display: block;
-      color: #808080;
-      width: 5rem;
-      text-align: left;
-    }
+  &:hover {
+    color: #202020;
+    font-weight: 600;
   }
 `;
 
