@@ -99,15 +99,8 @@ const Container = styled.section`
 
   @media screen and (max-width: 1023px) {
     #map {
-      left: 0;
-      width: 100vw;
       height: calc(100vh - 5.7rem);
       top: 5.7rem;
-    }
-
-    #search {
-      right: 4%;
-      bottom: 5rem;
     }
   }
 
