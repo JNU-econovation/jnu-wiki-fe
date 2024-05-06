@@ -1,19 +1,15 @@
-import { useState } from "react";
 import { useSelector } from "react-redux";
 
 import useDocsMutation from "./useDocsMutation";
 import { scrapCreate, scrapDelete } from "@/services/scrap";
 
-const useScrap = (isScraped, docsId) => {
-  const [scraped, setScrap] = useState(isScraped);
+const useScrap = () => {
   const { mutate: scrapDetailCreate } = useDocsMutation(scrapCreate);
   const { mutate: scrapDetailDelete } = useDocsMutation(scrapDelete);
   const { memberId } = useSelector((state) => state.user);
 
-  const handleOnScrapFill = () => {
-    setScrap((prev) => !prev);
-
-    if (scraped) return scrapDetailDelete({ memberId, docsId });
+  const handleOnScrapFill = (isScraped, docsId) => {
+    if (isScraped) return scrapDetailDelete({ memberId, docsId });
     return scrapDetailCreate({ memberId, docsId });
   };
 

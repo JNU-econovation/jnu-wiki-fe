@@ -26,7 +26,7 @@ const Basic = ({ data }) => {
   const { isEdit } = useSelector((state) => state.edit);
 
   const { mutate: mutationBasicModify } = useDocsMutation(basicModify);
-  const { handleOnScrapFill } = useScrap(isScraped, docsId);
+  const { handleOnScrapFill } = useScrap();
 
   const methods = useForm();
   const { handleSubmit, setValue, getValues, reset } = methods;
@@ -65,7 +65,10 @@ const Basic = ({ data }) => {
           >
             기본 정보
           </DocumentHeading>
-          <ScrapBtn onClick={handleOnScrapFill} scrap={isScraped} />
+          <ScrapBtn
+            onClick={() => handleOnScrapFill(isScraped, docsId)}
+            isScraped={isScraped}
+          />
         </BasicInfo>
 
         <Box>
