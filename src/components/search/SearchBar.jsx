@@ -50,14 +50,12 @@ const SearchBar = ({ isDisplay }) => {
 
 const Container = styled.section`
   position: relative;
-  top: 0;
-  left: 0;
   width: 40rem;
   display: ${(props) => props.isDisplay === false && "none"};
 
   > * {
     border: 0.5px solid #71717118;
-    border-radius: 10px;
+    border-radius: 8px;
     width: 100%;
   }
 
@@ -65,12 +63,8 @@ const Container = styled.section`
     width: 45%;
   }
 
-  @media screen and (max-width: 767px) {
-    position: absolute;
-    top: 5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80%;
+  @media screen and (max-width: 1272px) {
+    width: 50%;
   }
 `;
 
@@ -90,6 +84,11 @@ const StyledSearchBar = styled.input`
     background-repeat: no-repeat;
     text-indent: 0;
   }
+
+  @media screen and (max-width: 767px) {
+    box-shadow: none;
+    border: 0;
+  }
 `;
 
 const StyledSearchResult = styled.article`
@@ -100,6 +99,8 @@ const StyledSearchResult = styled.article`
   padding: 3rem 1.3rem;
 
   background-color: white;
+  box-shadow: 0px 3px 13px -4px rgba(0, 0, 0, 0.206);
+
   box-sizing: border-box;
   overflow-y: scroll;
 
@@ -109,8 +110,8 @@ const StyledSearchResult = styled.article`
 `;
 
 const StyledLoader = styled(Loader)`
+  position: absolute;
   transform: scale(0.8);
-  margin-left: -3rem;
 `;
 
 export default SearchBar;

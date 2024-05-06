@@ -20,7 +20,7 @@ const ScrapList = ({ datas }) => {
   const { memberId, isLogin } = useSelector((state) => state.user);
   const nickName = useUserInfo(isLogin);
 
-  const { display, handleOnDisplay } = useBottomDisplay(true);
+  const { isDisplay, handleOnDisplay } = useBottomDisplay(true);
 
   const { mutate: createScrap } = useDocsMutation(scrapCreate);
   const { mutate: deleteScrap } = useDocsMutation(scrapDelete);
@@ -43,11 +43,11 @@ const ScrapList = ({ datas }) => {
     }
   };
   return (
-    <Container display={display}>
+    <Container display={isDisplay}>
       <BottomSheet onClick={handleOnDisplay} />
       {docsData.length ? (
         <>
-          <NickNameScrap>{`${nickName}님이 스크랩한 문서입니다.`}</NickNameScrap>
+          <NickNameScrap>{`${nickName}님이 스크랩한 문서이에요.`}</NickNameScrap>
           {docsData.map((el) => (
             <DocsItem
               key={el.docsId}

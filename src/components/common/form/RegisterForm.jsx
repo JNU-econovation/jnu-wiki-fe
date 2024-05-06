@@ -80,7 +80,7 @@ const RegisterForm = () => {
         회원가입
       </Title>
 
-      <Subtitle fontSize="15px" margin="0 0 2rem 0">
+      <Subtitle fontSize="15px" margin="0 0 3rem 0">
         반가워요! 전남대학교에 대한 정보를 공유해봐요 :)
       </Subtitle>
 

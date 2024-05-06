@@ -1,80 +1,57 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { RxHamburgerMenu } from "react-icons/rx";
 
 import Button from "@/components/common/button/Button";
 import routes from "@/routes";
 import Profile from "@/components/common/layout/Profile";
 
-const HeaderButtons = ({ isMenu, onClick }) => {
+const HeaderButtons = () => {
   const navigate = useNavigate();
   const isLogin = useSelector((state) => state.user.isLogin);
 
   return (
     <ButtonGroup>
-      {!isMenu && <RxHamburgerMenu className="menu" onClick={onClick} />}
       {isLogin ? (
-        <Profile isMenu={isMenu} />
+        <Profile />
       ) : (
-        <>
+        <BeforeLoginGroup>
           <JoinBtn onClick={() => navigate(routes.join)}>회원가입</JoinBtn>
-          <LoginBtn onClick={() => navigate(routes.login)} isMenu={isMenu}>
-            <p className="login-btn">로그인</p>
-          </LoginBtn>
-        </>
+          <LoginBtn onClick={() => navigate(routes.login)}>로그인</LoginBtn>
+        </BeforeLoginGroup>
       )}
     </ButtonGroup>
   );
 };
 
-const JoinBtn = styled(Button)`
-  color: #216d32;
-  border: 1px solid;
-  border-color: #216d32;
+const BeforeLoginGroup = styled.section`
+  > * {
+    color: #4f4f4f;
+    font-size: 1.1rem;
+    width: 5rem;
 
+    &:hover {
+      color: #216d32;
+      font-weight: bold;
+    }
+  }
+`;
+
+const JoinBtn = styled(Button)`
   @media screen and (max-width: 1023px) {
     display: none;
   }
 `;
 
 const LoginBtn = styled(Button)`
-  color: white;
-  background-color: #216d32;
-
-  @media screen and (max-width: 1023px) {
-    display: ${(props) => (props.isMenu ? "block" : "none")};
-    background-color: transparent;
-    margin-right: 4.5rem;
-
-    .login-btn {
-      color: #808080;
-    }
+  @media screen and (max-width: 767px) {
+    font-size: 0.9rem;
   }
 `;
 
 const ButtonGroup = styled.section`
-  position: fixed;
-  z-index: 10;
-  top: 2rem;
-  right: 3.8rem;
-
-  .menu {
-    display: none;
-  }
-
-  @media screen and (max-width: 1023px) {
-    right: 2rem;
-
-    .menu {
-      display: block;
-      font-size: 1.4rem;
-      cursor: pointer;
-    }
-  }
-  @media screen and (max-width: 767px) {
-    top: 1.5rem;
-  }
+  position: absolute;
+  right: 0;
 `;
 
 export default HeaderButtons;

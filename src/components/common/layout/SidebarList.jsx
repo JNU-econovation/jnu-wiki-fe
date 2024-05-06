@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
-import MypageSidebar from "./MypageSidebar";
+import MyPageSidebar from "./MyPageSidebar";
 import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
 import { useState, useEffect } from "react";
 
@@ -31,7 +31,7 @@ const MenuList = ({ name, icons, route, isActive, myPageClicked, onClick }) => {
             <BsFillCaretDownFill className="icon" onClick={handleOnClick} />
           ))}
       </NavStyle>
-      {clicked && <MypageSidebar isActive={act} />}
+      {clicked && <MyPageSidebar isActive={act} />}
     </>
   );
 };

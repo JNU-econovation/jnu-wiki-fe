@@ -1,14 +1,11 @@
-import Sidebar from "@/components/common/layout/Sidebar.jsx";
-import Header from "@/components/common/layout/Header.jsx";
-import RegisterForm from "@/components/common/form/RegisterForm.jsx";
+import RegisterForm from "@/components/common/form/RegisterForm";
+import MainLayout from "@/components/common/layout/MainLayout";
 
 const Join = () => {
   return (
-    <>
-      <Sidebar></Sidebar>
-      <Header isDisplay={false}></Header>
-      <RegisterForm></RegisterForm>
-    </>
+    <MainLayout isDisplay={false}>
+      <RegisterForm />
+    </MainLayout>
   );
 };
 

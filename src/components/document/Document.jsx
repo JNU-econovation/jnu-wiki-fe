@@ -5,11 +5,11 @@ import BottomSheet from "../common/layout/BottomSheet";
 import { useBottomDisplay } from "@/hooks/useBottomDisplay";
 
 const Document = ({ data }) => {
-  const { display, handleOnDisplay } = useBottomDisplay(true);
+  const { isDisplay, handleOnDisplay } = useBottomDisplay(true);
 
   return (
     <Container>
-      <Group display={display}>
+      <Group display={isDisplay}>
         <BottomSheet onClick={handleOnDisplay} />
         <Basic data={data} />
         <Content data={data} />
@@ -23,7 +23,6 @@ const Group = styled.section`
   height: calc(100vh - 5.5rem);
 
   position: fixed;
-  left: 15rem;
   top: 6rem;
   padding: 2rem 2rem 8rem 2rem;
 

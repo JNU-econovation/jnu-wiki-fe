@@ -77,7 +77,7 @@ const LoginForm = () => {
       <Title fontSize="30px" margin="0 0 1rem 0">
         로그인
       </Title>
-      <Subtitle fontSize="15px" margin="0 0 2rem 0">
+      <Subtitle fontSize="15px" margin="0 0 3rem 0">
         환영해요! 오늘도 전남대 정보들, 잘 부탁해요 :)
       </Subtitle>
       <InputGroup

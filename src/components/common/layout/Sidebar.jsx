@@ -7,12 +7,12 @@ import { HiMiniUserGroup } from "react-icons/hi2";
 import { AiTwotoneSetting } from "react-icons/ai";
 import { useSelector } from "react-redux";
 
-function Sidebar({ isActive, myPageClicked, onClick, isMenu }) {
+function Sidebar({ isActive, myPageClicked, onClick }) {
   const user = useSelector((state) => state.user);
   const { role } = user;
 
   return (
-    <Container isMenu={isMenu}>
+    <Container>
       <MenuList
         name="홈"
         icons={<GoHomeFill />}
