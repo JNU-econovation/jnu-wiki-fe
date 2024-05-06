@@ -36,7 +36,7 @@ const DocumentListPage = () => {
     <MainLayout>
       <Suspense fallback={<Loading />}>
         {toggle && <DocsList docsData={docsData} />}
-        {docsData?.length > 4 && (
+        {(docsData?.length > 4 || !toggle) && (
           <ToggleBtn toggle={toggle} onClick={clickToggle} isList={true} />
         )}
         <div ref={bottomObserver}></div>

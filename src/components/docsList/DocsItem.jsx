@@ -1,4 +1,3 @@
-import { useState } from "react";
 import ScrapBtn from "@/components/common/button/ScrapBtn";
 import { Container, StyledHr } from "@/styles/DocsItem";
 import styled from "styled-components";
@@ -11,12 +10,9 @@ const DocsItem = ({
   onScrapClick,
   children,
 }) => {
-  const [scrap, setScrap] = useState(isScraped);
-
   const handleOnScrapFill = (e) => {
     e.stopPropagation();
-    onScrapClick(!scrap);
-    setScrap(!scrap);
+    onScrapClick();
   };
 
   return (
@@ -25,7 +21,7 @@ const DocsItem = ({
         <Container onClick={onClick}>
           <div className="title">
             <Title>{name}</Title>
-            <ScrapBtn onClick={handleOnScrapFill} scrap={scrap} />
+            <ScrapBtn onClick={handleOnScrapFill} isScraped={isScraped} />
           </div>
           <Category className="category">{category}</Category>
           <StyledHr />

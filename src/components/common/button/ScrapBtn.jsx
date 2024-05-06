@@ -2,12 +2,12 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import styled, { css } from "styled-components";
 
-const ScrapBtn = ({ onClick, scrap, className }) => {
+const ScrapBtn = ({ onClick, isScraped, className }) => {
   const isLogin = useSelector((state) => state.user.isLogin);
 
   return (
     <section onClick={onClick} className={className}>
-      {isLogin && (scrap ? <StyledFill /> : <StyledOut />)}
+      {isLogin && (isScraped ? <StyledFill /> : <StyledOut />)}
     </section>
   );
 };

@@ -52,19 +52,23 @@ const MypageScrap = () => {
   const { center, level } = useSelector((state) => state.SwNe) || {};
   const { lat, lng } = center || {};
 
-  const mapInfo = data?.pages.flatMap((x) => x.data.response.scrapList);
+  const scrapList = data?.pages.flatMap((x) => x.data.response.scrapList);
 
   return (
     <>
       <DocumentWrapper>
         <Suspense fallback={<Loader />}>
-          <ScrapList datas={data} />
+          <ScrapList scrapList={scrapList} />
           <div style={{ height: "50px" }} ref={bottomObserver}></div>
         </Suspense>
       </DocumentWrapper>
       {(isLoading || isError) && <MainMap />}
       {data && (
-        <MainMap mapInfo={mapInfo} centerMap={{ lat, lng }} mapLevel={level} />
+        <MainMap
+          mapInfo={scrapList}
+          centerMap={{ lat, lng }}
+          mapLevel={level}
+        />
       )}
     </>
   );
