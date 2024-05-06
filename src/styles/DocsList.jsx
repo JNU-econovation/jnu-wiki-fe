@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const Container = styled.section`
   position: absolute;
-  left: 15rem;
   top: 5.9rem;
   padding: 2rem;
 
