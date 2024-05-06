@@ -30,7 +30,7 @@ const Button = styled.section`
   }
 
   @media screen and (max-width: 767px) {
-    bottom: ${(props) => (props.isDisplay ? "32%" : "8%")};
+    bottom: ${(props) => (props.isDisplay ? "320px" : "80px")};
   }
 `;
 

@@ -21,7 +21,7 @@ const CreateDocument = () => {
   const { address } = useSelector((state) => state.address);
   const { isLogin } = useSelector((state) => state.user);
 
-  const { display, handleOnDisplay } = useBottomDisplay(true);
+  const { isDisplay, handleOnDisplay } = useBottomDisplay(true);
 
   const methods = useForm();
   const { reset, getValues, handleSubmit } = methods;
@@ -68,8 +68,10 @@ const CreateDocument = () => {
 
   return (
     <FormProvider {...methods}>
-      <Container onSubmit={handleSubmit(onSubmit)} display={display}>
+      <Container onSubmit={handleSubmit(onSubmit)} display={isDisplay}>
         <BottomSheet onClick={handleOnDisplay} />
+        {/* TODO: 이전버튼 만들기 */}
+        <Title>새 문서 작성</Title>
         <DocsInput
           name={DOCS_INFO.NAME}
           placeholder={HELPER_MSG.NAME}
@@ -105,10 +107,10 @@ const CreateDocument = () => {
             type="reset"
             onClick={handleClear}
           >
-            등록 취소
+            취소
           </Button>
           <Button type="submit" color="white" backgroundColor="primary">
-            등록 요청
+            등록
           </Button>
         </StyledButton>
       </Container>
@@ -121,9 +123,8 @@ export const Container = styled.form`
   height: calc(100vh - 5.5rem);
 
   position: fixed;
-  left: 15rem;
   top: 5.5rem;
-  padding: 2rem;
+  padding: 3rem;
   padding-top: 3rem;
 
   background-color: white;
@@ -162,7 +163,7 @@ export const Container = styled.form`
 export const StyledButton = styled.section`
   position: absolute;
   right: 1.5rem;
-  bottom: 7rem;
+  bottom: 8rem;
 
   @media screen and (max-width: 767px) {
     bottom: auto;
@@ -184,6 +185,12 @@ export const StyledButton = styled.section`
 const DocsInput = styled(DocumentInputGroup)`
   height: 6rem;
   margin-bottom: 2rem;
+`;
+
+const Title = styled.p`
+  font-size: 1.5rem;
+  color: #525252;
+  margin-bottom: 3rem;
 `;
 
 export default CreateDocument;

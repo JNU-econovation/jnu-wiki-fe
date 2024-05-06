@@ -8,11 +8,7 @@ import Loader from "@/components/common/layout/Loader";
 import DocumentWrapper from "@/components/docsList/DocumentWrapper";
 import { docsList } from "@/services/document";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
-import { delayForDocs } from "@/utils/delayForDocs";
-
-const DocsList = lazy(() =>
-  delayForDocs(import("@/components/docsList/DocsList"))
-);
+import AddPostBtn from "@/components/common/button/AddPostBtn";
 
 const DocumentListPage = () => {
   const [show, setShow] = useState(true);
@@ -45,8 +41,7 @@ const DocumentListPage = () => {
             <div ref={bottomObserver}></div>
           </DocumentWrapper>
         </Suspense>
-      )}
-
+      <AddPostBtn />
       {(isLoading || isError) && <MainMap />}
       {data && (
         <MainMap mapInfo={mapInfo} centerMap={{ lat, lng }} mapLevel={level} />
