@@ -1,20 +1,21 @@
-import { useState, Suspense, lazy } from "react";
+import { useState, Suspense } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 import MainLayout from "@/components/common/layout/MainLayout";
 import MainMap from "@/components/map/MainMap";
 import Loader from "@/components/common/layout/Loader";
-import DocumentWrapper from "@/components/docsList/DocumentWrapper";
 import { docsList } from "@/services/document";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
+import DocsList from "@/components/docsList/DocsList";
+import ToggleBtn from "@/components/common/button/ToggleBtn";
 import AddPostBtn from "@/components/common/button/AddPostBtn";
 
 const DocumentListPage = () => {
-  const [show, setShow] = useState(true);
+  const [toggle, setToggle] = useState(true);
 
-  const handleShow = () => {
-    setShow((prev) => !prev);
+  const clickToggle = () => {
+    setToggle((prev) => !prev);
   };
 
   const { neLatlng, swLatlng, center, level } =
@@ -29,24 +30,23 @@ const DocumentListPage = () => {
     { rightUpLa, rightUpMa, leftDownLa, leftDownMa }
   );
 
-  const mapInfo = data?.pages.flatMap((x) => x.data.response.docsList);
+  const docsData = data?.pages.flatMap((x) => x.data.response.docsList);
 
   return (
-    <>
-      <MainLayout onClick={handleShow} />
-      {show && (
-        <Suspense fallback={<Loading />}>
-          <DocumentWrapper>
-            <DocsList data={data} />
-            <div ref={bottomObserver}></div>
-          </DocumentWrapper>
-        </Suspense>
+    <MainLayout>
+      <Suspense fallback={<Loading />}>
+        {toggle && <DocsList docsData={docsData} />}
+        {docsData?.length > 4 && (
+          <ToggleBtn toggle={toggle} onClick={clickToggle} isList={true} />
+        )}
+        <div ref={bottomObserver}></div>
+      </Suspense>
       <AddPostBtn />
       {(isLoading || isError) && <MainMap />}
       {data && (
-        <MainMap mapInfo={mapInfo} centerMap={{ lat, lng }} mapLevel={level} />
+        <MainMap mapInfo={docsData} centerMap={{ lat, lng }} mapLevel={level} />
       )}
-    </>
+    </MainLayout>
   );
 };
 

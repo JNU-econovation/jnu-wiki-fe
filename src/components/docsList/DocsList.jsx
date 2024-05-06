@@ -13,8 +13,7 @@ const DocsList = ({ data }) => {
   const navigate = useNavigate();
   const docsData = data?.pages.flatMap((x) => x.data.response.docsList);
   const { memberId } = useSelector((state) => state.user);
-  const [scrapList, setScrapList] = useState([]);
-  const { display, handleOnDisplay } = useBottomDisplay(true);
+  const { isDisplay, handleOnDisplay } = useBottomDisplay(true);
 
   const { mutate: createScrap } = useDocsMutation(scrapCreate);
   const { mutate: deleteScrap } = useDocsMutation(scrapDelete);
@@ -42,7 +41,7 @@ const DocsList = ({ data }) => {
   };
 
   return (
-    <Container display={display}>
+    <Container display={isDisplay}>
       <BottomSheet onClick={handleOnDisplay} />
 
       {docsData && docsData.length > 0 ? (
