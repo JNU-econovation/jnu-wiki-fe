@@ -129,10 +129,12 @@ const SearchBtn = styled(Button)`
   opacity: 0;
   transform: translateY(-20px);
   transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  pointer-events: none;
 
   &.show {
     opacity: 0.9;
     transform: translateY(0);
+    pointer-events: auto;
   }
 
   @media screen and (max-width: 767px) {
