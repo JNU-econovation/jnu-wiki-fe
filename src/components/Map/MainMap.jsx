@@ -92,9 +92,8 @@ const Container = styled.section`
   }
 
   #search {
-    position: fixed;
-    top: 13%;
-    left: 50%;
+    display: flex;
+    justify-content: center;
   }
 
   @media screen and (max-width: 1023px) {
@@ -124,7 +123,9 @@ const Label = styled.p`
 const SearchBtn = styled(Button)`
   width: 10rem;
   font-weight: 600;
+  margin-top: 8rem;
   box-shadow: 0px 2px 13px 0px rgba(0, 0, 0, 0.306);
+
   opacity: 0;
   transform: translateY(-20px);
   transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
@@ -132,6 +133,10 @@ const SearchBtn = styled(Button)`
   &.show {
     opacity: 0.9;
     transform: translateY(0);
+  }
+
+  @media screen and (max-width: 767px) {
+    margin-top: 6rem;
   }
 `;
 
