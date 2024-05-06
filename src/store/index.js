@@ -7,6 +7,7 @@ import userReducer from "./userReducer";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import editReducer from "./editReducer";
+import displayReducer from "./displayReudcer";
 
 const persistConfig = {
   key: "root",
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   SwNe: boundReducer,
   user: userReducer,
   edit: editReducer,
+  display: displayReducer,
 });
 
 // const store = createStore(rootReducer);

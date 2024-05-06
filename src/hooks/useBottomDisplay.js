@@ -1,11 +1,15 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 export const useBottomDisplay = () => {
-  const [display, setDisplay] = useState(true);
+  const { isDisplay } = useSelector((state) => state.display);
+  const dispatch = useDispatch();
 
   const handleOnDisplay = () => {
-    setDisplay((prop) => !prop);
+    isDisplay
+      ? dispatch({ type: "disableDisplay" })
+      : dispatch({ type: "enableDisplay" });
   };
 
-  return { display, handleOnDisplay };
+  return { isDisplay, handleOnDisplay };
 };

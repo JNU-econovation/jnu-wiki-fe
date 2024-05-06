@@ -1,12 +1,14 @@
 import { PiPlusBold } from "react-icons/pi";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const AddPostBtn = () => {
   const navigate = useNavigate();
+  const { isDisplay } = useSelector((state) => state.display);
 
   return (
-    <Button>
+    <Button isDisplay={isDisplay}>
       <Label className="label">새 문서 작성</Label>
       <PlusBtn onClick={() => navigate("/add-post")} />
     </Button>
@@ -15,8 +17,8 @@ const AddPostBtn = () => {
 
 const Button = styled.section`
   position: absolute;
-  bottom: 5%;
   right: 5%;
+  bottom: 5%;
 
   display: flex;
   justify-content: center;
@@ -25,6 +27,10 @@ const Button = styled.section`
     visibility: visible;
     opacity: 1;
     transform: translateY(-20px);
+  }
+
+  @media screen and (max-width: 767px) {
+    bottom: ${(props) => (props.isDisplay ? "32%" : "8%")};
   }
 `;
 
