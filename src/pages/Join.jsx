@@ -1,4 +1,4 @@
-import RegisterForm from "@/components/common/form/RegisterForm.jsx";
+import RegisterForm from "@/components/common/form/RegisterForm";
 import MainLayout from "@/components/common/layout/MainLayout";
 
 const Join = () => {

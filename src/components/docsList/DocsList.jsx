@@ -57,7 +57,7 @@ const DocsList = ({ data }) => {
           />
         ))
       ) : (
-        <DocsItem>현재 영역과 일치하는 문서가 없습니다.</DocsItem>
+        <DocsItem>현재 영역과 일치하는 문서가 없어요.</DocsItem>
       )}
     </Container>
   );
