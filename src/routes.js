@@ -10,6 +10,7 @@ const routes = {
   newDocsRequest: "/admin/newDocsReq",
   basicInfoEditRequest: "/admin/basicInfoEditReq",
   documentPage: "/document/:id",
+  notFound: "/*",
 };
 
 export default routes;

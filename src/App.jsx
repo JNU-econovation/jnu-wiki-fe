@@ -17,6 +17,7 @@ import DocumentListPage from "./pages/DocumentListPage.jsx";
 import Scrap from "./pages/Scrap.jsx";
 import { GlobalStyle } from "./styles/globalStyle";
 import { store, persistor } from "./store/store.js";
+import NotFound from "./pages/NotFound.jsx";
 
 function App() {
   function setScreenSize() {
@@ -43,6 +44,7 @@ function App() {
               <Route path={routes.join} element={<Join />} />
               <Route path={routes.admin} element={<Admin />} />
               <Route path={routes.scrap} element={<Scrap />} />
+              <Route path={routes.notFound} element={<NotFound />} />
               <Route
                 path={`${routes.newDocsRequest}/:id`}
                 element={<NewDocsReq />}
