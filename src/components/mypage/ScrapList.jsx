@@ -23,7 +23,7 @@ const ScrapList = ({ scrapList }) => {
       <BottomSheet onClick={handleOnDisplay} />
       {scrapList?.length ? (
         <>
-          <NickNameScrap>{`${nickName}님이 스크랩한 문서이에요.`}</NickNameScrap>
+          <NickNameScrap>{`${nickName}님이 스크랩한 문서예요.`}</NickNameScrap>
           {scrapList.map((el) => (
             <DocsItem
               key={el.docsId}

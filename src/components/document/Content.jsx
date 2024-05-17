@@ -14,6 +14,7 @@ const Content = ({ data }) => {
 
   const [contentValue, setContentValue] = useState(docsContent);
   const [isEditContent, setIsEditContent] = useState(false);
+  const { publish } = useWebSocket(isEditContent);
 
   const { mutate: mutationContentModify } = useDocsMutation(contentModify);
 
@@ -24,6 +25,8 @@ const Content = ({ data }) => {
 
   const handleSaveClick = () => {
     setIsEditContent(false);
+
+    publish(id);
     mutationContentModify(
       { docs_id: id, docsContent: contentValue },
       {
@@ -35,8 +38,6 @@ const Content = ({ data }) => {
   useEffect(() => {
     setIsEditContent(false);
   }, [data, setIsEditContent]);
-
-  // useWebSocket(data?.id, isEditContent);
 
   return (
     <>
