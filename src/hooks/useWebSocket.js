@@ -22,12 +22,14 @@ export const useWebSocket = (isEdit) => {
   };
 
   useEffect(() => {
-    stomp.activate();
-    setStompClient(stomp);
+    if (isEdit) {
+      stomp.activate();
+      setStompClient(stomp);
 
-    stomp.onConnect = () => {
-      stomp.subscribe("/user/queue/info", () => {});
-    };
+      stomp.onConnect = () => {
+        stomp.subscribe("/user/queue/info", () => {});
+      };
+    }
 
     return () => disconnect();
   }, [isEdit]);
