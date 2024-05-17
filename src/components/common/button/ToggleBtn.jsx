@@ -41,7 +41,7 @@ const StyledToggle = styled(IoIosArrowBack)`
   left: ${(props) => (props.isList ? "20rem" : "27rem")};
 
   @media screen and (max-width: 1023px) {
-    left: ${(props) => (props.isList ? "20.5rem" : "21rem")};
+    left: ${(props) => (props.isList ? "20rem" : "25rem")};
   }
 `;
 
