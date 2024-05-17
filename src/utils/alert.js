@@ -61,21 +61,17 @@ export const loginFailAlert = (text) => {
 
 export const joinSuccessAlert = () => {
   return Swal.fire({
+    position: "center",
     icon: "success",
     title: "회원가입 성공!",
-    text: "로그인 페이지로 이동하시겠습니까?",
-    confirmButtonText: "예",
-    cancelButtonText: "아니오",
-    confirmButtonColor: "#429f50",
-    cancelButtonColor: "#d33",
-  }).then((result) => {
-    if (result.isConfirmed) {
-      location.href = routes.login;
-    } else if (result.isDismissed) {
-      location.href = routes.home;
-    }
+    text: "로그인 페이지로 이동합니다.",
+    showConfirmButton: false,
+    timer: 1500,
+  }).then(() => {
+    location.href = routes.login;
   });
 };
+
 export const joinFailAlert = () => {
   return Swal.fire({
     icon: "error",
