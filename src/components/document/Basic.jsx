@@ -27,6 +27,7 @@ const Basic = ({ data }) => {
 
   const { mutate: mutationBasicModify } = useDocsMutation(basicModify);
   const { handleOnScrapFill } = useScrap();
+  const { publish } = useWebSocket(isEdit);
 
   const methods = useForm();
   const { handleSubmit, setValue, getValues, reset } = methods;
@@ -35,6 +36,7 @@ const Basic = ({ data }) => {
     setValue("docsId", docsId);
     setValue("docsRequestLocation", { lat: getLat, lng: getLng });
 
+    publish(docsId);
     mutationBasicModify(getValues(), {
       onSuccess: () => {
         adminApproval();
@@ -51,8 +53,6 @@ const Basic = ({ data }) => {
   useEffect(() => {
     dispatch({ type: "disableEdit" });
   }, [data, dispatch]);
-
-  // useWebSocket(data?.id, isEdit);
 
   return (
     <FormProvider {...methods}>
