@@ -1,20 +1,20 @@
-import { stomp } from "@/services/stomp";
+import { client } from "@/services/stomp";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 export const useWebSocket = (isEdit) => {
-  const [stompClient, setStompClient] = useState(null);
+  const [stomp, setStomp] = useState(null);
   const { memberId } = useSelector((state) => state.user);
 
   const disconnect = () => {
-    if (stompClient?.connected) {
-      stompClient.deactivate();
+    if (stomp?.connected) {
+      stomp.deactivate();
     }
   };
 
   const publish = (docsId) => {
-    if (stompClient?.connected) {
-      stompClient.publish({
+    if (stomp?.connected) {
+      stomp.publish({
         destination: "/app/info",
         body: JSON.stringify({ docsId, memberId }),
       });
@@ -23,11 +23,11 @@ export const useWebSocket = (isEdit) => {
 
   useEffect(() => {
     if (isEdit) {
-      stomp.activate();
-      setStompClient(stomp);
+      client.activate();
+      setStomp(client);
 
-      stomp.onConnect = () => {
-        stomp.subscribe("/user/queue/info", () => {});
+      client.onConnect = () => {
+        client.subscribe("/user/queue/info", () => {});
       };
     }
 
