@@ -30,7 +30,7 @@ const DocumentListPage = () => {
     { rightUpLa, rightUpMa, leftDownLa, leftDownMa }
   );
 
-  const docsData = data?.pages.flatMap((x) => x?.data?.response.docsList);
+  const docsData = data?.pages.flatMap((x) => x?.data?.response.docsList ?? []);
 
   return (
     <MainLayout>
@@ -42,7 +42,7 @@ const DocumentListPage = () => {
         <div ref={bottomObserver}></div>
       </Suspense>
       <AddPostBtn />
-      {(isLoading || isError) && <MainMap />}
+      {(isLoading || isError || !data) && <MainMap />}
       {data && (
         <MainMap mapInfo={docsData} centerMap={{ lat, lng }} mapLevel={level} />
       )}
