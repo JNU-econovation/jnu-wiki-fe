@@ -1,7 +1,7 @@
 import ToggleBtn from "@/components/common/button/ToggleBtn";
 import MainLayout from "@/components/common/layout/MainLayout";
 import CreateDocument from "@/components/createDocument/CreateDocument";
-import MapWithClickEvent from "@/components/Map/MapWithClickEvent";
+import MapWithClickEvent from "@/components/map/MapWithClickEvent";
 import { useState } from "react";
 
 const AddPost = () => {
