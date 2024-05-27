@@ -29,6 +29,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
+      - name: create .env
+        run: |
+          touch .env
+          echo VITE_KAKAO_MAP=${{ secrets.VITE_KAKAO_MAP }} >> .env
+          echo VITE_BASE_URL=${{ secrets.VITE_BASE_URL }} >> .env
+
       - name: install npm dependencies
         run: npm install
 
