@@ -9,6 +9,9 @@ jobs:
   build:
     name: react build & deploy
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
 
     steps:
       - name: checkout Github Action
