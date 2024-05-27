@@ -30,7 +30,7 @@ const DocumentListPage = () => {
     { rightUpLa, rightUpMa, leftDownLa, leftDownMa }
   );
 
-  const docsData = data?.pages.flatMap((x) => x.data.response.docsList);
+  const docsData = data?.pages.flatMap((x) => x?.data?.response.docsList);
 
   return (
     <MainLayout>
