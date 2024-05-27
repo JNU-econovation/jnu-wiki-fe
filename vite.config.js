@@ -15,6 +15,5 @@ export default defineConfig({
   extensions: [".js", ".jsx", ".css"],
   define: {
     __APP_ENV__: process.env.VITE_VERCEL_ENV,
-    global: {},
   },
 });

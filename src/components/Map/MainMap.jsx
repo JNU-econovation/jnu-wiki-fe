@@ -84,9 +84,9 @@ const MainMap = memo(function MainMap({ mapInfo, centerMap, mapLevel }) {
 
 const Container = styled.section`
   #map {
+    position: fixed;
     width: 100vw;
     height: calc(100vh - 5.5rem);
-    position: fixed;
     top: 6rem;
     z-index: -1;
   }
@@ -98,14 +98,13 @@ const Container = styled.section`
 
   @media screen and (max-width: 1023px) {
     #map {
-      height: calc(100vh - 5.7rem);
       top: 5.7rem;
+      height: calc(100vh - 5.7rem);
     }
   }
 
   @media screen and (max-width: 767px) {
     #map {
-      height: calc(100vh - 4.5rem);
       top: 4.5rem;
     }
   }
@@ -113,7 +112,7 @@ const Container = styled.section`
 
 const Label = styled.p`
   margin-bottom: 120px;
-  background-color: rgba(222, 233, 224, 1);
+  background-color: #bacefa;
   padding: 5px 10px;
   border-radius: 5px;
   border-bottom: 2px solid #ccc;

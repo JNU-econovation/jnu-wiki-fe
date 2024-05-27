@@ -148,3 +148,11 @@ button {
   overflow: visible;
   cursor: pointer;
 }
+
+.swal2-popup {
+  justify-items: center;
+}
+
+.swal2-icon {
+  margin: 2rem 0 1rem 0;
+}
