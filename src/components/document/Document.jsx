@@ -5,11 +5,11 @@ import BottomSheet from "../common/layout/BottomSheet";
 import { useBottomDisplay } from "@/hooks/useBottomDisplay";
 
 const Document = ({ data }) => {
-  const { isDisplay, handleOnDisplay } = useBottomDisplay(true);
+  const { $isDisplay, handleOnDisplay } = useBottomDisplay(true);
 
   return (
     <Container>
-      <Group display={isDisplay}>
+      <Group display={$isDisplay}>
         <BottomSheet onClick={handleOnDisplay} />
         <Basic data={data} />
         <Content data={data} />

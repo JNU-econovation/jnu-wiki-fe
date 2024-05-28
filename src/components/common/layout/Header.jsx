@@ -7,7 +7,7 @@ import routes from "@/routes";
 import SearchBar from "@/components/search/SearchBar";
 import HeaderButtons from "../button/HeaderButtons";
 
-const Header = ({ isDisplay }) => {
+const Header = ({ $isDisplay }) => {
   const navigate = useNavigate();
 
   const reloadHome = () => {
@@ -22,7 +22,7 @@ const Header = ({ isDisplay }) => {
           <img src={jnuwikiLogo} alt="jnu-wiki logo" />
           <img src={jnuwiki} alt="jnu logo" />
         </LogoImg>
-        <SearchBar isDisplay={isDisplay} />
+        <SearchBar $isDisplay={$isDisplay} />
         <HeaderButtons />
       </HeaderDiv>
       <Line />

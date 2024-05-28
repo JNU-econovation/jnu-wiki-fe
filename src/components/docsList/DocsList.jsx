@@ -9,11 +9,11 @@ import useScrap from "@/hooks/useScrap";
 
 const DocsList = ({ docsData }) => {
   const navigate = useNavigate();
-  const { isDisplay, handleOnDisplay } = useBottomDisplay(true);
+  const { $isDisplay, handleOnDisplay } = useBottomDisplay(true);
   const { handleOnScrapFill } = useScrap();
 
   return (
-    <Container display={isDisplay}>
+    <Container display={$isDisplay.toString()}>
       <BottomSheet onClick={handleOnDisplay} />
       {docsData?.length > 0 ? (
         <>

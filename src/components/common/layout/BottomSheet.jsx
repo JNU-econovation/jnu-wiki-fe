@@ -10,7 +10,7 @@ const BottomSheet = ({ onClick }) => {
       size="3rem"
       className="outline-icon"
       margin="0"
-      hoverColor="#949494"
+      $hoverColor="#949494"
     >
       <IoRemoveOutline className="line" onClick={onClick} />
     </BottomIcon>

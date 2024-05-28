@@ -5,10 +5,10 @@ import styled from "styled-components";
 
 const AddPostBtn = () => {
   const navigate = useNavigate();
-  const { isDisplay } = useSelector((state) => state.display);
+  const { $isDisplay } = useSelector((state) => state.display);
 
   return (
-    <Button isDisplay={isDisplay}>
+    <Button $isDisplay={$isDisplay}>
       <Label className="label">새 문서 작성</Label>
       <PlusBtn onClick={() => navigate("/add-post")} />
     </Button>
@@ -30,7 +30,7 @@ const Button = styled.section`
   }
 
   @media screen and (max-width: 767px) {
-    bottom: ${(props) => (props.isDisplay ? "320px" : "80px")};
+    bottom: ${(props) => (props.$isDisplay ? "320px" : "80px")};
   }
 `;
 

@@ -16,7 +16,7 @@ const MypageBottom = () => {
         size="3rem"
         className="icon"
         margin="0"
-        hoverColor="#949494"
+        $hoverColor="#949494"
       >
         <IoRemoveOutline onClick={() => setDisplay((prop) => !prop)} />
       </Icon>

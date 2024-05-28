@@ -1,10 +1,10 @@
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import styled, { css } from "styled-components";
 
-const ToggleBtn = ({ toggle, onClick, islist = false }) => {
+const ToggleBtn = ({ toggle, onClick, $isList = false }) => {
   return (
     <aside onClick={onClick}>
-      {toggle ? <StyledToggle islist={islist} /> : <StyledClosedToggle />}
+      {toggle ? <StyledToggle $isList={$isList} /> : <StyledClosedToggle />}
     </aside>
   );
 };
@@ -38,10 +38,10 @@ const baseStyles = css`
 const StyledToggle = styled(IoIosArrowBack)`
   ${baseStyles}
 
-  left: ${(props) => (props.islist ? "20rem" : "27rem")};
+  left: ${(props) => (props.$isList ? "20rem" : "27rem")};
 
   @media screen and (max-width: 1023px) {
-    left: ${(props) => (props.islist ? "20rem" : "25rem")};
+    left: ${(props) => (props.$isList ? "20rem" : "25rem")};
   }
 `;
 
