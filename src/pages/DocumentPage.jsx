@@ -6,7 +6,7 @@ import Document from "@/components/document/Document";
 import MainLayout from "@/components/common/layout/MainLayout";
 import { detailDocument } from "@/services/document";
 import ToggleBtn from "@/components/common/button/ToggleBtn";
-import MapWithClickEvent from "@/components/Map/MapWithClickEvent";
+import MapWithClickEvent from "@/components/map/MapWithClickEvent";
 import { useSelector } from "react-redux";
 
 const DocumentPage = () => {

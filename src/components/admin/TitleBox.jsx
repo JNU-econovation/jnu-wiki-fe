@@ -10,7 +10,7 @@ const TitleBox = ({ title, error, isLoading }) => {
   return (
     <TitleBoxCss>
       {title}
-      <Circle backgroundColor={none ? "#B6B6B6" : "#216D32"} />
+      <Circle $backgroundColor={none ? "#B6B6B6" : "#216D32"} />
     </TitleBoxCss>
   );
 };
@@ -26,6 +26,6 @@ const Circle = styled.span`
   width: 0.5rem;
   height: 0.5rem;
   margin-left: 0.7rem;
-  background-color: ${(props) => props.backgroundColor};
+  background-color: ${(props) => props.$backgroundColor};
 `;
 export default TitleBox;

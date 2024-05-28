@@ -3,7 +3,7 @@ import MainLayout from "@/components/common/layout/MainLayout";
 
 const Join = () => {
   return (
-    <MainLayout isDisplay={false}>
+    <MainLayout $isDisplay={false}>
       <RegisterForm />
     </MainLayout>
   );

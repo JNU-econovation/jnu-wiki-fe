@@ -30,19 +30,19 @@ const DocumentListPage = () => {
     { rightUpLa, rightUpMa, leftDownLa, leftDownMa }
   );
 
-  const docsData = data?.pages.flatMap((x) => x.data.response.docsList);
+  const docsData = data?.pages.flatMap((x) => x?.data?.response.docsList ?? []);
 
   return (
     <MainLayout>
       <Suspense fallback={<Loading />}>
         {toggle && <DocsList docsData={docsData} />}
         {(docsData?.length > 4 || !toggle) && (
-          <ToggleBtn toggle={toggle} onClick={clickToggle} isList={true} />
+          <ToggleBtn toggle={toggle} onClick={clickToggle} $isList="true" />
         )}
         <div ref={bottomObserver}></div>
       </Suspense>
       <AddPostBtn />
-      {(isLoading || isError) && <MainMap />}
+      {(isLoading || isError || !data) && <MainMap />}
       {data && (
         <MainMap mapInfo={docsData} centerMap={{ lat, lng }} mapLevel={level} />
       )}

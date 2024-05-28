@@ -7,7 +7,7 @@ const MyPage = () => {
   const user = useSelector((state) => state.user);
   return (
     <>
-      <MainLayout myPageClicked={true} isDisplay={false}>
+      <MainLayout myPageClicked={true} $isDisplay={false}>
         {user.isLogin ? (
           <MypageForm></MypageForm>
         ) : (

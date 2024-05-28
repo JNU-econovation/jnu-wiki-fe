@@ -10,7 +10,7 @@ const Btn = styled.button`
 
   color: ${(props) => colors[props.color]};
   border: ${(props) => props.border};
-  background-color: ${(props) => colors[props.backgroundColor]};
+  background-color: ${(props) => colors[props.$backgroundColor]};
 `;
 
 const colors = {
@@ -23,7 +23,7 @@ const Button = ({
   children,
   color,
   border,
-  backgroundColor,
+  $backgroundColor,
   onClick,
   className,
   type = "click",
@@ -33,7 +33,7 @@ const Button = ({
       type={type}
       color={color}
       border={border}
-      backgroundColor={backgroundColor}
+      $backgroundColor={$backgroundColor}
       onClick={onClick}
       className={className}
     >

@@ -1,4 +1,4 @@
-import InputGroup from "@/components/common/Input/InputGroup";
+import InputGroup from "@/components/common/input/InputGroup";
 import Container from "@/components/register/Container";
 import Title from "@/components/common/Title";
 import { useState } from "react";
@@ -136,7 +136,7 @@ const MyInfoEditForm = () => {
         <ButtonWrap>
           <MyBtn
             color="white"
-            backgroundColor="#216D32"
+            $backgroundColor="#216D32"
             onClick={() => {
               navigate(routes.myPage);
             }}

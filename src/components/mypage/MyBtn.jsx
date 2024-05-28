@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const Btn = styled.button`
   font-size: 16px;
-  background-color: ${(props) => props.backgroundColor};
+  background-color: ${(props) => props.$backgroundColor};
   color: ${(props) => props.color};
 
   width: 150px;
@@ -13,13 +13,13 @@ const Btn = styled.button`
   border: ${(props) => props.border};
 `;
 
-const MyBtn = ({ children, color, backgroundColor, border, onClick }) => {
+const MyBtn = ({ children, color, $backgroundColor, border, onClick }) => {
   return (
     <Btn
       type="button"
       border={border}
       color={color}
-      backgroundColor={backgroundColor}
+      $backgroundColor={$backgroundColor}
       onClick={onClick}
     >
       {children}
