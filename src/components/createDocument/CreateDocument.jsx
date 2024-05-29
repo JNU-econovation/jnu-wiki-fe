@@ -21,7 +21,7 @@ const CreateDocument = () => {
   const { address } = useSelector((state) => state.address);
   const { isLogin } = useSelector((state) => state.user);
 
-  const { isDisplay, handleOnDisplay } = useBottomDisplay(true);
+  const { $isDisplay, handleOnDisplay } = useBottomDisplay(true);
 
   const methods = useForm();
   const { reset, getValues, handleSubmit } = methods;
@@ -68,7 +68,7 @@ const CreateDocument = () => {
 
   return (
     <FormProvider {...methods}>
-      <Container onSubmit={handleSubmit(onSubmit)} display={isDisplay}>
+      <Container onSubmit={handleSubmit(onSubmit)} display={$isDisplay}>
         <BottomSheet onClick={handleOnDisplay} />
         {/* TODO: 이전버튼 만들기 */}
         <Title>새 문서 작성</Title>
@@ -103,13 +103,13 @@ const CreateDocument = () => {
             color="primary"
             border="1px solid"
             border-color="primary"
-            backgroundColor="white"
+            $backgroundColor="white"
             type="reset"
             onClick={handleClear}
           >
             취소
           </Button>
-          <Button type="submit" color="white" backgroundColor="primary">
+          <Button type="submit" color="white" $backgroundColor="primary">
             등록
           </Button>
         </StyledButton>

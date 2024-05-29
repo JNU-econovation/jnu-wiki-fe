@@ -1,12 +1,12 @@
 const displayState = {
-  isDisplay: true,
+  $isDisplay: true,
 };
 
 const displayReducer = (state = displayState, action) => {
   switch (action.type) {
     case "enableDisplay":
       return {
-        isDisplay: true,
+        $isDisplay: true,
       };
     case "disableDisplay":
       return {

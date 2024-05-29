@@ -9,7 +9,7 @@ import { useHandleSearchBar } from "@/hooks/useHandleSearchBar";
 import { useSearchQuery } from "@/hooks/useSearchQuery";
 import Loader from "../common/layout/Loader";
 
-const SearchBar = ({ isDisplay }) => {
+const SearchBar = ({ $isDisplay }) => {
   const {
     node: searchRef,
     clicked: clickedSearch,
@@ -22,7 +22,7 @@ const SearchBar = ({ isDisplay }) => {
   return (
     <>
       <ToastContainer />
-      <Container isDisplay={isDisplay} onClick={handleClickedSearch}>
+      <Container $isDisplay={$isDisplay} onClick={handleClickedSearch}>
         {clickedSearch && (
           <StyledSearchResult ref={searchRef}>
             {data?.length > 0 &&
@@ -51,7 +51,7 @@ const SearchBar = ({ isDisplay }) => {
 const Container = styled.section`
   position: relative;
   width: 40rem;
-  display: ${(props) => props.isDisplay === false && "none"};
+  display: ${(props) => props.$isDisplay === false && "none"};
 
   > * {
     border: 0.5px solid #71717118;

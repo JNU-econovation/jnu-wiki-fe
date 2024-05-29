@@ -12,14 +12,14 @@ import useScrap from "@/hooks/useScrap";
 
 const ScrapList = ({ scrapList }) => {
   const navigate = useNavigate();
-  const { isDisplay, handleOnDisplay } = useBottomDisplay(true);
+  const { $isDisplay, handleOnDisplay } = useBottomDisplay(true);
   const { handleOnScrapFill } = useScrap();
 
   const { isLogin } = useSelector((state) => state.user);
   const nickName = useUserInfo(isLogin);
 
   return (
-    <Container display={isDisplay}>
+    <Container display={$isDisplay}>
       <BottomSheet onClick={handleOnDisplay} />
       {scrapList?.length ? (
         <>

@@ -5,7 +5,7 @@ const Icon = ({
   size,
   color,
   onClick,
-  hoverColor,
+  $hoverColor,
   hoverBackColor,
   margin,
   className,
@@ -16,7 +16,7 @@ const Icon = ({
       color={color}
       onClick={onClick}
       hoverBackColor={hoverBackColor}
-      hoverColor={hoverColor}
+      $hoverColor={$hoverColor}
       margin={margin}
       className={className}
     >
@@ -30,7 +30,7 @@ const IconCss = styled.div`
   font-size: ${(props) => props.size || "26px"};
   color: ${(props) => props.color || "#000000"};
   &:hover {
-    color: ${(props) => props.hoverColor};
+    color: ${(props) => props.$hoverColor};
     background-color: ${(props) => props.hoverBackColor};
   }
   margin: ${(props) => props.margin};

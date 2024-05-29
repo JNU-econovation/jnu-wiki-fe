@@ -136,7 +136,7 @@ const MyInfoEditForm = () => {
         <ButtonWrap>
           <MyBtn
             color="white"
-            backgroundColor="#216D32"
+            $backgroundColor="#216D32"
             onClick={() => {
               navigate(routes.myPage);
             }}
