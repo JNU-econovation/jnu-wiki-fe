@@ -10,7 +10,7 @@ Version 1 : 2023.03.06 ~ 2024.01.26
 
 ## 배포 주소
 
-https://jnu-wiki.com/
+http://jnu-wiki.com/
 
 ## 프로젝트 소개
 
